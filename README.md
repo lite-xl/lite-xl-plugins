@@ -13,4 +13,4 @@ Plugin | Description
 [`macmodkeys`](macmodkeys.lua?raw=1) | Remaps mac modkeys `command/option` to `ctrl/alt`
 [`sort`](sort.lua?raw=1) | Sorts selected lines
 [`titleize`](titleize.lua?raw=1) | Titleizes selected string (`hello world` => `Hello World`)
-[`togglesnakecamel`](togglesnakecamel.lua?raw=1) | Toggles symbols between `snake\_case` and `camelCase`
+[`togglesnakecamel`](togglesnakecamel.lua?raw=1) | Toggles symbols between `snake_case` and `camelCase`
