@@ -6,6 +6,7 @@ Plugins for the [lite text editor](https://github.com/rxi/lite)
 
 Plugin | Description
 -------|-----------------------------------------
+[`gofmt`](gofmt.lua?raw=1) | Auto-formats the current go file, adds the missing imports and the missing return cases
 [`language_fe`](language_fe.lua?raw=1) | Syntax for the [fe](https://github.com/rxi/fe) programming language
 [`language_go`](language_go.lua?raw=1) | Syntax for the [Go](https://golang.org/) programming language
 [`language_jiyu`](language_jiyu.lua?raw=1) | Syntax for the [jiyu](https://github.com/machinamentum/jiyu) programming language
