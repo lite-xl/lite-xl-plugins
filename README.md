@@ -6,6 +6,7 @@ Plugins for the [lite text editor](https://github.com/rxi/lite)
 
 Plugin | Description
 -------|-----------------------------------------
+[`autowrap`](autowrap.lua?raw=1) | Automatically hardwraps lines when typing
 [`gofmt`](gofmt.lua?raw=1) | Auto-formats the current go file, adds the missing imports and the missing return cases
 [`language_fe`](language_fe.lua?raw=1) | Syntax for the [fe](https://github.com/rxi/fe) programming language
 [`language_go`](language_go.lua?raw=1) | Syntax for the [Go](https://golang.org/) programming language
@@ -15,6 +16,6 @@ Plugin | Description
 [`language_rust`](language_rust.lua?raw=1) | Syntax for the [Rust](https://rust-lang.org/) programming language
 [`language_wren`](language_wren.lua?raw=1) | Syntax for the [Wren](http://wren.io/) programming language
 [`macmodkeys`](macmodkeys.lua?raw=1) | Remaps mac modkeys `command/option` to `ctrl/alt`
-[`sort`](sort.lua?raw=1) | Sorts selected lines
+[`sort`](sort.lua?raw=1) | Sorts selected lines alphabetically
 [`titleize`](titleize.lua?raw=1) | Titleizes selected string (`hello world` => `Hello World`)
 [`togglesnakecamel`](togglesnakecamel.lua?raw=1) | Toggles symbols between `snake_case` and `camelCase`
