@@ -3,9 +3,7 @@ local config = require "core.config"
 local command = require "core.command"
 local DocView = require "core.docview"
 
-if not config.autowrap_files then
-  config.autowrap_files = { "%.md$", "%.txt$" }
-end
+config.autowrap_files = { "%.md$", "%.txt$" }
 
 
 local on_text_input = DocView.on_text_input
