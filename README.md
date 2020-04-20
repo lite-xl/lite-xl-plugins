@@ -1,6 +1,9 @@
 Plugins for the [lite text editor](https://github.com/rxi/lite)
 
-*Note: if you make a pull request, the table should be updated and kept in alphabetical order*
+*Note: if you make a pull request, the table should be updated and kept in
+alphabetical order. If your plugin is large (or you'd otherwise prefer it to
+have its own repo), the table can simply be updated to add a link to the repo;
+otherwise the plugin file itself can be submitted.*
 
 ---
 
@@ -18,5 +21,6 @@ Plugin | Description
 [`language_wren`](language_wren.lua?raw=1) | Syntax for the [Wren](http://wren.io/) programming language
 [`macmodkeys`](macmodkeys.lua?raw=1) | Remaps mac modkeys `command/option` to `ctrl/alt`
 [`sort`](sort.lua?raw=1) | Sorts selected lines alphabetically
+[`theme16`](https://github.com/monolifed/theme16) | Theme manager with base16 themes
 [`titleize`](titleize.lua?raw=1) | Titleizes selected string (`hello world` => `Hello World`)
 [`togglesnakecamel`](togglesnakecamel.lua?raw=1) | Toggles symbols between `snake_case` and `camelCase`
