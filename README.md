@@ -22,6 +22,7 @@ Plugin | Description
 [`language_wren`](language_wren.lua?raw=1) | Syntax for the [Wren](http://wren.io/) programming language
 [`macmodkeys`](macmodkeys.lua?raw=1) | Remaps mac modkeys `command/option` to `ctrl/alt`
 [`sort`](sort.lua?raw=1) | Sorts selected lines alphabetically
+[`spellcheck`](spellcheck.lua?raw=1) | [Underlines](https://user-images.githubusercontent.com/3920290/79923973-9caa7400-842e-11ea-85d4-7a196a91ca50.png) misspelt words
 [`theme16`](https://github.com/monolifed/theme16) | Theme manager with base16 themes
 [`titleize`](titleize.lua?raw=1) | Titleizes selected string (`hello world` => `Hello World`)
 [`togglesnakecamel`](togglesnakecamel.lua?raw=1) | Toggles symbols between `snake_case` and `camelCase`
