@@ -23,6 +23,7 @@ local function init_words()
       i = i + 1
       if i % 1000 == 0 then coroutine.yield() end
     end
+    core.log_quiet("Finished loading dictionary file: %s", config.dictionary_file)
     words = t
     core.redraw = true
   end)
