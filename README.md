@@ -10,6 +10,7 @@ otherwise the plugin file itself can be submitted.*
 Plugin | Description
 -------|-----------------------------------------
 [`autowrap`](autowrap.lua?raw=1) | Automatically hardwraps lines when typing
+[`bracketmatch`](bracketmatch.lua?raw=1) | [Underlines](https://user-images.githubusercontent.com/3920290/80132745-0c863f00-8594-11ea-8875-c455c6fd7eae.png) matching right-bracket of left-bracket under caret
 [`gofmt`](gofmt.lua?raw=1) | Auto-formats the current go file, adds the missing imports and the missing return cases
 [`indentguide`](indentguide.lua?raw=1) | Adds [indent guides](https://user-images.githubusercontent.com/3920290/79640716-f9860000-818a-11ea-9c3b-26d10dd0e0c0.png)
 [`language_fe`](language_fe.lua?raw=1) | Syntax for the [fe](https://github.com/rxi/fe) programming language
