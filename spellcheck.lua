@@ -7,27 +7,22 @@ local DocView = require "core.docview"
 config.spellcheck_files = { "%.txt$", "%.md$", "%.markdown$" }
 config.dictionary_file = "/usr/share/dict/words"
 
-local inited = false
 local words
 
-local function init_words()
-  if inited then return end
-  inited = true
-  core.add_thread(function()
-    local t = {}
-    local i = 0
-    for line in io.lines(config.dictionary_file) do
-      for word in line:gmatch("%a+") do
-        t[word:lower()] = true
-      end
-      i = i + 1
-      if i % 1000 == 0 then coroutine.yield() end
+core.add_thread(function()
+  local t = {}
+  local i = 0
+  for line in io.lines(config.dictionary_file) do
+    for word in line:gmatch("%a+") do
+      t[word:lower()] = true
     end
-    core.log_quiet("Finished loading dictionary file: %s", config.dictionary_file)
-    words = t
-    core.redraw = true
-  end)
-end
+    i = i + 1
+    if i % 1000 == 0 then coroutine.yield() end
+  end
+  words = t
+  core.redraw = true
+  core.log_quiet("Finished loading dictionary file: \"%s\"", config.dictionary_file)
+end)
 
 
 local function matches_any(filename, ptns)
@@ -42,7 +37,6 @@ local draw_line_text = DocView.draw_line_text
 function DocView:draw_line_text(idx, x, y)
   draw_line_text(self, idx, x, y)
 
-  init_words()
   if not words
   or not matches_any(self.doc.filename or "", config.spellcheck_files) then
     return
