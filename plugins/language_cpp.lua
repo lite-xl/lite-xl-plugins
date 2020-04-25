@@ -1,3 +1,5 @@
+pcall(require, "plugins.language_c")
+
 local syntax = require "core.syntax"
 
 syntax.add {
