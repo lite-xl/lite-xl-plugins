@@ -12,7 +12,11 @@ local function get_line_spaces(doc, idx, dir)
   if e == #text then
     return get_line_spaces(doc, idx + dir, dir)
   end
-  return e - s + 1
+  local n = 0
+  for i = s, e do
+    n = n + (text:byte(i) == 9 and config.indent_size or 1)
+  end
+  return n
 end
 
 
