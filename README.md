@@ -3,7 +3,8 @@ Plugins for the [lite text editor](https://github.com/rxi/lite)
 *Note: if you make a pull request, the table should be updated and kept in
 alphabetical order. If your plugin is large (or you'd otherwise prefer it to
 have its own repo), the table can simply be updated to add a link to the repo;
-otherwise the plugin file itself can be submitted.*
+otherwise the plugin file itself can be submitted. If a plugin's link resolves
+to a something other than a raw file it should be marked with an asterisk.*
 
 ---
 
@@ -26,7 +27,7 @@ Plugin | Description
 [`macmodkeys`](plugins/macmodkeys.lua?raw=1) | Remaps mac modkeys `command/option` to `ctrl/alt`
 [`sort`](plugins/sort.lua?raw=1) | Sorts selected lines alphabetically
 [`spellcheck`](plugins/spellcheck.lua?raw=1) | [Underlines](https://user-images.githubusercontent.com/3920290/79923973-9caa7400-842e-11ea-85d4-7a196a91ca50.png) misspelt words
-[`theme16`](https://github.com/monolifed/theme16) | Theme manager with base16 themes
+[`theme16`](https://github.com/monolifed/theme16)* | Theme manager with base16 themes
 [`titleize`](plugins/titleize.lua?raw=1) | Titleizes selected string (`hello world` => `Hello World`)
-[`todotreeview`](https://github.com/drmargarido/TodoTreeView) | Todo tree viewer for anotations in code like `TODO`, `BUG`, `FIX`, `IMPROVEMENT`
+[`todotreeview`](https://github.com/drmargarido/TodoTreeView)* | Todo tree viewer for anotations in code like `TODO`, `BUG`, `FIX`, `IMPROVEMENT`
 [`togglesnakecamel`](plugins/togglesnakecamel.lua?raw=1) | Toggles symbols between `snake_case` and `camelCase`
