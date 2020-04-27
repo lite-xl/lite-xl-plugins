@@ -12,9 +12,11 @@ end
 command.add("core.docview", {
   ["sort:sort"] = function()
     core.active_view.doc:replace(function(text)
-      local lines = split_lines(text)
+      local head, body, foot = text:match("(\n*)(.-)(\n*)$")
+      local lines = split_lines(body)
       table.sort(lines, function(a, b) return a:lower() < b:lower() end)
-      return table.concat(lines, "\n")
+      return head .. table.concat(lines, "\n") .. foot
     end)
   end,
 })
+
