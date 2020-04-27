@@ -23,6 +23,7 @@ Plugin | Description
 [`language_php`](plugins/language_php.lua?raw=1) | Syntax for the [PHP](https://php.net) programming language
 [`language_psql`](plugins/language_psql.lua?raw=1) | Syntax for the postgresql database access language
 [`language_rust`](plugins/language_rust.lua?raw=1) | Syntax for the [Rust](https://rust-lang.org/) programming language
+[`language_sh`](plugins/language_sh.lua?raw=1) | Syntax for shell scripting language
 [`language_wren`](plugins/language_wren.lua?raw=1) | Syntax for the [Wren](http://wren.io/) programming language
 [`macmodkeys`](plugins/macmodkeys.lua?raw=1) | Remaps mac modkeys `command/option` to `ctrl/alt`
 [`sort`](plugins/sort.lua?raw=1) | Sorts selected lines alphabetically
