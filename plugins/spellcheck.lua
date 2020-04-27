@@ -154,7 +154,7 @@ command.add("core.docview", {
 
     -- select word and init replacement selector
     local label = string.format("Replace \"%s\" With", word)
-    doc:set_selection(line, s, line, e + 1)
+    doc:set_selection(line, e + 1, line, s)
     core.command_view:enter(label, function(text, item)
       text = item and item.text or text
       doc:replace(function() return text end)
