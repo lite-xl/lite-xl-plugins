@@ -38,7 +38,9 @@ end
 
 local function active_word(doc, line, tail)
   local l, c = doc:get_selection()
-  return l == line and c == tail and system.get_time() - last_input_time < 0.5
+  return l == line and c == tail
+     and doc == core.active_view.doc
+     and system.get_time() - last_input_time < 0.5
 end
 
 
