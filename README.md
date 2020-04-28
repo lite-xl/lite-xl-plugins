@@ -25,6 +25,7 @@ Plugin | Description
 [`language_rust`](plugins/language_rust.lua?raw=1) | Syntax for the [Rust](https://rust-lang.org/) programming language
 [`language_sh`](plugins/language_sh.lua?raw=1) | Syntax for shell scripting language
 [`language_wren`](plugins/language_wren.lua?raw=1) | Syntax for the [Wren](http://wren.io/) programming language
+[`linter`](https://github.com/drmargarido/linters)* | Linters for multiple languages
 [`macmodkeys`](plugins/macmodkeys.lua?raw=1) | Remaps mac modkeys `command/option` to `ctrl/alt`
 [`sort`](plugins/sort.lua?raw=1) | Sorts selected lines alphabetically
 [`spellcheck`](plugins/spellcheck.lua?raw=1) | [Underlines](https://user-images.githubusercontent.com/3920290/79923973-9caa7400-842e-11ea-85d4-7a196a91ca50.png) misspelt words
