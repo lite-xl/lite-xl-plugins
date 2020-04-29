@@ -12,6 +12,7 @@ Plugin | Description
 -------|-----------------------------------------
 [`autowrap`](plugins/autowrap.lua?raw=1) | Automatically hardwraps lines when typing
 [`bracketmatch`](plugins/bracketmatch.lua?raw=1) | [Underlines](https://user-images.githubusercontent.com/3920290/80132745-0c863f00-8594-11ea-8875-c455c6fd7eae.png) matching right-bracket of left-bracket under caret
+[`drawwhitespace`](plugins/drawwhitespace.lua?raw=1) | [Draws](https://user-images.githubusercontent.com/3920290/80573013-22ae5800-89f7-11ea-9895-6362a1c0abc7.png) tabs and spaces
 [`eval`](plugins/eval.lua?raw=1) | Replaces selected Lua code with its evaluated result
 [`gofmt`](plugins/gofmt.lua?raw=1) | Auto-formats the current go file, adds the missing imports and the missing return cases
 [`indentguide`](plugins/indentguide.lua?raw=1) | Adds [indent guides](https://user-images.githubusercontent.com/3920290/79640716-f9860000-818a-11ea-9c3b-26d10dd0e0c0.png)
