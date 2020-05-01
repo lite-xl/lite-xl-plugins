@@ -35,10 +35,11 @@ local draw_line_text = DocView.draw_line_text
 function DocView:draw_line_text(idx, x, y)
   local spaces = get_line_indent_guide_spaces(self.doc, idx)
   local sw = self:get_font():get_width(" ")
+  local w = math.ceil(1 * SCALE)
   local h = self:get_line_height()
   for i = 0, spaces - 1, config.indent_size do
     local color = style.guide or style.selection
-    renderer.draw_rect(x + sw * i, y, style.divider_size, h, color)
+    renderer.draw_rect(x + sw * i, y, w, h, color)
   end
   draw_line_text(self, idx, x, y)
 end

@@ -85,7 +85,7 @@ function DocView:draw_line_text(idx, x, y)
     local color = style.bracketmatch_color or style.syntax["function"]
     local x1 = x + self:get_col_x_offset(idx, state.col2)
     local x2 = x + self:get_col_x_offset(idx, state.col2 + 1)
-    local h = style.divider_size
+    local h = math.ceil(1 * SCALE)
     renderer.draw_rect(x1, y + self:get_line_height() - h, x2 - x1, h, color)
   end
 end
