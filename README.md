@@ -37,4 +37,5 @@ Plugin | Description
 [`titleize`](plugins/titleize.lua?raw=1) | Titleizes selected string (`hello world` => `Hello World`)
 [`todotreeview`](https://github.com/drmargarido/TodoTreeView)* | Todo tree viewer for anotations in code like `TODO`, `BUG`, `FIX`, `IMPROVEMENT`
 [`togglesnakecamel`](plugins/togglesnakecamel.lua?raw=1) | Toggles symbols between `snake_case` and `camelCase`
+[`unboundedscroll`](plugins/unboundedscroll.lua?raw=1) | Allows scrolling outside the bounds of a document
 
