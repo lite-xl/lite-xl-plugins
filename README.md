@@ -16,6 +16,7 @@ Plugin | Description
 [`detectindent`](plugins/detectindent.lua?raw=1) | Automatically detects and uses the indentation size and tab type of a loaded file
 [`drawwhitespace`](plugins/drawwhitespace.lua?raw=1) | Draws tabs and spaces *([screenshot](https://user-images.githubusercontent.com/3920290/80573013-22ae5800-89f7-11ea-9895-6362a1c0abc7.png))*
 [`eval`](plugins/eval.lua?raw=1) | Replaces selected Lua code with its evaluated result
+[`gitstatus`](plugins/gitstatus.lua?raw=1) | Displays git branch and insert/delete count in status bar *([screenshot](https://user-images.githubusercontent.com/3920290/81107223-bcea3080-8f0e-11ea-8fc7-d03173f42e33.png))*
 [`gofmt`](plugins/gofmt.lua?raw=1) | Auto-formats the current go file, adds the missing imports and the missing return cases
 [`hidestatus`](plugins/hidestatus.lua?raw=1) | Hides the status bar at the bottom of the window
 [`indentguide`](plugins/indentguide.lua?raw=1) | Adds indent guides *([screenshot](https://user-images.githubusercontent.com/3920290/79640716-f9860000-818a-11ea-9c3b-26d10dd0e0c0.png))*
@@ -29,6 +30,7 @@ Plugin | Description
 [`language_rust`](plugins/language_rust.lua?raw=1) | Syntax for the [Rust](https://rust-lang.org/) programming language
 [`language_sh`](plugins/language_sh.lua?raw=1) | Syntax for shell scripting language
 [`language_wren`](plugins/language_wren.lua?raw=1) | Syntax for the [Wren](http://wren.io/) programming language
+[`lfautoinsert`](plugins/lfautoinsert.lua?raw=1) | Automatically inserts indentation and closing bracket/text after newline
 [`linter`](https://github.com/drmargarido/linters)* | Linters for multiple languages
 [`macmodkeys`](plugins/macmodkeys.lua?raw=1) | Remaps mac modkeys `command/option` to `ctrl/alt`
 [`selectionhighlight`](plugins/selectionhighlight.lua?raw=1) | Highlights regions of code that match the current selection *([screenshot](https://user-images.githubusercontent.com/3920290/80710883-5f597c80-8ae7-11ea-97f0-76dfacc08439.png))*
@@ -39,4 +41,5 @@ Plugin | Description
 [`todotreeview`](https://github.com/drmargarido/TodoTreeView)* | Todo tree viewer for anotations in code like `TODO`, `BUG`, `FIX`, `IMPROVEMENT`
 [`togglesnakecamel`](plugins/togglesnakecamel.lua?raw=1) | Toggles symbols between `snake_case` and `camelCase`
 [`unboundedscroll`](plugins/unboundedscroll.lua?raw=1) | Allows scrolling outside the bounds of a document
+
 
