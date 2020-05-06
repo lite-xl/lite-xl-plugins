@@ -4,19 +4,19 @@ local config = require "core.config"
 local keymap = require "core.keymap"
 
 config.autoinsert_map = {
-  ["{\n"] = "}",
-  ["%(\n"] = ")",
-  ["%f[[]%[\n"] = "]",
-  ["%[%[\n"] = "]]",
-  ["=\n"] = false,
-  [":\n"] = false,
-  ["^#if"] = "#endif",
-  ["^#else"] = "#endif",
-  ["%f[%w]do\n"] = "end",
-  ["%f[%w]then\n"] = "end",
-  ["%f[%w]else\n"] = "end",
-  ["%f[%w]repeat\n"] = "until",
-  ["%f[%w]function.*%)\n"] = "end",
+  ["{%s*\n"] = "}",
+  ["%(%s*\n"] = ")",
+  ["%f[[]%[%s*\n"] = "]",
+  ["%[%[%s*\n"] = "]]",
+  ["=%s*\n"] = false,
+  [":%s*\n"] = false,
+  ["^#if%s*\n"] = "#endif",
+  ["^#else%s*\n"] = "#endif",
+  ["%f[%w]do%s*\n"] = "end",
+  ["%f[%w]then%s*\n"] = "end",
+  ["%f[%w]else%s*\n"] = "end",
+  ["%f[%w]repeat%s*\n"] = "until",
+  ["%f[%w]function.*%)%s*\n"] = "end",
 }
 
 
@@ -28,16 +28,17 @@ end
 
 command.add("core.docview", {
   ["autoinsert:newline"] = function()
-    local doc = core.active_view.doc
-    local line = doc:get_selection()
-    local text = doc.lines[line]
-
     command.perform("doc:newline")
+
+    local doc = core.active_view.doc
+    local line, col = doc:get_selection()
+    local text = doc.lines[line - 1]
 
     for ptn, close in pairs(config.autoinsert_map) do
       if text:find(ptn) then
         if  close
-        and indent_size(doc, line + 2) <= indent_size(doc, line)
+        and col == #doc.lines[line]
+        and indent_size(doc, line + 1) <= indent_size(doc, line - 1)
         then
           command.perform("doc:newline")
           core.active_view:on_text_input(close)
