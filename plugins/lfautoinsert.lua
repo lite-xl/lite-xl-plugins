@@ -28,16 +28,16 @@ end
 
 command.add("core.docview", {
   ["autoinsert:newline"] = function()
-    command.perform("doc:newline")
-
     local doc = core.active_view.doc
     local line = doc:get_selection()
-    local text = doc.lines[line - 1]
+    local text = doc.lines[line]
+
+    command.perform("doc:newline")
 
     for ptn, close in pairs(config.autoinsert_map) do
       if text:find(ptn) then
         if  close
-        and indent_size(doc, line + 1) <= indent_size(doc, line - 1)
+        and indent_size(doc, line + 2) <= indent_size(doc, line)
         then
           command.perform("doc:newline")
           core.active_view:on_text_input(close)
