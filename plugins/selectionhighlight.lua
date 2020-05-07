@@ -19,8 +19,8 @@ function DocView:draw_line_body(idx, x, y)
   local line1, col1, line2, col2 = self.doc:get_selection(true)
   if line1 == line2 and col1 ~= col2 then
     local lh = self:get_line_height()
-    local selected_text = self:get_cached_line(line1).text:sub(col1, col2 - 1)
-    local current_line_text = self:get_cached_line(idx).text
+    local selected_text = self.doc.lines[line1]:sub(col1, col2 - 1)
+    local current_line_text = self.doc.lines[idx]
     local last_col = 1
     while true do
       local start_col, end_col = current_line_text:find(selected_text, last_col, true)
