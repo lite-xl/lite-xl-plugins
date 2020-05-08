@@ -8,6 +8,7 @@ syntax.add {
     { pattern = [[\.]],                   type = "normal"   },
     { pattern = { '"', '"', '\\' },       type = "string"   },
     { pattern = { "'", "'", '\\' },       type = "string"   },
+    { pattern = { '`', '`', '\\' },       type = "string"   },
     { pattern = "%f[%w_][%d%.]+%f[^%w_]", type = "number"   },
     { pattern = "[!<>|%[%]=*]",           type = "operator" },
     { pattern = "%f[%S]%-[%w%-_]+",       type = "function" },
