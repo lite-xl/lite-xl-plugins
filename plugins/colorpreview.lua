@@ -24,16 +24,13 @@ local function draw_color_previews(self, idx, x, y, ptn, base)
     local oy = self:get_line_text_y_offset()
 
     local text_color = math.max(r, g, b) < 128 and white or black
-    tmp[1], tmp[2], tmp[3], tmp[4] = r, g, b, nil
+    tmp[1], tmp[2], tmp[3] = r, g, b
 
     local l1, _, l2, _ = self.doc:get_selection(true)
 
     if not (self.doc:has_selection() and idx >= l1 and idx <= l2) then
       renderer.draw_rect(x1, y, x2 - x1, self:get_line_height(), tmp)
       renderer.draw_text(self:get_font(), str, x1, y + oy, text_color)
-    else
-      tmp[4] = 58
-      renderer.draw_rect(x1, y, x2 - x1, self:get_line_height(), tmp)
     end
   end
 end
