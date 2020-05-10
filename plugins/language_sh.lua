@@ -22,7 +22,7 @@ syntax.add {
     ["done"]     = "keyword",
     ["elif"]     = "keyword",
     ["else"]     = "keyword",
-    ["esca"]     = "keyword",
+    ["esac"]     = "keyword",
     ["fi"]       = "keyword",
     ["for"]      = "keyword",
     ["function"] = "keyword",
