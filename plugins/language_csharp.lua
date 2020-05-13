@@ -1,9 +1,4 @@
 local syntax = require "core.syntax"
-local common = require "core.common"
-local style = require "core.style"
-
--- additional syntax highlighting for character (same as string)
-style.syntax["character"] = style.syntax["string"]
 
 syntax.add {
   files = "%.cs$",
@@ -12,9 +7,9 @@ syntax.add {
     { pattern = "//.-\n",               type = "comment"  },
     { pattern = { "/%*", "%*/" },       type = "comment"  },
     { pattern = { '"', '"', '\\' },     type = "string"   },
-    { pattern = "'\\x%x?%x?%x?%x'",     type = "character"}, -- hexadecimal escape sequence
-    { pattern = "'\\u%x%x%x%x'",        type = "character"}, -- unicode escape sequence
-    { pattern = "'\\?.'",               type = "character"}, -- character literal
+    { pattern = "'\\x%x?%x?%x?%x'",     type = "string"   }, -- character hexadecimal escape sequence
+    { pattern = "'\\u%x%x%x%x'",        type = "string"   }, -- character unicode escape sequence
+    { pattern = "'\\?.'",               type = "string"   }, -- character literal
     { pattern = "-?0x%x+",              type = "number"   },
     { pattern = "-?%d+[%d%.eE]*f?",     type = "number"   },
     { pattern = "-?%.?%d+f?",           type = "number"   },
