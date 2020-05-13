@@ -4,20 +4,21 @@ syntax.add {
   files = "%.cs$",
   comment = "//",
   patterns = {
-    { pattern = "//.-\n",               type = "comment"  },
-    { pattern = { "/%*", "%*/" },       type = "comment"  },
-    { pattern = { '"', '"', '\\' },     type = "string"   },
-    { pattern = "'\\x%x?%x?%x?%x'",     type = "string"   }, -- character hexadecimal escape sequence
-    { pattern = "'\\u%x%x%x%x'",        type = "string"   }, -- character unicode escape sequence
-    { pattern = "'\\?.'",               type = "string"   }, -- character literal
-    { pattern = "-?0x%x+",              type = "number"   },
-    { pattern = "-?%d+[%d%.eE]*f?",     type = "number"   },
-    { pattern = "-?%.?%d+f?",           type = "number"   },
-    { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
-    { pattern = "%?%?",                 type = "operator" }, -- ?? null-coalescing
-    { pattern = "%?%.",                 type = "operator" }, -- ?. null-conditional
-    { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
-    { pattern = "[%a_][%w_]*",          type = "symbol"   },
+    { pattern = "//.-\n",                   type = "comment"  },
+    { pattern = { "/%*", "%*/" },           type = "comment"  },
+    { pattern = { '"', '"', '\\' },         type = "string"   },
+    { pattern = { "[%$%@]?\"", '"', '\\' }, type = "string"   }, -- string interpolation and verbatim
+    { pattern = "'\\x%x?%x?%x?%x'",         type = "string"   }, -- character hexadecimal escape sequence
+    { pattern = "'\\u%x%x%x%x'",            type = "string"   }, -- character unicode escape sequence
+    { pattern = "'\\?.'",                   type = "string"   }, -- character literal
+    { pattern = "-?0x%x+",                  type = "number"   },
+    { pattern = "-?%d+[%d%.eE]*f?",         type = "number"   },
+    { pattern = "-?%.?%d+f?",               type = "number"   },
+    { pattern = "[%+%-=/%*%^%%<>!~|&]",     type = "operator" },
+    { pattern = "%?%?",                     type = "operator" }, -- ?? null-coalescing
+    { pattern = "%?%.",                     type = "operator" }, -- ?. null-conditional
+    { pattern = "[%a_][%w_]*%f[(]",         type = "function" },
+    { pattern = "[%a_][%w_]*",              type = "symbol"   },
   },
   symbols = {
     -- keywords
@@ -44,6 +45,7 @@ syntax.add {
     ["fixed"]      = "keyword",
     ["for"]        = "keyword",
     ["foreach"]    = "keyword",
+    ["get"]        = "keyword",
     ["goto"]       = "keyword",
     ["if"]         = "keyword",
     ["implicit"]   = "keyword",
@@ -54,7 +56,6 @@ syntax.add {
     ["lock"]       = "keyword",
     ["namespace"]  = "keyword",
     ["new"]        = "keyword",
-    ["object"]     = "keyword",
     ["operator"]   = "keyword",
     ["out"]        = "keyword",
     ["override"]   = "keyword",
@@ -66,6 +67,7 @@ syntax.add {
     ["ref"]        = "keyword",
     ["return"]     = "keyword",
     ["sealed"]     = "keyword",
+    ["set"]        = "keyword",
     ["sizeof"]     = "keyword",
     ["stackalloc"] = "keyword",
     ["static"]     = "keyword",
@@ -80,7 +82,9 @@ syntax.add {
     ["using"]      = "keyword",
     ["var"]        = "keyword",
     ["virtual"]    = "keyword",
+    ["void"]       = "keyword",
     ["volatile"]   = "keyword",
+    ["where"]      = "keyword",
     ["while"]      = "keyword",
     ["yield"]      = "keyword",
     -- types
@@ -92,13 +96,13 @@ syntax.add {
     ["float"]      = "keyword2",
     ["int"]        = "keyword2",
     ["long"]       = "keyword2",
+    ["object"]     = "keyword2",
     ["sbyte"]      = "keyword2",
     ["short"]      = "keyword2",
     ["string"]     = "keyword2",
     ["uint"]       = "keyword2",
     ["ulong"]      = "keyword2",
     ["ushort"]     = "keyword2",
-    ["void"]       = "keyword2",
     -- literals
     ["true"]       = "literal",
     ["false"]      = "literal",
