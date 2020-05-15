@@ -1,11 +1,37 @@
 local core = require "core"
 local style = require "core.style"
-local config = require "core.config"
 local command = require "core.command"
 local keymap = require "core.keymap"
 local DocView = require "core.docview"
 
-local bracket_map = { ["["] = "]", ["("] = ")", ["{"] = "}" }
+local bracket_maps = {
+  -- [     ]    (     )    {      }
+  { [91] = 93, [40] = 41, [123] = 125, step =  1 },
+  -- ]     [    )     (    }      {
+  { [93] = 91, [41] = 40, [125] = 123, step = -1 },
+}
+
+
+local function get_matching_bracket(doc, line, col, line_limit, open_byte, close_byte, step)
+  local end_line = line + line_limit * step
+  local depth = 0
+
+  while line ~= end_line do
+    local byte = doc.lines[line]:byte(col)
+    if byte == open_byte then
+      depth = depth + 1
+    elseif byte == close_byte then
+      depth = depth - 1
+      if depth == 0 then return line, col end
+    end
+
+    local prev_line, prev_col = line, col
+    line, col = doc:position_offset(line, col, step)
+    if line == prev_line and col == prev_col then
+      break
+    end
+  end
+end
 
 
 local state = {}
@@ -27,34 +53,20 @@ local function update_state(line_limit)
     return
   end
 
-  -- find matching rbracket if we have an lbracket
+  -- find matching bracket if we're on a bracket
   local line2, col2
-  local chr = doc:get_text(line, col - 1, line, col)
-  local rbracket = bracket_map[chr]
-
-  if rbracket then
-    local ptn = "[%" .. chr .. "%" .. rbracket .. "]"
-    local offset = col - 1
-    local depth = 1
-
-    for i = line, math.min(#doc.lines, line + line_limit) do
-      while offset do
-        local n = doc.lines[i]:find(ptn, offset + 1)
-        if n then
-          local match = doc.lines[i]:sub(n, n)
-          if match == chr then
-            depth = depth + 1
-          elseif match == rbracket then
-            depth = depth - 1
-            if depth == 0 then line2, col2 = i, n end
-          end
-        end
-        offset = n
+  for _, map in ipairs(bracket_maps) do
+    for i = 0, -1, -1 do
+      local line, col = doc:position_offset(line, col, i)
+      local open = doc.lines[line]:byte(col)
+      local close = map[open]
+      if close then
+        line2, col2 = get_matching_bracket(doc, line, col, line_limit, open, close, map.step)
+        goto found
       end
-      if line2 then break end
-      offset = 0
     end
   end
+  ::found::
 
   -- update
   state = {
