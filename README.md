@@ -11,7 +11,7 @@ to a something other than a raw file it should be marked with an asterisk.*
 Plugin | Description
 -------|-----------------------------------------
 [`autowrap`](plugins/autowrap.lua?raw=1) | Automatically hardwraps lines when typing
-[`bracketmatch`](plugins/bracketmatch.lua?raw=1) | Underlines matching right-bracket of left-bracket under caret *([screenshot](https://user-images.githubusercontent.com/3920290/80132745-0c863f00-8594-11ea-8875-c455c6fd7eae.png))*
+[`bracketmatch`](plugins/bracketmatch.lua?raw=1) | Underlines matching pair for bracket under the caret *([screenshot](https://user-images.githubusercontent.com/3920290/80132745-0c863f00-8594-11ea-8875-c455c6fd7eae.png))*
 [`colorpreview`](plugins/colorpreview.lua?raw=1) | Underlays color values (eg. `#ff00ff` or `rgb(255, 0, 255)`) with their resultant color. *([screenshot](https://user-images.githubusercontent.com/3920290/80743752-731bd780-8b15-11ea-97d3-847db927c5dc.png))*
 [`console`](https://github.com/rxi/console)* | A console for running external commands and capturing their output *([gif](https://user-images.githubusercontent.com/3920290/81343656-49325a00-90ad-11ea-8647-ff39d8f1d730.gif))*
 [`copyfilelocation`](plugins/copyfilelocation.lua?raw=1) | Copy file location to clipboard
