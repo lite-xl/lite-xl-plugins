@@ -27,7 +27,7 @@ local symtable = {
   "forfiles",
  },
 }
--- prepare a mixed symbol list digestable by lite
+-- prepare a mixed symbol list
 local function prepare_symbols(symtable)
   local symbols = { }
   for symtype, symlist in pairs(symtable) do
@@ -55,7 +55,7 @@ syntax.add {
     { pattern = "-?%.?%d+f?",                   type = "number"   },    -- integer numbers
     { pattern = { '"', '"', '\\' },             type = "string"   },    -- "strings"
     { pattern = "[%a_][%w_]*",                  type = "normal"   },
-    { pattern = ":eof",                         type = "keyword"  },    -- NOTE: end processing here once possible in lite
+    { pattern = ":eof",                         type = "keyword"  },    -- not quite as intended, but ok for now
   },
   symbols = prepare_symbols(symtable),
 }
