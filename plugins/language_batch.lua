@@ -5,26 +5,26 @@ local syntax = require "core.syntax"
 -- windows batch files use caseless matching for symbols
 local symtable = {
   ["keyword"] = {
-	"if", "else", "elsif", "not", "for", "do", "in",
-	"equ", "neq", "lss", "leq", "gtr", "geq", -- == != < <= > >=
-	"nul", "con", "prn", "prn", "lpt1", "com1", "com2", "com3", "com4",
-	"exist", "defined",
-	"errorlevel", "cmdextversion",
-	"goto", "call", "verify",
+  "if", "else", "elsif", "not", "for", "do", "in",
+  "equ", "neq", "lss", "leq", "gtr", "geq", -- == != < <= > >=
+  "nul", "con", "prn", "prn", "lpt1", "com1", "com2", "com3", "com4",
+  "exist", "defined",
+  "errorlevel", "cmdextversion",
+  "goto", "call", "verify",
   },
   ["function"] = {
-	"set", "setlocal", "endlocal", "enabledelayedexpansion",
-	"echo", "type",
-	"cd", "chdir",
-	"md", "mkdir",
-	"pause", "choice", "exit",
-	"del", "rd", "rmdir",
-	"copy", "xcopy",
-	"move", "ren",
-	"find", "findstr",
-	"sort", "shift", "attrib",
-	"cmd", "command",
-	"forfiles",
+  "set", "setlocal", "endlocal", "enabledelayedexpansion",
+  "echo", "type",
+  "cd", "chdir",
+  "md", "mkdir",
+  "pause", "choice", "exit",
+  "del", "rd", "rmdir",
+  "copy", "xcopy",
+  "move", "ren",
+  "find", "findstr",
+  "sort", "shift", "attrib",
+  "cmd", "command",
+  "forfiles",
  },
 }
 -- prepare a mixed symbol list digestable by lite
@@ -33,7 +33,7 @@ local function prepare_symbols(symtable)
   for symtype, symlist in pairs(symtable) do
     for _, symname in ipairs(symlist) do
       symbols[symname:lower()] = symtype
-	  symbols[symname:upper()] = symtype
+    symbols[symname:upper()] = symtype
     end
   end
   return symbols
