@@ -48,8 +48,9 @@ local function update_state(line_limit)
 
   -- early exit if nothing has changed since the last call
   local line, col = doc:get_selection()
-  if state.doc == doc and state.line == line and state.col == col
-  and state.limit == line_limit then
+  local change_id = doc:get_change_id()
+  if  state.doc == doc and state.line == line and state.col == col
+  and state.change_id == change_id and state.limit == line_limit then
     return
   end
 
@@ -70,6 +71,7 @@ local function update_state(line_limit)
 
   -- update
   state = {
+    change_id = change_id,
     doc = doc,
     line = line,
     col = col,
