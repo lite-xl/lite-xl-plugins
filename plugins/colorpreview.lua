@@ -7,7 +7,7 @@ local black = { common.color "#000000" }
 local tmp = {}
 
 
-local function draw_color_previews(self, idx, x, y, ptn, base)
+local function draw_color_previews(self, idx, x, y, ptn, base, nibbles)
   local text = self.doc.lines[idx]
   local s, e = 0, 0
 
@@ -18,6 +18,13 @@ local function draw_color_previews(self, idx, x, y, ptn, base)
     local str = text:sub(s, e)
     local r, g, b = str:match(ptn)
     r, g, b = tonumber(r, base), tonumber(g, base), tonumber(b, base)
+
+    -- #123 becomes #112233
+    if nibbles then
+      r = r * 16
+      g = g * 16
+      b = b * 16
+    end
 
     local x1 = x + self:get_col_x_offset(idx, s)
     local x2 = x + self:get_col_x_offset(idx, e + 1)
@@ -41,6 +48,6 @@ local draw_line_text = DocView.draw_line_text
 function DocView:draw_line_text(idx, x, y)
   draw_line_text(self, idx, x, y)
   draw_color_previews(self, idx, x, y, "#(%x%x)(%x%x)(%x%x)%f[%X]",        16)
+  draw_color_previews(self, idx, x, y, "#(%x)(%x)(%x)%f[%X]",              16, true) -- support #fff css format
   draw_color_previews(self, idx, x, y, "rgba?%((%d+)%D+(%d+)%D+(%d+).-%)", 10)
 end
-
