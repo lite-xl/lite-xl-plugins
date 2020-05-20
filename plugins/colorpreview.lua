@@ -47,7 +47,7 @@ local draw_line_text = DocView.draw_line_text
 
 function DocView:draw_line_text(idx, x, y)
   draw_line_text(self, idx, x, y)
-  draw_color_previews(self, idx, x, y, "#(%x%x)(%x%x)(%x%x)%f[%X]",        16)
-  draw_color_previews(self, idx, x, y, "#(%x)(%x)(%x)%f[%X]",              16, true) -- support #fff css format
+  draw_color_previews(self, idx, x, y, "#(%x%x)(%x%x)(%x%x)%f[%W]",        16)
+  draw_color_previews(self, idx, x, y, "#(%x)(%x)(%x)%f[%W]",              16, true) -- support #fff css format
   draw_color_previews(self, idx, x, y, "rgba?%((%d+)%D+(%d+)%D+(%d+).-%)", 10)
 end
