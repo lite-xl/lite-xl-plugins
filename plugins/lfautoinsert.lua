@@ -17,6 +17,7 @@ config.autoinsert_map = {
   ["%f[%w]else%s*\n"] = "end",
   ["%f[%w]repeat%s*\n"] = "until",
   ["%f[%w]function.*%)%s*\n"] = "end",
+  ["^%s*<([^/][^%s>]*)[^>]*>%s*\n"] = "</$TEXT>",
 }
 
 
@@ -35,11 +36,13 @@ command.add("core.docview", {
     local text = doc.lines[line - 1]
 
     for ptn, close in pairs(config.autoinsert_map) do
-      if text:find(ptn) then
+      local s, _, str = text:find(ptn)
+      if s then
         if  close
         and col == #doc.lines[line]
         and indent_size(doc, line + 1) <= indent_size(doc, line - 1)
         then
+          close = str and close:gsub("$TEXT", str) or close
           command.perform("doc:newline")
           core.active_view:on_text_input(close)
           command.perform("doc:move-to-previous-line")
