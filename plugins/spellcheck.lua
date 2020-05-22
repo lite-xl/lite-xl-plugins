@@ -7,7 +7,12 @@ local DocView = require "core.docview"
 local Doc = require "core.doc"
 
 config.spellcheck_files = { "%.txt$", "%.md$", "%.markdown$" }
-config.dictionary_file = "/usr/share/dict/words"
+if PLATFORM == "Windows" then
+  config.dictionary_file = EXEDIR .. "/words.txt"
+else
+  config.dictionary_file = "/usr/share/dict/words"
+end
+
 
 local last_input_time = 0
 local word_pattern = "%a+"
@@ -172,4 +177,3 @@ command.add("core.docview", {
   end,
 
 })
-
