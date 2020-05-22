@@ -31,6 +31,7 @@ Plugin | Description
 [`language_cpp`](plugins/language_cpp.lua?raw=1) | Syntax for the [C++](https://isocpp.org/) programming language
 [`language_csharp`](plugins/language_csharp.lua?raw=1) | Syntax for the [C#](http://csharp.net) programming language
 [`language_fe`](plugins/language_fe.lua?raw=1) | Syntax for the [fe](https://github.com/rxi/fe) programming language
+[`language_fennel`](plugins/language_fennel.lua?raw=1) | Syntax for the [fennel](https://fennel-lang.org) programming language
 [`language_go`](plugins/language_go.lua?raw=1) | Syntax for the [Go](https://golang.org/) programming language
 [`language_hs`](plugins/language_hs.lua?raw=1) | Syntax for the [Haskell](https://www.haskell.org/) programming language
 [`language_jiyu`](plugins/language_jiyu.lua?raw=1) | Syntax for the [jiyu](https://github.com/machinamentum/jiyu) programming language
