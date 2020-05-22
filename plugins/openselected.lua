@@ -15,7 +15,7 @@ command.add("core.docview", {
     core.log("Opening \"%s\"...", text)
 
     if PLATFORM == "Windows" then
-      system.exec("explorer " .. text)
+      system.exec("start " .. text)
     else
       system.exec(string.format("xdg-open %q", text))
     end
