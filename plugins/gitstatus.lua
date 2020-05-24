@@ -10,21 +10,30 @@ local git = {
   deletes = 0,
 }
 
+
+local tempfile = ".lite_gitstatus_" .. os.tmpname():gsub("%W", "")
+
+local function exec(cmd, wait)
+  system.exec(cmd .. " >" .. tempfile)
+  coroutine.yield(wait)
+  local fp = io.open(tempfile)
+  local res = fp:read("*a")
+  fp:close()
+  os.remove(tempfile)
+  return res
+end
+
+
 core.add_thread(function()
   while true do
     if system.get_file_info(".git") then
       -- get branch name
-      local fp = io.popen("git rev-parse --abbrev-ref HEAD")
-      git.branch = fp:read("*l")
-      fp:close()
+      git.branch = exec("git rev-parse --abbrev-ref HEAD", 1):match("[^\n]*")
 
       -- get diff
-      local fp = io.popen("git diff --stat")
-      local last_line = ""
-      for line in fp:lines() do last_line = line end
-      fp:close()
-      git.inserts = tonumber(last_line:match("(%d+) ins")) or 0
-      git.deletes = tonumber(last_line:match("(%d+) del")) or 0
+      local line = exec("git diff --stat", 1):match("[^\n]*%s*$")
+      git.inserts = tonumber(line:match("(%d+) ins")) or 0
+      git.deletes = tonumber(line:match("(%d+) del")) or 0
 
     else
       git.branch = nil

@@ -1,7 +1,7 @@
 local core = require "core"
 local DocView = require "core.docview"
 
-local workspace_filename = core.project_dir .. "/.lite_workspace.lua"
+local workspace_filename = ".lite_workspace.lua"
 
 
 local function serialize(val)
@@ -36,24 +36,9 @@ local function get_unlocked_root(node)
 end
 
 
-local function save_path(filename)
-  local proj = system.absolute_path(core.project_dir)
-  filename = system.absolute_path(filename)
-  if filename:sub(1, #proj) == proj then
-    return "." .. filename:sub(#proj + 1)
-  end
-  return filename
-end
-
-
-local function load_path(filename)
-  return filename:gsub("^%.", core.project_dir)
-end
-
-
 local function save_docview(dv)
   return {
-    filename = save_path(dv.doc.filename),
+    filename = dv.doc.filename,
     selection = { dv.doc:get_selection() },
     scroll = { x = dv.scroll.to.x, y = dv.scroll.to.y }
   }
@@ -61,7 +46,7 @@ end
 
 
 local function load_docview(t)
-  local ok, doc = pcall(core.open_doc, load_path(t.filename))
+  local ok, doc = pcall(core.open_doc, t.filename)
   if not ok then
     return DocView(core.open_doc())
   end
