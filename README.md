@@ -35,9 +35,9 @@ Plugin | Description
 [`language_fe`](plugins/language_fe.lua?raw=1) | Syntax for the [fe](https://github.com/rxi/fe) programming language
 [`language_fennel`](plugins/language_fennel.lua?raw=1) | Syntax for the [fennel](https://fennel-lang.org) programming language
 [`language_gdscript`](plugins/language_gdscript.lua?raw=1) | Syntax for the [Godot Engine](https://godotengine.org/)'s GDScript scripting language
-[`language_cpp`](plugins/language_glsl.lua?raw=1) | Syntax for the [GLSL](https://www.khronos.org/registry/OpenGL/specs/gl/) programming language. Also highlights commonly-used HLSL keywords, to easily detect mistypes or copy-pasting mistakes between languages.
+[`language_cpp`](plugins/language_glsl.lua?raw=1) | Syntax for the [GLSL](https://www.khronos.org/registry/OpenGL/specs/gl/) programming language
 [`language_go`](plugins/language_go.lua?raw=1) | Syntax for the [Go](https://golang.org/) programming language
-[`language_cpp`](plugins/language_hlsl.lua?raw=1) | Syntax for the [HLSL](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl) programming language. Also highlights commonly-used GLSL keywords, to easily detect mistypes or copy-pasting mistakes between languages.
+[`language_cpp`](plugins/language_hlsl.lua?raw=1) | Syntax for the [HLSL](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl) programming language
 [`language_hs`](plugins/language_hs.lua?raw=1) | Syntax for the [Haskell](https://www.haskell.org/) programming language
 [`language_jiyu`](plugins/language_jiyu.lua?raw=1) | Syntax for the [jiyu](https://github.com/machinamentum/jiyu) programming language
 [`language_odin`](plugins/language_odin.lua?raw=1) | Syntax for the [Odin](https://github.com/odin-lang/Odin) programming language
