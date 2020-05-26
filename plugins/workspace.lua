@@ -36,26 +36,40 @@ local function get_unlocked_root(node)
 end
 
 
-local function save_docview(dv)
-  return {
-    filename = dv.doc.filename,
-    selection = { dv.doc:get_selection() },
-    scroll = { x = dv.scroll.to.x, y = dv.scroll.to.y }
-  }
+local function save_view(view)
+  local mt = getmetatable(view)
+  if mt == DocView then
+    return {
+      type = "doc",
+      filename = view.doc.filename,
+      selection = { view.doc:get_selection() },
+      scroll = { x = view.scroll.to.x, y = view.scroll.to.y },
+      text = not view.doc.filename and view.doc:get_text(1, 1, math.huge, math.huge)
+    }
+  end
+  for name, mod in pairs(package.loaded) do
+    if mod == mt then
+      return { type = "view", module = name }
+    end
+  end
 end
 
 
-local function load_docview(t)
-  local ok, doc = pcall(core.open_doc, t.filename)
-  if not ok then
-    return DocView(core.open_doc())
+local function load_view(t)
+  if t.type == "doc" then
+    local ok, doc = pcall(core.open_doc, t.filename)
+    if not ok then
+      return DocView(core.open_doc())
+    end
+    local dv = DocView(doc)
+    if t.text then doc:insert(1, 1, t.text) end
+    doc:set_selection(table.unpack(t.selection))
+    dv.last_line, dv.last_col = doc:get_selection()
+    dv.scroll.x, dv.scroll.to.x = t.scroll.x, t.scroll.x
+    dv.scroll.y, dv.scroll.to.y = t.scroll.y, t.scroll.y
+    return dv
   end
-  local dv = DocView(doc)
-  doc:set_selection(table.unpack(t.selection))
-  dv:update() -- prevents scrolling-to-make-caret-visible on initial frame
-  dv.scroll.x, dv.scroll.to.x = t.scroll.x, t.scroll.x
-  dv.scroll.y, dv.scroll.to.y = t.scroll.y, t.scroll.y
-  return dv
+  return require(t.module)()
 end
 
 
@@ -65,8 +79,9 @@ local function save_node(node)
   if node.type == "leaf" then
     res.views = {}
     for _, view in ipairs(node.views) do
-      if getmetatable(view) == DocView and view.doc.filename then
-        table.insert(res.views, save_docview(view))
+      local t = save_view(view)
+      if t then
+        table.insert(res.views, t)
         if node.active_view == view then
           res.active_view = #res.views
         end
@@ -83,8 +98,8 @@ end
 
 local function load_node(node, t)
   if t.type == "leaf" then
-    for _, dv in ipairs(t.views) do
-      node:add_view(load_docview(dv))
+    for _, v in ipairs(t.views) do
+      node:add_view(load_view(v))
     end
     if t.active_view then
       node:set_active_view(node.views[t.active_view])
@@ -108,6 +123,7 @@ end
 
 local function load_workspace()
   local ok, t = pcall(dofile, workspace_filename)
+  os.remove(workspace_filename)
   if ok then
     local root = get_unlocked_root(core.root_view.root_node)
     load_node(root, t)
@@ -119,7 +135,7 @@ local run = core.run
 
 function core.run(...)
   if #core.docs == 0 then
-    load_workspace()
+    core.try(load_workspace)
 
     local exit = os.exit
     function os.exit(...)
