@@ -46,6 +46,9 @@ command.add("core.docview", {
           command.perform("doc:newline")
           core.active_view:on_text_input(close)
           command.perform("doc:move-to-previous-line")
+          if doc.lines[line+1] == doc.lines[line+2] then
+            doc:remove(line+1, 1, line+2, 1)
+          end
         end
         command.perform("doc:indent")
       end
