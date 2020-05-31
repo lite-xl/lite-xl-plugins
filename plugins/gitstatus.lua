@@ -11,10 +11,9 @@ local git = {
 }
 
 
-local tempfile = ".lite_gitstatus_" .. os.tmpname():gsub("%W", "")
-
 local function exec(cmd, wait)
-  system.exec(cmd .. " >" .. tempfile)
+  local tempfile = core.temp_filename()
+  system.exec(string.format("%s > %q", cmd, tempfile))
   coroutine.yield(wait)
   local fp = io.open(tempfile)
   local res = fp:read("*a")
