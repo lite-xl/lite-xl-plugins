@@ -1,8 +1,10 @@
 local core = require "core"
 local command = require "core.command"
+local config = require "core.config"
 local keymap = require "core.keymap"
 local style = require "core.style"
 
+config.scale_mode = "code"
 
 local font_cache = setmetatable({}, { __mode = "k" })
 
@@ -27,32 +29,37 @@ local function scale_font(font, s)
 end
 
 
+local current_scale = SCALE
+local default = current_scale
+
 local function set_scale(scale)
-  local s = scale / SCALE
+  local s = scale / current_scale
 
-  style.padding.x      = style.padding.x      * s
-  style.padding.y      = style.padding.y      * s
-  style.divider_size   = style.divider_size   * s
-  style.scrollbar_size = style.scrollbar_size * s
-  style.caret_width    = style.caret_width    * s
-  style.tab_width      = style.tab_width      * s
+  if config.scale_mode == "ui" then
+    style.padding.x      = style.padding.x      * s
+    style.padding.y      = style.padding.y      * s
+    style.divider_size   = style.divider_size   * s
+    style.scrollbar_size = style.scrollbar_size * s
+    style.caret_width    = style.caret_width    * s
+    style.tab_width      = style.tab_width      * s
 
-  style.font      = scale_font(style.font,      s)
-  style.big_font  = scale_font(style.big_font,  s)
-  style.icon_font = scale_font(style.icon_font, s)
+    style.big_font  = scale_font(style.big_font,  s)
+    style.icon_font = scale_font(style.icon_font, s)
+    style.font      = scale_font(style.font,      s)
+    SCALE = current_scale
+  end
+
   style.code_font = scale_font(style.code_font, s)
 
-  SCALE = scale
+  current_scale = scale
   core.redraw = true
 end
 
 
-local default = SCALE
-
 command.add(nil, {
-  ["scale:reset"   ] = function() set_scale(default)     end,
-  ["scale:decrease"] = function() set_scale(SCALE * 0.9) end,
-  ["scale:increase"] = function() set_scale(SCALE * 1.1) end,
+  ["scale:reset"   ] = function() set_scale(default)             end,
+  ["scale:decrease"] = function() set_scale(current_scale * 0.9) end,
+  ["scale:increase"] = function() set_scale(current_scale * 1.1) end,
 })
 
 keymap.add {
