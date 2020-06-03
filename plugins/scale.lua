@@ -34,6 +34,7 @@ local default = current_scale
 
 local function set_scale(scale)
   local s = scale / current_scale
+  current_scale = scale
 
   if config.scale_mode == "ui" then
     style.padding.x      = style.padding.x      * s
@@ -51,7 +52,6 @@ local function set_scale(scale)
 
   style.code_font = scale_font(style.code_font, s)
 
-  current_scale = scale
   core.redraw = true
 end
 
