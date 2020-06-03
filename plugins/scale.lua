@@ -47,8 +47,10 @@ local function set_scale(scale)
 end
 
 
+local default = SCALE
+
 command.add(nil, {
-  ["scale:reset"   ] = function() set_scale(1)           end,
+  ["scale:reset"   ] = function() set_scale(default)     end,
   ["scale:decrease"] = function() set_scale(SCALE * 0.9) end,
   ["scale:increase"] = function() set_scale(SCALE * 1.1) end,
 })
