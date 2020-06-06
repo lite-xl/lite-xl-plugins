@@ -5,6 +5,8 @@ local config = require "core.config"
 
 if PLATFORM == "Windows" then
   config.filemanager = "explorer"
+elseif PLATFORM == "Mac OS X" then
+  config.filemanager = "open"
 else
   config.filemanager = "xdg-open"
 end
