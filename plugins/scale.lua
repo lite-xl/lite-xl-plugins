@@ -1,10 +1,13 @@
 local core = require "core"
+local common = require "core.common"
 local command = require "core.command"
 local config = require "core.config"
 local keymap = require "core.keymap"
 local style = require "core.style"
+local RootView = require "core.rootview"
 
 config.scale_mode = "code"
+config.scale_use_mousewheel = true
 
 local font_cache = setmetatable({}, { __mode = "k" })
 
@@ -33,10 +36,14 @@ local current_scale = SCALE
 local default = current_scale
 
 local function set_scale(scale)
+  scale = common.clamp(scale, 0.2, 6)
+
   local s = scale / current_scale
   current_scale = scale
 
   if config.scale_mode == "ui" then
+    SCALE = current_scale
+
     style.padding.x      = style.padding.x      * s
     style.padding.y      = style.padding.y      * s
     style.divider_size   = style.divider_size   * s
@@ -47,12 +54,23 @@ local function set_scale(scale)
     style.big_font  = scale_font(style.big_font,  s)
     style.icon_font = scale_font(style.icon_font, s)
     style.font      = scale_font(style.font,      s)
-    SCALE = current_scale
   end
 
   style.code_font = scale_font(style.code_font, s)
 
   core.redraw = true
+end
+
+
+local on_mouse_wheel = RootView.on_mouse_wheel
+
+function RootView:on_mouse_wheel(d, ...)
+  if keymap.modkeys["ctrl"] and config.scale_use_mousewheel then
+    if d < 0 then command.perform "scale:decrease" end
+    if d > 0 then command.perform "scale:increase" end
+  else
+    return on_mouse_wheel(self, d, ...)
+  end
 end
 
 
