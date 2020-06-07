@@ -42,6 +42,7 @@ Plugin | Description
 [`language_hs`](plugins/language_hs.lua?raw=1) | Syntax for the [Haskell](https://www.haskell.org/) programming language
 [`language_jiyu`](plugins/language_jiyu.lua?raw=1) | Syntax for the [jiyu](https://github.com/machinamentum/jiyu) programming language
 [`language_make`](plugins/language_make.lua?raw=1) | Syntax for the Make build system language
+[`language_meson`](plugins/language_meson.lua?raw=1) | Syntax for the Meson build system language
 [`language_odin`](plugins/language_odin.lua?raw=1) | Syntax for the [Odin](https://github.com/odin-lang/Odin) programming language
 [`language_php`](plugins/language_php.lua?raw=1) | Syntax for the [PHP](https://php.net) programming language
 [`language_psql`](plugins/language_psql.lua?raw=1) | Syntax for the postgresql database access language
