@@ -5,6 +5,7 @@ syntax.add {
   comment = "//",
   patterns = {
     { pattern = "//.-\n",                 type = "comment"  },
+    { pattern = "#.-\n",                  type = "comment"  },
     { pattern = { "/%*", "%*/" },         type = "comment"  },
     -- I dont know why the '//' are needed but I leave it here for now
     { pattern = { '"', '"', '\\' },       type = "string"   },
