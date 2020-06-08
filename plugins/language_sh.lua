@@ -2,6 +2,7 @@ local syntax = require "core.syntax"
 
 syntax.add {
   files = { "%.sh$" },
+  headers = "^#!.*bin.*sh\n",
   comment = "#",
   patterns = {
     { pattern = "#.*\n",                  type = "comment"  },
