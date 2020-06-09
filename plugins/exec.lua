@@ -10,13 +10,18 @@ local function exec(cmd, keep_newline)
 end
 
 
+local function shell_quote(str)
+  return "'" .. str:gsub("'", "'\\''") .. "'"
+end
+
+
+local printfb_sub = {
+  ["\\"] = "\\\\",
+  ["\0"] = "\\0000",
+  ["'"] = "'\\''",
+}
 local function printfb_quote(str)
-  local sub = {
-    ["\\"] = "\\\\",
-    [string.char(0)] = "\\0000",
-    ["'"] = "'\\''",
-  }
-  return "'" .. str:gsub(".", sub) .. "'"
+  return "'" .. str:gsub(".", printfb_sub) .. "'"
 end
 
 
@@ -31,7 +36,7 @@ command.add("core.docview", {
     core.command_view:enter("Replace With Result Of Command", function(cmd)
       core.active_view.doc:replace(function(str)
         return exec(
-          "printf %b " .. printfb_quote(str:gsub("%\n$", "") .. "\n") .. " | " .. cmd,
+          "printf %b " .. printfb_quote(str:gsub("%\n$", "") .. "\n") .. " | eval '' " .. shell_quote(cmd),
           str:find("%\n$")
         )
       end)
