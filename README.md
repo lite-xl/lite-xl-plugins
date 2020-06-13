@@ -10,6 +10,7 @@ to a something other than a raw file it should be marked with an asterisk.*
 
 Plugin | Description
 -------|-----------------------------------------
+[`autoinsert`](plugins/autoinsert.lua?raw=1) | Automatically inserts closing brackets and quotes
 [`autowrap`](plugins/autowrap.lua?raw=1) | Automatically hardwraps lines when typing
 [`bigclock`](plugins/bigclock.lua?raw=1) | Shows the current time and date in a view with large text *([screenshot](https://user-images.githubusercontent.com/3920290/82752891-3318df00-9db9-11ea-803f-261d80d5cf53.png))*
 [`bracketmatch`](plugins/bracketmatch.lua?raw=1) | Underlines matching pair for bracket under the caret *([screenshot](https://user-images.githubusercontent.com/3920290/80132745-0c863f00-8594-11ea-8875-c455c6fd7eae.png))*
