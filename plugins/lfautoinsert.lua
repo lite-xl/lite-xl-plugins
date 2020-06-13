@@ -3,7 +3,7 @@ local command = require "core.command"
 local config = require "core.config"
 local keymap = require "core.keymap"
 
-config.autoinsert_map = {
+config.lfautoinsert_map = {
   ["{%s*\n"] = "}",
   ["%(%s*\n"] = ")",
   ["%f[[]%[%s*\n"] = "]",
@@ -35,7 +35,7 @@ command.add("core.docview", {
     local line, col = doc:get_selection()
     local text = doc.lines[line - 1]
 
-    for ptn, close in pairs(config.autoinsert_map) do
+    for ptn, close in pairs(config.lfautoinsert_map) do
       local s, _, str = text:find(ptn)
       if s then
         if  close
