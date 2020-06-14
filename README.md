@@ -53,6 +53,7 @@ Plugin | Description
 [`language_wren`](plugins/language_wren.lua?raw=1) | Syntax for the [Wren](http://wren.io/) programming language
 [`lfautoinsert`](plugins/lfautoinsert.lua?raw=1) | Automatically inserts indentation and closing bracket/text after newline
 [`lineguide`](plugins/lineguide.lua?raw=1) | Displays a line-guide at the line limit offset *([screenshot](https://user-images.githubusercontent.com/3920290/81476159-2cf70000-9208-11ea-928b-9dae3884c477.png))*
+[`linecopypaste`](plugins/linecopypaste.lua?raw=1) | Copy, cut and paste the current line when nothing is selected
 [`linter`](https://github.com/drmargarido/linters)* | Linters for multiple languages
 [`macmodkeys`](plugins/macmodkeys.lua?raw=1) | Remaps mac modkeys `command/option` to `ctrl/alt`
 [`markers`](plugins/markers.lua?raw=1) | Add markers to docs and jump between them quickly *([screenshot](https://user-images.githubusercontent.com/3920290/82252149-5faaa200-9946-11ea-9199-bea2efb7ee23.png))*
