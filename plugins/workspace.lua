@@ -41,6 +41,7 @@ local function save_view(view)
   if mt == DocView then
     return {
       type = "doc",
+      active = (core.active_view == view),
       filename = view.doc.filename,
       selection = { view.doc:get_selection() },
       scroll = { x = view.scroll.to.x, y = view.scroll.to.y },
@@ -49,7 +50,11 @@ local function save_view(view)
   end
   for name, mod in pairs(package.loaded) do
     if mod == mt then
-      return { type = "view", module = name }
+      return {
+        type = "view",
+        active = (core.active_view == view),
+        module = name
+      }
     end
   end
 end
@@ -98,17 +103,22 @@ end
 
 local function load_node(node, t)
   if t.type == "leaf" then
+    local res
     for _, v in ipairs(t.views) do
-      node:add_view(load_view(v))
+      local view = load_view(v)
+      if v.active then res = view end
+      node:add_view(view)
     end
     if t.active_view then
       node:set_active_view(node.views[t.active_view])
     end
+    return res
   else
     node:split(t.type == "hsplit" and "right" or "down")
     node.divider = t.divider
-    load_node(node.a, t.a)
-    load_node(node.b, t.b)
+    local res1 = load_node(node.a, t.a)
+    local res2 = load_node(node.b, t.b)
+    return res1 or res2
   end
 end
 
@@ -126,7 +136,10 @@ local function load_workspace()
   os.remove(workspace_filename)
   if ok then
     local root = get_unlocked_root(core.root_view.root_node)
-    load_node(root, t)
+    local active_view = load_node(root, t)
+    if active_view then
+      core.set_active_view(active_view)
+    end
   end
 end
 
