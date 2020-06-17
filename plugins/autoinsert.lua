@@ -1,4 +1,5 @@
 local core = require "core"
+local translate = require "core.doc.translate"
 local config = require "core.config"
 local DocView = require "core.docview"
 local command = require "core.command"
@@ -60,7 +61,13 @@ function DocView:on_text_input(text)
 end
 
 
-command.add("core.docview", {
+
+local function predicate()
+  return getmetatable(core.active_view) == DocView
+     and not core.active_view.doc:has_selection()
+end
+
+command.add(predicate, {
   ["autoinsert:backspace"] = function()
     local doc = core.active_view.doc
     local l, c = doc:get_selection()
@@ -70,6 +77,22 @@ command.add("core.docview", {
     end
     command.perform "doc:backspace"
   end,
+
+  ["autoinsert:delete-to-previous-word-start"] = function()
+    local doc = core.active_view.doc
+    local le, ce = translate.previous_word_start(doc, doc:get_selection())
+    while true do
+      local l, c = doc:get_selection()
+      if l == le and c == ce then
+        break
+      end
+      command.perform "autoinsert:backspace"
+    end
+  end,
 })
 
-keymap.add { ["backspace"] = "autoinsert:backspace" }
+keymap.add {
+  ["backspace"]            = "autoinsert:backspace",
+  ["ctrl+backspace"]       = "autoinsert:delete-to-previous-word-start",
+  ["ctrl+shift+backspace"] = "autoinsert:delete-to-previous-word-start",
+}
