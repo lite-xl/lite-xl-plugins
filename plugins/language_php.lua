@@ -2,6 +2,7 @@ local syntax = require "core.syntax"
 
 syntax.add {
   files = { "%.php$", "%.phtml" },
+  headers = "^<%?php",
   comment = "//",
   patterns = {
     { pattern = "//.-\n",                 type = "comment"  },
