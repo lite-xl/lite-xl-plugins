@@ -46,14 +46,15 @@ Plugin | Description
 [`language_meson`](plugins/language_meson.lua?raw=1) | Syntax for the [Meson](https://mesonbuild.com) build system language
 [`language_odin`](plugins/language_odin.lua?raw=1) | Syntax for the [Odin](https://github.com/odin-lang/Odin) programming language
 [`language_php`](plugins/language_php.lua?raw=1) | Syntax for the [PHP](https://php.net) programming language
+[`language_pico8`](plugins/language_pico8.lua?raw=1) | Syntax for [Pico-8](https://www.lexaloffle.com/pico-8.php) cartridge files
 [`language_psql`](plugins/language_psql.lua?raw=1) | Syntax for the postgresql database access language
 [`language_rust`](plugins/language_rust.lua?raw=1) | Syntax for the [Rust](https://rust-lang.org/) programming language
 [`language_sh`](plugins/language_sh.lua?raw=1) | Syntax for shell scripting language
 [`language_tex`](plugins/language_tex.lua?raw=1) | Syntax for the [LaTeX](https://www.latex-project.org/) typesetting language
 [`language_wren`](plugins/language_wren.lua?raw=1) | Syntax for the [Wren](http://wren.io/) programming language
 [`lfautoinsert`](plugins/lfautoinsert.lua?raw=1) | Automatically inserts indentation and closing bracket/text after newline
-[`lineguide`](plugins/lineguide.lua?raw=1) | Displays a line-guide at the line limit offset *([screenshot](https://user-images.githubusercontent.com/3920290/81476159-2cf70000-9208-11ea-928b-9dae3884c477.png))*
 [`linecopypaste`](plugins/linecopypaste.lua?raw=1) | Copy, cut and paste the current line when nothing is selected
+[`lineguide`](plugins/lineguide.lua?raw=1) | Displays a line-guide at the line limit offset *([screenshot](https://user-images.githubusercontent.com/3920290/81476159-2cf70000-9208-11ea-928b-9dae3884c477.png))*
 [`linter`](https://github.com/drmargarido/linters)* | Linters for multiple languages
 [`macmodkeys`](plugins/macmodkeys.lua?raw=1) | Remaps mac modkeys `command/option` to `ctrl/alt`
 [`markers`](plugins/markers.lua?raw=1) | Add markers to docs and jump between them quickly *([screenshot](https://user-images.githubusercontent.com/3920290/82252149-5faaa200-9946-11ea-9199-bea2efb7ee23.png))*
