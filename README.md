@@ -33,7 +33,6 @@ Plugin | Description
 [`language_batch`](plugins/language_batch.lua?raw=1) | Syntax for Windows [Batch Files](https://en.wikipedia.org/wiki/Batch_file)
 [`language_cpp`](plugins/language_cpp.lua?raw=1) | Syntax for the [C++](https://isocpp.org/) programming language
 [`language_csharp`](plugins/language_csharp.lua?raw=1) | Syntax for the [C#](http://csharp.net) programming language
-[`language_java`](plugins/language_java.lua?raw=1) | Syntax for the [Java](https://en.wikipedia.org/wiki/Java_(programming_language)) programming language
 [`language_d`](plugins/language_d.lua?raw=1) | Syntax for the [D](https://dlang.org/) programming language
 [`language_fe`](plugins/language_fe.lua?raw=1) | Syntax for the [fe](https://github.com/rxi/fe) programming language
 [`language_fennel`](plugins/language_fennel.lua?raw=1) | Syntax for the [fennel](https://fennel-lang.org) programming language
@@ -42,6 +41,7 @@ Plugin | Description
 [`language_go`](plugins/language_go.lua?raw=1) | Syntax for the [Go](https://golang.org/) programming language
 [`language_hlsl`](plugins/language_hlsl.lua?raw=1) | Syntax for the [HLSL](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl) programming language
 [`language_hs`](plugins/language_hs.lua?raw=1) | Syntax for the [Haskell](https://www.haskell.org/) programming language
+[`language_java`](plugins/language_java.lua?raw=1) | Syntax for the [Java](https://en.wikipedia.org/wiki/Java_(programming_language)) programming language
 [`language_jiyu`](plugins/language_jiyu.lua?raw=1) | Syntax for the [jiyu](https://github.com/machinamentum/jiyu) programming language
 [`language_make`](plugins/language_make.lua?raw=1) | Syntax for the Make build system language
 [`language_meson`](plugins/language_meson.lua?raw=1) | Syntax for the [Meson](https://mesonbuild.com) build system language
