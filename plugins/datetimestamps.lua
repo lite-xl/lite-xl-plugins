@@ -26,8 +26,8 @@ local function timestamp()
 end
 
 command.add("core.docview", {
-  ["datetimestamps:datestamp"] = datestamp,
-  ["datetimestamps:timestamp"] = timestamp,
-  ["datetimestamps:datetimestamp"] = datetimestamp
+  ["datetimestamps:insert-datestamp"] = datestamp,
+  ["datetimestamps:insert-timestamp"] = timestamp,
+  ["datetimestamps:insert-datetimestamp"] = datetimestamp
 })
 
