@@ -32,6 +32,7 @@ Plugin | Description
 [`indentguide`](plugins/indentguide.lua?raw=1) | Adds indent guides *([screenshot](https://user-images.githubusercontent.com/3920290/79640716-f9860000-818a-11ea-9c3b-26d10dd0e0c0.png))*
 [`language_angelscript`](plugins/language_angelscript.lua?raw=1) | Syntax for the [Angelscript](https://www.angelcode.com/angelscript/) programming language
 [`language_batch`](plugins/language_batch.lua?raw=1) | Syntax for Windows [Batch Files](https://en.wikipedia.org/wiki/Batch_file)
+[`language_cmake`](plugins/language_cmake.lua?raw=1) | Syntax for the CMake build system language
 [`language_cpp`](plugins/language_cpp.lua?raw=1) | Syntax for the [C++](https://isocpp.org/) programming language
 [`language_csharp`](plugins/language_csharp.lua?raw=1) | Syntax for the [C#](http://csharp.net) programming language
 [`language_d`](plugins/language_d.lua?raw=1) | Syntax for the [D](https://dlang.org/) programming language
