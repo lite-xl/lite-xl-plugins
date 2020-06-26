@@ -31,8 +31,13 @@ end -- isInSelection
 local on_mouse_moved = DocView.on_mouse_moved
 function DocView:on_mouse_moved(x, y, ...)
 
+    local sCursor = nil
+
     -- make sure we only act if previously on_mouse_pressed was in selection
     if self.bClickedIntoSelection then
+
+        -- show that we are dragging something
+        sCursor = 'hand'
 
         -- check for modifier to duplicate
         -- (may want to set a flag as this only needs to be done once)
@@ -42,8 +47,9 @@ function DocView:on_mouse_moved(x, y, ...)
             -- as some editors do, only when dropped. I do like it going
             -- instantly as that reduces the travel-distance.
             self.doc:delete_to(0)
-            --self.cursor = 'arrowWithPlus'
+            --sCursor = 'arrowWithPlus' -- 'handWithPlus'
         end
+
         -- calculate line and column for current mouse position
         local iLine, iCol = self:resolve_screen_position(x, y)
         -- move text cursor
@@ -54,7 +60,9 @@ function DocView:on_mouse_moved(x, y, ...)
     end -- if previously clicked into selection
 
     -- hand off to 'old' on_mouse_moved()
-    return on_mouse_moved(self, x, y, ...)
+    on_mouse_moved(self, x, y, ...)
+    -- override cursor as needed
+    if sCursor then self.cursor = sCursor end
 
 end -- DocView:on_mouse_moved
 
