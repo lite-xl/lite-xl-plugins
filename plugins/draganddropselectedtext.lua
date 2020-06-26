@@ -64,7 +64,8 @@ function DocView:on_mouse_pressed(button, x, y, clicks)
 
     -- no need to proceed if not left button or has no selection
     if ('left' ~= button)
-      or not self.doc:has_selection() then
+      or (not self.doc:has_selection())
+      or (1 < clicks) then
         return on_mouse_pressed(self, button, x, y, clicks)
     end
     -- convert pixel coordinates to line and column coordinates
