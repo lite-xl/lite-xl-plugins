@@ -1,15 +1,19 @@
 local config = require "core.config"
 local style = require "core.style"
 local DocView = require "core.docview"
+local command = require "core.command"
 
 -- originally written by luveti
 
 config.whitespace_map = { [" "] = "·", ["\t"] = "»" }
 
+local visible = false
+
 local draw_line_text = DocView.draw_line_text
 
 function DocView:draw_line_text(idx, x, y)
   draw_line_text(self, idx, x, y)
+  if not visible then return end
 
   local text = self.doc.lines[idx]
   local tx, ty = x, y + self:get_line_text_y_offset()
@@ -27,3 +31,8 @@ function DocView:draw_line_text(idx, x, y)
   end
 end
 
+command.add("core.docview", {
+  ["drawwhitespace:toggle"] = function() visible = not visible end,
+  ["drawwhitespace:no"]     = function() visible = false       end,
+  ["drawwhitespace:yes"]    = function() visible = true        end,
+})
