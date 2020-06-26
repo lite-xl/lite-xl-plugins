@@ -32,7 +32,7 @@ function DocView:draw_line_text(idx, x, y)
 end
 
 command.add("core.docview", {
-  ["drawwhitespace:toggle"] = function() visible = not visible end,
-  ["drawwhitespace:no"]     = function() visible = false       end,
-  ["drawwhitespace:yes"]    = function() visible = true        end,
+  ["drawwhitespace:toggle"]  = function() visible = not visible end,
+  ["drawwhitespace:disable"] = function() visible = false       end,
+  ["drawwhitespace:enable"]  = function() visible = true        end,
 })
