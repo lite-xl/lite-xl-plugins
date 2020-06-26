@@ -20,6 +20,7 @@ Plugin | Description
 [`copyfilelocation`](plugins/copyfilelocation.lua?raw=1) | Copy file location to clipboard
 [`datetimestamps`](plugins/datetimestamps.lua?raw=1) | Insert date-, time- and date-time-stamps
 [`detectindent`](plugins/detectindent.lua?raw=1) | Automatically detects and uses the indentation size and tab type of a loaded file
+[`draganddropselectedtext`](plugins/draganddropselectedtext.lua?raw=1) | Provides basic drag and drop of selected text (in same document)
 [`drawwhitespace`](plugins/drawwhitespace.lua?raw=1) | Draws tabs and spaces *([screenshot](https://user-images.githubusercontent.com/3920290/80573013-22ae5800-89f7-11ea-9895-6362a1c0abc7.png))*
 [`eval`](plugins/eval.lua?raw=1) | Replaces selected Lua code with its evaluated result
 [`exec`](plugins/exec.lua?raw=1) | Runs selected text through shell command and replaces with result
