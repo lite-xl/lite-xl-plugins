@@ -7,7 +7,7 @@ local command = require "core.command"
 
 config.whitespace_map = { [" "] = "·", ["\t"] = "»" }
 
-local visible = false
+local visible = true
 
 local draw_line_text = DocView.draw_line_text
 
