@@ -1,3 +1,4 @@
+local common = require "core.common"
 local config = require "core.config"
 local style = require "core.style"
 local DocView = require "core.docview"
@@ -20,8 +21,7 @@ function DocView:draw_line_text(idx, x, y)
   local color = style.whitespace or style.syntax.comment
   local map = config.whitespace_map
 
-  for i = 1, #text do
-    local chr = text:sub(i, i)
+  for chr in common.utf8_chars(text) do
     local rep = map[chr]
     if rep then
       renderer.draw_text(font, rep, tx, ty, color)
