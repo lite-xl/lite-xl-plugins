@@ -31,7 +31,7 @@ function DocView:draw_line_text(idx, x, y)
 end
 
 command.add("core.docview", {
-  ["drawwhitespace:toggle"] = function() config.draw_whitespace = not config.draw_whitespace end,
-  ["drawwhitespace:no"]     = function() config.draw_whitespace = false                      end,
-  ["drawwhitespace:yes"]    = function() config.draw_whitespace = true                       end,
+  ["drawwhitespace:toggle"]  = function() config.draw_whitespace = not config.draw_whitespace end,
+  ["drawwhitespace:disable"] = function() config.draw_whitespace = false                      end,
+  ["drawwhitespace:enable"]  = function() config.draw_whitespace = true                       end,
 })
