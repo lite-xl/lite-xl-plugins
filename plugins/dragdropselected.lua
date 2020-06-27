@@ -1,7 +1,7 @@
 --[[
-    draganddropselectedtext.lua
+    dragdropselected.lua
     provides basic drag and drop of selected text (in same document)
-    version: 20200626_013631
+    version: 20200627_133351
     originally by SwissalpS
 
     TODO: use OS drag and drop events
