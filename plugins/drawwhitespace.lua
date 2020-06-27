@@ -12,8 +12,6 @@ local draw_line_text = DocView.draw_line_text
 
 function DocView:draw_line_text(idx, x, y)
   draw_line_text(self, idx, x, y)
-
-  --if not visible then return end
   if not config.draw_whitespace then return end
 
   local text = self.doc.lines[idx]
