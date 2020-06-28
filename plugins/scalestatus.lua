@@ -6,11 +6,13 @@
 
     Depends on plugin scale.lua version >= 20200628_154010
 --]]
-local core = require "core"
 local scale = require "plugins.scale"
-core.log_quiet(type(scale.get_scale))
 -- make sure plugin is installed and has get_scale field
-if not scale.get_scale then return false end
+if not scale.get_scale then
+    local core = require "core"
+    core.error("Plugin 'scale' needs to be updated, scalestatus inactive.")
+    return false
+end
 
 local config = require "core.config"
 local StatusView = require "core.statusview"
