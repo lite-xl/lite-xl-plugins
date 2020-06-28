@@ -1,3 +1,9 @@
+--[[
+    scale.lua
+    provides support for dynamically adjusting the scale of the code font / UI
+    version: 20200628_154010
+    originally by 6r1d
+--]]
 local core = require "core"
 local common = require "core.common"
 local command = require "core.command"
