@@ -67,6 +67,7 @@ Plugin | Description
 [`openfilelocation`](plugins/openfilelocation.lua?raw=1) | Opens the parent directory of the current file in the file manager
 [`openselected`](plugins/openselected.lua?raw=1) | Opens the selected filename or url
 [`scale`](plugins/scale.lua?raw=1) | Provides support for dynamically adjusting the scale of the code font / UI (`ctrl+-`, `ctrl+=`)
+[`scalestatus`](plugins/scalestatus.lua?raw=1) | Displays current scale (zoom) in status view (depends on scale plugin)
 [`selectionhighlight`](plugins/selectionhighlight.lua?raw=1) | Highlights regions of code that match the current selection *([screenshot](https://user-images.githubusercontent.com/3920290/80710883-5f597c80-8ae7-11ea-97f0-76dfacc08439.png))*
 [`sort`](plugins/sort.lua?raw=1) | Sorts selected lines alphabetically
 [`spellcheck`](plugins/spellcheck.lua?raw=1) | Underlines misspelt words *([screenshot](https://user-images.githubusercontent.com/3920290/79923973-9caa7400-842e-11ea-85d4-7a196a91ca50.png))* *— note: on Windows a [`words.txt`](https://github.com/dwyl/english-words/blob/master/words.txt) dictionary file must be placed beside the exe*
