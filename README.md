@@ -4,7 +4,7 @@ Plugins for the [lite text editor](https://github.com/rxi/lite)
 alphabetical order. If your plugin is large (or you'd otherwise prefer it to
 have its own repo), the table can simply be updated to add a link to the repo;
 otherwise the plugin file itself can be submitted. If a plugin's link resolves
-to a something other than a raw file it should be marked with an asterisk.*
+to something other than a raw file it should be marked with an asterisk.*
 
 ---
 
