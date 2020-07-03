@@ -22,6 +22,7 @@ Plugin | Description
 [`detectindent`](plugins/detectindent.lua?raw=1) | Automatically detects and uses the indentation size and tab type of a loaded file
 [`dragdropselected`](plugins/dragdropselected.lua?raw=1) | Provides basic drag and drop of selected text (in same document)
 [`drawwhitespace`](plugins/drawwhitespace.lua?raw=1) | Draws tabs and spaces *([screenshot](https://user-images.githubusercontent.com/3920290/80573013-22ae5800-89f7-11ea-9895-6362a1c0abc7.png))*
+[`eofnewline`](https://github.com/bokunodev/lite_modules/blob/master/plugins/eofnewline.lua?raw=1) | Make sure the file ends with one blank line.
 [`eval`](plugins/eval.lua?raw=1) | Replaces selected Lua code with its evaluated result
 [`exec`](plugins/exec.lua?raw=1) | Runs selected text through shell command and replaces with result
 [`ghmarkdown`](plugins/ghmarkdown.lua?raw=1) | Opens a preview of the current markdown file in a browser window *([screenshot](https://user-images.githubusercontent.com/3920290/82754898-f7394600-9dc7-11ea-8278-2305363ed372.png))*
@@ -77,4 +78,3 @@ Plugin | Description
 [`togglesnakecamel`](plugins/togglesnakecamel.lua?raw=1) | Toggles symbols between `snake_case` and `camelCase`
 [`unboundedscroll`](plugins/unboundedscroll.lua?raw=1) | Allows scrolling outside the bounds of a document
 [`workspace`](plugins/workspace.lua?raw=1) | Retains project's layout and open documents between sessions
-
