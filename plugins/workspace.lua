@@ -126,8 +126,10 @@ end
 local function save_workspace()
   local root = get_unlocked_root(core.root_view.root_node)
   local fp = io.open(workspace_filename, "w")
-  fp:write("return ", serialize(save_node(root)), "\n")
-  fp:close()
+  if fp then
+    fp:write("return ", serialize(save_node(root)), "\n")
+    fp:close()
+  end
 end
 
 
