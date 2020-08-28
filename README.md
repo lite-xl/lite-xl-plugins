@@ -60,6 +60,7 @@ Plugin | Description
 [`language_sh`](plugins/language_sh.lua?raw=1) | Syntax for shell scripting language
 [`language_tex`](plugins/language_tex.lua?raw=1) | Syntax for the [LaTeX](https://www.latex-project.org/) typesetting language
 [`language_wren`](plugins/language_wren.lua?raw=1) | Syntax for the [Wren](http://wren.io/) programming language
+[`lastproject`](plugins/lastproject.lua?raw=1) | Loads the last loaded project if lite is launched without any arguments
 [`lfautoinsert`](plugins/lfautoinsert.lua?raw=1) | Automatically inserts indentation and closing bracket/text after newline
 [`linecopypaste`](plugins/linecopypaste.lua?raw=1) | Copy, cut and paste the current line when nothing is selected
 [`lineguide`](plugins/lineguide.lua?raw=1) | Displays a line-guide at the line limit offset *([screenshot](https://user-images.githubusercontent.com/3920290/81476159-2cf70000-9208-11ea-928b-9dae3884c477.png))*
