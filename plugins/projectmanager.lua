@@ -125,9 +125,4 @@ command.add(nil, {
   ["project-manager:rename-project"] = project_manager.rename_project,
   })
 
-keymap.add {
-  ["ctrl+p"]       = "project-manager:open-project",
-  ["ctrl+shift+p"] = "project-manager:switch-project",
-}
-
 return project_manager
