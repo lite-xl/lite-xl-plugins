@@ -1,9 +1,3 @@
---[[
-    scale.lua
-    provides support for dynamically adjusting the scale of the code font / UI
-    version: 20200628_154010
-    originally by 6r1d
---]]
 local core = require "core"
 local common = require "core.common"
 local command = require "core.command"
@@ -48,6 +42,15 @@ local function get_scale() return current_scale end
 local function set_scale(scale)
   scale = common.clamp(scale, 0.2, 6)
 
+  -- save scroll positions
+  local scrolls = {}
+  for _, view in ipairs(core.root_view.root_node:get_children()) do
+    local n = view:get_scrollable_size()
+    if n ~= math.huge then
+      scrolls[view] = view.scroll.y / (n - view.size.y)
+    end
+  end
+
   local s = scale / current_scale
   current_scale = scale
 
@@ -67,6 +70,12 @@ local function set_scale(scale)
   end
 
   style.code_font = scale_font(style.code_font, s)
+
+  -- restore scroll positions
+  for view, n in pairs(scrolls) do
+    view.scroll.y = n * (view:get_scrollable_size() - view.size.y)
+    view.scroll.to.y = view.scroll.y
+  end
 
   core.redraw = true
 end
