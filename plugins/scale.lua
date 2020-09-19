@@ -5,6 +5,7 @@ local config = require "core.config"
 local keymap = require "core.keymap"
 local style = require "core.style"
 local RootView = require "core.rootview"
+local CommandView = require "core.commandview"
 
 config.scale_mode = "code"
 config.scale_use_mousewheel = true
@@ -46,7 +47,7 @@ local function set_scale(scale)
   local scrolls = {}
   for _, view in ipairs(core.root_view.root_node:get_children()) do
     local n = view:get_scrollable_size()
-    if n ~= math.huge then
+    if n ~= math.huge and not view:is(CommandView) then
       scrolls[view] = view.scroll.y / (n - view.size.y)
     end
   end
