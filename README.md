@@ -55,6 +55,7 @@ Plugin | Description
 [`language_odin`](plugins/language_odin.lua?raw=1) | Syntax for the [Odin](https://github.com/odin-lang/Odin) programming language
 [`language_php`](plugins/language_php.lua?raw=1) | Syntax for the [PHP](https://php.net) programming language
 [`language_pico8`](plugins/language_pico8.lua?raw=1) | Syntax for [Pico-8](https://www.lexaloffle.com/pico-8.php) cartridge files
+[`language_powershell`](plugins/language_powershell.lua?raw=1) | Syntax for [PowerShell](https://docs.microsoft.com/en-us/powershell) scripting language
 [`language_psql`](plugins/language_psql.lua?raw=1) | Syntax for the postgresql database access language
 [`language_rust`](plugins/language_rust.lua?raw=1) | Syntax for the [Rust](https://rust-lang.org/) programming language
 [`language_sh`](plugins/language_sh.lua?raw=1) | Syntax for shell scripting language
