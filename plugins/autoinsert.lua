@@ -24,6 +24,14 @@ local function is_closer(chr)
   end
 end
 
+local function count_char(text, chr)
+  local count = 0
+  for _ in text:gmatch(chr) do
+    count = count + 1
+  end
+  return count
+end
+
 
 local on_text_input = DocView.on_text_input
 
@@ -49,6 +57,12 @@ function DocView:on_text_input(text)
   if text == chr and is_closer(chr) then
     self.doc:move_to(1)
     return
+  end
+
+  -- don't insert closing quote if we have a non-even number on this line
+  local line = self.doc:get_selection()
+  if text == mapping and count_char(self.doc.lines[line], text) % 2 == 1 then
+    return on_text_input(self, text)
   end
 
   -- auto insert closing bracket
