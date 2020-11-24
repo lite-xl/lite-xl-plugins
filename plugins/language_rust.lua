@@ -70,6 +70,7 @@ syntax.add {
     ["f64"]    = "keyword2",
     ["f128"]    = "keyword2",
     ["String"]        = "keyword2",
+    ["char"] = "keyword2",
     ["&str"]     = "keyword2",
     ["bool"]       = "keyword2",
     ["true"]       = "literal",
