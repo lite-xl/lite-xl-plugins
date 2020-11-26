@@ -61,6 +61,7 @@ syntax.add {
     ["i128"]      = "keyword2",
     ["i16"]      = "keyword2",
     ["i8"]       = "keyword2",
+    ["u8"] 	= "keyword2",
     ["u16"]       = "keyword2",
     ["u32"]     = "keyword2",
     ["u64"]     = "keyword2",
