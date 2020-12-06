@@ -14,8 +14,10 @@ end
 
 -- save current project path
 local fp = io.open(last_project_filename, "w")
-fp:write(system.absolute_path ".")
-fp:close()
+if nil ~= fp then
+    fp:write(system.absolute_path ".")
+    fp:close()
+end
 
 
 -- restart using last project path if we had no commandline arguments and could
@@ -24,3 +26,4 @@ if #ARGS == 1 and project_path then
     system.exec(string.format("%s %q", EXEFILE, project_path))
     core.quit(true)
 end
+
