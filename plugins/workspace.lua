@@ -152,10 +152,10 @@ function core.run(...)
   if #core.docs == 0 then
     core.try(load_workspace)
 
-    local exit = os.exit
-    function os.exit(...)
+    local original_on_quit = core.on_quit
+    function core.on_quit()
       save_workspace()
-      exit(...)
+      original_on_quit()
     end
   end
 
