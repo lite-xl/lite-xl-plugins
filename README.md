@@ -1,4 +1,4 @@
-Plugins for the [lite text editor](https://github.com/rxi/lite)
+Plugins for the [lite text editor](https://github.com/rxi/lite) adapted for [lite-xl](https://github.com/franko/lite-xl)
 
 *Note: if you make a pull request, the table should be updated and kept in
 alphabetical order. If your plugin is large (or you'd otherwise prefer it to
@@ -17,10 +17,10 @@ Plugin | Description
 [`bracketmatch`](plugins/bracketmatch.lua?raw=1) | Underlines matching pair for bracket under the caret *([screenshot](https://user-images.githubusercontent.com/3920290/80132745-0c863f00-8594-11ea-8875-c455c6fd7eae.png))*
 [`centerdoc`](plugins/centerdoc.lua?raw=1) | Centers document's content on the screen *([screenshot](https://user-images.githubusercontent.com/3920290/82127896-bf6e4500-97ae-11ea-97fc-ba9a552bc9a4.png))*
 [`colorpreview`](plugins/colorpreview.lua?raw=1) | Underlays color values (eg. `#ff00ff` or `rgb(255, 0, 255)`) with their resultant color. *([screenshot](https://user-images.githubusercontent.com/3920290/80743752-731bd780-8b15-11ea-97d3-847db927c5dc.png))*
-[`console`](https://github.com/rxi/console)* | A console for running external commands and capturing their output *([gif](https://user-images.githubusercontent.com/3920290/81343656-49325a00-90ad-11ea-8647-ff39d8f1d730.gif))*
+[`console (adapted for lite-xl)`](https://github.com/franko/console)* | A console for running external commands and capturing their output *([gif](https://user-images.githubusercontent.com/3920290/81343656-49325a00-90ad-11ea-8647-ff39d8f1d730.gif))*
 [`copyfilelocation`](plugins/copyfilelocation.lua?raw=1) | Copy file location to clipboard
 [`datetimestamps`](plugins/datetimestamps.lua?raw=1) | Insert date-, time- and date-time-stamps
-[`detectindent`](plugins/detectindent.lua?raw=1) | Automatically detects and uses the indentation size and tab type of a loaded file
+~~[`detectindent`](plugins/detectindent.lua?raw=1)~~ | Included with lite-xl ~~Automatically detects and uses the indentation size and tab type of a loaded file~~
 [`dragdropselected`](plugins/dragdropselected.lua?raw=1) | Provides basic drag and drop of selected text (in same document)
 [`drawwhitespace`](plugins/drawwhitespace.lua?raw=1) | Draws tabs and spaces *([screenshot](https://user-images.githubusercontent.com/3920290/80573013-22ae5800-89f7-11ea-9895-6362a1c0abc7.png))*
 [`eofnewline`](https://github.com/bokunodev/lite_modules/blob/master/plugins/eofnewline.lua?raw=1) | Make sure the file ends with one blank line.
@@ -32,8 +32,8 @@ Plugin | Description
 [`gofmt`](plugins/gofmt.lua?raw=1) | Auto-formats the current go file, adds the missing imports and the missing return cases
 [`hidelinenumbers`](plugins/hidelinenumbers.lua?raw=1) | Hides the line numbers on the left of documents *([screenshot](https://user-images.githubusercontent.com/3920290/81692043-b8b19c00-9455-11ea-8d74-ad99be4b9c5f.png))*
 [`hidestatus`](plugins/hidestatus.lua?raw=1) | Hides the status bar at the bottom of the window
-[`inanimate`](plugins/inanimate.lua?raw=1) | Disables all transition animations
-[`indentguide`](plugins/indentguide.lua?raw=1) | Adds indent guides *([screenshot](https://user-images.githubusercontent.com/3920290/79640716-f9860000-818a-11ea-9c3b-26d10dd0e0c0.png))*
+~~[`inanimate`]~~(plugins/inanimate.lua?raw=1) | Integrated in lite-xl with `config.transitions = false` ~~Disables all transition animations~~
+[`indentguide`](plugins/indentguide.lua?raw=1) | **Currently broken for lite-xl** Adds indent guides *([screenshot](https://user-images.githubusercontent.com/3920290/79640716-f9860000-818a-11ea-9c3b-26d10dd0e0c0.png))*
 [`language_angelscript`](plugins/language_angelscript.lua?raw=1) | Syntax for the [Angelscript](https://www.angelcode.com/angelscript/) programming language
 [`language_batch`](plugins/language_batch.lua?raw=1) | Syntax for Windows [Batch Files](https://en.wikipedia.org/wiki/Batch_file)
 [`language_cmake`](plugins/language_cmake.lua?raw=1) | Syntax for the CMake build system language
@@ -77,7 +77,7 @@ Plugin | Description
 [`motiontrail`](plugins/motiontrail.lua?raw=1) | Adds a motion-trail to the caret *([screenshot](https://user-images.githubusercontent.com/3920290/83256814-085ccb00-a1ab-11ea-9e35-e6633cbed1a9.gif))*
 [`openfilelocation`](plugins/openfilelocation.lua?raw=1) | Opens the parent directory of the current file in the file manager
 [`openselected`](plugins/openselected.lua?raw=1) | Opens the selected filename or url
-[`projectmanager`](plugins/projectmanager.lua?raw=1) | Save projects and load/reload them quickly
+~~[`projectmanager`]~~(plugins/projectmanager.lua?raw=1) | Superseded by lite-xl implementation ~~Save projects and load/reload them quickly~~
 [`rainbowparen`](plugins/rainbowparen.lua?raw=1) | Show nesting of parentheses with rainbow colours
 [`scale`](plugins/scale.lua?raw=1) | Provides support for dynamically adjusting the scale of the code font / UI (`ctrl+-`, `ctrl+=`)
 [`scalestatus`](plugins/scalestatus.lua?raw=1) | Displays current scale (zoom) in status view (depends on scale plugin)
@@ -90,4 +90,4 @@ Plugin | Description
 [`todotreeview`](https://github.com/drmargarido/TodoTreeView)* | Todo tree viewer for annotations in code like `TODO`, `BUG`, `FIX`, `IMPROVEMENT`
 [`togglesnakecamel`](plugins/togglesnakecamel.lua?raw=1) | Toggles symbols between `snake_case` and `camelCase`
 [`unboundedscroll`](plugins/unboundedscroll.lua?raw=1) | Allows scrolling outside the bounds of a document
-[`workspace`](plugins/workspace.lua?raw=1) | Retains project's layout and open documents between sessions
+~~[`workspace`]~~(plugins/workspace.lua?raw=1) | Integrated with lite-xl ~~Retains project's layout and open documents between sessions~~
