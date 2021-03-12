@@ -7,7 +7,9 @@ local draw = DocView.draw
 function DocView:draw(...)
   draw(self, ...)
 
-  local offset = self:get_font():get_width("n") * config.line_limit
+  local ns = ("n"):rep(config.line_limit)
+  local ss = self:get_font():subpixel_scale()
+  local offset = self:get_font():get_width_subpixel(ns) / ss
   local x = self:get_line_screen_position(1) + offset
   local y = self.position.y
   local w = math.ceil(SCALE * 1)
