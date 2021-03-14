@@ -1,10 +1,12 @@
-Plugins for the [lite text editor](https://github.com/rxi/lite) adapted for [lite-xl](https://github.com/franko/lite-xl)
+Plugins for [Lite XL](https://github.com/franko/lite-xl)
 
 *Note: if you make a pull request, the table should be updated and kept in
 alphabetical order. If your plugin is large (or you'd otherwise prefer it to
 have its own repo), the table can simply be updated to add a link to the repo;
 otherwise the plugin file itself can be submitted. If a plugin's link resolves
-to something other than a raw file it should be marked with an asterisk.*
+to something other than a raw file it should be marked with an asterisk.
+If a plugin has modifications specific to Lite XL or is otherwise incompatible
+with the official version of lite, format the name in italic.*
 
 ---
 
