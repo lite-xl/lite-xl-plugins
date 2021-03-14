@@ -13,10 +13,10 @@ config.scale_use_mousewheel = true
 local font_cache = setmetatable({}, { __mode = "k" })
 
 -- the following should be kept in sync with core.style's default font settings
-font_cache[style.font]      = { EXEDIR .. "/data/fonts/font.ttf",      14   * SCALE }
-font_cache[style.big_font]  = { EXEDIR .. "/data/fonts/font.ttf",      34   * SCALE }
-font_cache[style.icon_font] = { EXEDIR .. "/data/fonts/icons.ttf",     14   * SCALE }
-font_cache[style.code_font] = { EXEDIR .. "/data/fonts/monospace.ttf", 13.5 * SCALE }
+font_cache[style.font]      = { DATADIR .. "/fonts/font.ttf",      14   * SCALE }
+font_cache[style.big_font]  = { DATADIR .. "/fonts/font.ttf",      34   * SCALE }
+font_cache[style.icon_font] = { DATADIR .. "/fonts/icons.ttf",     14   * SCALE }
+font_cache[style.code_font] = { DATADIR .. "/fonts/monospace.ttf", 13.5 * SCALE }
 
 
 local load_font = renderer.font.load
