@@ -25,7 +25,7 @@ Plugin | Description
 [`datetimestamps`](plugins/datetimestamps.lua?raw=1) | Insert date-, time- and date-time-stamps
 ~~[`detectindent`](plugins/detectindent.lua?raw=1)~~ | Included with lite-xl ~~Automatically detects and uses the indentation size and tab type of a loaded file~~
 [`dragdropselected`](plugins/dragdropselected.lua?raw=1) | Provides basic drag and drop of selected text (in same document)
-[`drawwhitespace`](plugins/drawwhitespace.lua?raw=1) | Draws tabs and spaces *([screenshot](https://user-images.githubusercontent.com/3920290/80573013-22ae5800-89f7-11ea-9895-6362a1c0abc7.png))*
+*[`drawwhitespace`](plugins/drawwhitespace.lua?raw=1)* | Draws tabs and spaces *([screenshot](https://user-images.githubusercontent.com/3920290/80573013-22ae5800-89f7-11ea-9895-6362a1c0abc7.png))*
 [`eofnewline`](https://github.com/bokunodev/lite_modules/blob/master/plugins/eofnewline.lua?raw=1) | Make sure the file ends with one blank line.
 [`eval`](plugins/eval.lua?raw=1) | Replaces selected Lua code with its evaluated result
 [`exec`](plugins/exec.lua?raw=1) | Runs selected text through shell command and replaces with result

@@ -16,17 +16,18 @@ function DocView:draw_line_text(idx, x, y)
   if not config.draw_whitespace then return end
 
   local text = self.doc.lines[idx]
-  local tx, ty = x, y + self:get_line_text_y_offset()
   local font = self:get_font()
+  local ss = font:subpixel_scale()
+  local tx, ty = ss * x, y + self:get_line_text_y_offset()
   local color = style.whitespace or style.syntax.comment
   local map = config.whitespace_map
 
   for chr in common.utf8_chars(text) do
     local rep = map[chr]
     if rep then
-      renderer.draw_text(font, rep, tx, ty, color)
+      renderer.draw_text_subpixel(font, rep, tx, ty, color)
     end
-    tx = tx + font:get_width(chr)
+    tx = tx + font:get_width_subpixel(chr)
   end
 end
 
