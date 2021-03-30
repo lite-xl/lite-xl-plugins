@@ -43,6 +43,7 @@ Plugin | Description
 [`language_cpp`](plugins/language_cpp.lua?raw=1) | Syntax for the [C++](https://isocpp.org/) programming language
 [`language_csharp`](plugins/language_csharp.lua?raw=1) | Syntax for the [C#](http://csharp.net) programming language
 [`language_d`](plugins/language_d.lua?raw=1) | Syntax for the [D](https://dlang.org/) programming language
+[`language_dart`](plugins/language_dart.lua?raw=1) | Syntax for the [Dart](https://dart.dev/) programming languiage
 [`language_elixir`](plugins/language_elixir.lua?raw=1) | Syntax for the [Elixir](https://elixir-lang.org) programming language
 [`language_elm`](plugins/language_elm.lua?raw=1) | Syntax for the [Elm](https://elm-lang.org) programming language
 [`language_fe`](plugins/language_fe.lua?raw=1) | Syntax for the [fe](https://github.com/rxi/fe) programming language
@@ -57,6 +58,7 @@ Plugin | Description
 [`language_ksy`](https://raw.githubusercontent.com/whiteh0le/lite-plugins/main/plugins/language_ksy.lua?raw=1) | Syntax for [Kaitai](http://kaitai.io/) struct files
 [`language_make`](plugins/language_make.lua?raw=1) | Syntax for the Make build system language
 [`language_meson`](plugins/language_meson.lua?raw=1) | Syntax for the [Meson](https://mesonbuild.com) build system language
+[`language_moon`](plugins/language_moon.lua?raw=1) | Syntax for the [MoonScript](https://moonscript.org) scripting language
 [`language_nim`](plugins/language_nim.lua?raw=1) | Syntax for the [Nim](https://nim-lang.org) programming language
 [`language_objc`](plugins/language_objc.lua?raw=1) | Syntax for the [Objective C](https://en.wikipedia.org/wiki/Objective-C) programming language
 [`language_odin`](plugins/language_odin.lua?raw=1) | Syntax for the [Odin](https://github.com/odin-lang/Odin) programming language
