@@ -1,3 +1,4 @@
+-- lite-xl 1.16
 pcall(require, "plugins.language_c")
 
 local syntax = require "core.syntax"
