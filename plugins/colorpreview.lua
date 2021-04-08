@@ -1,3 +1,4 @@
+-- lite-xl 1.16
 local common = require "core.common"
 local DocView = require "core.docview"
 
