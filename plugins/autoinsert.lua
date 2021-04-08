@@ -1,3 +1,4 @@
+-- lite-xl 1.16
 local core = require "core"
 local translate = require "core.doc.translate"
 local config = require "core.config"

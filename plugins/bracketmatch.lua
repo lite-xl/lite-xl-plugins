@@ -1,3 +1,4 @@
+-- lite-xl 1.16
 local core = require "core"
 local style = require "core.style"
 local command = require "core.command"
