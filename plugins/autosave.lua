@@ -13,18 +13,15 @@ config.autosave_timeout = 1
 
 
 local function loop_for_save()
-  if not looping then
-    looping = true
     while looping do
       if os.difftime(os.time(), last_keypress) >= config.autosave_timeout then
         command.perform "doc:save"
         -- stop loop
         looping = false
       end
-      -- dividing by five is completely arbitrary but it seemed to work well so idc
+      -- wait the timeout. may cause timeout to be slightly imprescise
       coroutine.yield(config.autosave_timeout) 
     end
-  end
 end
 
 
@@ -32,7 +29,10 @@ local function updatepress()
   -- set last keypress time to now
   last_keypress = os.time()
   -- put loop in coroutine so it doesn't lag out this script
-  core.add_thread(loop_for_save)
+  if not looping then
+    looping = true
+    core.add_thread(loop_for_save)
+  end
 end
 
 
