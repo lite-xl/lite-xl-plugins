@@ -38,7 +38,7 @@ end
 
 function Doc:on_text_change(type)
   -- check if file is saved
-  if core.active_view:get_name() ~= "unsaved*" then
+  if self.filename then
     updatepress()
   end
   return on_text_change(type)
