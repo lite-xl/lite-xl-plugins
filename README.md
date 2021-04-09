@@ -13,7 +13,7 @@ with the official version of lite, format the name in italic.*
 Plugin | Description
 -------|-----------------------------------------
 [`autoinsert`](plugins/autoinsert.lua?raw=1) | Automatically inserts closing brackets and quotes
-*[`autosave`](plugins/autosave.lua?raw=1)* | Automatically saves files when they are changed 
+*[`autosave`](plugins/autosave.lua?raw=1)* | Automatically saves files when they are changed
 [`autowrap`](plugins/autowrap.lua?raw=1) | Automatically hardwraps lines when typing
 *[`bigclock`](plugins/bigclock.lua?raw=1)* | Shows the current time and date in a view with large text *([screenshot](https://user-images.githubusercontent.com/3920290/82752891-3318df00-9db9-11ea-803f-261d80d5cf53.png))*
 [`black`](https://git.sr.ht/~tmpod/black-lite)* | Integrates the [black](https://github.com/psf/black) Python formatter with lite
@@ -73,7 +73,7 @@ Plugin | Description
 [`language_teal`](plugins/language_teal.lua?raw=1) | Syntax for the [Teal](https://github.com/teal-language/tl) programming language, a typed dialect of Lua.
 [`language_tex`](plugins/language_tex.lua?raw=1) | Syntax for the [LaTeX](https://www.latex-project.org/) typesetting language
 [`language_wren`](plugins/language_wren.lua?raw=1) | Syntax for the [Wren](http://wren.io/) programming language
-[`lastproject`](plugins/lastproject.lua?raw=1) | Loads the last loaded project if lite is launched without any arguments
+~~[`lastproject`](plugins/lastproject.lua?raw=1)~~ | Integrated with lite-xl ~~Loads the last loaded project if lite is launched without any arguments~~
 [`lfautoinsert`](plugins/lfautoinsert.lua?raw=1) | Automatically inserts indentation and closing bracket/text after newline
 [`linecopypaste`](plugins/linecopypaste.lua?raw=1) | Copy, cut and paste the current line when nothing is selected
 [*`lineguide`*](plugins/lineguide.lua?raw=1) | Displays a line-guide at the line limit offset *([screenshot](https://user-images.githubusercontent.com/3920290/81476159-2cf70000-9208-11ea-928b-9dae3884c477.png))*
