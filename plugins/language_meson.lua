@@ -5,7 +5,6 @@ syntax.add {
   comment = "#",
   patterns = {
     { pattern = { "#", "\n" },            type = "comment"  },
-    { pattern = { '"', '"', '\\' },       type = "string"   },
     { pattern = { "'", "'", '\\' },       type = "string"   },
     { pattern = { "'''", "'''" },         type = "string"   },
     { pattern = "0x[%da-fA-F]+",          type = "number"   },
