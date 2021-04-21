@@ -96,6 +96,7 @@ Plugin | Description
 [`tabnumbers`](plugins/tabnumbers.lua?raw=1) | Displays tab numbers from 1–9 next to their names *([screenshot](https://user-images.githubusercontent.com/16415678/101285362-007a8500-37e5-11eb-869b-c10eb9d9d902.png))
 [`theme16`](https://github.com/monolifed/theme16)* | Theme manager with base16 themes
 [`themescheduler`](https://github.com/BenStigsen/lite-config/blob/main/plugins/themescheduler.lua?raw=1) | Schedule themes to be used at certain times
+[`themeselect`](plugins/themeselect.lua?raw=1) | Select a theme based on filename of active document
 [`titleize`](plugins/titleize.lua?raw=1) | Titleizes selected string (`hello world` => `Hello World`)
 [`todotreeview`](https://github.com/drmargarido/TodoTreeView)* | Todo tree viewer for annotations in code like `TODO`, `BUG`, `FIX`, `IMPROVEMENT`
 [`togglesnakecamel`](plugins/togglesnakecamel.lua?raw=1) | Toggles symbols between `snake_case` and `camelCase`
