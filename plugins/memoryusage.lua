@@ -1,3 +1,4 @@
+-- lite-xl 1.16
 -- original implementation by AqilCont
 local style = require "core.style"
 local StatusView = require "core.statusview"
