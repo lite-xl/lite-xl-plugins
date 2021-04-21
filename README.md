@@ -13,19 +13,20 @@ with the official version of lite, format the name in italic.*
 Plugin | Description
 -------|-----------------------------------------
 [`autoinsert`](plugins/autoinsert.lua?raw=1) | Automatically inserts closing brackets and quotes
+*[`autosave`](plugins/autosave.lua?raw=1)* | Automatically saves files when they are changed
 [`autowrap`](plugins/autowrap.lua?raw=1) | Automatically hardwraps lines when typing
-[`bigclock`](plugins/bigclock.lua?raw=1) | Shows the current time and date in a view with large text *([screenshot](https://user-images.githubusercontent.com/3920290/82752891-3318df00-9db9-11ea-803f-261d80d5cf53.png))*
+*[`bigclock`](plugins/bigclock.lua?raw=1)* | Shows the current time and date in a view with large text *([screenshot](https://user-images.githubusercontent.com/3920290/82752891-3318df00-9db9-11ea-803f-261d80d5cf53.png))*
 [`black`](https://git.sr.ht/~tmpod/black-lite)* | Integrates the [black](https://github.com/psf/black) Python formatter with lite
 [`bracketmatch`](plugins/bracketmatch.lua?raw=1) | Underlines matching pair for bracket under the caret *([screenshot](https://user-images.githubusercontent.com/3920290/80132745-0c863f00-8594-11ea-8875-c455c6fd7eae.png))*
 [`centerdoc`](plugins/centerdoc.lua?raw=1) | Centers document's content on the screen *([screenshot](https://user-images.githubusercontent.com/3920290/82127896-bf6e4500-97ae-11ea-97fc-ba9a552bc9a4.png))*
-[`closeconfirmx`](plugins/closeconfirmx.lua?raw=1) | Replaces a system close confirmation dialog with a command view, like for individual files *([screenshot](https://user-images.githubusercontent.com/1689801/107596774-afa76280-6c53-11eb-80ab-22e73058c097.png))*
+~~[`closeconfirmx`](plugins/closeconfirmx.lua?raw=1)~~ | Replaced by NagView dialog ~~Replaces a system close confirmation dialog with a command view, like for individual files *([screenshot](https://user-images.githubusercontent.com/1689801/107596774-afa76280-6c53-11eb-80ab-22e73058c097.png))*~~
 [`colorpreview`](plugins/colorpreview.lua?raw=1) | Underlays color values (eg. `#ff00ff` or `rgb(255, 0, 255)`) with their resultant color. *([screenshot](https://user-images.githubusercontent.com/3920290/80743752-731bd780-8b15-11ea-97d3-847db927c5dc.png))*
 *[`console`](https://github.com/franko/console)* | A console for running external commands and capturing their output *([gif](https://user-images.githubusercontent.com/3920290/81343656-49325a00-90ad-11ea-8647-ff39d8f1d730.gif))*
-[`copyfilelocation`](plugins/copyfilelocation.lua?raw=1) | Copy file location to clipboard
+*[`copyfilelocation`](plugins/copyfilelocation.lua?raw=1)* | Copy file location to clipboard
 [`datetimestamps`](plugins/datetimestamps.lua?raw=1) | Insert date-, time- and date-time-stamps
 ~~[`detectindent`](plugins/detectindent.lua?raw=1)~~ | Included with lite-xl ~~Automatically detects and uses the indentation size and tab type of a loaded file~~
 [`dragdropselected`](plugins/dragdropselected.lua?raw=1) | Provides basic drag and drop of selected text (in same document)
-*[`drawwhitespace`](plugins/drawwhitespace.lua?raw=1)* | Draws tabs and spaces *([screenshot](https://user-images.githubusercontent.com/3920290/80573013-22ae5800-89f7-11ea-9895-6362a1c0abc7.png))*
+~~*[`drawwhitespace`](plugins/drawwhitespace.lua?raw=1)*~~ | Integrated with lite-xl reducing CPU usage ~~Draws tabs and spaces *([screenshot](https://user-images.githubusercontent.com/3920290/80573013-22ae5800-89f7-11ea-9895-6362a1c0abc7.png))*~~
 [`eofnewline`](https://github.com/bokunodev/lite_modules/blob/master/plugins/eofnewline.lua?raw=1) | Make sure the file ends with one blank line.
 [`eval`](plugins/eval.lua?raw=1) | Replaces selected Lua code with its evaluated result
 [`exec`](plugins/exec.lua?raw=1) | Runs selected text through shell command and replaces with result
@@ -72,7 +73,7 @@ Plugin | Description
 [`language_teal`](plugins/language_teal.lua?raw=1) | Syntax for the [Teal](https://github.com/teal-language/tl) programming language, a typed dialect of Lua.
 [`language_tex`](plugins/language_tex.lua?raw=1) | Syntax for the [LaTeX](https://www.latex-project.org/) typesetting language
 [`language_wren`](plugins/language_wren.lua?raw=1) | Syntax for the [Wren](http://wren.io/) programming language
-[`lastproject`](plugins/lastproject.lua?raw=1) | Loads the last loaded project if lite is launched without any arguments
+~~[`lastproject`](plugins/lastproject.lua?raw=1)~~ | Integrated with lite-xl ~~Loads the last loaded project if lite is launched without any arguments~~
 [`lfautoinsert`](plugins/lfautoinsert.lua?raw=1) | Automatically inserts indentation and closing bracket/text after newline
 [`linecopypaste`](plugins/linecopypaste.lua?raw=1) | Copy, cut and paste the current line when nothing is selected
 [*`lineguide`*](plugins/lineguide.lua?raw=1) | Displays a line-guide at the line limit offset *([screenshot](https://user-images.githubusercontent.com/3920290/81476159-2cf70000-9208-11ea-928b-9dae3884c477.png))*

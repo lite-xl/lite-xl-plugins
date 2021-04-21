@@ -1,3 +1,4 @@
+-- lite-xl 1.16
 require "plugins.reflow"
 local config = require "core.config"
 local command = require "core.command"

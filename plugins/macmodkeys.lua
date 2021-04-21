@@ -1,3 +1,4 @@
+-- lite-xl 1.16
 local keymap = require "core.keymap"
 
 local on_key_pressed = keymap.on_key_pressed

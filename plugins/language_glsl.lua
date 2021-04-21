@@ -1,3 +1,4 @@
+-- lite-xl 1.16
 
 local style = require "core.style"
 local common = require "core.common"

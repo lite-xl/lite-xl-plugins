@@ -1,3 +1,4 @@
+-- lite-xl 1.16
 local command = require "core.command"
 local StatusView = require "core.statusview"
 
