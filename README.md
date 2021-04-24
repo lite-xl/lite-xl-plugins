@@ -56,6 +56,7 @@ Plugin | Description
 [`language_hs`](plugins/language_hs.lua?raw=1) | Syntax for the [Haskell](https://www.haskell.org/) programming language
 [`language_java`](plugins/language_java.lua?raw=1) | Syntax for the [Java](https://en.wikipedia.org/wiki/Java_(programming_language)) programming language
 [`language_jiyu`](plugins/language_jiyu.lua?raw=1) | Syntax for the [jiyu](https://github.com/machinamentum/jiyu) programming language
+[`language_jsx`](plugins/language_jsx.lua?raw=1) | Syntax for the [JSX](https://reactjs.org/docs/introducing-jsx.html) language for the React framework in JavaScript
 [`language_ksy`](https://raw.githubusercontent.com/whiteh0le/lite-plugins/main/plugins/language_ksy.lua?raw=1) | Syntax for [Kaitai](http://kaitai.io/) struct files
 [`language_make`](plugins/language_make.lua?raw=1) | Syntax for the Make build system language
 [`language_meson`](plugins/language_meson.lua?raw=1) | Syntax for the [Meson](https://mesonbuild.com) build system language
@@ -68,6 +69,7 @@ Plugin | Description
 [`language_powershell`](plugins/language_powershell.lua?raw=1) | Syntax for [PowerShell](https://docs.microsoft.com/en-us/powershell) scripting language
 [`language_psql`](plugins/language_psql.lua?raw=1) | Syntax for the postgresql database access language
 [`language_rust`](plugins/language_rust.lua?raw=1) | Syntax for the [Rust](https://rust-lang.org/) programming language
+[`language_ruby`](plugins/language_ruby.lua?raw=1) | Syntax for the [Ruby](https://www.ruby-lang.org/) programming language
 [`language sass`](plugins/language_sass.lua?raw=1) | Syntax for the [Sass](https://sass-lang.com/) CSS preprocessor
 [`language_sh`](plugins/language_sh.lua?raw=1) | Syntax for shell scripting language
 [`language_teal`](plugins/language_teal.lua?raw=1) | Syntax for the [Teal](https://github.com/teal-language/tl) programming language, a typed dialect of Lua.
