@@ -1,7 +1,6 @@
 -- lite-xl 1.16
 local syntax = require "core.syntax"
 
-
 local liquid_syntax = {
   patterns = {
     { pattern = { '"', '"', '\\' },        type = "string"   },
@@ -58,7 +57,7 @@ local liquid_syntax = {
     ["map"] = "keyword2",
     ["minus"] = "keyword2",
     ["modulo"] = "keyword2",
-    ["nil"] = "literal"
+    ["nil"] = "literal",
     ["null"] = "literal",
     ["offset"] = "keyword2",
     ["or"] = "operator",
@@ -142,3 +141,4 @@ syntax.add {
   },
   symbols = {},
 }
+
