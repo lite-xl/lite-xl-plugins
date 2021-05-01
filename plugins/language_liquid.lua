@@ -127,7 +127,7 @@ syntax.add {
       type = "function"
     },
     { pattern = { "<!%-%-", "%-%->" },     type = "comment"  },
-    { pattern = { '%f[^>][^<]', '%f[<]' }, type = "normal"   },
+    { pattern = { '%f[^>][^<]', '%f[<{]' }, type = "normal"  },
     { pattern = { '"', '"', '\\' },        type = "string"   },
     { pattern = { "'", "'", '\\' },        type = "string"   },
     { pattern = "0x[%da-fA-F]+",           type = "number"   },
