@@ -1,0 +1,51 @@
+-- lite-xl 1.16
+local syntax = require "core.syntax"
+
+syntax.add {
+  files = { "%.pm$", "%.pl$" },
+  headers = "^#!.*[ /]perl",
+  comment = "#",
+  patterns = {
+    { pattern = "%#.-\n",                 type = "comment"  },
+    { pattern = { '"', '"', '\\' },       type = "string"   },
+    { pattern = { "'", "'", '\\' },       type = "string"   },
+    { pattern = { '/', '/', '\\' },       type = "string"   },
+    { pattern = "%\\x[%da-fA-F]+",        type = "number"   },
+    { pattern = "-?%d+[%d%.eE]*",         type = "number"   },
+    { pattern = "-?%.?%d+",               type = "number"   },
+    { pattern = "[%a_][%w_]*%f[(]",       type = "function" },
+    { pattern = "[%@%$%*]+[%a_][%w_]*",   type = "keyword2" },
+    { pattern = "[%a_][%w_]*",            type = "symbol"   },
+  },
+  symbols = {
+    ["return"] = "keyword",
+    ["if"] = "keyword",
+    ["unless"] = "keyword",
+    ["else"] = "keyword",
+    ["elsif"] = "keyword",
+    ["do"] = "keyword",
+    ["for"] = "keyword",
+    ["foreach"] = "keyword",
+    ["while"] = "keyword",
+    ["next"] = "keyword",
+    ["last"] = "keyword",
+    ["exit"] = "keyword",
+    ["goto"] = "keyword",
+    ["eval"] = "keyword",
+    ["delete"] = "keyword",    
+    ["exists"] = "keyword",
+    
+    ["use"] = "keyword",
+    ["die"] = "keyword",
+    ["require"] = "keyword",
+    ["require_once"] = "keyword",
+    ["new"] = "keyword",
+    ["our"] = "keyword",
+    ["my"] = "keyword",
+    ["sub"] = "keyword",
+    ["sub"] = "keyword",
+    ["clone"] = "keyword",
+
+    ["undef"] = "literal",
+  },
+}
