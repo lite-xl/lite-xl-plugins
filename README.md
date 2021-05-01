@@ -59,6 +59,7 @@ Plugin | Description
 [`language_jiyu`](plugins/language_jiyu.lua?raw=1) | Syntax for the [jiyu](https://github.com/machinamentum/jiyu) programming language
 [`language_jsx`](plugins/language_jsx.lua?raw=1) | Syntax for the [JSX](https://reactjs.org/docs/introducing-jsx.html) language for the React framework in JavaScript
 [`language_ksy`](https://raw.githubusercontent.com/whiteh0le/lite-plugins/main/plugins/language_ksy.lua?raw=1) | Syntax for [Kaitai](http://kaitai.io/) struct files
+[`language_liquid`](plugins/language_liquid.lua?raw=1) | Syntax for [Liquid](https://shopify.github.io/liquid/) templating language
 [`language_make`](plugins/language_make.lua?raw=1) | Syntax for the Make build system language
 [`language_meson`](plugins/language_meson.lua?raw=1) | Syntax for the [Meson](https://mesonbuild.com) build system language
 [`language_moon`](plugins/language_moon.lua?raw=1) | Syntax for the [MoonScript](https://moonscript.org) scripting language
