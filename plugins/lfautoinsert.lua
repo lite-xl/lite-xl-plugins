@@ -19,6 +19,7 @@ config.lfautoinsert_map = {
   ["%f[%w]repeat%s*\n"] = "until",
   ["%f[%w]function.*%)%s*\n"] = "end",
   ["^%s*<([^/][^%s>]*)[^>]*>%s*\n"] = "</$TEXT>",
+  ["/%*"] = "*/",
 }
 
 
