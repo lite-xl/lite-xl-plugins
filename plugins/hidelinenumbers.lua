@@ -1,4 +1,4 @@
--- lite-xl 1.16
+-- mod-version:1 -- lite-xl 1.16
 local style = require "core.style"
 local DocView = require "core.docview"
 

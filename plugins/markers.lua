@@ -1,4 +1,4 @@
--- lite-xl 1.16
+-- mod-version:1 -- lite-xl 1.16
 -- Markers plugin for lite text editor
 -- original implementation by Petri Häkkinen
 

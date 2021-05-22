@@ -1,4 +1,4 @@
--- lite-xl 1.16
+-- mod-version:1 -- lite-xl 1.16
 --[[
     dragdropselected.lua
     provides basic drag and drop of selected text (in same document)

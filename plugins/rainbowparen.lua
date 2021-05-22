@@ -1,4 +1,4 @@
--- lite-xl 1.16
+-- mod-version:1 -- lite-xl 1.16
 local tokenizer = require "core.tokenizer"
 local style = require "core.style"
 local common = require "core.common"
