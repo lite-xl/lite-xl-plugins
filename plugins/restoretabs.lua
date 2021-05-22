@@ -29,7 +29,7 @@ RootView.update = function(self)
         end
         table.insert(tab_history, closing_filename)
         if #tab_history > history_size then
-          tab_history.remove(tab_history, 1)
+          table.remove(tab_history, 1)
         end
       end
       old_close(self, root, view)
