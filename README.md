@@ -23,7 +23,7 @@ Plugin | Description
 [`colorpreview`](plugins/colorpreview.lua?raw=1) | Underlays color values (eg. `#ff00ff` or `rgb(255, 0, 255)`) with their resultant color. *([screenshot](https://user-images.githubusercontent.com/3920290/80743752-731bd780-8b15-11ea-97d3-847db927c5dc.png))*
 *[`console`](https://github.com/franko/console)* | A console for running external commands and capturing their output *([gif](https://user-images.githubusercontent.com/3920290/81343656-49325a00-90ad-11ea-8647-ff39d8f1d730.gif))*
 [`contextmenu`](https://github.com/takase1121/lite-contextmenu)* | Simple context menu *([screenshot](https://github.com/takase1121/lite-contextmenu/blob/master/assets/screenshot.jpg?raw=true))*
-[`copyfilelocation`](plugins/copyfilelocation.lua?raw=1) | Copy file location to clipboard
+*[`copyfilelocation`](plugins/copyfilelocation.lua?raw=1)* | Copy file location to clipboard
 [`datetimestamps`](plugins/datetimestamps.lua?raw=1) | Insert date-, time- and date-time-stamps
 ~~[`detectindent`](plugins/detectindent.lua?raw=1)~~ | Included with lite-xl ~~Automatically detects and uses the indentation size and tab type of a loaded file~~
 *[`discord-presence`](https://github.com/vincens2005/lite-xl-discord)* * | Adds the current workspace and file to your Discord Rich Presence
