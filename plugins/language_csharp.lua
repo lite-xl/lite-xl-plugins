@@ -1,3 +1,4 @@
+-- mod-version:1 -- lite-xl 1.16
 local syntax = require "core.syntax"
 
 syntax.add {

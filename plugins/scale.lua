@@ -1,3 +1,4 @@
+-- mod-version:1 -- lite-xl 1.16
 local core = require "core"
 local common = require "core.common"
 local command = require "core.command"
@@ -10,13 +11,15 @@ local CommandView = require "core.commandview"
 config.scale_mode = "code"
 config.scale_use_mousewheel = true
 
+local scale_level = 0
+local scale_steps = 0.1
 local font_cache = setmetatable({}, { __mode = "k" })
 
 -- the following should be kept in sync with core.style's default font settings
-font_cache[style.font]      = { EXEDIR .. "/data/fonts/font.ttf",      14   * SCALE }
-font_cache[style.big_font]  = { EXEDIR .. "/data/fonts/font.ttf",      34   * SCALE }
-font_cache[style.icon_font] = { EXEDIR .. "/data/fonts/icons.ttf",     14   * SCALE }
-font_cache[style.code_font] = { EXEDIR .. "/data/fonts/monospace.ttf", 13.5 * SCALE }
+font_cache[style.font]      = { DATADIR .. "/fonts/font.ttf",      14   * SCALE }
+font_cache[style.big_font]  = { DATADIR .. "/fonts/font.ttf",      34   * SCALE }
+font_cache[style.icon_font] = { DATADIR .. "/fonts/icons.ttf",     14   * SCALE }
+font_cache[style.code_font] = { DATADIR .. "/fonts/monospace.ttf", 13.5 * SCALE }
 
 
 local load_font = renderer.font.load
@@ -93,11 +96,26 @@ function RootView:on_mouse_wheel(d, ...)
   end
 end
 
+local function res_scale()
+    scale_level = 0
+    set_scale(default)
+end
+
+local function inc_scale()
+    scale_level = scale_level + 1
+    set_scale(default + scale_level * scale_steps)
+end
+
+local function dec_scale()
+    scale_level = scale_level - 1
+    set_scale(default + scale_level * scale_steps)
+end
+
 
 command.add(nil, {
-  ["scale:reset"   ] = function() set_scale(default)             end,
-  ["scale:decrease"] = function() set_scale(current_scale * 0.9) end,
-  ["scale:increase"] = function() set_scale(current_scale * 1.1) end,
+  ["scale:reset"   ] = function() res_scale() end,
+  ["scale:decrease"] = function() dec_scale() end,
+  ["scale:increase"] = function() inc_scale() end,
 })
 
 keymap.add {

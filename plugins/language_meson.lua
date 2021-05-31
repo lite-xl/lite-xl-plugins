@@ -1,3 +1,4 @@
+-- mod-version:1 -- lite-xl 1.16
 local syntax = require "core.syntax"
 
 syntax.add {
@@ -5,7 +6,6 @@ syntax.add {
   comment = "#",
   patterns = {
     { pattern = { "#", "\n" },            type = "comment"  },
-    { pattern = { '"', '"', '\\' },       type = "string"   },
     { pattern = { "'", "'", '\\' },       type = "string"   },
     { pattern = { "'''", "'''" },         type = "string"   },
     { pattern = "0x[%da-fA-F]+",          type = "number"   },

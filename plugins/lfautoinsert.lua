@@ -1,3 +1,4 @@
+-- mod-version:1 -- lite-xl 1.16
 local core = require "core"
 local command = require "core.command"
 local config = require "core.config"
@@ -18,6 +19,7 @@ config.lfautoinsert_map = {
   ["%f[%w]repeat%s*\n"] = "until",
   ["%f[%w]function.*%)%s*\n"] = "end",
   ["^%s*<([^/][^%s>]*)[^>]*>%s*\n"] = "</$TEXT>",
+  ["/%*%s*\n"] = "*/",
 }
 
 

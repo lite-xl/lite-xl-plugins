@@ -1,99 +1,70 @@
+-- mod-version:1 -- lite-xl 1.16
+--[[
+    language_php.lua
+    provides php syntax support allowing mixed html, css and js
+    version: 20210513_144200
+
+    Depends on plugin language_phps.lua version >= 20210512_181200
+--]]
 local syntax = require "core.syntax"
 
 syntax.add {
   files = { "%.php$", "%.phtml" },
-  headers = "^<%?php",
-  comment = "//",
   patterns = {
-    { pattern = "//.-\n",                 type = "comment"  },
-    { pattern = "#.-\n",                  type = "comment"  },
-    { pattern = { "/%*", "%*/" },         type = "comment"  },
-    -- I dont know why the '//' are needed but I leave it here for now
-    { pattern = { '"', '"', '\\' },       type = "string"   },
-    { pattern = { "'", "'", '\\' },       type = "string"   },
-    { pattern = "%\\x[%da-fA-F]+",        type = "number"   },
-    { pattern = "-?%d+[%d%.eE]*",         type = "number"   },
-    { pattern = "-?%.?%d+",               type = "number"   },
-    { pattern = "[%.%+%-=/%*%^%%<>!~|&]", type = "operator" },
-    { pattern = "[%a_][%w_]*%f[(]",       type = "function" },
-    { pattern = "[%a_][%w_]*",            type = "symbol"   },
-    -- To indicate variables.
-    { pattern = "%$",          type = "operator" },
+    {
+      pattern = {
+        "<%?php%s+",
+        "%?>"
+      },
+      syntax = ".phps",
+      type = "keyword2"
+    },
+    {
+      pattern = {
+        "<%?=?",
+        "%?>"
+      },
+      syntax = ".phps",
+      type = "keyword2"
+    },
+    {
+      pattern = {
+        "<%s*[sS][cC][rR][iI][pP][tT]%s+[tT][yY][pP][eE]%s*=%s*" ..
+          "['\"]%a+/[jJ][aA][vV][aA][sS][cC][rR][iI][pP][tT]['\"]%s*>",
+        "<%s*/[sS][cC][rR][iI][pP][tT]>"
+      },
+      syntax = ".js",
+      type = "function"
+    },
+    {
+      pattern = {
+        "<%s*[sS][cC][rR][iI][pP][tT]%s*>",
+        "<%s*/%s*[sS][cC][rR][iI][pP][tT]>"
+      },
+      syntax = ".js",
+      type = "function"
+    },
+    {
+      pattern = {
+        "<%s*[sS][tT][yY][lL][eE][^>]*>",
+        "<%s*/%s*[sS][tT][yY][lL][eE]%s*>"
+      },
+      syntax = ".css",
+      type = "function"
+    },
+    { pattern = { "<!%-%-", "%-%->" },     type = "comment"  },
+    { pattern = { '%f[^>][^<]', '%f[<]' }, type = "normal"   },
+    { pattern = { '"', '"', '\\' },        type = "string"   },
+    { pattern = { "'", "'", '\\' },        type = "string"   },
+    { pattern = "0x[%da-fA-F]+",           type = "number"   },
+    { pattern = "-?%d+[%d%.]*f?",          type = "number"   },
+    { pattern = "-?%.?%d+f?",              type = "number"   },
+    { pattern = "%f[^<]![%a_][%w_]*",      type = "keyword2" },
+    { pattern = "%f[^<][%a_][%w_]*",       type = "function" },
+    { pattern = "%f[^<]/[%a_][%w_]*",      type = "function" },
+    { pattern = "[%a_][%w_]*",             type = "keyword"  },
+    { pattern = "[/<>=]",                  type = "operator" },
   },
-  symbols = {
-    ["return"] = "keyword",
-    ["if"] = "keyword",
-    ["else"] = "keyword",
-    ["elseif"] = "keyword",
-    ["endif"] = "keyword",
-    ["declare"] = "keyword",
-    ["enddeclare"] = "keyword",
-    ["switch"] = "keyword",
-    ["endswitch"] = "keyword",
-    ["as"] = "keyword",
-    ["do"] = "keyword",
-    ["for"] = "keyword",
-    ["endfor"] = "keyword",
-    ["foreach"] = "keyword",
-    ["endforeach"] = "keyword",
-    ["while"] = "keyword",
-    ["endwhile"] = "keyword",
-    ["switch"] = "keyword",
-    ["case"] = "keyword",
-    ["continue"] = "keyword",
-    ["default"] = "keyword",
-    ["break"] = "keyword",
-    ["exit"] = "keyword",
-    ["goto"] = "keyword",
-
-    ["catch"] = "keyword",
-    ["throw"] = "keyword",
-    ["try"] = "keyword",
-    ["finally"] = "keyword",
-
-    ["class"] = "keyword",
-    ["trait"] = "keyword",
-    ["interface"] = "keyword",
-    ["public"] = "keyword",
-    ["static"] = "keyword",
-    ["protected"] = "keyword",
-    ["private"] = "keyword",
-    ["abstract"] = "keyword",
-    ["final"] = "keyword",
-
-    ["function"] = "keyword2",
-    ["global"] = "keyword2",
-    ["var"] = "keyword2",
-    ["const"] = "keyword2",
-    ["bool"] = "keyword2",
-    ["boolean"] = "keyword2",
-    ["int"] = "keyword2",
-    ["integer"] = "keyword2",
-    ["real"] = "keyword2",
-    ["double"] = "keyword2",
-    ["float"] = "keyword2",
-    ["string"] = "keyword2",
-    ["array"] = "keyword2",
-    ["object"] = "keyword2",
-    ["callable"] = "keyword2",
-    ["iterable"] = "keyword2",
-
-    ["namespace"] = "keyword2",
-    ["extends"] = "keyword2",
-    ["implements"] = "keyword2",
-    ["instanceof"] = "keyword2",
-    ["require"] = "keyword2",
-    ["require_once"] = "keyword2",
-    ["include"] = "keyword2",
-    ["include_once"] = "keyword2",
-    ["use"] = "keyword2",
-    ["new"] = "keyword2",
-    ["clone"] = "keyword2",
-
-    ["true"] = "literal",
-    ["false"] = "literal",
-    ["NULL"] = "literal",
-    ["parent"] = "literal",
-    ["self"] = "literal",
-  },
+  symbols = {},
 }
+

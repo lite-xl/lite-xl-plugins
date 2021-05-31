@@ -1,3 +1,4 @@
+-- mod-version:1 -- lite-xl 1.16
 local core = require "core"
 local style = require "core.style"
 local command = require "core.command"
@@ -29,8 +30,8 @@ end
 function ClockView:update_fonts()
   local size = math.floor(self.size.x * 0.15 / 15) * 15 * config.bigclock_scale
   if self.font_size ~= size then
-    self.time_font = renderer.font.load(EXEDIR .. "/data/fonts/font.ttf", size)
-    self.date_font = renderer.font.load(EXEDIR .. "/data/fonts/font.ttf", size * 0.3)
+    self.time_font = renderer.font.load(DATADIR .. "/fonts/font.ttf", size)
+    self.date_font = renderer.font.load(DATADIR .. "/fonts/font.ttf", size * 0.3)
     self.font_size = size
     collectgarbage()
   end
