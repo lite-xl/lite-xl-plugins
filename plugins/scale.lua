@@ -50,7 +50,7 @@ local function set_scale(scale)
   local scrolls = {}
   for _, view in ipairs(core.root_view.root_node:get_children()) do
     local n = view:get_scrollable_size()
-    if n ~= math.huge and not view:is(CommandView) then
+    if n ~= math.huge and not view:is(CommandView) and n > view.size.y then
       scrolls[view] = view.scroll.y / (n - view.size.y)
     end
   end
