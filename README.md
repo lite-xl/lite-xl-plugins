@@ -12,7 +12,7 @@ with the official version of lite, format the name in italic.*
 
 Plugin | Description
 -------|-----------------------------------------
-[`autoinsert`](plugins/autoinsert.lua?raw=1) | Automatically inserts closing brackets and quotes
+[`autoinsert`](plugins/autoinsert.lua?raw=1) | Automatically inserts closing brackets and quotes. Also allows selected text to be wrapped with brackets or quotes.
 *[`autosave`](plugins/autosave.lua?raw=1)* | Automatically saves files when they are changed
 [`autowrap`](plugins/autowrap.lua?raw=1) | Automatically hardwraps lines when typing
 *[`bigclock`](plugins/bigclock.lua?raw=1)* | Shows the current time and date in a view with large text *([screenshot](https://user-images.githubusercontent.com/3920290/82752891-3318df00-9db9-11ea-803f-261d80d5cf53.png))*
