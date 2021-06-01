@@ -15,11 +15,24 @@ local scale_level = 0
 local scale_steps = 0.1
 local font_cache = setmetatable({}, { __mode = "k" })
 
+-- default lite fonts
+local regular_font = "font.ttf"
+local monospace_font = "monospace.ttf"
+
+-- Set font names properly to work with latest lite-xl changes
+if io.open(DATADIR .. "/fonts/FiraSans-Regular.ttf", "r") then
+  regular_font = "FiraSans-Regular.ttf"
+end
+
+if io.open(DATADIR .. "/fonts/JetBrainsMono-Regular.ttf", "r") then
+  monospace_font = "JetBrainsMono-Regular.ttf"
+end
+
 -- the following should be kept in sync with core.style's default font settings
-font_cache[style.font]      = { DATADIR .. "/fonts/font.ttf",      14   * SCALE }
-font_cache[style.big_font]  = { DATADIR .. "/fonts/font.ttf",      34   * SCALE }
+font_cache[style.font]      = { DATADIR .. "/fonts/" .. regular_font,      14   * SCALE }
+font_cache[style.big_font]  = { DATADIR .. "/fonts/" .. regular_font,      34   * SCALE }
 font_cache[style.icon_font] = { DATADIR .. "/fonts/icons.ttf",     14   * SCALE }
-font_cache[style.code_font] = { DATADIR .. "/fonts/monospace.ttf", 13.5 * SCALE }
+font_cache[style.code_font] = { DATADIR .. "/fonts/" .. monospace_font, 13.5 * SCALE }
 
 
 local load_font = renderer.font.load
