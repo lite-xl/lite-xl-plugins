@@ -79,6 +79,7 @@ Plugin | Description
 [`language_sh`](plugins/language_sh.lua?raw=1) | Syntax for shell scripting language
 [`language_teal`](plugins/language_teal.lua?raw=1) | Syntax for the [Teal](https://github.com/teal-language/tl) programming language, a typed dialect of Lua.
 [`language_tex`](plugins/language_tex.lua?raw=1) | Syntax for the [LaTeX](https://www.latex-project.org/) typesetting language
+[`language_v`](plugins/language_v.lua?raw=1) | Syntax for the [V](https://vlang.io/) programming language
 [`language_wren`](plugins/language_wren.lua?raw=1) | Syntax for the [Wren](http://wren.io/) programming language
 [`language_zig`](plugins/language_zig.lua?raw=1) | Syntax for the [Zig](https://ziglang.org/) programming language
 ~~[`lastproject`](plugins/lastproject.lua?raw=1)~~ | Integrated with lite-xl ~~Loads the last loaded project if lite is launched without any arguments~~
