@@ -29,10 +29,11 @@ if io.open(DATADIR .. "/fonts/JetBrainsMono-Regular.ttf", "r") then
 end
 
 -- the following should be kept in sync with core.style's default font settings
-font_cache[style.font]      = { DATADIR .. "/fonts/" .. regular_font,      14   * SCALE }
-font_cache[style.big_font]  = { DATADIR .. "/fonts/" .. regular_font,      34   * SCALE }
-font_cache[style.icon_font] = { DATADIR .. "/fonts/icons.ttf",     14   * SCALE }
-font_cache[style.code_font] = { DATADIR .. "/fonts/" .. monospace_font, 13.5 * SCALE }
+font_cache[style.font]          = { DATADIR .. "/fonts/" .. regular_font,   13 * SCALE }
+font_cache[style.big_font]      = { DATADIR .. "/fonts/" .. regular_font,   40 * SCALE }
+font_cache[style.icon_font]     = { DATADIR .. "/fonts/icons.ttf",          14 * SCALE }
+font_cache[style.icon_big_font] = { DATADIR .. "/fonts/icons.ttf",          20 * SCALE }
+font_cache[style.code_font]     = { DATADIR .. "/fonts/" .. monospace_font, 13 * SCALE }
 
 
 local load_font = renderer.font.load
