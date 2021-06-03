@@ -26,7 +26,7 @@ Plugin | Description
 *[`copyfilelocation`](plugins/copyfilelocation.lua?raw=1)* | Copy file location to clipboard
 [`datetimestamps`](plugins/datetimestamps.lua?raw=1) | Insert date-, time- and date-time-stamps
 ~~[`detectindent`](plugins/detectindent.lua?raw=1)~~ | Included with lite-xl ~~Automatically detects and uses the indentation size and tab type of a loaded file~~
-*[`discord-presence`](https://github.com/vincens2005/lite-xl-discord)* * | Adds the current workspace and file to your Discord Rich Presence
+*[`discord-presence`](https://github.com/vincens2005/lite-xl-discord)** | Adds the current workspace and file to your Discord Rich Presence
 [`dragdropselected`](plugins/dragdropselected.lua?raw=1) | Provides basic drag and drop of selected text (in same document)
 ~~*[`drawwhitespace`](plugins/drawwhitespace.lua?raw=1)*~~ | Integrated with lite-xl reducing CPU usage ~~Draws tabs and spaces *([screenshot](https://user-images.githubusercontent.com/3920290/80573013-22ae5800-89f7-11ea-9895-6362a1c0abc7.png))*~~
 [`eofnewline`](https://github.com/bokunodev/lite_modules/blob/master/plugins/eofnewline-xl.lua?raw=1) | Make sure the file ends with one blank line.
@@ -111,4 +111,5 @@ Plugin | Description
 [`todotreeview`](https://github.com/drmargarido/TodoTreeView)* | Todo tree viewer for annotations in code like `TODO`, `BUG`, `FIX`, `IMPROVEMENT`
 [`togglesnakecamel`](plugins/togglesnakecamel.lua?raw=1) | Toggles symbols between `snake_case` and `camelCase`
 [`unboundedscroll`](plugins/unboundedscroll.lua?raw=1) | Allows scrolling outside the bounds of a document
+*[`updatechecker`](https://github.com/vincens2005/lite-xl-updatechecker)** | Automatically checks for updates and notifies you
 ~~[`workspace`](plugins/workspace.lua?raw=1)~~ | Integrated in lite-xl ~~Retains project's layout and open documents between sessions~~
