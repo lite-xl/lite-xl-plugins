@@ -94,6 +94,7 @@ Plugin | Description
 [`memoryusage`](plugins/memoryusage.lua?raw=1) | Show memory usage in the status view
 [`motiontrail`](plugins/motiontrail.lua?raw=1) | Adds a motion-trail to the caret *([screenshot](https://user-images.githubusercontent.com/3920290/83256814-085ccb00-a1ab-11ea-9e35-e6633cbed1a9.gif))*
 [`nagbar`](https://github.com/takase1121/lite-nagbar)* | consistent and _beautiful_ confirmation dialogs for lite and lite-xl *([gif](https://raw.githubusercontent.com/takase1121/lite-nagbar/master/assets/preview.gif))*
+[`navigate`](plugins/navigate.lua?raw=1) | Allows moving back and forward between document positions, reducing the amount of scrolling
 [`openfilelocation`](plugins/openfilelocation.lua?raw=1) | Opens the parent directory of the current file in the file manager
 [`openselected`](plugins/openselected.lua?raw=1) | Opens the selected filename or url
 ~~[`projectmanager`](plugins/projectmanager.lua?raw=1)~~ | Integrated in lite-xl with improvements ~~Save projects and load/reload them quickly~~
