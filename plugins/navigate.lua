@@ -102,12 +102,7 @@ core.add_thread(function()
         current.col = col
       end
     end
-
-    if system.window_has_focus() then
-      coroutine.yield(0.5)
-    else
-      coroutine.yield(config.project_scan_rate)
-    end
+    coroutine.yield(0.5)
   end
 end)
 
