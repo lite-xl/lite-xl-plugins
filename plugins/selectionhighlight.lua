@@ -1,8 +1,12 @@
 -- mod-version:1 -- lite-xl 1.16
 local style = require "core.style"
 local DocView = require "core.docview"
+local config = require "core.config"
 
 -- originally written by luveti
+
+-- Set to true to also highlight empty spaces
+config.highlight_spaces = false
 
 local function draw_box(x, y, w, h, color)
   local r = renderer.draw_rect
@@ -18,13 +22,24 @@ local draw_line_body = DocView.draw_line_body
 
 function DocView:draw_line_body(idx, x, y)
   local line1, col1, line2, col2 = self.doc:get_selection(true)
-  if line1 == line2 and col1 ~= col2 then
+  local selection = self.doc:get_text(line1, col1, line2, col2)
+  if
+    line1 == line2 and col1 ~= col2
+    and
+    (
+      config.highlight_spaces
+      or
+      not selection:match("^%s+$")
+    )
+  then
     local lh = self:get_line_height()
     local selected_text = self.doc.lines[line1]:sub(col1, col2 - 1)
     local current_line_text = self.doc.lines[idx]
     local last_col = 1
     while true do
-      local start_col, end_col = current_line_text:find(selected_text, last_col, true)
+      local start_col, end_col = current_line_text:find(
+        selected_text, last_col, true
+      )
       if start_col == nil then break end
       local x1 = x + self:get_col_x_offset(idx, start_col)
       local x2 = x + self:get_col_x_offset(idx, end_col + 1)
