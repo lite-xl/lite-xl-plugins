@@ -4,16 +4,8 @@
     displays current scale (zoom) in status view
     version: 20200628_155804
     originally by SwissalpS
-
-    Depends on plugin scale.lua version >= 20200628_154010
 --]]
 local scale = require "plugins.scale"
--- make sure plugin is installed and has get_scale field
-if not scale then
-    local core = require "core"
-    core.error("Plugin 'scale' needs to be updated, scalestatus inactive.")
-    return false
-end
 
 local config = require "core.config"
 local StatusView = require "core.statusview"
