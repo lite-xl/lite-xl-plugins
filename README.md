@@ -44,6 +44,7 @@ Plugin | Description
 *[`indentguide`](plugins/indentguide.lua?raw=1)* | Adds indent guides *([screenshot](https://user-images.githubusercontent.com/3920290/79640716-f9860000-818a-11ea-9c3b-26d10dd0e0c0.png))*
 [`language_angelscript`](plugins/language_angelscript.lua?raw=1) | Syntax for the [Angelscript](https://www.angelcode.com/angelscript/) programming language
 [`language_batch`](plugins/language_batch.lua?raw=1) | Syntax for Windows [Batch Files](https://en.wikipedia.org/wiki/Batch_file)
+[`language_bib`](plugins/language_bib.lua?raw=1) | Syntax for [BibTex](https://en.wikipedia.org/wiki/BibTeX) files
 [`language_cmake`](plugins/language_cmake.lua?raw=1) | Syntax for the CMake build system language
 [`language_cpp`](plugins/language_cpp.lua?raw=1) | Syntax for the [C++](https://isocpp.org/) programming language
 [`language_csharp`](plugins/language_csharp.lua?raw=1) | Syntax for the [C#](http://csharp.net) programming language
@@ -98,6 +99,7 @@ Plugin | Description
 [`openfilelocation`](plugins/openfilelocation.lua?raw=1) | Opens the parent directory of the current file in the file manager
 [`openselected`](plugins/openselected.lua?raw=1) | Opens the selected filename or url
 ~~[`projectmanager`](plugins/projectmanager.lua?raw=1)~~ | Integrated in lite-xl with improvements ~~Save projects and load/reload them quickly~~
+[`pdfview`](plugins/pdfview.lua?raw=1) | PDF preview for TeX files
 [`rainbowparen`](plugins/rainbowparen.lua?raw=1) | Show nesting of parentheses with rainbow colours
 [`restoretabs`](plugins/restoretabs.lua?raw=1) | Keep a list of recently closed tabs, and restore the tab in order on cntrl+shift+t.
 [`regexreplaceplugin`](plugins/regexreplaceplugin.lua?raw=1) | Allows for you to write a regex and its replacement in one go, and live preview the results.
@@ -107,6 +109,7 @@ Plugin | Description
 [`sort`](plugins/sort.lua?raw=1) | Sorts selected lines alphabetically
 [`spellcheck`](plugins/spellcheck.lua?raw=1) | Underlines misspelt words *([screenshot](https://user-images.githubusercontent.com/3920290/79923973-9caa7400-842e-11ea-85d4-7a196a91ca50.png))* *— note: on Windows a [`words.txt`](https://github.com/dwyl/english-words/blob/master/words.txt) dictionary file must be placed beside the exe*
 [`tabnumbers`](plugins/tabnumbers.lua?raw=1) | Displays tab numbers from 1–9 next to their names *([screenshot](https://user-images.githubusercontent.com/16415678/101285362-007a8500-37e5-11eb-869b-c10eb9d9d902.png))
+[`texcompile`](plugins/texcompile.lua?raw=1) | Compile Tex files into PDF
 [`theme16`](https://github.com/monolifed/theme16)* | Theme manager with base16 themes
 [`themescheduler`](https://github.com/BenStigsen/lite-config/blob/main/plugins/themescheduler.lua?raw=1) | Schedule themes to be used at certain times
 [`themeselect`](plugins/themeselect.lua?raw=1) | Select a theme based on filename of active document
