@@ -9,7 +9,7 @@
 --]]
 local scale = require "plugins.scale"
 -- make sure plugin is installed and has get_scale field
-if not scale.get_scale then
+if not scale then
     local core = require "core"
     core.error("Plugin 'scale' needs to be updated, scalestatus inactive.")
     return false
@@ -27,7 +27,7 @@ function StatusView:get_items()
 
   local t = {
     self.separator,
-    string.format(config.scalestatus_format, scale.get_scale() * 100),
+    string.format(config.scalestatus_format, scale.get() * 100),
   }
 
   for _, item in ipairs(t) do

@@ -110,7 +110,7 @@ Plugin | Description
 [`rainbowparen`](plugins/rainbowparen.lua?raw=1) | Show nesting of parentheses with rainbow colours
 [`restoretabs`](plugins/restoretabs.lua?raw=1) | Keep a list of recently closed tabs, and restore the tab in order on cntrl+shift+t.
 [`regexreplaceplugin`](plugins/regexreplaceplugin.lua?raw=1) | Allows for you to write a regex and its replacement in one go, and live preview the results.
-*[`scale`](plugins/scale.lua?raw=1)* | Provides support for dynamically adjusting the scale of the code font / UI (`ctrl+-`, `ctrl+=`)
+~~`scale`~~ | Integrated in lite-xl with improvements ~~Provides support for dynamically adjusting the scale of the code font / UI (`ctrl+-`, `ctrl+=`)~~
 [`scalestatus`](plugins/scalestatus.lua?raw=1) | Displays current scale (zoom) in status view (depends on scale plugin)
 [`selectionhighlight`](plugins/selectionhighlight.lua?raw=1) | Highlights regions of code that match the current selection *([screenshot](https://user-images.githubusercontent.com/3920290/80710883-5f597c80-8ae7-11ea-97f0-76dfacc08439.png))*
 [`smallclock`](plugins/smallclock.lua?raw=1) | Displays the current time in the corner of the status view
