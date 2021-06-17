@@ -20,7 +20,7 @@ command.add("core.docview", {
     local texfile = av:get_filename()
     texfile = string.gsub(texfile, '~', homedir)
 -- Construct the PDF file name out of the (La)Tex filename
-    local pdffile = string.gsub(texfile, ".tex", ".pdf")
+    local pdffile = "\"" .. string.gsub(texfile, ".tex", ".pdf") .. "\""
 -- PDF viewer - is there any provided by the environment
     local pdfcmd = os.getenv("LITE_PDF_VIEWER")
 
