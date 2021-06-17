@@ -74,6 +74,7 @@ Plugin | Description
 [`language_perl`](plugins/language_perl.lua?raw=1) | Syntax for the [Perl](https://perl.org) programming language
 [`language_php`](plugins/language_php.lua?raw=1) | Syntax for the [PHP](https://php.net) programming language
 [`language_pico8`](plugins/language_pico8.lua?raw=1) | Syntax for [Pico-8](https://www.lexaloffle.com/pico-8.php) cartridge files
+[`language_po`](plugins/language_po.lua?raw=1) | Syntax for [PO](https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html) translation files
 [`language_powershell`](plugins/language_powershell.lua?raw=1) | Syntax for [PowerShell](https://docs.microsoft.com/en-us/powershell) scripting language
 [`language_psql`](plugins/language_psql.lua?raw=1) | Syntax for the postgresql database access language
 [`language_rust`](plugins/language_rust.lua?raw=1) | Syntax for the [Rust](https://rust-lang.org/) programming language
