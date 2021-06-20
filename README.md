@@ -93,7 +93,7 @@ Plugin | Description
 ~~[`lastproject`](plugins/lastproject.lua?raw=1)~~ | Integrated with lite-xl ~~Loads the last loaded project if lite is launched without any arguments~~
 [`lfautoinsert`](plugins/lfautoinsert.lua?raw=1) | Automatically inserts indentation and closing bracket/text after newline
 [`linecopypaste`](plugins/linecopypaste.lua?raw=1) | Copy, cut and paste the current line when nothing is selected
-[*`lineguide`*](plugins/lineguide.lua?raw=1) | Displays a line-guide at the line limit offset *([screenshot](https://user-images.githubusercontent.com/3920290/81476159-2cf70000-9208-11ea-928b-9dae3884c477.png))*
+~~[*`lineguide`*](plugins/lineguide.lua?raw=1)~~ | Integrated with lite-xl ~~Displays a line-guide at the line limit offset *([screenshot](https://user-images.githubusercontent.com/3920290/81476159-2cf70000-9208-11ea-928b-9dae3884c477.png))*~~
 [`linter`](https://github.com/drmargarido/linters)* | Linters for multiple languages
 [`lint+`](https://github.com/liquid600pgm/lintplus)* | Advanced linter with ErrorLens-like error reporting. Compatible with linters made for `linter` *([screenshot](https://raw.githubusercontent.com/liquid600pgm/lintplus/master/screenshots/1.png))*
 [`macmodkeys`](plugins/macmodkeys.lua?raw=1) | Remaps mac modkeys `command/option` to `ctrl/alt`
