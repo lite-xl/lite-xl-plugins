@@ -3,8 +3,8 @@
 local core = require "core"
 local common = require "core.common"
 local command = require "core.command"
-local config = require "core.config"
 local keymap = require "core.keymap"
+local Doc = require "core.doc"
 local DocView = require "core.docview"
 
 local navigate = {
@@ -23,15 +23,37 @@ local function get_active_view()
   return nil
 end
 
+-- Solution to safely remove elements from array table:
+-- found at https://stackoverflow.com/a/53038524
+local function array_remove(t, fnKeep)
+  local j, n = 1, #t;
+
+  for i=1, n do
+    if (fnKeep(t, i, j)) then
+      if (i ~= j) then
+        t[j] = t[i];
+        t[i] = nil;
+      end
+      j = j + 1;
+    else
+      t[i] = nil;
+    end
+  end
+
+  return t;
+end
+
 local function add(doc)
   -- Make new navigation point last in list
   if navigate.index > 0 and navigate.index < #navigate.list then
-    local list_len = #navigate.list
-    for index=navigate.index+1, list_len, 1 do
-      if navigate.list[index] then
-        table.remove(navigate.list, index)
+    local remove_start = navigate.index + 1
+    local remove_end = #navigate.list
+    array_remove(navigate.list, function(_, i)
+      if i >= remove_start and i <= remove_end then
+        return false
       end
-    end
+      return true
+    end)
   end
 
   local line, col = doc:get_selection()
@@ -106,17 +128,23 @@ core.add_thread(function()
   end
 end)
 
-core.add_close_hook(function(doc)
-  local filename = doc.filename
-  local list = {table.unpack(navigate.list)}
-  for index, position in ipairs(list) do
-    if position.filename == filename then
-      if navigate.list[index] then
-        table.remove(navigate.list, index)
-      end
+--
+-- Patching
+--
+local doc_on_close = Doc.on_close
+
+function Doc:on_close()
+  local filename = self.filename
+  -- remove all positions referencing closed file
+  array_remove(navigate.list, function(t, i)
+    if t[i].filename == filename then
+      return false
     end
-  end
-end)
+    return true
+  end)
+
+  doc_on_close(self)
+end
 
 --
 -- Commands
