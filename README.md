@@ -81,6 +81,7 @@ Plugin | Description
 [`language_ruby`](plugins/language_ruby.lua?raw=1) | Syntax for the [Ruby](https://www.ruby-lang.org/) programming language
 [`language sass`](plugins/language_sass.lua?raw=1) | Syntax for the [Sass](https://sass-lang.com/) CSS preprocessor
 [`language_sh`](plugins/language_sh.lua?raw=1) | Syntax for shell scripting language
+[`language_tcl`](plugins/language_tcl.lua?raw=1) | Syntax for the [Tcl](https://www.tcl.tk/) programming language
 [`language_teal`](plugins/language_teal.lua?raw=1) | Syntax for the [Teal](https://github.com/teal-language/tl) programming language, a typed dialect of Lua.
 [`language_tex`](plugins/language_tex.lua?raw=1) | Syntax for the [LaTeX](https://www.latex-project.org/) typesetting language
 [`language_v`](plugins/language_v.lua?raw=1) | Syntax for the [V](https://vlang.io/) programming language
