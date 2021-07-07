@@ -88,6 +88,7 @@ Plugin | Description
 [`language_tsx`](plugins/language_tsx.lua?raw=1) | Syntax for [TSX](https://www.typescriptlang.org/docs/handbook/jsx.html) language
 [`language_v`](plugins/language_v.lua?raw=1) | Syntax for the [V](https://vlang.io/) programming language
 [`language_wren`](plugins/language_wren.lua?raw=1) | Syntax for the [Wren](http://wren.io/) programming language
+[`language_yaml`](plugins/language_yaml.lua?raw=1) | Syntax for [YAML](https://yaml.org/) serialization language
 [`language_zig`](plugins/language_zig.lua?raw=1) | Syntax for the [Zig](https://ziglang.org/) programming language
 ~~[`lastproject`](plugins/lastproject.lua?raw=1)~~ | Integrated with lite-xl ~~Loads the last loaded project if lite is launched without any arguments~~
 [`lfautoinsert`](plugins/lfautoinsert.lua?raw=1) | Automatically inserts indentation and closing bracket/text after newline
