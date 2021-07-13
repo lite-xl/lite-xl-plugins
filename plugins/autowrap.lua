@@ -4,7 +4,7 @@ local config = require "core.config"
 local command = require "core.command"
 local DocView = require "core.docview"
 
-config.autowrap_files = { "%.md$", "%.txt$" }
+config.plugins.autowrap = { files = { "%.md$", "%.txt$" } }
 
 
 local on_text_input = DocView.on_text_input
@@ -15,7 +15,7 @@ DocView.on_text_input = function(self, ...)
   -- early-exit if the filename does not match a file type pattern
   local filename = self.doc.filename or ""
   local matched = false
-  for _, ptn in ipairs(config.autowrap_files) do
+  for _, ptn in ipairs(config.plugins.autowrap.files) do
     if filename:match(ptn) then
       matched = true
       break

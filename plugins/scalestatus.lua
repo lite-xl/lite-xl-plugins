@@ -10,7 +10,7 @@ local scale = require "plugins.scale"
 local config = require "core.config"
 local StatusView = require "core.statusview"
 
-config.scalestatus_format = '%.0f%%'
+config.plugins.scalestatus = { format = '%.0f%%' }
 
 local get_items = StatusView.get_items
 function StatusView:get_items()
@@ -19,7 +19,7 @@ function StatusView:get_items()
 
   local t = {
     self.separator,
-    string.format(config.scalestatus_format, scale.get() * 100),
+    string.format(config.plugins.scalestatus.format, scale.get() * 100),
   }
 
   for _, item in ipairs(t) do

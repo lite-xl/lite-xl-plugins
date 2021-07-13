@@ -4,12 +4,13 @@ local command = require "core.command"
 local config = require "core.config"
 
 
+config.plugins.openfilelocation = {}
 if PLATFORM == "Windows" then
-  config.filemanager = "explorer"
+  config.plugins.openfilelocation.filemanager = "explorer"
 elseif PLATFORM == "Mac OS X" then
-  config.filemanager = "open"
+  config.plugins.openfilelocation.filemanager = "open"
 else
-  config.filemanager = "xdg-open"
+  config.plugins.openfilelocation.filemanager = "xdg-open"
 end
 
 
@@ -23,9 +24,9 @@ command.add("core.docview", {
     local folder = doc.filename:match("^(.*)[/\\].*$") or "."
     core.log("Opening \"%s\"", folder)
     if PLATFORM == "Windows" then
-      system.exec(string.format("%s %s", config.filemanager, folder))
+      system.exec(string.format("%s %s", config.plugins.openfilelocation.filemanager, folder))
     else
-      system.exec(string.format("%s %q", config.filemanager, folder))
+      system.exec(string.format("%s %q", config.plugins.openfilelocation.filemanager, folder))
     end
   end
 })

@@ -1,8 +1,6 @@
 -- mod-version:1 -- lite-xl 2.00
 local core = require "core"
 local command = require "core.command"
-local config = require "core.config"
-
 
 command.add("core.docview", {
   ["copy-file-location:copy-file-location"] = function()

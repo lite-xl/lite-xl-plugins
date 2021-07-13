@@ -6,26 +6,26 @@ local style = require "core.style"
 local DocView = require "core.docview"
 
 -- General plugin settings
-config.minimap_enabled = true
-config.minimap_width = 100
-config.minimap_instant_scroll = false
-config.minimap_syntax_highlight = true
-config.minimap_scale = 1
-
--- how many spaces one tab is equivalent to
-config.minimap_tab_width = 4
-
-config.minimap_draw_background = true
+config.plugins.minimap = {
+	enabled = true,
+	width = 100,
+	instant_scroll = false,
+	syntax_highlight = true,
+	scale = 1,
+	-- how many spaces one tab is equivalent to
+	tab_width = 4,
+	draw_background = true
+}
 
 -- Configure size for rendering each char in the minimap
-local char_height = 1 * SCALE * config.minimap_scale
-local char_spacing = 0.8 * SCALE * config.minimap_scale
-local line_spacing = 2 * SCALE * config.minimap_scale
+local char_height = 1 * SCALE * config.plugins.minimap.scale
+local char_spacing = 0.8 * SCALE * config.plugins.minimap.scale
+local line_spacing = 2 * SCALE * config.plugins.minimap.scale
 
 -- Overloaded since the default implementation adds a extra x3 size of hotspot for the mouse to hit the scrollbar.
 local prev_scrollbar_overlaps_point = DocView.scrollbar_overlaps_point
 DocView.scrollbar_overlaps_point = function(self, x, y)
-	if not config.minimap_enabled then
+	if not config.plugins.minimap.enabled then
 		return prev_scrollbar_overlaps_point(self, x, y)
 	end
 
@@ -46,7 +46,7 @@ end
 -- Overloaded with an extra check if the user clicked inside the minimap to automatically scroll to that line.
 local prev_on_mouse_pressed = DocView.on_mouse_pressed
 DocView.on_mouse_pressed = function(self, button, x, y, clicks)
-	if not config.minimap_enabled then
+	if not config.plugins.minimap.enabled then
 		return prev_on_mouse_pressed(self, button, x, y, clicks)
 	end
 
@@ -100,7 +100,7 @@ DocView.on_mouse_pressed = function(self, button, x, y, clicks)
 
 		-- if user didn't click on the visible area (ie not dragging), scroll accordingly
 		if not hit_visible_area then
-			self:scroll_to_line(jump_to_line, false, config.minimap_instant_scroll)
+			self:scroll_to_line(jump_to_line, false, config.plugins.minimap.instant_scroll)
 			return
 		end
 
@@ -114,7 +114,7 @@ end
 -- since the "scrollbar" essentially represents the lines visible in the content view.
 local prev_on_mouse_moved = DocView.on_mouse_moved
 DocView.on_mouse_moved = function(self, x, y, dx, dy)
-	if not config.minimap_enabled then
+	if not config.plugins.minimap.enabled then
 		return prev_on_mouse_moved(self, x, y, dx, dy)
 	end
 
@@ -143,16 +143,16 @@ end
 -- not juse the scrollbar.
 local prev_get_scrollbar_rect = DocView.get_scrollbar_rect
 DocView.get_scrollbar_rect = function(self)
-	if not config.minimap_enabled then return prev_get_scrollbar_rect(self) end
+	if not config.plugins.minimap.enabled then return prev_get_scrollbar_rect(self) end
 
-	return self.position.x + self.size.x - config.minimap_width * SCALE,
-	       self.position.y, config.minimap_width * SCALE, self.size.y
+	return self.position.x + self.size.x - config.plugins.minimap.width * SCALE,
+	       self.position.y, config.plugins.minimap.width * SCALE, self.size.y
 end
 
 -- Overloaded so we can render the minimap in the "scrollbar area".
 local prev_draw_scrollbar = DocView.draw_scrollbar
 DocView.draw_scrollbar = function(self)
-	if not config.minimap_enabled then return prev_draw_scrollbar(self) end
+	if not config.plugins.minimap.enabled then return prev_draw_scrollbar(self) end
 
 	local x, y, w, h = self:get_scrollbar_rect()
 
@@ -190,7 +190,7 @@ DocView.draw_scrollbar = function(self)
 		                                          line_count - max_minmap_lines))
 	end
 
-	if config.minimap_draw_background then
+	if config.plugins.minimap.draw_background then
 		renderer.draw_rect(x, y, w, h, style.minimap_background or style.background)
 	end
 	-- draw visual rect
@@ -206,12 +206,12 @@ DocView.draw_scrollbar = function(self)
 	-- we try to "batch" characters so that they can be rendered as just one rectangle instead of one for each.
 	local batch_width = 0
 	local batch_start = x
-	local minimap_cutoff_x = x + config.minimap_width * SCALE
+	local minimap_cutoff_x = x + config.plugins.minimap.width * SCALE
 	local batch_syntax_type = nil
 	local function flush_batch(type)
 		local old_color = color
 		color = style.syntax[batch_syntax_type]
-		if config.minimap_syntax_highlight and color ~= nil then
+		if config.plugins.minimap.syntax_highlight and color ~= nil then
 			-- fetch and dim colors
 			color = {color[1], color[2], color[3], color[4] * 0.5}
 		else
@@ -226,7 +226,7 @@ DocView.draw_scrollbar = function(self)
 	end
 
 	-- render lines with syntax highlighting
-	if config.minimap_syntax_highlight then
+	if config.plugins.minimap.syntax_highlight then
 
 		-- keep track of the highlight type, since this needs to break batches as well
 		batch_syntax_type = nil
@@ -252,7 +252,7 @@ DocView.draw_scrollbar = function(self)
 						batch_start = batch_start + char_spacing
 					elseif char == "	" then
 						flush_batch(type)
-						batch_start = batch_start + (char_spacing * config.minimap_tab_width)
+						batch_start = batch_start + (char_spacing * config.plugins.minimap.tab_width)
 					elseif batch_start + batch_width > minimap_cutoff_x then
 						flush_batch(type)
 						break
@@ -291,9 +291,9 @@ end
 
 command.add(nil, {
 	["minimap:toggle-visibility"] = function()
-		config.minimap_enabled = not config.minimap_enabled
+		config.plugins.minimap.enabled = not config.plugins.minimap.enabled
 	end,
 	["minimap:toggle-syntax-highlighting"] = function()
-		config.minimap_syntax_highlight = not config.minimap_syntax_highlight
+		config.plugins.minimap.syntax_highlight = not config.plugins.minimap.syntax_highlight
 	end
 })

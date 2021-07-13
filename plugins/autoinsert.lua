@@ -7,18 +7,18 @@ local command = require "core.command"
 local keymap = require "core.keymap"
 
 
-config.autoinsert_map = {
+config.plugins.autoinsert = { map = {
   ["["] = "]",
   ["{"] = "}",
   ["("] = ")",
   ['"'] = '"',
   ["'"] = "'",
   ["`"] = "`",
-}
+} }
 
 
 local function is_closer(chr)
-  for _, v in pairs(config.autoinsert_map) do
+  for _, v in pairs(config.plugins.autoinsert.map) do
     if v == chr then
       return true
     end
@@ -37,7 +37,7 @@ end
 local on_text_input = DocView.on_text_input
 
 function DocView:on_text_input(text)
-  local mapping = config.autoinsert_map[text]
+  local mapping = config.plugins.autoinsert.map[text]
 
   -- prevents plugin from operating on `CommandView`
   if getmetatable(self) ~= DocView then
@@ -89,7 +89,7 @@ command.add(predicate, {
     local doc = core.active_view.doc
     local l, c = doc:get_selection()
     local chr = doc:get_char(l, c)
-    if config.autoinsert_map[doc:get_char(l, c - 1)] and is_closer(chr) then
+    if config.plugins.autoinsert.map[doc:get_char(l, c - 1)] and is_closer(chr) then
       doc:delete_to(1)
     end
     command.perform "doc:backspace"

@@ -7,11 +7,12 @@ local common = require "core.common"
 local DocView = require "core.docview"
 local Doc = require "core.doc"
 
-config.spellcheck_files = { "%.txt$", "%.md$", "%.markdown$" }
+config.plugins.spellcheck = {}
+config.spellcheck.files = { "%.txt$", "%.md$", "%.markdown$" }
 if PLATFORM == "Windows" then
-  config.dictionary_file = EXEDIR .. "/words.txt"
+  config.plugins.spellcheck.dictionary_file = EXEDIR .. "/words.txt"
 else
-  config.dictionary_file = "/usr/share/dict/words"
+  config.plugins.spellcheck.dictionary_file = "/usr/share/dict/words"
 end
 
 
@@ -22,7 +23,7 @@ local words
 core.add_thread(function()
   local t = {}
   local i = 0
-  for line in io.lines(config.dictionary_file) do
+  for line in io.lines(config.plugins.spellcheck.dictionary_file) do
     for word in line:gmatch(word_pattern) do
       t[word:lower()] = true
     end
@@ -31,7 +32,7 @@ core.add_thread(function()
   end
   words = t
   core.redraw = true
-  core.log_quiet("Finished loading dictionary file: \"%s\"", config.dictionary_file)
+  core.log_quiet("Finished loading dictionary file: \"%s\"", config.plugins.spellcheck.dictionary_file)
 end)
 
 
@@ -64,7 +65,7 @@ function DocView:draw_line_text(idx, x, y)
   draw_line_text(self, idx, x, y)
 
   if not words
-  or not matches_any(self.doc.filename or "", config.spellcheck_files) then
+  or not matches_any(self.doc.filename or "", config.plugins.spellcheck.files) then
     return
   end
 
@@ -120,7 +121,7 @@ command.add("core.docview", {
       return
     end
     if word then
-      local fp = assert(io.open(config.dictionary_file, "a"))
+      local fp = assert(io.open(config.plugins.spellcheck.dictionary_file, "a"))
       fp:write("\n" .. word .. "\n")
       fp:close()
       words[word] = true

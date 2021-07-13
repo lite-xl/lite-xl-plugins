@@ -10,18 +10,18 @@ local last_keypress = os.time()
 local looping = false
 local on_text_change = Doc.on_text_change
 -- the approximate amount of time, in seconds, that it takes to trigger an autosave
-config.autosave_timeout = 1
+config.plugins.autosave = { timeout = 1 }
 
 
 local function loop_for_save()
     while looping do
-      if os.difftime(os.time(), last_keypress) >= config.autosave_timeout then
+      if os.difftime(os.time(), last_keypress) >= config.plugins.autosave.timeout then
         command.perform "doc:save"
         -- stop loop
         looping = false
       end
       -- wait the timeout. may cause timeout to be slightly imprescise
-      coroutine.yield(config.autosave_timeout) 
+      coroutine.yield(config.plugins.autosave.timeout)
     end
 end
 

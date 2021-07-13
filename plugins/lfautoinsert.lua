@@ -5,7 +5,7 @@ local common = require "core.common"
 local config = require "core.config"
 local keymap = require "core.keymap"
 
-config.lfautoinsert_map = {
+config.plugins.lfautoinsert = { map = {
   ["{%s*\n"] = "}",
   ["%(%s*\n"] = ")",
   ["%f[[]%[%s*\n"] = "]",
@@ -36,11 +36,11 @@ config.lfautoinsert_map = {
       ["%[%[%s*\n"] = "]]"
     }
   },
-}
+} }
 
 local function get_autoinsert_map(filename)
   local map = {}
-  for pattern, closing in pairs(config.lfautoinsert_map) do
+  for pattern, closing in pairs(config.plugins.lfautoinsert.map) do
     if type(closing) == "table" then
       if common.match_pattern(filename, closing.file_patterns) then
         for p, e in pairs(closing.map) do
@@ -101,7 +101,7 @@ keymap.add {
 return {
   add = function(file_patterns, map)
     table.insert(
-      config.lfautoinsert_map,
+      config.plugins.lfautoinsert.map,
       { file_patterns = file_patterns, map=map }
     )
   end

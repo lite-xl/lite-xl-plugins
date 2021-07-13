@@ -25,32 +25,25 @@ from https://www.lua.org/pil/22.1.html
 %y	two-digit year (98) [00-99]
 %%	the character `%´
 --]]
-config.datetimestamps_format_datestamp = "%Y%m%d"
-config.datetimestamps_format_datetimestamp = "%Y%m%d_%H%M%S"
-config.datetimestamps_format_timestamp = "%H%M%S"
+config.plugins.datetimestamps = {
+  format_datestamp = "%Y%m%d"
+  format_datetimestamp = "%Y%m%d_%H%M%S"
+  format_timestamp = "%H%M%S"
+}
 
 local function datestamp()
-
-  local sOut = os.date(config.datetimestamps_format_datestamp)
-
+  local sOut = os.date(config.plugins.datetimestamps.format_datestamp)
   core.active_view.doc:text_input(sOut)
-
 end
 
 local function datetimestamp()
-
-  local sOut = os.date(config.datetimestamps_format_datetimestamp)
-
+  local sOut = os.date(config.plugins.datetimestamps.format_datetimestamp)
   core.active_view.doc:text_input(sOut)
-
 end
 
 local function timestamp()
-
-  local sOut = os.date(config.datetimestamps_format_timestamp)
-
+  local sOut = os.date(config.plugins.datetimestamps.format_timestamp)
   core.active_view.doc:text_input(sOut)
-
 end
 
 command.add("core.docview", {

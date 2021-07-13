@@ -7,9 +7,11 @@ local config = require "core.config"
 local View = require "core.view"
 
 
-config.bigclock_time_format = "%H:%M:%S"
-config.bigclock_date_format = "%A, %d %B %Y"
-config.bigclock_scale = 1
+config.plugins.bigclock = {
+  time_format = "%H:%M:%S",
+  date_format = "%A, %d %B %Y"
+  scale = 1
+}
 
 
 local ClockView = View:extend()
@@ -28,7 +30,7 @@ end
 
 
 function ClockView:update_fonts()
-  local size = math.floor(self.size.x * 0.15 / 15) * 15 * config.bigclock_scale
+  local size = math.floor(self.size.x * 0.15 / 15) * 15 * config.plugins.bigclock.scale
   if self.font_size ~= size then
     self.time_font = renderer.font.load(DATADIR .. "/fonts/font.ttf", size)
     self.date_font = renderer.font.load(DATADIR .. "/fonts/font.ttf", size * 0.3)
@@ -40,8 +42,8 @@ end
 
 
 function ClockView:update()
-  local time_text = os.date(config.bigclock_time_format)
-  local date_text = os.date(config.bigclock_date_format)
+  local time_text = os.date(config.plugins.bigclock.time_format)
+  local date_text = os.date(config.plugins.bigclock.date_format)
   if self.time_text ~= time_text or self.date_text ~= date_text then
     core.redraw = true
     self.time_text = time_text

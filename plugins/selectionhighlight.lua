@@ -1,7 +1,6 @@
 -- mod-version:1 -- lite-xl 2.00
 local style = require "core.style"
 local DocView = require "core.docview"
-local config = require "core.config"
 
 -- originally written by luveti
 
