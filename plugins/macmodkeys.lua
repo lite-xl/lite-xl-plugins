@@ -1,4 +1,4 @@
--- mod-version:1 -- lite-xl 1.16
+-- mod-version:1 -- lite-xl 2.00
 local keymap = require "core.keymap"
 
 local on_key_pressed = keymap.on_key_pressed

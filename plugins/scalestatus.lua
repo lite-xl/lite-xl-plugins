@@ -1,4 +1,4 @@
--- mod-version:1 -- lite-xl 1.16
+-- mod-version:1 -- lite-xl 2.00
 --[[
     scalestatus.lua
     displays current scale (zoom) in status view

@@ -1,4 +1,4 @@
--- mod-version:1 -- lite-xl 1.16
+-- mod-version:1 -- lite-xl 2.00
 local core = require "core"
 local style = require "core.style"
 local config = require "core.config"

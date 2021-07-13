@@ -1,4 +1,4 @@
--- mod-version:1 -- lite-xl 1.16
+-- mod-version:1 -- lite-xl 2.00
 local core = require "core"
 
 -- Load a specific theme when the filename of an active document does match

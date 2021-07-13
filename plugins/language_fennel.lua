@@ -1,4 +1,4 @@
--- mod-version:1 -- lite-xl 1.16
+-- mod-version:1 -- lite-xl 2.00
 -- Support for the Fennel programming language: https://fennel-lang.org
 -- Covers all the keywords up to Fennel version 0.4.0
 

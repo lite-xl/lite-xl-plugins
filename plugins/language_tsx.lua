@@ -1,4 +1,4 @@
--- mod-version:1 -- lite-xl 1.16
+-- mod-version:1 -- lite-xl 2.00
 -- Almost identical to JS, with the exception that / shouldn't denote a regex. Current JS syntax highlighter will highlight half the document due to closing tags.
 local syntax = require "core.syntax"
 

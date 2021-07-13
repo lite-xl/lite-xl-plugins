@@ -1,4 +1,4 @@
--- mod-version:1 -- lite-xl 1.16
+-- mod-version:1 -- lite-xl 2.00
 --[[
     language_phps.lua
     complement to language_php.lua providing the php syntax support

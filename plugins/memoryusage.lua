@@ -1,4 +1,4 @@
--- mod-version:1 -- lite-xl 1.16
+-- mod-version:1 -- lite-xl 2.00
 -- original implementation by AqilCont
 local style = require "core.style"
 local StatusView = require "core.statusview"

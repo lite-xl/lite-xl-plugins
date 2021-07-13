@@ -1,4 +1,4 @@
--- mod-version:1 -- lite-xl 1.16
+-- mod-version:1 -- lite-xl 2.00
 --[[
     language_php.lua
     provides php syntax support allowing mixed html, css and js

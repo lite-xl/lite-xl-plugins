@@ -1,4 +1,4 @@
--- mod-version:1 -- lite-xl 1.16
+-- mod-version:1 -- lite-xl 2.00
 -- Support for the GDScript programming language: https://godotengine.org/
 -- Covers the most used keywords up to Godot version 3.2.x
 
