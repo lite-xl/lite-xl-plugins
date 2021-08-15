@@ -95,6 +95,7 @@ Plugin | Description
 [`lfautoinsert`](plugins/lfautoinsert.lua?raw=1) | Automatically inserts indentation and closing bracket/text after newline
 [`linecopypaste`](plugins/linecopypaste.lua?raw=1) | Copy, cut and paste the current line when nothing is selected
 [*`lineguide`*](plugins/lineguide.lua?raw=1) | Displays a line-guide at the line limit offset *([screenshot](https://user-images.githubusercontent.com/3920290/81476159-2cf70000-9208-11ea-928b-9dae3884c477.png))*
+[`linenumbers`](plugins/linenumbers.lua?raw=1) | The ability to change the display of the line number *([screenshot](https://user-images.githubusercontent.com/5556081/129493788-6a4cbd7a-9074-4133-bab7-110ed55f18f7.png))*
 [`linter`](https://github.com/drmargarido/linters)* | Linters for multiple languages
 [`lint+`](https://github.com/liquid600pgm/lintplus)* | Advanced linter with ErrorLens-like error reporting. Compatible with linters made for `linter` *([screenshot](https://raw.githubusercontent.com/liquid600pgm/lintplus/master/screenshots/1.png))*
 [`macmodkeys`](plugins/macmodkeys.lua?raw=1) | Remaps mac modkeys `command/option` to `ctrl/alt`
@@ -109,8 +110,8 @@ Plugin | Description
 ~~[`projectmanager`](plugins/projectmanager.lua?raw=1)~~ | Integrated in lite-xl with improvements ~~Save projects and load/reload them quickly~~
 [`pdfview`](plugins/pdfview.lua?raw=1) | PDF preview for TeX files
 [`rainbowparen`](plugins/rainbowparen.lua?raw=1) | Show nesting of parentheses with rainbow colours
-[`restoretabs`](plugins/restoretabs.lua?raw=1) | Keep a list of recently closed tabs, and restore the tab in order on cntrl+shift+t.
 [`regexreplaceplugin`](plugins/regexreplaceplugin.lua?raw=1) | Allows for you to write a regex and its replacement in one go, and live preview the results.
+[`restoretabs`](plugins/restoretabs.lua?raw=1) | Keep a list of recently closed tabs, and restore the tab in order on cntrl+shift+t.
 *[`scale`](plugins/scale.lua?raw=1)* | Provides support for dynamically adjusting the scale of the code font / UI (`ctrl+-`, `ctrl+=`)
 [`scalestatus`](plugins/scalestatus.lua?raw=1) | Displays current scale (zoom) in status view (depends on scale plugin)
 [`selectionhighlight`](plugins/selectionhighlight.lua?raw=1) | Highlights regions of code that match the current selection *([screenshot](https://user-images.githubusercontent.com/3920290/80710883-5f597c80-8ae7-11ea-97f0-76dfacc08439.png))*
