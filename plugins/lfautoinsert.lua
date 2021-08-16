@@ -13,6 +13,7 @@ config.lfautoinsert_map = {
   [":%s*\n"] = false,
   ["->%s*\n"] = false,
   ["^%s*<([^/][^%s>]*)[^>]*>%s*\n"] = "</$TEXT>",
+  ["^%s*{{#([^/][^%s}]*)[^}]*}}%s*\n"] = "{{/$TEXT}}",
   ["/%*%s*\n"] = "*/",
   ["c/c++"] = {
     file_patterns = {
