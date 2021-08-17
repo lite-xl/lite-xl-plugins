@@ -2,7 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
-  files = { "%.sass$" },
+  files = { "%.sass$" ,"%.scss$"},
   comment = "//",
   patterns = {
     { pattern = "/[/%*].-\n",             type = "comment"  },

@@ -39,6 +39,7 @@ syntax.add {
     ["while"]       = "keyword",
     ["var"]             = "keyword",
     ["anytype"]         = "keyword",
+    ["anyframe"] = "keyword",
     ["const"]           = "keyword",
     ["test"]            = "keyword",
     ["packed"]          = "keyword",
@@ -76,6 +77,10 @@ syntax.add {
     ["enum"] = "keyword",
     ["union"] = "keyword",
     ["opaque"] = "keyword",
+    ["inline"] = "keyword",
+    ["allowzero"] = "keyword",
+    ["noalias"] = "keyword",
+    ["nosuspend"] = "keyword",
 
     -- types
     ["f16"] = "keyword2",

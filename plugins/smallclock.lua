@@ -9,7 +9,7 @@ core.add_thread(function()
   while true do
     local t = os.date("*t")
     time = string.format("%02d:%02d", t.hour, t.min)
-    coroutine.yield()
+    coroutine.yield(1)
   end
 end)
 

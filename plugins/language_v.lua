@@ -45,8 +45,8 @@ syntax.add {
     ["match"] = "keyword",
     ["module"] = "keyword",
     ["mut"] = "keyword2",
-    ["none"] = "keyword",
     ["or"] = "keyword",
+    ["pub"] = "keyword",
     ["return"] = "keyword",
     ["rlock"] = "keyword",
     ["select"] = "keyword",
@@ -63,7 +63,7 @@ syntax.add {
 
     ["true"] = "literal",
     ["false"] = "literal",
-    ["pub"] = "literal",
+    ["none"] = "literal",
   },
 }
 

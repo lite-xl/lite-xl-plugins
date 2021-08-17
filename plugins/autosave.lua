@@ -2,7 +2,6 @@
 local core = require "core"
 local config = require "core.config"
 local Doc = require "core.doc"
-local DocView = require "core.docview"
 local command = require "core.command"
 -- this is used to detect the wait time
 local last_keypress = os.time()
@@ -42,5 +41,5 @@ function Doc:on_text_change(type)
   if self.filename then
     updatepress()
   end
-  return on_text_change(type)
+  return on_text_change(self, type)
 end
