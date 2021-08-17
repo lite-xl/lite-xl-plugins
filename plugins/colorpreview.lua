@@ -1,4 +1,4 @@
--- mod-version:1 -- lite-xl 2.00
+-- mod-version:2 -- lite-xl 2.0
 local common = require "core.common"
 local DocView = require "core.docview"
 

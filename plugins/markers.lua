@@ -1,4 +1,4 @@
--- mod-version:1 -- lite-xl 2.00
+-- mod-version:2 -- lite-xl 2.0
 -- Markers plugin for lite text editor
 -- original implementation by Petri Häkkinen
 
