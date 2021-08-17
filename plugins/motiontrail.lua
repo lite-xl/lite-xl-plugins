@@ -1,10 +1,10 @@
--- mod-version:1 -- lite-xl 1.16
+-- mod-version:2 -- lite-xl 2.0
 local core = require "core"
 local config = require "core.config"
 local style = require "core.style"
 local DocView = require "core.docview"
 
-config.motiontrail_steps = 50
+config.plugins.motiontrail = { steps = 50 }
 
 
 local function lerp(a, b, t)
@@ -32,7 +32,7 @@ function DocView:draw(...)
 
   if last_view == self and (x ~= last_x or y ~= last_y) then
     local lx = x
-    for i = 0, 1, 1 / config.motiontrail_steps do
+    for i = 0, 1, 1 / config.plugins.motiontrail.steps do
       local ix = lerp(x, last_x, i)
       local iy = lerp(y, last_y, i)
       local iw = math.max(w, math.ceil(math.abs(ix - lx)))
