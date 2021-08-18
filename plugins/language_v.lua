@@ -44,7 +44,6 @@ syntax.add {
     ["lock"] = "keyword",
     ["match"] = "keyword",
     ["module"] = "keyword",
-    ["mut"] = "keyword2",
     ["or"] = "keyword",
     ["pub"] = "keyword",
     ["return"] = "keyword",
@@ -59,11 +58,30 @@ syntax.add {
     ["union"] = "keyword",
     ["unsafe"] = "keyword",
     ["__offsetof"] = "keyword",
-
-
+    
+    ["mut"] = "keyword2",
+    ["i8"] = "keyword2",
+    ["i16"] = "keyword2",
+    ["int"] = "keyword2",
+    ["i64"] = "keyword2",
+    ["i128"] = "keyword2",
+    ["u8"] = "keyword2",
+    ["u16"] = "keyword2",
+    ["u32"] = "keyword2",
+    ["u64"] = "keyword2",
+    ["u128"] = "keyword2",
+    ["f32"] = "keyword2",
+    ["f64"] = "keyword2",
+    ["map"] = "keyword2",
+    ["string"] = "keyword2",
+    ["voidptr"] = "keyword2",
+    ["byte"] = "keyword2",
+    ["rune"] = "keyword2",
+    ["chan"] = "keyword2",
+    ["char"] = "keyword2",
+    
     ["true"] = "literal",
     ["false"] = "literal",
     ["none"] = "literal",
   },
 }
-
