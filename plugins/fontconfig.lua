@@ -7,13 +7,18 @@ local config = require "core.config"
 
 --[[
     Example config (put it in user module):
+
     ```
-    local fc = require "plugins.fontconfig"
-    fc(
-        { name = "sans", size = 13 * SCALE },     -- UI font
-        { name = "monospace", size = 13 * SCALE } -- code font
-    )
+    local fontconfig = require "plugins.fontconfig"
+    fontconfig.use {
+	font = { name = 'sans', size = 13 * SCALE },
+	code_font = { name = 'monospace', size = 13 * SCALE },
+    }
     ```
+
+    if you want the fonts to load instantaneously on startup,
+    you can try your luck on fontconfig.use_blocking. I won't be responsible for
+    the slow startup time.
 ]]
 
 local function resolve_font(spec)
@@ -23,35 +28,64 @@ local function resolve_font(spec)
         stdout = subprocess.REDIRECT_PIPE,
         stderr = subprocess.REDIRECT_STDOUT
     })
-    local prev, lines = {}, {}
+    local prev
+    local lines = {}
     while proc:running() do
         coroutine.yield(scan_rate)
         local buf = proc:read_stdout()
-        local p, _, n = string.match(buf, "(.+)\n(.+)")
-        if p then
-            prev[#prev + 1] = p
-            lines[#lines + 1] = table.concat(prev, "")
-            prev = { n }
-        else
-            prev[#prev + 1] = buf
-        end
+	if type(buf) == "string" then
+		local last_line_start = 1
+		for line, ln in string.gmatch(buf, "([^\n]-)\n()") do
+			last_line_start = ln
+			if prev then line = prev .. line end
+			table.insert(lines, line)
+		end
+		prev = last_line_start < #buf and string.sub(buf, last_line_start)
+	end
     end
-    table.insert(lines, table.concat(prev, ""))
+    if prev then table.insert(lines, prev) end
 
     if proc:returncode() ~= 0 or #lines < 1 then
         error(string.format("Cannot find a font matching the given specs: %q", spec), 0)
     end
-    -- maybe in the future we can detect and do glyph substitution here...
     return lines[1]
 end
 
-local function load_system_fonts(font, code_font)
-    core.add_thread(function()
-        local font_file = resolve_font(font.name)
-        local code_font_file = resolve_font(code_font.name)
-        style.font = renderer.font.load(font_file, font.size, font)
-        style.code_font = renderer.font.load(code_font_file, code_font.size, code_font)
-    end)
+
+local M = {}
+
+function M.load(font_name, font_size, font_opt)
+	local font_file = resolve_font(font_name)
+	return renderer.font.load(font_file, font_size, font_opt)
 end
 
-return load_system_fonts
+function M.load_blocking(font_name, font_size, font_opt)
+	local co = coroutine.create(function()
+		return M.load(font_name, font_size, font_opt)
+	end)
+	local result
+	while coroutine.status(co) ~= "dead" do
+		local ok, err = coroutine.resume(co)
+		if not ok then error(err) end
+		result = err
+	end
+	return result
+end
+
+function M.use(spec)
+	core.add_thread(function()
+		for key, value in pairs(spec) do
+			style[key] = M.load(value.name, value.size, value)
+		end
+	end)
+end
+
+-- there is basically no need for this, but for the sake of completeness
+-- I'll leave this here
+function M.use_blocking(spec)
+	for key, value in pairs(spec) do
+		style[key] = M.load_blocking(value.name, value.size, value)
+	end
+end
+
+return M
