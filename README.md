@@ -131,5 +131,5 @@ Plugin | Description
 [`togglesnakecamel`](plugins/togglesnakecamel.lua?raw=1) | Toggles symbols between `snake_case` and `camelCase`
 [`unboundedscroll`](plugins/unboundedscroll.lua?raw=1) | Allows scrolling outside the bounds of a document
 *[`updatechecker`](https://github.com/vincens2005/lite-xl-updatechecker)** | Automatically checks for updates and notifies you
-*[`vibe`](https://github.com/eugenpt/lite-xl-vibe)* | VI(vim?) bindings with a hint of DOOM Emacs, for lite-xl
+*[`vibe`](https://github.com/eugenpt/lite-xl-vibe)** | VI(vim?) bindings with a hint of DOOM Emacs, for lite-xl
 ~~[`workspace`](plugins/workspace.lua?raw=1)~~ | Integrated in lite-xl ~~Retains project's layout and open documents between sessions~~
