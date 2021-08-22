@@ -35,6 +35,7 @@ Plugin | Description
 [`exec`](plugins/exec.lua?raw=1) | Runs selected text through shell command and replaces with result
 [`ephemeraldocviews`](plugins/ephemeraldocviews.lua?raw=1) | Preview tabs. Opening a doc will replace the contents of the preview tab. Marks tabs as non-preview on any change.
 [`fallbackfonts`](https://github.com/takase1121/lite-fallback-fonts)* | Adds support for fallback fonts *([gif](https://raw.githubusercontent.com/takase1121/lite-fallback-fonts/master/assets/Iw18fI57J0.gif))*
+[`fontconfig`](plugins/fontconfig.lua?raw=1) | Allows users to load fonts with [fontconfig](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html).
 [`formatter`](https://github.com/vincens2005/lite-formatters)* | formatters for various languages
 [`ghmarkdown`](plugins/ghmarkdown.lua?raw=1) | Opens a preview of the current markdown file in a browser window *([screenshot](https://user-images.githubusercontent.com/3920290/82754898-f7394600-9dc7-11ea-8278-2305363ed372.png))*
 *[`gitdiff_highlight`](https://github.com/vincens2005/lite-xl-gitdiff-highlight)** | highlight changed lines from git *([screenshot](https://raw.githubusercontent.com/vincens2005/lite-xl-gitdiff-highlight/master/screenshot.png))*
