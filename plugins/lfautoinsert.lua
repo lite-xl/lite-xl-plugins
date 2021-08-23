@@ -41,6 +41,7 @@ config.plugins.lfautoinsert = { map = {
 
 local function get_autoinsert_map(filename)
   local map = {}
+  if not filename then return map end
   for pattern, closing in pairs(config.plugins.lfautoinsert.map) do
     if type(closing) == "table" then
       if common.match_pattern(filename, closing.file_patterns) then
