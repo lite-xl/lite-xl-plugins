@@ -45,6 +45,7 @@ Plugin | Description
 [`hidestatus`](plugins/hidestatus.lua?raw=1) | Hides the status bar at the bottom of the window
 ~~[`inanimate`](plugins/inanimate.lua?raw=1)~~ | Integrated in lite-xl using `config.transitions = false` ~~Disables all transition animations~~
 *[`indentguide`](plugins/indentguide.lua?raw=1)* | Adds indent guides *([screenshot](https://user-images.githubusercontent.com/3920290/79640716-f9860000-818a-11ea-9c3b-26d10dd0e0c0.png))*
+*[`Kinc Projects`](https://github.com/Kode-Community/kinc_plugin)** | Adds [Kinc](https://github.com/Kode/Kinc) Project generation with basic build commands(depends on [`console`](https://github.com/franko/console))
 [`language_angelscript`](plugins/language_angelscript.lua?raw=1) | Syntax for the [Angelscript](https://www.angelcode.com/angelscript/) programming language
 [`language_batch`](plugins/language_batch.lua?raw=1) | Syntax for Windows [Batch Files](https://en.wikipedia.org/wiki/Batch_file)
 [`language_bib`](plugins/language_bib.lua?raw=1) | Syntax for [BibTex](https://en.wikipedia.org/wiki/BibTeX) files
