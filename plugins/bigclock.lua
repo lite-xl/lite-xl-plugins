@@ -9,7 +9,7 @@ local View = require "core.view"
 
 config.plugins.bigclock = {
   time_format = "%H:%M:%S",
-  date_format = "%A, %d %B %Y"
+  date_format = "%A, %d %B %Y",
   scale = 1
 }
 
