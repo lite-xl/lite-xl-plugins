@@ -28,7 +28,11 @@ command.map["doc:cut"].perform = function()
   else
     local line = doc():get_selection()
     system.set_clipboard(doc().lines[line])
-    doc():remove(line, 1, line+1, 1)
+    if line < #(doc().lines) then
+      doc():remove(line, 1, line+1, 1)
+    else -- last line in file
+      doc():remove(line, 1, line, #(doc().lines[line]))
+    end
     doc():set_selection(line, 1)
     line_in_clipboard = true
   end
