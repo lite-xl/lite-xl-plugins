@@ -11,7 +11,7 @@ local RootView = require "core.rootview"
 local View = require "core.view"
 
 
-local function validate_utf8(s)
+local function validate_utf8(s, limit)
   --[[
     MIT LICENSE
     Copyright (c) 2013 Enrique García Cota
@@ -32,7 +32,8 @@ local function validate_utf8(s)
     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   ]]
-  local p, len = 1, #s
+  limit = limit or math.huge
+  local i, p, len = 1, 1, #s
   while p <= len do
     if     p == s:find("[%z\1-\127]", p) then p = p + 1
     elseif p == s:find("[\194-\223][\128-\191]", p) then p = p + 2
@@ -46,6 +47,8 @@ local function validate_utf8(s)
     else
       return false
     end
+    i = i + 1
+    if i > limit then break end
   end
 
   return true
@@ -158,10 +161,21 @@ function OpenExtView:draw()
 end
 
 
+local function read_from_doc(doc, limit)
+  local l, result = 0, {}
+  for _, line in ipairs(doc.lines) do
+    result[#result+1] = line
+    l = l + #line
+    if l >= limit then break end
+  end
+  return table.concat(result, "")
+end
+
+
 local rootview_open_doc = RootView.open_doc
 function RootView:open_doc(doc)
-  local line = string.sub(doc.lines[1] or "", 1, 128)
-  if line == "\n" or line == "" and validate_utf8(line) then
+  local str = read_from_doc(doc, 4 * 128) -- max size for 128 codepoints
+  if str == "\n" or str == "" and validate_utf8(str, 128) then
     return rootview_open_doc(self, doc)
   else
     local node = self:get_active_node_default()
