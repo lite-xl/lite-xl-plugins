@@ -62,14 +62,6 @@ local function replace_view(this, that)
 end
 
 
-local function merge(a, ...)
-  local r = {}
-  for i, v in ipairs(a) do r[i] = v end
-  for i, v in ipairs { ... } do r[#r+1] = v end
-  return r
-end
-
-
 local msg = "This file is not displayed because it is either binary or uses an unsupported text encoding."
 local cmd -- here's evil code again...
 if PLATFORM == "Windows" then
