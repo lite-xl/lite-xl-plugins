@@ -82,7 +82,7 @@ Plugin | Description
 [`language_pony`*](https://github.com/MrAnyx/lite-plugin-pony) | Syntax for [Pony](https://www.ponylang.io/) programming language
 [`language_powershell`](plugins/language_powershell.lua?raw=1) | Syntax for [PowerShell](https://docs.microsoft.com/en-us/powershell) scripting language
 [`language_psql`](plugins/language_psql.lua?raw=1) | Syntax for the postgresql database access language
-[`language_r`] (plugins/language_R.lua?raw=1) | Syntax for [R](https://www.r-project.org/) scripting language
+[`language_r`](plugins/language_R.lua?raw=1) | Syntax for [R](https://www.r-project.org/) scripting language
 [`language_rescript`](plugins/language_rescript.lua?raw=1) | Syntax for the [ReScript](https://rescript-lang.org/) programming language
 [`language_rust`](plugins/language_rust.lua?raw=1) | Syntax for the [Rust](https://rust-lang.org/) programming language
 [`language_ruby`](plugins/language_ruby.lua?raw=1) | Syntax for the [Ruby](https://www.ruby-lang.org/) programming language
