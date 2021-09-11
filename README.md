@@ -79,8 +79,10 @@ Plugin | Description
 [`language_php`](plugins/language_php.lua?raw=1) | Syntax for the [PHP](https://php.net) programming language
 [`language_pico8`](plugins/language_pico8.lua?raw=1) | Syntax for [Pico-8](https://www.lexaloffle.com/pico-8.php) cartridge files
 [`language_po`](plugins/language_po.lua?raw=1) | Syntax for [PO](https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html) translation files
+[`language_pony`*](https://github.com/MrAnyx/lite-plugin-pony) | Syntax for [Pony](https://www.ponylang.io/) programming language
 [`language_powershell`](plugins/language_powershell.lua?raw=1) | Syntax for [PowerShell](https://docs.microsoft.com/en-us/powershell) scripting language
 [`language_psql`](plugins/language_psql.lua?raw=1) | Syntax for the postgresql database access language
+[`language_rescript`](plugins/language_rescript.lua?raw=1) | Syntax for the [ReScript](https://rescript-lang.org/) programming language
 [`language_rust`](plugins/language_rust.lua?raw=1) | Syntax for the [Rust](https://rust-lang.org/) programming language
 [`language_ruby`](plugins/language_ruby.lua?raw=1) | Syntax for the [Ruby](https://www.ruby-lang.org/) programming language
 [`language sass`](plugins/language_sass.lua?raw=1) | Syntax for the [Sass](https://sass-lang.com/) CSS preprocessor
