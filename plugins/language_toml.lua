@@ -1,4 +1,4 @@
--- lite-xl 1.16
+-- mod-version:2
 
 local syntax = require "core.syntax"
 

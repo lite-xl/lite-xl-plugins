@@ -289,6 +289,13 @@ DocView.draw_scrollbar = function(self)
 
 end
 
+local prev_update = DocView.update
+DocView.update = function (self)
+	if not config.plugins.minimap.enabled then return prev_update(self) end
+	self.size.x = self.size.x - config.plugins.minimap.width * SCALE
+	return prev_update(self)
+end
+
 command.add(nil, {
 	["minimap:toggle-visibility"] = function()
 		config.plugins.minimap.enabled = not config.plugins.minimap.enabled
