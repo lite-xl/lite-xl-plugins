@@ -78,6 +78,10 @@ end -- DocView:on_mouse_moved
 -- override DocView:on_mouse_pressed
 local on_mouse_pressed = DocView.on_mouse_pressed
 function DocView:on_mouse_pressed(button, x, y, clicks)
+    local caught = DocView.super.on_mouse_pressed(self, button, x, y, clicks)
+    if caught then
+        return caught
+    end
     -- no need to proceed if not left button or has no selection
     if ('left' ~= button)
       or (not self.doc:has_selection())
