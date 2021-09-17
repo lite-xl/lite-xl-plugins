@@ -12,6 +12,7 @@
 local DocView = require "core.docview"
 local core = require "core"
 local keymap = require "core.keymap"
+local style = require "core.style"
 
 -- helper function for on_mouse_pressed to determine if mouse down is in selection
 -- iLine is line number where mouse down happened
@@ -28,6 +29,13 @@ local function isInSelection(iLine, iCol, iSelLine1, iSelCol1, iSelLine2, iSelCo
     return true
 end -- isInSelection
 
+-- distance between two points
+local function distance(x1, y1, x2, y2)
+    return math.sqrt(math.pow(x2-x1, 2)+math.pow(y2-y1, 2))
+end
+
+local min_drag = style.code_font:get_width(" ")
+
 -- override DocView:on_mouse_moved
 local on_mouse_moved = DocView.on_mouse_moved
 function DocView:on_mouse_moved(x, y, ...)
@@ -35,29 +43,29 @@ function DocView:on_mouse_moved(x, y, ...)
     local sCursor = nil
 
     -- make sure we only act if previously on_mouse_pressed was in selection
-    if self.bClickedIntoSelection then
+    if self.bClickedIntoSelection and
+       ( -- we are already dragging or we moved enough to start dragging
+         not self.drag_start_loc or
+         distance(self.drag_start_loc[1],self.drag_start_loc[2], x, y) > min_drag
+       ) then
+        self.drag_start_loc = nil
 
         -- show that we are dragging something
         sCursor = 'hand'
 
-        -- check for modifier to duplicate
-        -- (may want to set a flag as this only needs to be done once)
-        -- TODO: make image to drag with and/or hand over to OS dnd event
-        if not keymap.modkeys['ctrl'] then
-            -- TODO: maybe check if moved at all and only delete then or
-            -- as some editors do, only when dropped. I do like it going
-            -- instantly as that reduces the travel-distance.
-            self.doc:delete_to(0)
-            --sCursor = 'arrowWithPlus' -- 'handWithPlus'
-        end
-
         -- calculate line and column for current mouse position
         local iLine, iCol = self:resolve_screen_position(x, y)
-        -- move text cursor
-        self.doc:set_selection(iLine, iCol)
+        local iSelLine1 = self.dragged_selection[1]
+        local iSelCol1  = self.dragged_selection[2]
+        local iSelLine2 = self.dragged_selection[3]
+        local iSelCol2  = self.dragged_selection[4]
+        self.doc:set_selection(iSelLine1, iSelCol1, iSelLine2, iSelCol2)
+        if not isInSelection(iLine, iCol, iSelLine1, iSelCol1, iSelLine2, iSelCol2) then
+            -- show cursor only if outside selection
+            self.doc:add_selection(iLine, iCol)
+        end
         -- update scroll position
         self:scroll_to_line(iLine, true)
-
     end -- if previously clicked into selection
 
     -- hand off to 'old' on_mouse_moved()
@@ -70,7 +78,10 @@ end -- DocView:on_mouse_moved
 -- override DocView:on_mouse_pressed
 local on_mouse_pressed = DocView.on_mouse_pressed
 function DocView:on_mouse_pressed(button, x, y, clicks)
-
+    local caught = DocView.super.on_mouse_pressed(self, button, x, y, clicks)
+    if caught then
+        return caught
+    end
     -- no need to proceed if not left button or has no selection
     if ('left' ~= button)
       or (not self.doc:has_selection())
@@ -85,29 +96,70 @@ function DocView:on_mouse_pressed(button, x, y, clicks)
     self.bClickedIntoSelection = isInSelection(iLine, iCol, iSelLine1, iSelCol1,
                                                iSelLine2, iSelCol2)
     if self.bClickedIntoSelection then
+        self.drag_start_loc = { x, y }
         -- stash selection for inserting later
         self.sDraggedText = self.doc:get_text(self.doc:get_selection())
+        self.dragged_selection = { iSelLine1, iSelCol1, iSelLine2, iSelCol2 }
     else
+        self.bClickedIntoSelection = nil
+        self.dragged_selection = nil
         -- let 'old' on_mouse_pressed() do whatever it needs to do
         on_mouse_pressed(self, button, x, y, clicks)
     end
-
 end -- DocView:on_mouse_pressed
 
 -- override DocView:on_mouse_released()
 local on_mouse_released = DocView.on_mouse_released
-function DocView:on_mouse_released(button)
-
+function DocView:on_mouse_released(button, x, y)
+    local iLine, iCol = self:resolve_screen_position(x, y)
     if self.bClickedIntoSelection then
-        -- insert stashed selected text at current position
-        self.doc:text_input(self.sDraggedText)
+        local iSelLine1, iSelCol1, iSelLine2, iSelCol2 = table.unpack(self.dragged_selection)
+        if not self.drag_start_loc
+           and not isInSelection(iLine, iCol, iSelLine1, iSelCol1, iSelLine2, iSelCol2) then
+            -- insert stashed selected text at current position
+            if iLine < iSelLine1 or (iLine == iSelLine1 and iCol < iSelCol1) then
+                -- delete first
+                self.doc:set_selection(iSelLine1, iSelCol1, iSelLine2, iSelCol2)
+                if not keymap.modkeys['ctrl'] then
+                    self.doc:delete_to(0)
+                end
+                self.doc:set_selection(iLine, iCol)
+                self.doc:text_input(self.sDraggedText)
+            else
+                -- insert first
+                self.doc:set_selection(iLine, iCol)
+                self.doc:text_input(self.sDraggedText)
+                self.doc:set_selection(iSelLine1, iSelCol1, iSelLine2, iSelCol2)
+                if not keymap.modkeys['ctrl'] then
+                    self.doc:delete_to(0)
+                end
+                self.doc:set_selection(iLine, iCol)
+            end
+        elseif self.drag_start_loc then
+            -- deselect only if the drag never happened
+            self.doc:set_selection(iLine, iCol)
+        end
         -- unset stash and flag(s) TODO:
         self.sDraggedText = ''
         self.bClickedIntoSelection = nil
     end
 
     -- hand over to old handler
-    on_mouse_released(self, button)
+    on_mouse_released(self, button, x, y)
 
 end -- DocView:on_mouse_released
 
+-- override DocView:draw_caret()
+local draw_caret = DocView.draw_caret
+function DocView:draw_caret(x, y)
+    if self.bClickedIntoSelection then
+        local iLine, iCol = self:resolve_screen_position(x, y)
+        -- don't show carets inside selections
+        if isInSelection(iLine, iCol,
+                         self.dragged_selection[1], self.dragged_selection[2],
+                         self.dragged_selection[3], self.dragged_selection[4]) then
+            return
+        end
+    end
+    draw_caret(self, x, y)
+end -- DocView:draw_caret()
