@@ -17,13 +17,18 @@ local keymap = require "core.keymap"
 --   view_command = "evince",
 -- }
 --
--- On windows you may use the full path for the commands like:
+-- as long as the commands are in your PATH.
+--
+-- On Windows, if the commands are not in your PATH, you may use the full path
+-- of the executable like, for example:
 --
 -- config.texcompile = {
---   latex_command = [[c:\miktex\miktex\bin\x64\pdflatex.exe]],
---   view_command = [[c:\miktex\miktex\bin\x64\miktex-texworks.exe]],
+--   latex_command = [[C:\miktex\miktex\bin\x64\pdflatex.exe]],
+--   view_command = [[C:\Program^ Files\SumatraPDF\SumatraPDF.exe]],
 -- }
 --
+-- Note that in the example we have used "^ " for spaces that appear in the path.
+-- It is required on Windows for path or file names that contains space characters.
 
 command.add("core.docview", {
   ["texcompile:tex-compile"] = function()
@@ -32,12 +37,12 @@ command.add("core.docview", {
     local texpath = common.dirname(core.active_view:get_filename())
     local pdfname = texname:gsub("%.tex$", ".pdf")
 
-    -- LaTeX compiler - is there any provided by the environment
+    -- LaTeX compiler as configured in config.texcompile
     local texcmd = config.texcompile and config.texcompile.latex_command
     local viewcmd = config.texcompile and config.texcompile.view_command
 
     if not texcmd then
-      core.log("No LaTeX compiler provided.")
+      core.log("No LaTeX compiler provided in config.")
     else
       core.log("LaTeX compiler is %s, compiling %s", texcmd, texname)
 
