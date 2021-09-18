@@ -19,6 +19,10 @@ local keymap = require "core.keymap"
 --
 -- as long as the commands are in your PATH.
 --
+-- Options can be passed as part of the command for example like in:
+--
+-- latex_command = "latex -pdf -pdflatex -c".
+--
 -- On Windows, if the commands are not in your PATH, you may use the full path
 -- of the executable like, for example:
 --
