@@ -1,4 +1,4 @@
--- lite-xl 2.00
+-- mod-version:2 -- lite-xl 2.00
 local core = require "core"
 local style = require "core.style"
 local status_view = require "core.statusview"
