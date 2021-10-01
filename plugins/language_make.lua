@@ -8,7 +8,7 @@ syntax.add {
     { pattern = "#.*\n",                  type = "comment"  },
     { pattern = [[\.]],                   type = "normal"   },
     { pattern = "$[@^<%%?+|*]",           type = "keyword2" },
-    { pattern = "$%(.-%)",                type = "variable" },
+    { pattern = "$%(.-%)",                type = "symbol"   },
     { pattern = "%f[%w_][%d%.]+%f[^%w_]", type = "number"   },
     { pattern = "%..*:",                  type = "keyword2" },
     { pattern = ".*:",                    type = "function" },
