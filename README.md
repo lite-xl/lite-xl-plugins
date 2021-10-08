@@ -63,6 +63,7 @@ Plugin | Description
 [`language_go`](plugins/language_go.lua?raw=1) | Syntax for the [Go](https://golang.org/) programming language
 [`language_hlsl`](plugins/language_hlsl.lua?raw=1) | Syntax for the [HLSL](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl) programming language
 [`language_hs`](plugins/language_hs.lua?raw=1) | Syntax for the [Haskell](https://www.haskell.org/) programming language
+[`language_ini`](plugins/language_ini.lua?raw=1) | Syntax for [ini](https://en.wikipedia.org/wiki/INI_file) files
 [`language_java`](plugins/language_java.lua?raw=1) | Syntax for the [Java](https://en.wikipedia.org/wiki/Java_(programming_language)) programming language
 [`language_jiyu`](plugins/language_jiyu.lua?raw=1) | Syntax for the [jiyu](https://github.com/machinamentum/jiyu) programming language
 [`language_jsx`](plugins/language_jsx.lua?raw=1) | Syntax for the [JSX](https://reactjs.org/docs/introducing-jsx.html) language for the React framework in JavaScript
