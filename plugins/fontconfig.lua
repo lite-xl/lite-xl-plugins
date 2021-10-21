@@ -32,18 +32,18 @@ local function resolve_font(spec)
   })
   local prev
   local lines = {}
-  while proc:running() do
+  while true do
     coroutine.yield(scan_rate)
     local buf = proc:read_stdout()
-    if type(buf) == "string" then
-      local last_line_start = 1
-      for line, ln in string.gmatch(buf, "([^\n]-)\n()") do
-        last_line_start = ln
-        if prev then line = prev .. line end
-        table.insert(lines, line)
-      end
-      prev = last_line_start < #buf and string.sub(buf, last_line_start)
+    if not buf then break end
+
+    local last_line_start = 1
+    for line, ln in string.gmatch(buf, "([^\n]-)\n()") do
+      last_line_start = ln
+      if prev then line = prev .. line end
+      table.insert(lines, line)
     end
+    prev = last_line_start < #buf and string.sub(buf, last_line_start)
   end
   if prev then table.insert(lines, prev) end
 
