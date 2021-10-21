@@ -11,30 +11,9 @@ local RootView = require "core.rootview"
 local View = require "core.view"
 
 
-local function validate_utf8(s, limit)
-  --[[
-    MIT LICENSE
-    Copyright (c) 2013 Enrique García Cota
-    Permission is hereby granted, free of charge, to any person obtaining a
-    copy of this software and associated documentation files (the
-    "Software"), to deal in the Software without restriction, including
-    without limitation the rights to use, copy, modify, merge, publish,
-    distribute, sublicense, and/or sell copies of the Software, and to
-    permit persons to whom the Software is furnished to do so, subject to
-    the following conditions:
-    The above copyright notice and this permission notice shall be included
-    in all copies or substantial portions of the Software.
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-  ]]
-  limit = limit or math.huge
+local function validate_utf8(s, max_len)
   local i, p, len = 1, 1, #s
-  while p <= len do
+  while p <= len and i <= max_len do
     if     p == s:find("[%z\1-\127]", p) then p = p + 1
     elseif p == s:find("[\194-\223][\128-\191]", p) then p = p + 2
     elseif p == s:find(       "\224[\160-\191][\128-\191]", p)
@@ -48,9 +27,7 @@ local function validate_utf8(s, limit)
       return false
     end
     i = i + 1
-    if i > limit then break end
   end
-
   return true
 end
 
@@ -161,21 +138,17 @@ function OpenExtView:draw()
 end
 
 
-local function read_from_doc(doc, limit)
-  local l, result = 0, {}
-  for _, line in ipairs(doc.lines) do
-    result[#result+1] = line
-    l = l + #line
-    if l >= limit then break end
-  end
-  return table.concat(result, "")
+local function read_doc(doc, limit)
+  local f = io.open(doc.abs_filename)
+  local str = f:read(limit)
+  f:close()
+  return str
 end
-
 
 local rootview_open_doc = RootView.open_doc
 function RootView:open_doc(doc)
-  local str = read_from_doc(doc, 4 * 128) -- max size for 128 codepoints
-  if str == "\n" or str == "" and validate_utf8(str, 128) then
+  local str = read_doc(doc, 128 * 4) -- max bytes for 128 codepoints
+  if validate_utf8(str, 128) then
     return rootview_open_doc(self, doc)
   else
     local node = self:get_active_node_default()
