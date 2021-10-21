@@ -5,6 +5,8 @@ local core = require "core"
 local style = require "core.style"
 local config = require "core.config"
 
+config.plugins.fontconfig = { prefix = "" }
+
 --[[
   Example config (put it in user module):
 
@@ -23,7 +25,7 @@ local config = require "core.config"
 
 local function resolve_font(spec)
   local scan_rate = 1 / config.fps
-  local proc = subprocess.start({ "fc-match", "-s", "-f", "%{file}\n", spec }, {
+  local proc = subprocess.start({ config.plugins.fontconfig.prefix .. "fc-match", "-s", "-f", "%{file}\n", spec }, {
     stdin = subprocess.REDIRECT_DISCARD,
     stdout = subprocess.REDIRECT_PIPE,
     stderr = subprocess.REDIRECT_STDOUT
