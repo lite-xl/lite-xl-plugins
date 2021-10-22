@@ -139,6 +139,7 @@ end
 
 
 local function read_doc(doc, limit)
+  if not doc.abs_filename return "" end
   local f = io.open(doc.abs_filename)
   local str = f:read(limit)
   f:close()
