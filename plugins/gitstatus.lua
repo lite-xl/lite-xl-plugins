@@ -3,6 +3,7 @@ local core = require "core"
 local config = require "core.config"
 local style = require "core.style"
 local StatusView = require "core.statusview"
+local scan_rate = config.project_scan_rate or 5
 
 
 local git = {
@@ -35,7 +36,7 @@ core.add_thread(function()
       git.branch = nil
     end
 
-    coroutine.yield(config.project_scan_rate)
+    coroutine.yield(scan_rate)
   end
 end)
 
