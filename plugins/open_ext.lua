@@ -138,18 +138,19 @@ function OpenExtView:draw()
 end
 
 
-local function read_doc(doc, limit)
-  if not doc.abs_filename return "" end
-  local f = io.open(doc.abs_filename)
-  local str = f:read(limit)
+local function validate_doc(doc)
+  local f = io.open(doc.abs_filename or "")
+  if not f then return true end
+  local str = f:read(128 * 4) -- max bytes for 128 codepoints
   f:close()
-  return str
+  return validate_utf8(str, 128)
 end
+
 
 local rootview_open_doc = RootView.open_doc
 function RootView:open_doc(doc)
-  local str = read_doc(doc, 128 * 4) -- max bytes for 128 codepoints
-  if validate_utf8(str, 128) then
+  -- 128 * 4 == max number of bytes for 128 codepoints
+  if validate_doc(doc) then
     return rootview_open_doc(self, doc)
   else
     local node = self:get_active_node_default()
