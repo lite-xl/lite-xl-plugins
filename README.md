@@ -34,6 +34,7 @@ Plugin | Description
 [`eval`](plugins/eval.lua?raw=1) | Replaces selected Lua code with its evaluated result
 [`exec`](plugins/exec.lua?raw=1) | Runs selected text through shell command and replaces with result
 [`ephemeraldocviews`](plugins/ephemeraldocviews.lua?raw=1) | Preview tabs. Opening a doc will replace the contents of the preview tab. Marks tabs as non-preview on any change.
+*[`extend_selection_line`](plugins/extend_selection_line.lua?raw=1)* | When a selection crosses multiple lines, it is drawn to the end of the screen *([screenshot](https://user-images.githubusercontent.com/2798487/140995616-89a20b55-5917-4df8-8a7c-d7c53732fa8b.png))*
 [`fallbackfonts`](https://github.com/takase1121/lite-fallback-fonts)* | Adds support for fallback fonts *([gif](https://raw.githubusercontent.com/takase1121/lite-fallback-fonts/master/assets/Iw18fI57J0.gif))*
 [`fontconfig`](plugins/fontconfig.lua?raw=1) | Allows users to load fonts with [fontconfig](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html).
 [`formatter`](https://github.com/vincens2005/lite-formatters)* | formatters for various languages
