@@ -90,6 +90,7 @@ Plugin | Description
 [`language_ruby`](plugins/language_ruby.lua?raw=1) | Syntax for the [Ruby](https://www.ruby-lang.org/) programming language
 [`language sass`](plugins/language_sass.lua?raw=1) | Syntax for the [Sass](https://sass-lang.com/) CSS preprocessor
 [`language_sh`](plugins/language_sh.lua?raw=1) | Syntax for shell scripting language
+[`language_ssh_config`](plugins/language_ssh_config.lua?raw=1) | Syntax for ssh & sshd config files
 [`language_tcl`](plugins/language_tcl.lua?raw=1) | Syntax for the [Tcl](https://www.tcl.tk/) programming language
 [`language_teal`](plugins/language_teal.lua?raw=1) | Syntax for the [Teal](https://github.com/teal-language/tl) programming language, a typed dialect of Lua.
 [`language_ts`](plugins/language_ts.lua?raw=1) | Syntax for the [TypeScript](https://www.typescriptlang.org/) programming language, a typed dialect of JavaScript.
