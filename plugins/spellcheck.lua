@@ -8,7 +8,7 @@ local DocView = require "core.docview"
 local Doc = require "core.doc"
 
 config.plugins.spellcheck = {}
-config.spellcheck.files = { "%.txt$", "%.md$", "%.markdown$" }
+config.plugins.spellcheck.files = { "%.txt$", "%.md$", "%.markdown$" }
 if PLATFORM == "Windows" then
   config.plugins.spellcheck.dictionary_file = EXEDIR .. "/words.txt"
 else
