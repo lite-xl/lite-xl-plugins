@@ -2,6 +2,17 @@
 local core = require "core"
 local command = require "core.command"
 local keymap = require "core.keymap"
+local config = require "core.config"
+
+
+config.plugins.openselected = {}
+if PLATFORM == "Windows" then
+  config.plugins.openselected.filemanager = "start"
+elseif PLATFORM == "Mac OS X" then
+  config.plugins.openselected.filemanager = "open"
+else
+  config.plugins.openselected.filemanager = "xdg-open"
+end
 
 
 command.add("core.docview", {
@@ -13,15 +24,21 @@ command.add("core.docview", {
     end
 
     local text = doc:get_text(doc:get_selection())
-    core.log("Opening \"%s\"...", text)
 
-    if PLATFORM == "Windows" then
-      system.exec("start " .. text)
-    else
-      system.exec(string.format("xdg-open %q", text))
+    -- trim whitespace from the ends
+    text = text:match( "^%s*(.-)%s*$" )
+
+    -- non-Windows platforms need the text quoted (%q)
+    if PLATFORM ~= "Windows" then
+      text = string.format("%q", text)
     end
+
+    core.log("Opening %s...", text)
+
+    system.exec(config.plugins.openselected.filemanager .. " " .. text)
   end,
 })
 
 
 keymap.add { ["ctrl+shift+o"] = "open-selected:open-selected" }
+
