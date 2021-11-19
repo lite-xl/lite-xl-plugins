@@ -44,6 +44,7 @@ Plugin | Description
 [`hidelinenumbers`](plugins/hidelinenumbers.lua?raw=1) | Hides the line numbers on the left of documents *([screenshot](https://user-images.githubusercontent.com/3920290/81692043-b8b19c00-9455-11ea-8d74-ad99be4b9c5f.png))*
 [`hidestatus`](plugins/hidestatus.lua?raw=1) | Hides the status bar at the bottom of the window
 ~~[`inanimate`](plugins/inanimate.lua?raw=1)~~ | Integrated in lite-xl using `config.transitions = false` ~~Disables all transition animations~~
+*[`indent_convert`](plugins/indent_convert.lua?raw=1)* | Convert between tabs and spaces indentation
 *[`indentguide`](plugins/indentguide.lua?raw=1)* | Adds indent guides *([screenshot](https://user-images.githubusercontent.com/3920290/79640716-f9860000-818a-11ea-9c3b-26d10dd0e0c0.png))*
 *[`Kinc Projects`](https://github.com/Kode-Community/kinc_plugin)** | Adds [Kinc](https://github.com/Kode/Kinc) Project generation with basic build commands(depends on [`console`](https://github.com/franko/console))
 [`language_angelscript`](plugins/language_angelscript.lua?raw=1) | Syntax for the [Angelscript](https://www.angelcode.com/angelscript/) programming language
