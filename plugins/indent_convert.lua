@@ -72,27 +72,32 @@ local function tabs_replacer(text, indent_size)
   return text, total
 end
 
-local function replacer(doc, fn)
-  local size = config.indent_size
+local function replacer(doc, fn, indent_size)
+  return function(text)
+    return fn(text, indent_size)
+  end
+end
+
+local function get_indent_size(doc)
+  local indent_size = config.indent_size
   if type(doc.get_indent_info) == "function" then
     -- use the new `Doc:get_indent_info` function
-    size = select(2, doc:get_indent_info())
+    indent_size = select(2, doc:get_indent_info())
   end
-  return function(text)
-    return fn(text, size)
-  end
+  return indent_size
 end
 
 local function tabs_to_spaces()
   local doc = core.active_view.doc
+  local indent_size = get_indent_size(doc)
   local selections = doc.selections
-  doc:replace(replacer(doc, tabs_replacer))
+  doc:replace(replacer(doc, tabs_replacer, indent_size))
   doc.selections = selections
   doc:sanitize_selection()
   if config.plugins.indent_convert.update_indent_type then
     doc.indent_info = {
       type = "soft",
-      size = config.indent_size,
+      size = indent_size,
       confirmed = true
     }
   end
@@ -100,14 +105,15 @@ end
 
 local function spaces_to_tabs()
   local doc = core.active_view.doc
+  local indent_size = get_indent_size(doc)
   local selections = doc.selections
-  doc:replace(replacer(doc, spaces_replacer))
+  doc:replace(replacer(doc, spaces_replacer, indent_size))
   doc.selections = selections
   doc:sanitize_selection()
   if config.plugins.indent_convert.update_indent_type then
     doc.indent_info = {
       type = "hard",
-      size = config.indent_size,
+      size = indent_size,
       confirmed = true
     }
   end
