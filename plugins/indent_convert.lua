@@ -36,8 +36,8 @@ config.plugins.indent_convert = {
 -- The workaround is to find the longest possible repetition of N*X spaces and
 -- use that information to replace the longest repetition of spaces starting
 -- from the beginning of the line, then the second longest...
-local function spaces_replacer(text)
-  local spaces = string.rep(" ", config.indent_size)
+local function spaces_replacer(text, indent_size)
+  local spaces = string.rep(" ", indent_size)
   local total = 0
   local n
   local reps = 0
@@ -57,8 +57,8 @@ local function spaces_replacer(text)
   return text, total
 end
 
-local function tabs_replacer(text)
-  local spaces = string.rep(" ", config.indent_size)
+local function tabs_replacer(text, indent_size)
+  local spaces = string.rep(" ", indent_size)
   local total = 0
   local n
   -- replace the last tab before the text until there aren't anymore
@@ -69,9 +69,20 @@ local function tabs_replacer(text)
   return text, total
 end
 
+local function replacer(doc, fn)
+  local size = config.indent_size
+  if type(doc.get_indent_info) == "function" then
+    -- use the new `Doc:get_indent_info` function
+    size = select(2, doc:get_indent_info())
+  end
+  return function(text)
+    return fn(text, size)
+  end
+end
+
 local function tabs_to_spaces()
   local doc = core.active_view.doc
-  doc:replace(tabs_replacer)
+  doc:replace(replacer(doc, tabs_replacer))
   if config.plugins.indent_convert.update_indent_type then
     doc.indent_info = {
       type = "soft",
@@ -83,7 +94,7 @@ end
 
 local function spaces_to_tabs()
   local doc = core.active_view.doc
-  doc:replace(spaces_replacer)
+  doc:replace(replacer(doc, spaces_replacer))
   if config.plugins.indent_convert.update_indent_type then
     doc.indent_info = {
       type = "hard",
