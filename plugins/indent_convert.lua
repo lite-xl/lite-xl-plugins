@@ -7,6 +7,9 @@ config.plugins.indent_convert = {
   update_indent_type = true -- set to false to avoid updating the document indent type
 }
 
+-- TODO: only set document indent type if there are no selections
+-- TODO: correctly restore selections accounting for the offset caused by the conversion
+
 -- To replace N spaces with tabs, we match the last N spaces before the start of
 -- the actual code and replace them with a tab.
 -- We repeat this until we can't find any more spaces before the code.
@@ -82,7 +85,10 @@ end
 
 local function tabs_to_spaces()
   local doc = core.active_view.doc
+  local selections = doc.selections
   doc:replace(replacer(doc, tabs_replacer))
+  doc.selections = selections
+  doc:sanitize_selection()
   if config.plugins.indent_convert.update_indent_type then
     doc.indent_info = {
       type = "soft",
@@ -94,7 +100,10 @@ end
 
 local function spaces_to_tabs()
   local doc = core.active_view.doc
+  local selections = doc.selections
   doc:replace(replacer(doc, spaces_replacer))
+  doc.selections = selections
+  doc:sanitize_selection()
   if config.plugins.indent_convert.update_indent_type then
     doc.indent_info = {
       type = "hard",
