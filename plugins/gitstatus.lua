@@ -58,7 +58,7 @@ core.add_thread(function()
       -- get diff
       local diff = exec({"git", "diff", "--numstat"})
       if config.gitstatus.recurse_submodules and system.get_file_info(".gitmodules") then
-        local diff2 = exec({"git", "submodule", "foreach", "git diff --numstat --stat"})
+        local diff2 = exec({"git", "submodule", "foreach", "git diff --numstat"})
         diff = diff .. diff2
       end
 
