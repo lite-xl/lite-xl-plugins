@@ -70,7 +70,13 @@ core.add_thread(function()
             deletes = deletes + (tonumber(dels) or 0)
             local abs_path = core.project_dir.."/"..root..path
             if TreeView then
-              TreeView:set_color_override(abs_path, style.gitstatus_modification)
+              -- Color this file, and each parent folder,
+              -- so you can see at a glance which folders
+              -- have modified files in them.
+              while abs_path do
+                TreeView:set_color_override(abs_path, style.gitstatus_modification)
+                abs_path = common.dirname(abs_path)
+              end
             end
           end
         end
