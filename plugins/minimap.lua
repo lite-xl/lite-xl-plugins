@@ -4,6 +4,7 @@ local common = require "core.common"
 local config = require "core.config"
 local style = require "core.style"
 local DocView = require "core.docview"
+local Object = require "core.object"
 
 -- General plugin settings
 config.plugins.minimap = {
@@ -14,13 +15,44 @@ config.plugins.minimap = {
 	scale = 1,
 	-- how many spaces one tab is equivalent to
 	tab_width = 4,
-	draw_background = true
+	draw_background = true,
+	-- if highlight_width is positive, it is drawn on the left
+	-- if highlight_width is negative, it is drawn on the right
+	-- gutter_width pushes the minimap text to the left to make room for a left-side highlight
+	highlight_width = -5,
+	gutter_width = 0,
+	-- try these values:
+	-- full width:
+	-- config.plugins.minimap.highlight_width = 100
+	-- config.plugins.minimap.gutter_width = 0
+	-- left side:
+	-- config.plugins.minimap.highlight_width = 3
+	-- config.plugins.minimap.gutter_width = 4
+	-- right side:
+	-- config.plugins.minimap.highlight_width = -5
+	-- config.plugins.minimap.gutter_width = 0
 }
 
 -- Configure size for rendering each char in the minimap
 local char_height = 1 * SCALE * config.plugins.minimap.scale
 local char_spacing = 0.8 * SCALE * config.plugins.minimap.scale
 local line_spacing = 2 * SCALE * config.plugins.minimap.scale
+
+local MiniMap = Object:extend()
+
+function MiniMap:new()
+	self.line_highlight_color = {}
+end
+
+function MiniMap:set_line_highlight_color(line, color)
+	self.line_highlight_color[line] = color
+end
+
+function MiniMap:clear_all_line_highlights()
+	self.line_highlight_color = {}
+end
+
+local minimap = MiniMap()
 
 -- Overloaded since the default implementation adds a extra x3 size of hotspot for the mouse to hit the scrollbar.
 local prev_scrollbar_overlaps_point = DocView.scrollbar_overlaps_point
@@ -196,6 +228,9 @@ DocView.draw_scrollbar = function(self)
 	-- draw visual rect
 	renderer.draw_rect(x, visible_y, w, scroller_height, visual_color)
 
+	local highlight_width = config.plugins.minimap.highlight_width
+	local gutter_width = config.plugins.minimap.gutter_width
+
 	-- time to draw the actual code, setup some local vars that are used in both highlighted and plain renderind.
 	local line_y = y
 
@@ -236,8 +271,17 @@ DocView.draw_scrollbar = function(self)
 		endidx = math.min(endidx, line_count)
 		for idx = minimap_start_line, endidx do
 			batch_syntax_type = nil
-			batch_start = x
+			batch_start = x + gutter_width
 			batch_width = 0
+
+			local highlight_color = minimap.line_highlight_color[idx]
+			if highlight_color then
+				if highlight_width > 0 then
+					renderer.draw_rect(x, line_y, highlight_width, line_spacing, highlight_color)
+				else
+					renderer.draw_rect(x + w + highlight_width, line_y, -highlight_width, line_spacing, highlight_color)
+				end
+			end
 
 			-- per token
 			for _, type, text in self.doc.highlighter:each_token(idx) do
@@ -268,8 +312,13 @@ DocView.draw_scrollbar = function(self)
 
 	else -- render lines without syntax highlighting
 		for idx = 1, line_count - 1 do
-			batch_start = x
+			batch_start = x + gutter_width
 			batch_width = 0
+
+			local highlight_color = minimap.line_highlight_color[idx]
+			if highlight_color then
+				renderer.draw_rect(x, line_y, highlight_width, line_spacing, highlight_color)
+			end
 
 			for char in common.utf8_chars(self.doc.lines[idx]) do
 				if char == " " or char == "\n" then
@@ -304,3 +353,6 @@ command.add(nil, {
 		config.plugins.minimap.syntax_highlight = not config.plugins.minimap.syntax_highlight
 	end
 })
+
+return minimap
+
