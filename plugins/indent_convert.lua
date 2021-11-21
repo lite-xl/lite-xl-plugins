@@ -7,6 +7,8 @@ config.plugins.indent_convert = {
   update_indent_type = true -- set to false to avoid updating the document indent type
 }
 
+local zero_pattern = _VERSION == "Lua 5.1" and "%z" or "\0"
+
 -- TODO: only set document indent type if there are no selections
 -- TODO: correctly restore selections accounting for the offset caused by the conversion
 
@@ -47,12 +49,12 @@ local function spaces_replacer(text, indent_size)
   -- find the longest repetition of indent_size*spaces
   repeat
     reps = reps + 1
-    local s, _ = string.find(text, "%f[^\0\n]"..string.rep(spaces, reps))
+    local s, _ = string.find(text, "%f[^"..zero_pattern.."\n]"..string.rep(spaces, reps))
   until not s
   reps = reps - 1
   while reps > 0 do
     text, n = string.gsub(text,
-                          "(%f[^\0\n])("..string.rep(spaces, reps)..")",
+                          "(%f[^"..zero_pattern.."\n])("..string.rep(spaces, reps)..")",
                           "%1"..string.rep("\t", reps))
     total = total + n
     reps = reps - 1
@@ -66,7 +68,7 @@ local function tabs_replacer(text, indent_size)
   local n
   -- replace the last tab before the text until there aren't anymore
   repeat
-    text, n = string.gsub(text, "(%f[^\0\n]\t*)(\t)", "%1"..spaces)
+    text, n = string.gsub(text, "(%f[^"..zero_pattern.."\n]\t*)(\t)", "%1"..spaces)
     total = total + n
   until n == 0
   return text, total
