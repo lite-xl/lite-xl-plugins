@@ -8,6 +8,14 @@ local StatusView = require "core.statusview"
 local scan_rate = config.project_scan_rate or 5
 
 
+if TreeView then
+  if not (TreeView["set_color_override"] and TreeView["clear_all_color_overrides"]) then
+    -- TreeView doesn't have the color override feature we rely on, so skip it.
+    TreeView = nil
+  end
+end
+
+
 local git = {
   branch = nil,
   inserts = 0,
