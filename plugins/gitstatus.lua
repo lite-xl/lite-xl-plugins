@@ -31,11 +31,16 @@ style.gitstatus_modification = {common.color "#0c7d9d"}
 style.gitstatus_deletion = {common.color "#94151b"}
 
 
-local function exec(cmd, wait)
+local function exec(cmd)
   local proc = process.start(cmd)
-  proc:wait(wait * 1000)
-	local res = proc:read_stdout()
-  return res
+  -- Don't use proc:wait() here - that will freeze the app.
+  -- Instead, rely on the fact that this is only called within
+  -- a coroutine, and yield for a fraction of a second, allowing
+  -- other stuff to happen while we wait for the process to complete.
+  while proc:running() do
+    coroutine.yield(0.1)
+  end
+  return proc:read_stdout()
 end
 
 
@@ -43,19 +48,20 @@ core.add_thread(function()
   while true do
     if system.get_file_info(".git") then
       -- get branch name
-      git.branch = exec({"git", "rev-parse", "--abbrev-ref", "HEAD"}, 1):match("[^\n]*")
-
-      if TreeView then
-        TreeView:clear_all_color_overrides()
-      end
+      git.branch = exec({"git", "rev-parse", "--abbrev-ref", "HEAD"}):match("[^\n]*")
 
       local inserts = 0
       local deletes = 0
 
       -- get diff
-      local diff = exec({"git", "diff", "--numstat"}, 1)
+      local diff = exec({"git", "diff", "--numstat"})
       if config.gitstatus.recurse_submodules and system.get_file_info(".gitmodules") then
-        diff = diff .. exec({"git", "submodule", "foreach", "git diff --numstat --stat"}, 1)
+        local diff2 = exec({"git", "submodule", "foreach", "git diff --numstat --stat"})
+        diff = diff .. diff2
+      end
+
+      if TreeView then
+        TreeView:clear_all_color_overrides()
       end
 
       local root = ""
