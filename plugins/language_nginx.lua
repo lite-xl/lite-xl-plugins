@@ -4,6 +4,7 @@ local syntax = require "core.syntax"
 -- Copied from https://github.com/shanoor/vscode-nginx/blob/master/syntaxes/nginx.tmLanguage
 
 syntax.add {
+  name = "Nginx",
   files = { "%.conf$" },
   comment = "#",
   patterns = {

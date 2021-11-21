@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add{
+    name = "R",
     files = {"%.r$", "%.rds$", "%.rda$", "%.rdata$", "%.R$"},
     comment = "#",
     patterns = {

@@ -6,6 +6,7 @@ local common = require "core.common"
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "HLSL",
   files = { "%.hlsl$", },
   comment = "//",
   patterns = {

@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "MoonScript",
   files = "%.moon$",
   headers = "^#!.*[ /]moon",
   comment = "--",

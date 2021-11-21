@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "V",
   files = "%.v$", "%.vsh$",
   headers = "^#!.*[ /]v\n",
   comment = "//",

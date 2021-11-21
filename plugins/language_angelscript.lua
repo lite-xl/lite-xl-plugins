@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "AngelScript",
   files = { "%.as$", "%.asc$" },
   comment = "//",
   patterns = {

@@ -3,6 +3,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "fstab",
   files = { "fstab" },
   comment = '#',
   patterns = {

@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "Perl",
   files = { "%.pm$", "%.pl$" },
   headers = "^#!.*[ /]perl",
   comment = "#",

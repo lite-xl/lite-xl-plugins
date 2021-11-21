@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "Rust",
   files = { "%.rs$" },
   comment = "//",
   patterns = {

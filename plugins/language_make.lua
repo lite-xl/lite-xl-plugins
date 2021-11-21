@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "Makefile",
   files = { "Makefile", "makefile", "%.mk$" },
   comment = "#",
   patterns = {

@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "Java",
   files = { "%.java$" },
   comment = "//",
   patterns = {

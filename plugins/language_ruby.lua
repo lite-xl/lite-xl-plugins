@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "Ruby",
   files = { "%.rb", "%.gemspec" },
   headers = "^#!.*[ /]ruby",
   comment = "#",

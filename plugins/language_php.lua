@@ -12,6 +12,7 @@ require "plugins.language_js"
 
 -- define the core php syntax coloring
 syntax.add {
+  name = "PHP",
   files = { "%.phps$" },
   headers = "^<%?php",
   comment = "//",

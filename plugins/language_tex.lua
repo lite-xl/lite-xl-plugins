@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "TeX",
   files = { "%.tex$" },
   comment = "%%",
   patterns = {

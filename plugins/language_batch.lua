@@ -41,6 +41,7 @@ local function prepare_symbols(symtable)
 end
 
 syntax.add {
+  name = "Batch",
   files = { "%.bat$", "%.cmd$" },
   comment = "rem",
   patterns = {
