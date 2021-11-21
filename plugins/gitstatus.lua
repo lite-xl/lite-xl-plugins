@@ -1,7 +1,9 @@
 -- mod-version:2 -- lite-xl 2.0
 local core = require "core"
+local common = require "core.common"
 local config = require "core.config"
 local style = require "core.style"
+local _, TreeView = pcall(require, "plugins.treeview")
 local StatusView = require "core.statusview"
 local scan_rate = config.project_scan_rate or 5
 
@@ -11,6 +13,14 @@ local git = {
   inserts = 0,
   deletes = 0,
 }
+
+
+config.gitstatus = {
+  recurse_submodules = true
+}
+style.gitstatus_addition = {common.color "#587c0c"}
+style.gitstatus_modification = {common.color "#0c7d9d"}
+style.gitstatus_deletion = {common.color "#94151b"}
 
 
 local function exec(cmd, wait)
@@ -27,10 +37,39 @@ core.add_thread(function()
       -- get branch name
       git.branch = exec({"git", "rev-parse", "--abbrev-ref", "HEAD"}, 1):match("[^\n]*")
 
+      if TreeView then
+        TreeView:clear_all_color_overrides()
+      end
+
+      local inserts = 0
+      local deletes = 0
+
       -- get diff
-      local line = exec({"git", "diff", "--stat"}, 1):match("[^\n]*%s*$")
-      git.inserts = tonumber(line:match("(%d+) ins")) or 0
-      git.deletes = tonumber(line:match("(%d+) del")) or 0
+      local diff = exec({"git", "diff", "--numstat"}, 1)
+      if config.gitstatus.recurse_submodules and system.get_file_info(".gitmodules") then
+        diff = diff .. exec({"git", "submodule", "foreach", "git diff --numstat --stat"}, 1)
+      end
+
+      local root = ""
+      for line in string.gmatch(diff, "[^\n]+") do
+        local submodule = line:match("^Entering '(.+)'$")
+        if submodule then
+          root = submodule.."/"
+        else
+          local ins, dels, path = line:match("(%d+)%s+(%d+)%s+(.+)")
+          if path then
+            inserts = inserts + (tonumber(ins) or 0)
+            deletes = deletes + (tonumber(dels) or 0)
+            local abs_path = core.project_dir.."/"..root..path
+            if TreeView then
+              TreeView:set_color_override(abs_path, style.gitstatus_modification)
+            end
+          end
+        end
+      end
+
+      git.inserts = inserts
+      git.deletes = deletes
 
     else
       git.branch = nil
