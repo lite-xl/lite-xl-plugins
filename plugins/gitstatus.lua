@@ -42,7 +42,7 @@ local function exec(cmd)
   while proc:running() do
     coroutine.yield(0.1)
   end
-  return proc:read_stdout()
+  return proc:read_stdout() or ""
 end
 
 
