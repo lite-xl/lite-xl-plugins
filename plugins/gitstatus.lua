@@ -3,16 +3,18 @@ local core = require "core"
 local common = require "core.common"
 local config = require "core.config"
 local style = require "core.style"
-local _, TreeView = pcall(require, "plugins.treeview")
 local StatusView = require "core.statusview"
+local TreeView = require "plugins.treeview"
+
 local scan_rate = config.project_scan_rate or 5
+local cached_color_for_item = {}
 
 
-if TreeView then
-  if not (TreeView["set_color_override"] and TreeView["clear_all_color_overrides"]) then
-    -- TreeView doesn't have the color override feature we rely on, so skip it.
-    TreeView = nil
-  end
+-- Override TreeView's color_for_item, but first
+-- stash the old one (using [] in case it is not there at all)
+local old_color_for_item = TreeView["color_for_item"]
+function TreeView:color_for_item(abs_path)
+  return cached_color_for_item[abs_path] or old_color_for_item(abs_path)
 end
 
 
@@ -60,29 +62,26 @@ core.add_thread(function()
         diff = diff .. diff2
       end
 
-      if TreeView then
-        TreeView:clear_all_color_overrides()
-      end
+      -- forget the old state
+      cached_color_for_item = {}
 
-      local root = ""
+      local folder = core.project_dir
       for line in string.gmatch(diff, "[^\n]+") do
         local submodule = line:match("^Entering '(.+)'$")
         if submodule then
-          root = submodule.."/"
+          folder = core.project_dir .. PATHSEP .. submodule
         else
           local ins, dels, path = line:match("(%d+)%s+(%d+)%s+(.+)")
           if path then
             inserts = inserts + (tonumber(ins) or 0)
             deletes = deletes + (tonumber(dels) or 0)
-            local abs_path = core.project_dir.."/"..root..path
-            if TreeView then
-              -- Color this file, and each parent folder,
-              -- so you can see at a glance which folders
-              -- have modified files in them.
-              while abs_path do
-                TreeView:set_color_override(abs_path, style.gitstatus_modification)
-                abs_path = common.dirname(abs_path)
-              end
+            local abs_path = folder .. PATHSEP .. path
+            -- Color this file, and each parent folder,
+            -- so you can see at a glance which folders
+            -- have modified files in them.
+            while abs_path do
+              cached_color_for_item[abs_path] = style.gitstatus_modification
+              abs_path = common.dirname(abs_path)
             end
           end
         end
