@@ -41,15 +41,10 @@ local line_spacing = 2 * SCALE * config.plugins.minimap.scale
 local MiniMap = Object:extend()
 
 function MiniMap:new()
-	self.line_highlight_color = {}
 end
 
-function MiniMap:set_line_highlight_color(line, color)
-	self.line_highlight_color[line] = color
-end
-
-function MiniMap:clear_all_line_highlights()
-	self.line_highlight_color = {}
+function MiniMap:line_highlight_color(line_index)
+	-- other plugins can override this, and return a color
 end
 
 local minimap = MiniMap()
@@ -260,6 +255,17 @@ DocView.draw_scrollbar = function(self)
 		batch_width = 0
 	end
 
+	local function render_highlight(idx, line_y)
+		local highlight_color = minimap:line_highlight_color(idx)
+		if highlight_color then
+			if highlight_width > 0 then
+				renderer.draw_rect(x, line_y, highlight_width, line_spacing, highlight_color)
+			else
+				renderer.draw_rect(x + w + highlight_width, line_y, -highlight_width, line_spacing, highlight_color)
+			end
+		end
+	end
+
 	-- render lines with syntax highlighting
 	if config.plugins.minimap.syntax_highlight then
 
@@ -274,14 +280,7 @@ DocView.draw_scrollbar = function(self)
 			batch_start = x + gutter_width
 			batch_width = 0
 
-			local highlight_color = minimap.line_highlight_color[idx]
-			if highlight_color then
-				if highlight_width > 0 then
-					renderer.draw_rect(x, line_y, highlight_width, line_spacing, highlight_color)
-				else
-					renderer.draw_rect(x + w + highlight_width, line_y, -highlight_width, line_spacing, highlight_color)
-				end
-			end
+			render_highlight(idx, line_y)
 
 			-- per token
 			for _, type, text in self.doc.highlighter:each_token(idx) do
@@ -315,10 +314,7 @@ DocView.draw_scrollbar = function(self)
 			batch_start = x + gutter_width
 			batch_width = 0
 
-			local highlight_color = minimap.line_highlight_color[idx]
-			if highlight_color then
-				renderer.draw_rect(x, line_y, highlight_width, line_spacing, highlight_color)
-			end
+			render_highlight(idx, line_y)
 
 			for char in common.utf8_chars(self.doc.lines[idx]) do
 				if char == " " or char == "\n" then
