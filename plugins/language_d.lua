@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "D",
   files = { "%.d$", "%.di$" },
   comment = "//",
   patterns = {

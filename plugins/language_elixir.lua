@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "Elixir",
   files = { "%.ex$", "%.exs$"},
   comment = "#",
   patterns = {

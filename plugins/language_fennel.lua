@@ -8,6 +8,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "Fennel",
   files = "%.fnl$",
   comment = ";",
   patterns = {

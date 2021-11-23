@@ -97,6 +97,7 @@ local liquid_syntax = {
 }
 
 syntax.add {
+  name = "Liquid",
   files = { "%.liquid?$" },
   patterns = {
     { pattern = { "{%%", "%%}" }, syntax = liquid_syntax, type = "function" },

@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "Dart",
   files = { "%.dart$" },
   comment = "//",
   patterns = {

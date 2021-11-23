@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "PICO-8",
   files = "%.p8$",
   headers = "^pico-8 cartridge",
   comment = "--",

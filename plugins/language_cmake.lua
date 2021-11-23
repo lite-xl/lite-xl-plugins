@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "CMake",
   files = { "%.cmake$", "CMakeLists.txt$" },
   comment = "//",
   patterns = {
