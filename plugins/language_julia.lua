@@ -1,10 +1,11 @@
 -- mod-version:2 -- lite-xl 2.0
--- Support for the GDScript programming language: https://godotengine.org/
--- Covers the most used keywords up to Godot version 3.2.x
+-- Support for the Julia programming language: 
+-- Covers the most used keywords up to Julia version 1.6.4
 
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "Julia",
   files = { "%.jl$" },
   comment = "#",
   patterns = {
