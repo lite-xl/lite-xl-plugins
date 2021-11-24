@@ -68,6 +68,7 @@ Plugin | Description
 [`language_java`](plugins/language_java.lua?raw=1) | Syntax for the [Java](https://en.wikipedia.org/wiki/Java_(programming_language)) programming language
 [`language_jiyu`](plugins/language_jiyu.lua?raw=1) | Syntax for the [jiyu](https://github.com/machinamentum/jiyu) programming language
 [`language_jsx`](plugins/language_jsx.lua?raw=1) | Syntax for the [JSX](https://reactjs.org/docs/introducing-jsx.html) language for the React framework in JavaScript
+[`language_julia`](plugins/language_julia.lua?raw=1) | Syntax for the [Julia](https://julialang.org/) programming language
 [`language_ksy`](https://raw.githubusercontent.com/whiteh0le/lite-plugins/main/plugins/language_ksy.lua?raw=1) | Syntax for [Kaitai](http://kaitai.io/) struct files
 [`language_liquid`](plugins/language_liquid.lua?raw=1) | Syntax for [Liquid](https://shopify.github.io/liquid/) templating language
 [`language_lobster`](plugins/language_lobster.lua?raw=1) | Syntax for [Lobster](https://strlen.com/lobster/) programming language
