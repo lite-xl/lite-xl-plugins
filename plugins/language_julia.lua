@@ -30,7 +30,7 @@ syntax.add {
     -- keywords
     ["baremodule"]        = "keyword",
     ["begin"]             = "keyword",
-    ["break"]            = "keyword",
+    ["break"]             = "keyword",
     ["catch"]             = "keyword",
     ["const"]             = "keyword",
     ["continue"]          = "keyword",
@@ -60,6 +60,7 @@ syntax.add {
     ["typeof"]            = "keyword",
     ["using"]             = "keyword",
     ["while"]             = "keyword",
+    ["where"]             = "keyword",
 
     -- types
     ["struct"]            = "keyword2",
@@ -92,6 +93,6 @@ syntax.add {
     ["missing"]          = "literal",
     ["true"]             = "literal",
     ["false"]            = "literal",
-    ["nothing"]            = "literal",
+    ["nothing"]          = "literal",
   }
 }
