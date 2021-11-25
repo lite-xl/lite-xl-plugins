@@ -21,16 +21,16 @@ syntax.add {
     { pattern = "-?%.?%d+f?",           type = "number"   },
     { pattern = "[%+%-=/%*%^%%<>!~|&%:]", type = "operator"},
     { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
-    { pattern = "@[%a_][%w_]",          type = "function" },
-    { pattern = "[%a_][%w_]*%.*!",      type = "keyword2" },
-    { pattern = { "{", "}"},            type = "string"},
+    { pattern = "@[%a_][%w_]*[%a_][%w_]",          type = "function" },
+    { pattern = "[%a_][%w_]*%.*!",       type = "keyword2" },
+    { pattern = "{[%a_][%w_]*}",            type = "string"},
     { pattern = "[%a_][%w_]*",          type = "symbol"   },
   },
   symbols = {
     -- keywords
     ["baremodule"]        = "keyword",
     ["begin"]             = "keyword",
-    ["break`"]            = "keyword",
+    ["break"]            = "keyword",
     ["catch"]             = "keyword",
     ["const"]             = "keyword",
     ["continue"]          = "keyword",
@@ -53,6 +53,7 @@ syntax.add {
     ["local"]             = "keyword",
     ["macro"]             = "keyword",
     ["module"]            = "keyword",
+    ["mutable"]           = "keyword",
     ["quote"]             = "keyword",
     ["return"]            = "keyword",
     ["try"]               = "keyword",
@@ -85,10 +86,11 @@ syntax.add {
     ["Matrix"]            = "keyword2",
     ["Ref"]               = "keyword2",
     ["String"]            = "keyword2",
+    ["Function"]          = "keyword2",
 
     -- literals
     ["missing"]          = "literal",
     ["true"]             = "literal",
     ["false"]            = "literal",
-  },
+  }
 }
