@@ -1,5 +1,5 @@
 -- mod-version:2 -- lite-xl 2.0
--- Support for the Julia programming language: 
+-- Support for the Julia programming language:
 -- Covers the most used keywords up to Julia version 1.6.4
 
 local syntax = require "core.syntax"
@@ -9,8 +9,9 @@ syntax.add {
   files = { "%.jl$" },
   comment = "#",
   patterns = {
-    { pattern = { "#=", "=#" },       type = "comment"  },
+    { pattern = { "#=", "=#" },         type = "comment"  },
     { pattern = "#.-\n",                type = "comment"  },
+    { pattern = { '[ruU]?"""', '"""'; '\\' },  type = "string"   },
     { pattern = { '"', '"', '\\' },     type = "string"   },
     { pattern = { "`", "`", '\\' },     type = "string"   },
     { pattern = "0[oO_][0-7]+",         type = "number"   },
@@ -18,13 +19,15 @@ syntax.add {
     { pattern = "-?%d+_%d",             type = "number"   },
     { pattern = "-?%d+[%d%.eE]*f?",     type = "number"   },
     { pattern = "-?%.?%d+f?",           type = "number"   },
-    { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
+    { pattern = "[%+%-=/%*%^%%<>!~|&]%:", type = "operator"},
     { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
+    { pattern = {"@"," "},              type = "operator" },
+    { pattern = "[%a_][%w_]*%.*!",      type = "keyword2" },
+    { pattern = { "{", "}"},            type = "string"},
     { pattern = "[%a_][%w_]*",          type = "symbol"   },
   },
   symbols = {
     -- keywords
-    ["abstract type"]     = "keyword",
     ["baremodule"]        = "keyword",
     ["begin"]             = "keyword",
     ["break`"]            = "keyword",
@@ -44,6 +47,7 @@ syntax.add {
     ["function"]          = "keyword",
     ["global"]            = "keyword",
     ["if"]                = "keyword",
+    ["in"]                = "keyword",
     ["import"]            = "keyword",
     ["let"]               = "keyword",
     ["local"]             = "keyword",
@@ -55,9 +59,11 @@ syntax.add {
     ["typeof"]            = "keyword",
     ["using"]             = "keyword",
     ["while"]             = "keyword",
-    
+
     -- types
     ["struct"]            = "keyword2",
+    ["abstract type"]     = "keyword2",
+    ["primitive type"]    = "keyword2",
     ["mutable struct"]    = "keyword2",
     ["Char"]              = "keyword2",
     ["Bool"]              = "keyword2",
@@ -77,6 +83,8 @@ syntax.add {
     ["Float64"]           = "keyword2",
     ["Vector"]            = "keyword2",
     ["Matrix"]            = "keyword2",
+    ["Ref"]               = "keyword2",
+    ["String"]            = "keyword2",
 
     -- literals
     ["missing"]          = "literal",
