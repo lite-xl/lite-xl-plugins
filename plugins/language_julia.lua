@@ -92,5 +92,6 @@ syntax.add {
     ["missing"]          = "literal",
     ["true"]             = "literal",
     ["false"]            = "literal",
+    ["nothing"]            = "literal",
   }
 }
