@@ -21,7 +21,7 @@ syntax.add {
     { pattern = "-?%.?%d+f?",           type = "number"   },
     { pattern = "[%+%-=/%*%^%%<>!~|&%:]", type = "operator"},
     { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
-    { pattern = {"@"," "},              type = "operator" },
+    { pattern = "@[%a_][%w_]",          type = "function" },
     { pattern = "[%a_][%w_]*%.*!",      type = "keyword2" },
     { pattern = { "{", "}"},            type = "string"},
     { pattern = "[%a_][%w_]*",          type = "symbol"   },
