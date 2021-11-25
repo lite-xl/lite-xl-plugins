@@ -19,7 +19,7 @@ syntax.add {
     { pattern = "-?%d+_%d",             type = "number"   },
     { pattern = "-?%d+[%d%.eE]*f?",     type = "number"   },
     { pattern = "-?%.?%d+f?",           type = "number"   },
-    { pattern = "[%+%-=/%*%^%%<>!~|&]%:", type = "operator"},
+    { pattern = "[%+%-=/%*%^%%<>!~|&%:]", type = "operator"},
     { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
     { pattern = {"@"," "},              type = "operator" },
     { pattern = "[%a_][%w_]*%.*!",      type = "keyword2" },
