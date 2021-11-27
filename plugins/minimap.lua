@@ -16,20 +16,20 @@ config.plugins.minimap = {
 	-- how many spaces one tab is equivalent to
 	tab_width = 4,
 	draw_background = true,
-	-- if highlight_width is positive, it is drawn on the left
-	-- if highlight_width is negative, it is drawn on the right
-	-- gutter_width pushes the minimap text to the left to make room for a left-side highlight
-	highlight_width = -5,
-	gutter_width = 0,
+	highlight_align = 'left',
+	highlight_width = 3,
+	gutter_width = 5,
 	-- try these values:
 	-- full width:
 	-- config.plugins.minimap.highlight_width = 100
 	-- config.plugins.minimap.gutter_width = 0
 	-- left side:
+	-- config.plugins.minimap.highlight_align = 'left'
 	-- config.plugins.minimap.highlight_width = 3
 	-- config.plugins.minimap.gutter_width = 4
 	-- right side:
-	-- config.plugins.minimap.highlight_width = -5
+	-- config.plugins.minimap.highlight_align = 'right'
+	-- config.plugins.minimap.highlight_width = 5
 	-- config.plugins.minimap.gutter_width = 0
 }
 
@@ -223,6 +223,7 @@ DocView.draw_scrollbar = function(self)
 	-- draw visual rect
 	renderer.draw_rect(x, visible_y, w, scroller_height, visual_color)
 
+	local highlight_align = config.plugins.minimap.highlight_align
 	local highlight_width = config.plugins.minimap.highlight_width
 	local gutter_width = config.plugins.minimap.gutter_width
 
@@ -255,14 +256,16 @@ DocView.draw_scrollbar = function(self)
 		batch_width = 0
 	end
 
+	local highlight_x
+	if highlight_align == 'left' then
+		highlight_x = x
+	else
+		highlight_x = x + w - highlight_width
+	end
 	local function render_highlight(idx, line_y)
 		local highlight_color = minimap:line_highlight_color(idx)
 		if highlight_color then
-			if highlight_width > 0 then
-				renderer.draw_rect(x, line_y, highlight_width, line_spacing, highlight_color)
-			else
-				renderer.draw_rect(x + w + highlight_width, line_y, -highlight_width, line_spacing, highlight_color)
-			end
+			renderer.draw_rect(highlight_x, line_y, highlight_width, line_spacing, highlight_color)
 		end
 	end
 
