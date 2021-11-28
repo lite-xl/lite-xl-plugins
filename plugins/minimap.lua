@@ -16,6 +16,13 @@ config.plugins.minimap = {
 	-- how many spaces one tab is equivalent to
 	tab_width = 4,
 	draw_background = true,
+
+	-- you can override these colors
+	selection_color = nil,
+	caret_color = nil,
+
+	-- If other plugins provide per-line highlights,
+	-- this controls the placement. (e.g. gitdiff_highlight)
 	highlight_align = 'left',
 	highlight_width = 3,
 	gutter_width = 5,
@@ -223,13 +230,15 @@ DocView.draw_scrollbar = function(self)
 	renderer.draw_rect(x, visible_y, w, scroller_height, visual_color)
 
 	-- highlight the selected lines, and the line with the caret on it
+	local selection_color = config.plugins.minimap.selection_color or style.dim
+	local caret_color = config.plugins.minimap.caret_color or style.caret
 	local selection_line, selection_col, selection_line2, selection_col2 = self.doc:get_selection()
 	local selection_y = y + (selection_line - minimap_start_line) * line_spacing
 	local selection2_y = y + (selection_line2 - minimap_start_line) * line_spacing
 	local selection_min_y = math.min(selection_y, selection2_y)
 	local selection_h = math.abs(selection2_y - selection_y)+1
-	renderer.draw_rect(x, selection_min_y, w, selection_h, style.dim)
-	renderer.draw_rect(x, selection_y, w, line_spacing, style.accent)
+	renderer.draw_rect(x, selection_min_y, w, selection_h, selection_color)
+	renderer.draw_rect(x, selection_y, w, line_spacing, caret_color)
 
 	local highlight_align = config.plugins.minimap.highlight_align
 	local highlight_width = config.plugins.minimap.highlight_width
