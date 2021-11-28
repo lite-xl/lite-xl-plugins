@@ -222,6 +222,15 @@ DocView.draw_scrollbar = function(self)
 	-- draw visual rect
 	renderer.draw_rect(x, visible_y, w, scroller_height, visual_color)
 
+	-- highlight the selected lines, and the line with the caret on it
+	local selection_line, selection_col, selection_line2, selection_col2 = self.doc:get_selection()
+	local selection_y = y + (selection_line - minimap_start_line) * line_spacing
+	local selection2_y = y + (selection_line2 - minimap_start_line) * line_spacing
+	local selection_min_y = math.min(selection_y, selection2_y)
+	local selection_h = math.abs(selection2_y - selection_y)+1
+	renderer.draw_rect(x, selection_min_y, w, selection_h, style.dim)
+	renderer.draw_rect(x, selection_y, w, line_spacing, style.accent)
+
 	local highlight_align = config.plugins.minimap.highlight_align
 	local highlight_width = config.plugins.minimap.highlight_width
 	local gutter_width = config.plugins.minimap.gutter_width
