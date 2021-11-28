@@ -101,7 +101,6 @@ DocView.on_mouse_pressed = function(self, button, x, y, clicks)
 		-- if user didn't click on the visible area (ie not dragging), scroll accordingly
 		if not hit_visible_area then
 			self:scroll_to_line(jump_to_line, false, config.plugins.minimap.instant_scroll)
-			return
 		end
 
 	end
