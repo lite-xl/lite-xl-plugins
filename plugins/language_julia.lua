@@ -11,20 +11,21 @@ syntax.add {
   patterns = {
     { pattern = { "#=", "=#" },         type = "comment"  },
     { pattern = "#.-\n",                type = "comment"  },
-    { pattern = { '[ruU]?"""', '"""'; '\\' },  type = "string"   },
-    { pattern = { '"', '"', '\\' },     type = "string"   },
-    { pattern = { "`", "`", '\\' },     type = "string"   },
+    { pattern = '[%a_][%w_]*"""*[%a_][%w_]*"""',     type = "function" },
+    { pattern = { '[ruU]?"', '"', '\\' },      type = "string"   },
+    { pattern = { "[ruU]?'", "'", '\\' },      type = "string"   },
     { pattern = "0[oO_][0-7]+",         type = "number"   },
     { pattern = "-?0x[%x_]+",           type = "number"   },
+    { pattern = "-?0b[%x_]+",           type = "number"   },
     { pattern = "-?%d+_%d",             type = "number"   },
     { pattern = "-?%d+[%d%.eE]*f?",     type = "number"   },
     { pattern = "-?%.?%d+f?",           type = "number"   },
-    { pattern = "[%+%-=/%*%^%%<>!~|&%:]", type = "operator"},
-    { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
-    { pattern = "@[%a_][%w_]*[%a_][%w_]",          type = "function" },
-    { pattern = "[%a_][%w_]*%.*!",       type = "keyword2" },
-    { pattern = "{[%a_][%w_]*}",            type = "string"},
-    { pattern = "[%a_][%w_]*",          type = "symbol"   },
+    { pattern = "[%+%-=/%*%^%%<>!~|&%:]", type = "operator" },
+    { pattern = "[%a_][%w_]*%f[(]",       type = "function" },
+    { pattern = "@[%a_][%w_]*[%a_][%w_]", type = "function" },
+    { pattern = "[%a_][%w_]*%.*!",        type = "keyword2" },
+    { pattern = "{[%a_][%w_]*}",          type = "string"   },
+    { pattern = "[%a_][%w_]*",            type = "symbol"   },
   },
   symbols = {
     -- keywords
@@ -88,11 +89,14 @@ syntax.add {
     ["Ref"]               = "keyword2",
     ["String"]            = "keyword2",
     ["Function"]          = "keyword2",
+    ["Number"]            = "keyword2",
 
     -- literals
     ["missing"]          = "literal",
     ["true"]             = "literal",
     ["false"]            = "literal",
     ["nothing"]          = "literal",
+    ["Inf"]              = "literal",
+    ["NaN"]              = "literal",
   }
 }
