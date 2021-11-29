@@ -65,8 +65,8 @@ syntax.add {
     ["Double"]    = "keyword2", 
     ["Char"]      = "keyword2", 
     ["String"]    = "keyword2", 
-    ["List"]    = "keyword2", 
-    ["Array"]    = "keyword2", 
+    ["List"]      = "keyword2", 
+    ["Array"]     = "keyword2", 
     ["Boolean"]   = "keyword2", 
     
     ["Null"]     = "literal", 
