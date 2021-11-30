@@ -8,6 +8,7 @@ syntax.add {
   patterns = {
     { pattern = "//.-\n",               type = "comment"  },
     { pattern = { "/%*", "%*/" },       type = "comment"  },
+    { pattern = { 'r#"', '"#', '\\' },  type = "string"   },
     { pattern = { '"', '"', '\\' },     type = "string"   },
     { pattern = { "`", "`", '\\' },     type = "string"   },
     { pattern = "0[oO_][0-7]+",         type = "number"   },
