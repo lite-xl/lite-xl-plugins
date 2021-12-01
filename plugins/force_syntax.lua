@@ -14,7 +14,7 @@ local function doc()
 end
 
 -- Force plaintext syntax to have a name
-local plain_text_syntax = syntax.get("")
+local plain_text_syntax = syntax.get("", "")
 plain_text_syntax.name = plain_text_syntax.name or "Plain Text"
 
 local doc_reset_syntax = Doc.reset_syntax
