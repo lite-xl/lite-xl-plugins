@@ -143,7 +143,7 @@ local function validate_doc(doc)
   if not f then return true end
   local str = f:read(128 * 4) -- max bytes for 128 codepoints
   f:close()
-  return validate_utf8(str, 128)
+  return validate_utf8(str or "", 128)
 end
 
 
