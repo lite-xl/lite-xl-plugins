@@ -11,6 +11,11 @@ syntax.add {
   patterns = {
     {pattern = {"#=", "=#"},            type="comment"    },
     {pattern = "#.*$",                  type="comment"    },
+    { pattern = { 'icxx"""', '"""' },     type = "string", syntax = ".cpp" },
+    { pattern = { 'cxx"""', '"""' },     type = "string", syntax = ".cpp" },
+    { pattern = { 'py"""', '"""' },     type = "string", syntax = ".py" },
+    { pattern = { 'js"""', '"""' },     type = "string", syntax = ".js" },
+    { pattern = { 'md"""', '"""' },     type = "string", syntax = ".md" },
     { pattern = "%d%w*[%.-+*//]",       type = "number"   },
     { pattern = "0[oO_][0-7]+",         type = "number"   },
     { pattern = "-?0x[%x_]+",           type = "number"   },
@@ -27,7 +32,7 @@ syntax.add {
     { pattern = "'\\.*'",   type = "string" },
     { pattern = "'.'",      type = "string" },
     { pattern = "[%a_][%w_]*%f[(]",       type = "function" },
-    { pattern = ".*!",                    type="function"},
+    { pattern = "%g*!",                    type="function"},
     { pattern = "[%a_][%w_]*",            type = "symbol"   },
   },
   symbols = {
