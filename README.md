@@ -118,6 +118,7 @@ Plugin | Description
 [`motiontrail`](plugins/motiontrail.lua?raw=1) | Adds a motion-trail to the caret *([screenshot](https://user-images.githubusercontent.com/3920290/83256814-085ccb00-a1ab-11ea-9e35-e6633cbed1a9.gif))*
 ~~[`nagbar`](https://github.com/takase1121/lite-nagbar)*~~ | integrated in lite-xl ~~consistent and _beautiful_ confirmation dialogs for lite and lite-xl *([gif](https://raw.githubusercontent.com/takase1121/lite-nagbar/master/assets/preview.gif))*~~
 [`navigate`](plugins/navigate.lua?raw=1) | Allows moving back and forward between document positions, reducing the amount of scrolling
+[`nonicons`](plugins/nonicons.lua?raw=1) | File icons set for TreeView. Download [font](https://github.com/yamatsum/nonicons/raw/master/dist/nonicons.ttf) to your config/fonts folder
 [`open_ext`](plugins/open_ext.lua?raw=1) | Automatically prompts you if you tried to open a binary file in the editor
 [`openfilelocation`](plugins/openfilelocation.lua?raw=1) | Opens the parent directory of the current file in the file manager
 [`openselected`](plugins/openselected.lua?raw=1) | Opens the selected filename or url
