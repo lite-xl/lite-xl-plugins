@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "Shell script",
   files = { "%.sh$" },
   headers = "^#!.*bin.*sh\n",
   comment = "#",

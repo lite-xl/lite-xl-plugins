@@ -5,6 +5,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "GDScript",
   files = { "%.gd$" },
   comment = "#",
   patterns = {

@@ -74,6 +74,7 @@ for _, literal in ipairs(literals) do
 end
 
 syntax.add {
+  name = "PostgreSQL",
   files = { "%.sql$", "%.psql$" },
   comment = "--",
   patterns = {

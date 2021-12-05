@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "Rust",
   files = { "%.rs$" },
   comment = "//",
   patterns = {
@@ -15,6 +16,7 @@ syntax.add {
     { pattern = "-?%d+[%d%.eE]*f?",     type = "number"   },
     { pattern = "-?%.?%d+f?",           type = "number"   },
     { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
+    { pattern = "[%a_][%w_]*!%f[%[(]",  type = "function" },
     { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
     { pattern = "[%a_][%w_]*",          type = "symbol"   },
   },

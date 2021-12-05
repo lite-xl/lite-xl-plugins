@@ -34,8 +34,10 @@ Plugin | Description
 [`eval`](plugins/eval.lua?raw=1) | Replaces selected Lua code with its evaluated result
 [`exec`](plugins/exec.lua?raw=1) | Runs selected text through shell command and replaces with result
 [`ephemeraldocviews`](plugins/ephemeraldocviews.lua?raw=1) | Preview tabs. Opening a doc will replace the contents of the preview tab. Marks tabs as non-preview on any change.
+*[`extend_selection_line`](plugins/extend_selection_line.lua?raw=1)* | When a selection crosses multiple lines, it is drawn to the end of the screen *([screenshot](https://user-images.githubusercontent.com/2798487/140995616-89a20b55-5917-4df8-8a7c-d7c53732fa8b.png))*
 [`fallbackfonts`](https://github.com/takase1121/lite-fallback-fonts)* | Adds support for fallback fonts *([gif](https://raw.githubusercontent.com/takase1121/lite-fallback-fonts/master/assets/Iw18fI57J0.gif))*
 [`fontconfig`](plugins/fontconfig.lua?raw=1) | Allows users to load fonts with [fontconfig](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html).
+*[`force_syntax`](plugins/force_syntax.lua?raw=1)* | Change the syntax used for a file.
 [`formatter`](https://github.com/vincens2005/lite-formatters)* | formatters for various languages
 [`ghmarkdown`](plugins/ghmarkdown.lua?raw=1) | Opens a preview of the current markdown file in a browser window *([screenshot](https://user-images.githubusercontent.com/3920290/82754898-f7394600-9dc7-11ea-8278-2305363ed372.png))*
 *[`gitdiff_highlight`](https://github.com/vincens2005/lite-xl-gitdiff-highlight)** | highlight changed lines from git *([screenshot](https://raw.githubusercontent.com/vincens2005/lite-xl-gitdiff-highlight/master/screenshot.png))*
@@ -45,6 +47,7 @@ Plugin | Description
 [`hidestatus`](plugins/hidestatus.lua?raw=1) | Hides the status bar at the bottom of the window
 ~~[`inanimate`](plugins/inanimate.lua?raw=1)~~ | Integrated in lite-xl using `config.transitions = false` ~~Disables all transition animations~~
 *[`immersive-title`](https://github.com/takase1121/lite-xl-immersive-title)** | Dark (or even Mica!) title bar for Lite XL
+*[`indent_convert`](plugins/indent_convert.lua?raw=1)* | Convert between tabs and spaces indentation
 *[`indentguide`](plugins/indentguide.lua?raw=1)* | Adds indent guides *([screenshot](https://user-images.githubusercontent.com/3920290/79640716-f9860000-818a-11ea-9c3b-26d10dd0e0c0.png))*
 *[`Kinc Projects`](https://github.com/Kode-Community/kinc_plugin)** | Adds [Kinc](https://github.com/Kode/Kinc) Project generation with basic build commands(depends on [`console`](https://github.com/franko/console))
 [`language_angelscript`](plugins/language_angelscript.lua?raw=1) | Syntax for the [Angelscript](https://www.angelcode.com/angelscript/) programming language
@@ -69,6 +72,7 @@ Plugin | Description
 [`language_java`](plugins/language_java.lua?raw=1) | Syntax for the [Java](https://en.wikipedia.org/wiki/Java_(programming_language)) programming language
 [`language_jiyu`](plugins/language_jiyu.lua?raw=1) | Syntax for the [jiyu](https://github.com/machinamentum/jiyu) programming language
 [`language_jsx`](plugins/language_jsx.lua?raw=1) | Syntax for the [JSX](https://reactjs.org/docs/introducing-jsx.html) language for the React framework in JavaScript
+[`language_julia`](plugins/language_julia.lua?raw=1) | Syntax for the [Julia](https://julialang.org/) programming language
 [`language_ksy`](https://raw.githubusercontent.com/whiteh0le/lite-plugins/main/plugins/language_ksy.lua?raw=1) | Syntax for [Kaitai](http://kaitai.io/) struct files
 [`language_liquid`](plugins/language_liquid.lua?raw=1) | Syntax for [Liquid](https://shopify.github.io/liquid/) templating language
 [`language_lobster`](plugins/language_lobster.lua?raw=1) | Syntax for [Lobster](https://strlen.com/lobster/) programming language
@@ -91,6 +95,7 @@ Plugin | Description
 [`language_rust`](plugins/language_rust.lua?raw=1) | Syntax for the [Rust](https://rust-lang.org/) programming language
 [`language_ruby`](plugins/language_ruby.lua?raw=1) | Syntax for the [Ruby](https://www.ruby-lang.org/) programming language
 [`language sass`](plugins/language_sass.lua?raw=1) | Syntax for the [Sass](https://sass-lang.com/) CSS preprocessor
+[`language scala`](plugins/language_scala.lua?raw=1) | Syntax for the [Scala](https://scala-lang.org/) programming language
 [`language_sh`](plugins/language_sh.lua?raw=1) | Syntax for shell scripting language
 [`language_ssh_config`](plugins/language_ssh_config.lua?raw=1) | Syntax for ssh & sshd config files
 [`language_tcl`](plugins/language_tcl.lua?raw=1) | Syntax for the [Tcl](https://www.tcl.tk/) programming language
@@ -117,6 +122,7 @@ Plugin | Description
 [`motiontrail`](plugins/motiontrail.lua?raw=1) | Adds a motion-trail to the caret *([screenshot](https://user-images.githubusercontent.com/3920290/83256814-085ccb00-a1ab-11ea-9e35-e6633cbed1a9.gif))*
 ~~[`nagbar`](https://github.com/takase1121/lite-nagbar)*~~ | integrated in lite-xl ~~consistent and _beautiful_ confirmation dialogs for lite and lite-xl *([gif](https://raw.githubusercontent.com/takase1121/lite-nagbar/master/assets/preview.gif))*~~
 [`navigate`](plugins/navigate.lua?raw=1) | Allows moving back and forward between document positions, reducing the amount of scrolling
+[`opacity`](plugins/opacity.lua?raw=1) | Change the opaqueness/transparency of `lite-xl` using shift+mousewheel or a command.
 [`open_ext`](plugins/open_ext.lua?raw=1) | Automatically prompts you if you tried to open a binary file in the editor
 [`openfilelocation`](plugins/openfilelocation.lua?raw=1) | Opens the parent directory of the current file in the file manager
 [`openselected`](plugins/openselected.lua?raw=1) | Opens the selected filename or url
@@ -129,6 +135,7 @@ Plugin | Description
 [`scalestatus`](plugins/scalestatus.lua?raw=1) | Displays current scale (zoom) in status view (depends on scale plugin)
 [`selectionhighlight`](plugins/selectionhighlight.lua?raw=1) | Highlights regions of code that match the current selection *([screenshot](https://user-images.githubusercontent.com/3920290/80710883-5f597c80-8ae7-11ea-97f0-76dfacc08439.png))*
 [`smallclock`](plugins/smallclock.lua?raw=1) | Displays the current time in the corner of the status view
+*[`smoothcaret`](plugins/smoothcaret.lua?raw=1)* | Smooth caret animation *([gif](https://user-images.githubusercontent.com/20792268/139006049-a0ba6559-88cb-49a7-8077-4822445b4a1f.gif))*
 [`sort`](plugins/sort.lua?raw=1) | Sorts selected lines alphabetically
 [`spellcheck`](plugins/spellcheck.lua?raw=1) | Underlines misspelt words *([screenshot](https://user-images.githubusercontent.com/3920290/79923973-9caa7400-842e-11ea-85d4-7a196a91ca50.png))* *— note: on Windows a [`words.txt`](https://github.com/dwyl/english-words/blob/master/words.txt) dictionary file must be placed beside the exe*
 [`statusclock`](plugins/statusclock.lua?raw=1) | Displays the current date and time in the corner of the status view

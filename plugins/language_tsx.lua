@@ -3,6 +3,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "TypeScript with JSX",
   files = { "%.tsx$" },
   comment = "//",
   patterns = {

@@ -2,6 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "YAML",
   files = { "%.yml$", "%.yaml$" },
   comment = "#",
   patterns = {

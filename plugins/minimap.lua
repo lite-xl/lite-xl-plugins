@@ -4,6 +4,7 @@ local common = require "core.common"
 local config = require "core.config"
 local style = require "core.style"
 local DocView = require "core.docview"
+local Object = require "core.object"
 
 -- General plugin settings
 config.plugins.minimap = {
@@ -14,13 +15,46 @@ config.plugins.minimap = {
 	scale = 1,
 	-- how many spaces one tab is equivalent to
 	tab_width = 4,
-	draw_background = true
+	draw_background = true,
+
+	-- you can override these colors
+	selection_color = nil,
+	caret_color = nil,
+
+	-- If other plugins provide per-line highlights,
+	-- this controls the placement. (e.g. gitdiff_highlight)
+	highlight_align = 'left',
+	highlight_width = 3,
+	gutter_width = 5,
+	-- try these values:
+	-- full width:
+	-- config.plugins.minimap.highlight_width = 100
+	-- config.plugins.minimap.gutter_width = 0
+	-- left side:
+	-- config.plugins.minimap.highlight_align = 'left'
+	-- config.plugins.minimap.highlight_width = 3
+	-- config.plugins.minimap.gutter_width = 4
+	-- right side:
+	-- config.plugins.minimap.highlight_align = 'right'
+	-- config.plugins.minimap.highlight_width = 5
+	-- config.plugins.minimap.gutter_width = 0
 }
 
 -- Configure size for rendering each char in the minimap
 local char_height = 1 * SCALE * config.plugins.minimap.scale
 local char_spacing = 0.8 * SCALE * config.plugins.minimap.scale
 local line_spacing = 2 * SCALE * config.plugins.minimap.scale
+
+local MiniMap = Object:extend()
+
+function MiniMap:new()
+end
+
+function MiniMap:line_highlight_color(line_index)
+	-- other plugins can override this, and return a color
+end
+
+local minimap = MiniMap()
 
 -- Overloaded since the default implementation adds a extra x3 size of hotspot for the mouse to hit the scrollbar.
 local prev_scrollbar_overlaps_point = DocView.scrollbar_overlaps_point
@@ -101,7 +135,6 @@ DocView.on_mouse_pressed = function(self, button, x, y, clicks)
 		-- if user didn't click on the visible area (ie not dragging), scroll accordingly
 		if not hit_visible_area then
 			self:scroll_to_line(jump_to_line, false, config.plugins.minimap.instant_scroll)
-			return
 		end
 
 	end
@@ -196,6 +229,21 @@ DocView.draw_scrollbar = function(self)
 	-- draw visual rect
 	renderer.draw_rect(x, visible_y, w, scroller_height, visual_color)
 
+	-- highlight the selected lines, and the line with the caret on it
+	local selection_color = config.plugins.minimap.selection_color or style.dim
+	local caret_color = config.plugins.minimap.caret_color or style.caret
+	local selection_line, selection_col, selection_line2, selection_col2 = self.doc:get_selection()
+	local selection_y = y + (selection_line - minimap_start_line) * line_spacing
+	local selection2_y = y + (selection_line2 - minimap_start_line) * line_spacing
+	local selection_min_y = math.min(selection_y, selection2_y)
+	local selection_h = math.abs(selection2_y - selection_y)+1
+	renderer.draw_rect(x, selection_min_y, w, selection_h, selection_color)
+	renderer.draw_rect(x, selection_y, w, line_spacing, caret_color)
+
+	local highlight_align = config.plugins.minimap.highlight_align
+	local highlight_width = config.plugins.minimap.highlight_width
+	local gutter_width = config.plugins.minimap.gutter_width
+
 	-- time to draw the actual code, setup some local vars that are used in both highlighted and plain renderind.
 	local line_y = y
 
@@ -225,6 +273,19 @@ DocView.draw_scrollbar = function(self)
 		batch_width = 0
 	end
 
+	local highlight_x
+	if highlight_align == 'left' then
+		highlight_x = x
+	else
+		highlight_x = x + w - highlight_width
+	end
+	local function render_highlight(idx, line_y)
+		local highlight_color = minimap:line_highlight_color(idx)
+		if highlight_color then
+			renderer.draw_rect(highlight_x, line_y, highlight_width, line_spacing, highlight_color)
+		end
+	end
+
 	-- render lines with syntax highlighting
 	if config.plugins.minimap.syntax_highlight then
 
@@ -236,8 +297,10 @@ DocView.draw_scrollbar = function(self)
 		endidx = math.min(endidx, line_count)
 		for idx = minimap_start_line, endidx do
 			batch_syntax_type = nil
-			batch_start = x
+			batch_start = x + gutter_width
 			batch_width = 0
+
+			render_highlight(idx, line_y)
 
 			-- per token
 			for _, type, text in self.doc.highlighter:each_token(idx) do
@@ -268,8 +331,10 @@ DocView.draw_scrollbar = function(self)
 
 	else -- render lines without syntax highlighting
 		for idx = 1, line_count - 1 do
-			batch_start = x
+			batch_start = x + gutter_width
 			batch_width = 0
+
+			render_highlight(idx, line_y)
 
 			for char in common.utf8_chars(self.doc.lines[idx]) do
 				if char == " " or char == "\n" then
@@ -304,3 +369,6 @@ command.add(nil, {
 		config.plugins.minimap.syntax_highlight = not config.plugins.minimap.syntax_highlight
 	end
 })
+
+return minimap
+
