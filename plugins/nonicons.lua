@@ -2,15 +2,11 @@
 local core = require "core"
 local common = require "core.common"
 local style = require "core.style"
-local ContextMenu = require "core.contextmenu"
-local RootView = require "core.rootview"
 local TreeView = require "plugins.treeview"
 
 
-local original_draw = TreeView.draw
-local icon_font = renderer.font.load(USERDIR .. "/fonts/nonicons.ttf", 15 * SCALE)
-
-local icons = {
+local icon_font = renderer.font.load(USERDIR.."/fonts/nonicons.ttf", 15 * SCALE)
+local extension_icons = {
   [".lua"] = { "#51a0cf", "" },
   [".md"]  = { "#519aba", "" }, -- Markdown
   [".cpp"] = { "#519aba", "" },
@@ -48,8 +44,29 @@ local icons = {
   -- Following without special icon:
   [".awk"] = { "#4d5a5e", "" },
   [".nim"] = { "#F88A02", "" },
+
+}
+local known_names_icons = {
+  ["changelog"] = { "#657175", "" }, ["changelog.txt"] = { "#4d5a5e", "" },
+  ["makefile"] = { "#6d8086", "" },
+  ["dockerfile"] = { "#296478", "" },
+  ["docker-compose.yml"] = { "#4289a1", "" },
+  ["license"] = { "#d0bf41", "" },
+  ["cmakelists.txt"] = { "#6d8086", "" },
+  ["readme.md"] = { "#72b886", "" }, ["readme"] = { "#72b886", "" },
+  ["init.lua"] = { "#2d6496", "" },
+  ["setup.py"] = { "#559dd9", "" },
 }
 
+-- Preparing colors
+for k, v in pairs(extension_icons) do
+  v[1] = { common.color(v[1]) }
+end
+for k, v in pairs(known_names_icons) do
+  v[1] = { common.color(v[1]) }
+end
+
+-- Replace original draw
 function TreeView:draw()
   self:draw_background(style.background2)
 
@@ -79,8 +96,8 @@ function TreeView:draw()
     -- icons
     x = x + item.depth * style.padding.x + style.padding.x
     if item.type == "dir" then
-      local icon1 = item.expanded and "" or "" -- 61726 and 61728
-      local icon2 = item.expanded and "" or "" -- 61771 and 61772
+      local icon1 = item.expanded and "" or "" -- unicode 61726 and 61728
+      local icon2 = item.expanded and "" or "" -- unicode 61771 and 61772
       x = x - spacing
       common.draw_text(icon_font, color, icon1, nil, x, y, 0, h)
       x = x + style.padding.x + spacing
@@ -88,11 +105,16 @@ function TreeView:draw()
       x = x + icon_width
     else
       x = x + style.padding.x
-      local icon = ""
-      local ext = item.name:match("^.+(%..+)$")
-      if icons[ext] ~= nil then
-        icon_color = { common.color(icons[ext][1]) }
-        icon = icons[ext][2]
+      -- default icon
+      local icon = "" -- unicode 61766
+      -- icon depending on the file extension or full name
+      local custom_icon = known_names_icons[item.name:lower()]
+      if custom_icon == nil then
+        custom_icon = extension_icons[item.name:match("^.+(%..+)$")]
+      end
+      if custom_icon ~= nil then
+        icon_color = custom_icon[1]
+        icon = custom_icon[2]
       end
       common.draw_text(icon_font, icon_color, icon, nil, x, y, 0, h)
       x = x + icon_width
@@ -108,5 +130,4 @@ function TreeView:draw()
     core.root_view:defer_draw(self.draw_tooltip, self)
   end
 end
-
 
