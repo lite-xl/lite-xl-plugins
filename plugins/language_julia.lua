@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3 --lite-xl 2.1
 -- Support for the Julia programming language:
 -- Covers the most used keywords up to Julia version 1.6.4
 
