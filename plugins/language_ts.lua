@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3 --lite-xl 2.1
 -- copied from language_js, but added regex highlighting back
 local syntax = require "core.syntax"
 

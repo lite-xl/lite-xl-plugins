@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3 --lite-xl 2.1
 local core = require "core"
 local translate = require "core.doc.translate"
 local config = require "core.config"
