@@ -4,7 +4,7 @@ local config = require "core.config"
 local command = require "core.command"
 local DocView = require "core.docview"
 
-config.plugins.autowrap = { files = { "%.md$", "%.txt$" } }
+config.plugins.autowrap = common.merge({ files = { "%.md$", "%.txt$" } }, config.plugins.autowrap)
 
 
 local on_text_input = DocView.on_text_input

@@ -1,11 +1,12 @@
 -- mod-version:3 --lite-xl 2.1
 local core = require "core"
+local common = require "core.common"
 local config = require "core.config"
 local command = require "core.command"
 
-config.plugins.indent_convert = {
+config.plugins.indent_convert = common.merge({
   update_indent_type = true -- set to false to avoid updating the document indent type
-}
+}, config.plugins.indent_convert)
 
 local zero_pattern = _VERSION == "Lua 5.1" and "%z" or "\0"
 

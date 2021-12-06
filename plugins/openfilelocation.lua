@@ -5,14 +5,15 @@ local config = require "core.config"
 
 
 config.plugins.openfilelocation = {}
-if PLATFORM == "Windows" then
-  config.plugins.openfilelocation.filemanager = "explorer"
-elseif PLATFORM == "Mac OS X" then
-  config.plugins.openfilelocation.filemanager = "open"
-else
-  config.plugins.openfilelocation.filemanager = "xdg-open"
+if not config.plugins.openfilelocation.filemanager then
+  if PLATFORM == "Windows" then
+    config.plugins.openfilelocation.filemanager = "explorer"
+  elseif PLATFORM == "Mac OS X" then
+    config.plugins.openfilelocation.filemanager = "open"
+  else
+    config.plugins.openfilelocation.filemanager = "xdg-open"
+  end
 end
-
 
 command.add("core.docview", {
   ["open-file-location:open-file-location"] = function()

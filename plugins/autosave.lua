@@ -3,13 +3,14 @@ local core = require "core"
 local config = require "core.config"
 local Doc = require "core.doc"
 local command = require "core.command"
+local common = require "core.common"
 -- this is used to detect the wait time
 local last_keypress = os.time()
 -- this exists so that we don't end up with multiple copies of the loop running at once
 local looping = false
 local on_text_change = Doc.on_text_change
 -- the approximate amount of time, in seconds, that it takes to trigger an autosave
-config.plugins.autosave = { timeout = 1 }
+config.plugins.autosave = common.merge({ timeout = 1 }, config.plugins.autosave)
 
 
 local function loop_for_save()
