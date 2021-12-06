@@ -34,8 +34,10 @@ Plugin | Description
 [`eval`](plugins/eval.lua?raw=1) | Replaces selected Lua code with its evaluated result
 [`exec`](plugins/exec.lua?raw=1) | Runs selected text through shell command and replaces with result
 [`ephemeraldocviews`](plugins/ephemeraldocviews.lua?raw=1) | Preview tabs. Opening a doc will replace the contents of the preview tab. Marks tabs as non-preview on any change.
+*[`extend_selection_line`](plugins/extend_selection_line.lua?raw=1)* | When a selection crosses multiple lines, it is drawn to the end of the screen *([screenshot](https://user-images.githubusercontent.com/2798487/140995616-89a20b55-5917-4df8-8a7c-d7c53732fa8b.png))*
 [`fallbackfonts`](https://github.com/takase1121/lite-fallback-fonts)* | Adds support for fallback fonts *([gif](https://raw.githubusercontent.com/takase1121/lite-fallback-fonts/master/assets/Iw18fI57J0.gif))*
 [`fontconfig`](plugins/fontconfig.lua?raw=1) | Allows users to load fonts with [fontconfig](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html).
+*[`force_syntax`](plugins/force_syntax.lua?raw=1)* | Change the syntax used for a file.
 [`formatter`](https://github.com/vincens2005/lite-formatters)* | formatters for various languages
 [`ghmarkdown`](plugins/ghmarkdown.lua?raw=1) | Opens a preview of the current markdown file in a browser window *([screenshot](https://user-images.githubusercontent.com/3920290/82754898-f7394600-9dc7-11ea-8278-2305363ed372.png))*
 *[`gitdiff_highlight`](https://github.com/vincens2005/lite-xl-gitdiff-highlight)** | highlight changed lines from git *([screenshot](https://raw.githubusercontent.com/vincens2005/lite-xl-gitdiff-highlight/master/screenshot.png))*
@@ -44,6 +46,8 @@ Plugin | Description
 [`hidelinenumbers`](plugins/hidelinenumbers.lua?raw=1) | Hides the line numbers on the left of documents *([screenshot](https://user-images.githubusercontent.com/3920290/81692043-b8b19c00-9455-11ea-8d74-ad99be4b9c5f.png))*
 [`hidestatus`](plugins/hidestatus.lua?raw=1) | Hides the status bar at the bottom of the window
 ~~[`inanimate`](plugins/inanimate.lua?raw=1)~~ | Integrated in lite-xl using `config.transitions = false` ~~Disables all transition animations~~
+*[`immersive-title`](https://github.com/takase1121/lite-xl-immersive-title)** | Dark (or even Mica!) title bar for Lite XL
+*[`indent_convert`](plugins/indent_convert.lua?raw=1)* | Convert between tabs and spaces indentation
 *[`indentguide`](plugins/indentguide.lua?raw=1)* | Adds indent guides *([screenshot](https://user-images.githubusercontent.com/3920290/79640716-f9860000-818a-11ea-9c3b-26d10dd0e0c0.png))*
 *[`Kinc Projects`](https://github.com/Kode-Community/kinc_plugin)** | Adds [Kinc](https://github.com/Kode/Kinc) Project generation with basic build commands(depends on [`console`](https://github.com/franko/console))
 [`language_angelscript`](plugins/language_angelscript.lua?raw=1) | Syntax for the [Angelscript](https://www.angelcode.com/angelscript/) programming language
@@ -118,6 +122,7 @@ Plugin | Description
 [`motiontrail`](plugins/motiontrail.lua?raw=1) | Adds a motion-trail to the caret *([screenshot](https://user-images.githubusercontent.com/3920290/83256814-085ccb00-a1ab-11ea-9e35-e6633cbed1a9.gif))*
 ~~[`nagbar`](https://github.com/takase1121/lite-nagbar)*~~ | integrated in lite-xl ~~consistent and _beautiful_ confirmation dialogs for lite and lite-xl *([gif](https://raw.githubusercontent.com/takase1121/lite-nagbar/master/assets/preview.gif))*~~
 [`navigate`](plugins/navigate.lua?raw=1) | Allows moving back and forward between document positions, reducing the amount of scrolling
+[`opacity`](plugins/opacity.lua?raw=1) | Change the opaqueness/transparency of `lite-xl` using shift+mousewheel or a command.
 [`open_ext`](plugins/open_ext.lua?raw=1) | Automatically prompts you if you tried to open a binary file in the editor
 [`openfilelocation`](plugins/openfilelocation.lua?raw=1) | Opens the parent directory of the current file in the file manager
 [`openselected`](plugins/openselected.lua?raw=1) | Opens the selected filename or url
