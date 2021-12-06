@@ -1,10 +1,11 @@
 -- mod-version:3 --lite-xl 2.1
 local core = require "core"
 local config = require "core.config"
+local common = require "core.common"
 local style = require "core.style"
 local DocView = require "core.docview"
 
-config.plugins.motiontrail = { steps = 50 }
+config.plugins.motiontrail = common.merge({ steps = 50 }, config.plugins.motiontrail)
 
 
 local function lerp(a, b, t)

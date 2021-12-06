@@ -2,6 +2,7 @@
 local core = require "core"
 local config = require "core.config"
 local command = require "core.command"
+local common = require "core.common"
 
 --[[
 Date and time format placeholders
@@ -25,11 +26,11 @@ from https://www.lua.org/pil/22.1.html
 %y	two-digit year (98) [00-99]
 %%	the character `%´
 --]]
-config.plugins.datetimestamps = {
+config.plugins.datetimestamps = common.merge({
   format_datestamp = "%Y%m%d"
   format_datetimestamp = "%Y%m%d_%H%M%S"
   format_timestamp = "%H%M%S"
-}
+}, config.plugins.datetimestamps)
 
 local function datestamp()
   local sOut = os.date(config.plugins.datetimestamps.format_datestamp)

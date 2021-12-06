@@ -2,18 +2,20 @@
 local core = require "core"
 local command = require "core.command"
 local keymap = require "core.keymap"
+local common = require "core.common"
 local config = require "core.config"
 
 
 config.plugins.openselected = {}
-if PLATFORM == "Windows" then
-  config.plugins.openselected.filemanager = "start"
-elseif PLATFORM == "Mac OS X" then
-  config.plugins.openselected.filemanager = "open"
-else
-  config.plugins.openselected.filemanager = "xdg-open"
+if not config.plugins.openselected.filemanager then
+  if PLATFORM == "Windows" then
+    config.plugins.openselected.filemanager = "start"
+  elseif PLATFORM == "Mac OS X" then
+    config.plugins.openselected.filemanager = "open"
+  else
+    config.plugins.openselected.filemanager = "xdg-open"
+  end
 end
-
 
 command.add("core.docview", {
   ["open-selected:open-selected"] = function()

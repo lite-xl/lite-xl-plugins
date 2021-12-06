@@ -1,9 +1,10 @@
 -- mod-version:3 --lite-xl 2.1
 local config = require "core.config"
 local style = require "core.style"
+local common = require "core.common"
 local DocView = require "core.docview"
 
-config.plugins.smoothcaret = { rate = 0.65 }
+config.plugins.smoothcaret = common.merge({ rate = 0.65 }, config.plugins.smoothcaret)
 
 local docview_update = DocView.update
 function DocView:update()
