@@ -2,13 +2,14 @@
 local core = require "core"
 local config = require "core.config"
 local style = require "core.style"
+local common = require "core.common"
 local StatusView = require "core.statusview"
 local scan_rate = 1
 
-config.plugins.statusclock = {
+config.plugins.statusclock = common.merge({
   time_format = "%H:%M:%S",
   date_format = "%A, %d %B %Y"
-}
+}, config.plugins.statusclock)
 
 local time_data = {
   time_text = '',

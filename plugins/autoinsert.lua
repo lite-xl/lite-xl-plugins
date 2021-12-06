@@ -2,19 +2,20 @@
 local core = require "core"
 local translate = require "core.doc.translate"
 local config = require "core.config"
+local common = require "core.common"
 local DocView = require "core.docview"
 local command = require "core.command"
 local keymap = require "core.keymap"
 
 
-config.plugins.autoinsert = { map = {
+config.plugins.autoinsert = common.merge({ map = {
   ["["] = "]",
   ["{"] = "}",
   ["("] = ")",
   ['"'] = '"',
   ["'"] = "'",
   ["`"] = "`",
-} }
+} }, config.plugins.autoinsert)
 
 
 local function is_closer(chr)

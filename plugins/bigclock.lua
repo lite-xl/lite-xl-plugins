@@ -7,11 +7,11 @@ local config = require "core.config"
 local View = require "core.view"
 
 
-config.plugins.bigclock = {
+config.plugins.bigclock = common.merge({
   time_format = "%H:%M:%S",
   date_format = "%A, %d %B %Y",
   scale = 1
-}
+}, config.plugins.bigclock)
 
 
 local ClockView = View:extend()
