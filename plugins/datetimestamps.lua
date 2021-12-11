@@ -25,10 +25,11 @@ from https://www.lua.org/pil/22.1.html
 %y	two-digit year (98) [00-99]
 %%	the character `%´
 --]]
+
 config.plugins.datetimestamps = {
-  format_datestamp = "%Y%m%d"
-  format_datetimestamp = "%Y%m%d_%H%M%S"
-  format_timestamp = "%H%M%S"
+  format_datestamp = "%Y%m%d",
+  format_datetimestamp = "%Y%m%d_%H%M%S",
+  format_timestamp = "%H%M%S",
 }
 
 local function datestamp()
