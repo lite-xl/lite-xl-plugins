@@ -20,7 +20,7 @@ Plugin | Description
 [`centerdoc`](plugins/centerdoc.lua?raw=1) | Centers document's content on the screen *([screenshot](https://user-images.githubusercontent.com/3920290/82127896-bf6e4500-97ae-11ea-97fc-ba9a552bc9a4.png))*
 ~~[`closeconfirmx`](plugins/closeconfirmx.lua?raw=1)~~ | Replaced by NagView dialog ~~Replaces a system close confirmation dialog with a command view, like for individual files *([screenshot](https://user-images.githubusercontent.com/1689801/107596774-afa76280-6c53-11eb-80ab-22e73058c097.png))*~~
 [`colorpreview`](plugins/colorpreview.lua?raw=1) | Underlays color values (eg. `#ff00ff` or `rgb(255, 0, 255)`) with their resultant color. *([screenshot](https://user-images.githubusercontent.com/3920290/80743752-731bd780-8b15-11ea-97d3-847db927c5dc.png))*
-[`console`](https://github.com/franko/console) | A console for running external commands and capturing their output *([gif](https://user-images.githubusercontent.com/3920290/81343656-49325a00-90ad-11ea-8647-ff39d8f1d730.gif))*
+[`console`](https://github.com/franko/console)* | A console for running external commands and capturing their output *([gif](https://user-images.githubusercontent.com/3920290/81343656-49325a00-90ad-11ea-8647-ff39d8f1d730.gif))*
 [`contextmenu`](https://github.com/takase1121/lite-contextmenu)* | Simple context menu *([screenshot](https://github.com/takase1121/lite-contextmenu/blob/master/assets/screenshot.jpg?raw=true))*
 [`copyfilelocation`](plugins/copyfilelocation.lua?raw=1) | Copy file location to clipboard
 [`datetimestamps`](plugins/datetimestamps.lua?raw=1) | Insert date-, time- and date-time-stamps
@@ -151,3 +151,4 @@ Plugin | Description
 [`updatechecker`](https://github.com/vincens2005/lite-xl-updatechecker)* | Automatically checks for updates and notifies you
 [`vibe`](https://github.com/eugenpt/lite-xl-vibe)* | VI(vim?) bindings with a hint of DOOM Emacs, for lite-xl
 ~~[`workspace`](plugins/workspace.lua?raw=1)~~ | Integrated in lite-xl ~~Retains project's layout and open documents between sessions~~
+
