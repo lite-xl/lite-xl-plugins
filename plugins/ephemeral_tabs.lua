@@ -41,10 +41,11 @@ end
 -- Double clicking in the TreeView makes the tab normal
 local TreeView_on_mouse_pressed = TreeView.on_mouse_pressed
 function TreeView:on_mouse_pressed(button, x, y, clicks)
-  TreeView_on_mouse_pressed(self, button, x, y, clicks)
+  local result = TreeView_on_mouse_pressed(self, button, x, y, clicks)
   if (clicks > 1) and (core.active_view.doc ~= nil) then
     core.active_view.ephemeral = false
   end
+  return result
 end
 
 -- Double clicking on a tab makes it normal
@@ -60,6 +61,7 @@ function RootView:on_mouse_pressed(button, x, y, clicks)
     end
     return true
   end
+  return false
 end
 
 -- Dragging a tab makes it normal
@@ -73,5 +75,5 @@ function RootView:on_mouse_released(button, x, y, ...)
       end
     end
   end
-  RootView_on_mouse_released(self, button, x, y, ...)
+  return RootView_on_mouse_released(self, button, x, y, ...)
 end
