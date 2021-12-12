@@ -51,17 +51,15 @@ end
 -- Double clicking on a tab makes it normal
 local RootView_on_mouse_pressed = RootView.on_mouse_pressed
 function RootView:on_mouse_pressed(button, x, y, clicks)
-  if RootView_on_mouse_pressed(self, button, x, y, clicks) then
-    if clicks > 1 then
-      local node = self.root_node:get_child_overlapping_point(x, y)
-      local idx = node:get_tab_overlapping_point(x, y)
-      if idx then
-        node.views[idx].ephemeral = false
-      end
+  local result = RootView_on_mouse_pressed(self, button, x, y, clicks)
+  if clicks > 1 then
+    local node = self.root_node:get_child_overlapping_point(x, y)
+    local idx = node:get_tab_overlapping_point(x, y)
+    if idx then
+      node.views[idx].ephemeral = false
     end
-    return true
   end
-  return false
+  return result
 end
 
 -- Dragging a tab makes it normal
