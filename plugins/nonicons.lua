@@ -90,9 +90,6 @@ function TreeView:draw()
       color = style.accent
     end
 
-    -- allow for color overrides
-    local icon_color = self:color_for_item(item.abs_filename) or color
-
     -- icons
     x = x + item.depth * style.padding.x + style.padding.x
     if item.type == "dir" then
@@ -107,6 +104,7 @@ function TreeView:draw()
       x = x + style.padding.x
       -- default icon
       local icon = "" -- unicode 61766
+      local icon_color = color
       -- icon depending on the file extension or full name
       local custom_icon = known_names_icons[item.name:lower()]
       if custom_icon == nil then
