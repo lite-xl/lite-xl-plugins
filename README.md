@@ -1,4 +1,4 @@
-Plugins for [Lite XL](https://github.com/franko/lite-xl)
+Plugins for [Lite XL](https://github.com/lite-xl/lite-xl)
 
 *Note: if you make a pull request, the table should be updated and kept in
 alphabetical order. If your plugin is large (or you'd otherwise prefer it to
