@@ -9,6 +9,11 @@ local TreeView = require "plugins.treeview"
 local RootView_open_doc = RootView.open_doc
 function RootView:open_doc(doc)
   local docview = RootView_open_doc(self, doc)
+  -- Check where method was called from. We make tab ephemeral for treeview only
+  if debug.getinfo(2).source:match("/plugins/treeview%.lua") == nil then
+    docview.ephemeral = false
+    return docview
+  end
   -- The absence of the ephemeral flag means that before this moment in this
   -- node this document was not exists
   if docview.ephemeral == nil then
