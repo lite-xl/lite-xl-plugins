@@ -7,10 +7,12 @@ local common = require "core.common"
 local config = require "core.config"
 local style = require "core.style"
 local TreeView = require "plugins.treeview"
+local Node = require "core.node"
 
 -- Config
 local use_default_dir_icons = false
 local use_default_chevrons  = false
+local draw_tab_icons        = true
 
 local icon_font = renderer.font.load(USERDIR.."/fonts/nonicons.ttf", 15 * SCALE)
 local chevron_width = icon_font:get_width("")
@@ -56,6 +58,7 @@ local extension_icons = {
 }
 local known_names_icons = {
   ["changelog"] = { "#657175", "" }, ["changelog.txt"] = { "#4d5a5e", "" },
+  ["changelog.md"] = { "#519aba", "" },
   ["makefile"] = { "#6d8086", "" },
   ["dockerfile"] = { "#296478", "" },
   ["docker-compose.yml"] = { "#4289a1", "" },
@@ -116,3 +119,20 @@ if not use_default_chevrons then
   end
 end
 
+-- Override function to draw icons in tabs if setting is enabled
+if draw_tab_icons then
+  local Node_draw_tab = Node.draw_tab
+  function Node:draw_tab(text, is_active, is_hovered, is_close_hovered, x, y, w, h, standalone)
+    local item = { type = "file", name = text }
+    -- Support ephemeral tabs
+    if text:match("^~ (.-) ~$") then
+      item.name = text:match("^~ (.-) ~$")
+    end
+    item.name = item.name:match("^(.-)%*?$") -- Remove * for modified files
+    text = "   " .. text -- Space for icon
+    Node_draw_tab(self, text, is_active, is_hovered, is_close_hovered, x, y, w, h, standalone)
+    x = x + chevron_width/2
+    y = y + SCALE
+    TreeView:draw_item_icon(item, false, is_hovered, x, y, w, h)
+  end
+end
