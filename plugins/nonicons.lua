@@ -115,24 +115,20 @@ if not use_default_chevrons then
       local chevron_color = hovered and style.accent or style.text
       common.draw_text(icon_font, chevron_color, chevron_icon, nil, x, y, 0, h)
     end
-    return chevron_width * 1.25
+    return chevron_width + style.padding.x/4
   end
 end
 
--- Override function to draw icons in tabs if setting is enabled
+-- Override function to draw icons in tabs titles if setting is enabled
 if draw_tab_icons then
-  local Node_draw_tab = Node.draw_tab
-  function Node:draw_tab(text, is_active, is_hovered, is_close_hovered, x, y, w, h, standalone)
-    local item = { type = "file", name = text }
-    -- Support ephemeral tabs
-    if text:match("^~ (.-) ~$") then
-      item.name = text:match("^~ (.-) ~$")
-    end
-    item.name = item.name:match("^(.-)%*?$") -- Remove * for modified files
-    text = "   " .. text -- Space for icon
-    Node_draw_tab(self, text, is_active, is_hovered, is_close_hovered, x, y, w, h, standalone)
-    x = x + chevron_width/2
-    y = y + SCALE
+  local Node_draw_tab_title = Node.draw_tab_title
+  function Node:draw_tab_title(view, font, is_active, is_hovered, x, y, w, h)
+    local padx = chevron_width + style.padding.x/2
+    local tx = x + padx -- Space for icon
+    w = w - padx
+    Node_draw_tab_title(self, view, font, is_active, is_hovered, tx, y, w, h)
+    if (view == nil) or (view.doc == nil) then return end
+    local item = { type = "file", name = view.doc:get_name() }
     TreeView:draw_item_icon(item, false, is_hovered, x, y, w, h)
   end
 end
