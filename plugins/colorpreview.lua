@@ -17,8 +17,16 @@ local function draw_color_previews(self, idx, x, y, ptn, base, nibbles)
     if not s then break end
 
     local str = text:sub(s, e)
-    local r, g, b = str:match(ptn)
+    local r, g, b, a = str:match(ptn)
     r, g, b = tonumber(r, base), tonumber(g, base), tonumber(b, base)
+    if (a ~= nil) and (a ~= "") then
+      a = tonumber(a, base)
+      if base ~= 16 then
+        a = a * 0xff
+      end
+    else
+      a = 0xff
+    end
 
     -- #123 becomes #112233
     if nibbles then
@@ -32,7 +40,7 @@ local function draw_color_previews(self, idx, x, y, ptn, base, nibbles)
     local oy = self:get_line_text_y_offset()
 
     local text_color = math.max(r, g, b) < 128 and white or black
-    tmp[1], tmp[2], tmp[3] = r, g, b
+    tmp[1], tmp[2], tmp[3], tmp[4] = r, g, b, a
 
     local l1, _, l2, _ = self.doc:get_selection(true)
 
@@ -48,7 +56,7 @@ local draw_line_text = DocView.draw_line_text
 
 function DocView:draw_line_text(idx, x, y)
   draw_line_text(self, idx, x, y)
-  draw_color_previews(self, idx, x, y, "#(%x%x)(%x%x)(%x%x)%f[%W]",        16)
+  draw_color_previews(self, idx, x, y, "#(%x%x)(%x%x)(%x%x)(%x?%x?)%f[%W]",        16)
   draw_color_previews(self, idx, x, y, "#(%x)(%x)(%x)%f[%W]",              16, true) -- support #fff css format
-  draw_color_previews(self, idx, x, y, "rgba?%((%d+)%D+(%d+)%D+(%d+).-%)", 10)
+  draw_color_previews(self, idx, x, y, "rgba?%((%d+)%D+(%d+)%D+(%d+)[%s,]-([%.%d]-)%s-%)", nil)
 end
