@@ -53,6 +53,7 @@ Plugin | Description
 [`language_bib`](plugins/language_bib.lua?raw=1) | Syntax for [BibTex](https://en.wikipedia.org/wiki/BibTeX) files
 [`language_cmake`](plugins/language_cmake.lua?raw=1) | Syntax for the CMake build system language
 [`language_cpp`](plugins/language_cpp.lua?raw=1) | Syntax for the [C++](https://isocpp.org/) programming language
+[`language_crystal`](https://github.com/Tamnac/lite-xl-plugins) | Syntax for the [Crystal](https://crystal-lang.org) programming language
 [`language_csharp`](plugins/language_csharp.lua?raw=1) | Syntax for the [C#](http://csharp.net) programming language
 [`language_d`](plugins/language_d.lua?raw=1) | Syntax for the [D](https://dlang.org/) programming language
 [`language_dart`](plugins/language_dart.lua?raw=1) | Syntax for the [Dart](https://dart.dev/) programming languiage
