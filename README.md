@@ -98,9 +98,9 @@ Plugin | Description
 [`language_ssh_config`](plugins/language_ssh_config.lua?raw=1) | Syntax for ssh & sshd config files
 [`language_tcl`](plugins/language_tcl.lua?raw=1) | Syntax for the [Tcl](https://www.tcl.tk/) programming language
 [`language_teal`](plugins/language_teal.lua?raw=1) | Syntax for the [Teal](https://github.com/teal-language/tl) programming language, a typed dialect of Lua.
-[`language_ts`](plugins/language_ts.lua?raw=1) | Syntax for the [TypeScript](https://www.typescriptlang.org/) programming language, a typed dialect of JavaScript.
 [`language_tex`](plugins/language_tex.lua?raw=1) | Syntax for the [LaTeX](https://www.latex-project.org/) typesetting language
 [`language_toml`](plugins/language_toml.lua?raw=1) | Syntax for the [TOML](https://toml.io/en/) configuration language
+[`language_ts`](plugins/language_ts.lua?raw=1) | Syntax for the [TypeScript](https://www.typescriptlang.org/) programming language, a typed dialect of JavaScript.
 [`language_tsx`](plugins/language_tsx.lua?raw=1) | Syntax for [TSX](https://www.typescriptlang.org/docs/handbook/jsx.html) language
 [`language_v`](plugins/language_v.lua?raw=1) | Syntax for the [V](https://vlang.io/) programming language
 [`language_wren`](plugins/language_wren.lua?raw=1) | Syntax for the [Wren](http://wren.io/) programming language
