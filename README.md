@@ -128,7 +128,7 @@ Plugin | Description
 ~~[`projectmanager`](plugins/projectmanager.lua?raw=1)~~ | Integrated in lite-xl with improvements ~~Save projects and load/reload them quickly~~
 [`pdfview`](plugins/pdfview.lua?raw=1) | PDF preview for TeX files
 [`rainbowparen`](plugins/rainbowparen.lua?raw=1) | Show nesting of parentheses with rainbow colours
-[`regexreplaceplugin`](plugins/regexreplaceplugin.lua?raw=1) | Allows for you to write a regex and its replacement in one go, and live preview the results.
+[`regexreplacepreview`](plugins/regexreplacepreview.lua?raw=1) | Allows for you to write a regex and its replacement in one go, and live preview the results.
 [`restoretabs`](plugins/restoretabs.lua?raw=1) | Keep a list of recently closed tabs, and restore the tab in order on cntrl+shift+t.
 ~~`scale`~~ | Integrated in lite-xl with improvements ~~Provides support for dynamically adjusting the scale of the code font / UI (`ctrl+-`, `ctrl+=`)~~
 [`scalestatus`](plugins/scalestatus.lua?raw=1) | Displays current scale (zoom) in status view (depends on scale plugin)
