@@ -1,0 +1,32 @@
+name: Reorganize README
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  reorganize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - name: run the script
+        run: |
+          cd scripts
+          npm install
+          npm run main -- "https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}/" ../README.md ../README.md
+      - name: create PR
+        uses: peter-evans/create-pull-request@v3
+        with:
+          commit-message: Reorganize README.md
+          branch: reorganize-ci
+          add-paths: README.md
+          delete-branch: false
+          title: '[CI] Reorganize README.md'
+          body: |
+            This is a CI that makes sure entries are in alphabetical order and no links are invalid.
+            Please check the [CI run][1] for logs.
+
+            [1]: https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}
