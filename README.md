@@ -90,8 +90,8 @@ Plugin | Description
 [`language_psql`](plugins/language_psql.lua?raw=1) | Syntax for the postgresql database access language
 [`language_r`](plugins/language_R.lua?raw=1) | Syntax for [R](https://www.r-project.org/) scripting language
 [`language_rescript`](plugins/language_rescript.lua?raw=1) | Syntax for the [ReScript](https://rescript-lang.org/) programming language
-[`language_rust`](plugins/language_rust.lua?raw=1) | Syntax for the [Rust](https://rust-lang.org/) programming language
 [`language_ruby`](plugins/language_ruby.lua?raw=1) | Syntax for the [Ruby](https://www.ruby-lang.org/) programming language
+[`language_rust`](plugins/language_rust.lua?raw=1) | Syntax for the [Rust](https://rust-lang.org/) programming language
 [`language sass`](plugins/language_sass.lua?raw=1) | Syntax for the [Sass](https://sass-lang.com/) CSS preprocessor
 [`language scala`](plugins/language_scala.lua?raw=1) | Syntax for the [Scala](https://scala-lang.org/) programming language
 [`language_sh`](plugins/language_sh.lua?raw=1) | Syntax for shell scripting language
