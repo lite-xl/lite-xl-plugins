@@ -6,11 +6,22 @@ local DocView = require "core.docview"
 local Doc = require "core.doc"
 local TreeView = require "plugins.treeview"
 
+local function is_called_by(module)
+  local i = 1
+  while debug.getinfo(i) do
+    if debug.getinfo(i).source:match(module .. "%.lua$") then
+      return true
+    end
+    i = i + 1
+  end
+  return false
+end
+
 local RootView_open_doc = RootView.open_doc
 function RootView:open_doc(doc)
   local docview = RootView_open_doc(self, doc)
-  -- Check where method was called from. We make tab ephemeral for treeview only
-  if debug.getinfo(2).source:match("/plugins/treeview%.lua") == nil then
+  -- We make tab ephemeral for treeview and searchview only
+  if not(is_called_by("/plugins/treeview") or is_called_by("/plugins/projectsearch")) then
     docview.ephemeral = false
     return docview
   end
