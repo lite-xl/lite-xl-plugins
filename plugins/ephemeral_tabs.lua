@@ -50,7 +50,9 @@ end
 -- Any change to the document makes the tab normal
 local Doc_on_text_change = Doc.on_text_change
 function Doc:on_text_change(type)
-  core.active_view.ephemeral = false
+  if self == core.active_view.doc then
+    core.active_view.ephemeral = false
+  end
   Doc_on_text_change(self, type)
 end
 
