@@ -24,7 +24,7 @@ command.add("core.docview", {
       local head, body, foot = text:match("(\n*)(.-)(\n*)$")
       local lines = split_lines(body)
       table.sort(lines, function(a, b) return a:lower() < b:lower() end)
-      return head .. table.concat(lines, "\n") .. foot
+      return head .. table.concat(lines, "\n") .. foot, 1
     end)
   end,
 })
