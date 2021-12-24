@@ -7,13 +7,14 @@ local Doc = require "core.doc"
 local TreeView = require "plugins.treeview"
 
 local function is_called_by(module)
-  local i = 1
-  while debug.getinfo(i) do
-    if debug.getinfo(i).source:match(module .. "%.lua$") then
+  local i = 0
+  repeat
+    i = i + 1
+    local info = debug.getinfo(i, "S")
+    if info and info.source:match(module .. "%.lua$") then
       return true
     end
-    i = i + 1
-  end
+  until info == nil
   return false
 end
 
