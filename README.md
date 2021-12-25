@@ -28,7 +28,7 @@ Plugin | Description
 [`discord-presence`](https://github.com/vincens2005/lite-xl-discord)* | Adds the current workspace and file to your Discord Rich Presence
 [`dragdropselected`](plugins/dragdropselected.lua?raw=1) | Provides basic drag and drop of selected text (in same document)
 ~~[`drawwhitespace`](plugins/drawwhitespace.lua?raw=1)~~ | Integrated with lite-xl reducing CPU usage ~~Draws tabs and spaces *([screenshot](https://user-images.githubusercontent.com/3920290/80573013-22ae5800-89f7-11ea-9895-6362a1c0abc7.png))*~~
-[`eofnewline`](https://github.com/bokunodev/lite_modules/blob/master/plugins/eofnewline-xl.lua?raw=1) | Make sure the file ends with one blank line.
+[`eofnewline`](https://github.com/bokunodev/lite_modules/blob/master/plugins/eofnewline-xl.lua?raw=1)* | Make sure the file ends with one blank line.
 [`eval`](plugins/eval.lua?raw=1) | Replaces selected Lua code with its evaluated result
 [`exec`](plugins/exec.lua?raw=1) | Runs selected text through shell command and replaces with result
 [`ephemeral_tabs`](plugins/ephemeral_tabs.lua?raw=1) | Preview tabs. Opening a doc will replace the contents of the preview tab. Marks tabs as non-preview on any change or tab double clicking.
