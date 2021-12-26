@@ -1,4 +1,4 @@
-Plugins for [Lite XL](https://github.com/lite-xl/lite-xl)
+Plugins for the [Lite XL text editor](https://github.com/lite-xl/lite-xl), originally forked from the [lite plugins repository](https://github.com/rxi/lite-plugins).
 
 *Note: if you make a pull request, the table should be updated and kept in
 alphabetical order. If your plugin is large (or you'd otherwise prefer it to
