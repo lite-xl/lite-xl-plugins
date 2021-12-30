@@ -89,8 +89,8 @@ Plugin | Description
 [`language_rescript`](plugins/language_rescript.lua?raw=1) | Syntax for the [ReScript](https://rescript-lang.org/) programming language
 [`language_ruby`](plugins/language_ruby.lua?raw=1) | Syntax for the [Ruby](https://www.ruby-lang.org/) programming language
 [`language_rust`](plugins/language_rust.lua?raw=1) | Syntax for the [Rust](https://rust-lang.org/) programming language
-[`language sass`](plugins/language_sass.lua?raw=1) | Syntax for the [Sass](https://sass-lang.com/) CSS preprocessor
-[`language scala`](plugins/language_scala.lua?raw=1) | Syntax for the [Scala](https://scala-lang.org/) programming language
+[`language_sass`](plugins/language_sass.lua?raw=1) | Syntax for the [Sass](https://sass-lang.com/) CSS preprocessor
+[`language_scala`](plugins/language_scala.lua?raw=1) | Syntax for the [Scala](https://scala-lang.org/) programming language
 [`language_sh`](plugins/language_sh.lua?raw=1) | Syntax for shell scripting language
 [`language_ssh_config`](plugins/language_ssh_config.lua?raw=1) | Syntax for ssh & sshd config files
 [`language_tcl`](plugins/language_tcl.lua?raw=1) | Syntax for the [Tcl](https://www.tcl.tk/) programming language
