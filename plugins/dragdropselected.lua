@@ -40,36 +40,48 @@ local min_drag = style.code_font:get_width(" ")
 local on_mouse_moved = DocView.on_mouse_moved
 function DocView:on_mouse_moved(x, y, ...)
 
-    local sCursor = nil
-
     -- make sure we only act if previously on_mouse_pressed was in selection
-    if self.bClickedIntoSelection and
-       ( -- we are already dragging or we moved enough to start dragging
-         not self.drag_start_loc or
-         distance(self.drag_start_loc[1],self.drag_start_loc[2], x, y) > min_drag
-       ) then
-        self.drag_start_loc = nil
+    if not self.bClickedIntoSelection then
+        return on_mouse_moved(self, x, y, ...)
+    end
 
+    local sCursor = nil
+    -- calculate line and column for current mouse position
+    local iLine, iCol = self:resolve_screen_position(x, y)
+
+    if self.drag_start_loc
+        and (distance(self.drag_start_loc[1],self.drag_start_loc[2], x, y) > min_drag)
+    then
+        -- we started dragging
+        self.drag_start_loc = nil
         -- show that we are dragging something
         sCursor = 'hand'
 
-        -- calculate line and column for current mouse position
-        local iLine, iCol = self:resolve_screen_position(x, y)
-        local iSelLine1 = self.dragged_selection[1]
-        local iSelCol1  = self.dragged_selection[2]
-        local iSelLine2 = self.dragged_selection[3]
-        local iSelCol2  = self.dragged_selection[4]
-        self.doc:set_selection(iSelLine1, iSelCol1, iSelLine2, iSelCol2)
-        if not isInSelection(iLine, iCol, iSelLine1, iSelCol1, iSelLine2, iSelCol2) then
-            -- show cursor only if outside selection
-            self.doc:add_selection(iLine, iCol)
+        -- check for modifier to duplicate
+        -- TODO: make image to drag with and/or hand over to OS dnd event
+        if keymap.modkeys['ctrl'] then
+            -- SDL does not yet have this and we would need to add it in C source first too
+            --sCursor = 'handWithPlus' -- 'arrowWithPlus' --
+        else
+            -- I do like the dragged portion going
+            -- instantly as that reduces the travel-distance.
+            -- TODO: does not seem to work -> FIXME
+            self.doc:delete_to(0)
         end
-        -- update scroll position
-        self:scroll_to_line(iLine, true)
-    end -- if previously clicked into selection
+        self.drag_drop_cursor = sCursor
 
-    -- hand off to 'old' on_mouse_moved()
-    on_mouse_moved(self, x, y, ...)
+    else
+        -- we are already dragging
+        -- show that we are dragging something
+        sCursor = self.drag_drop_cursor
+
+    end -- if previously moved selection
+
+    -- move text cursor
+    self.doc:set_selection(iLine, iCol)
+
+    -- update scroll position
+    self:scroll_to_line(iLine, true)
     -- override cursor as needed
     if sCursor then self.cursor = sCursor end
 
@@ -163,3 +175,4 @@ function DocView:draw_caret(x, y)
     end
     draw_caret(self, x, y)
 end -- DocView:draw_caret()
+
