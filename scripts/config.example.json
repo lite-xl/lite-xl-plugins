@@ -1,0 +1,6 @@
+{
+  "inputFile": "../README.md",
+  "outputFile": "README.md",
+  "pluginFile": "plugins.json",
+  "baseUrl": "http://google.com/"
+}

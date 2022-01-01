@@ -1,0 +1,6 @@
+{
+  "inputFile": "../README.md",
+  "outputFile": "../README.md",
+  "pluginFile": "../plugins.json",
+  "baseUrl": "<<GITHUB_ADDR>>"
+}
