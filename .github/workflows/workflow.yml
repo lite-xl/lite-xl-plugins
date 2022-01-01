@@ -17,7 +17,11 @@ jobs:
           cd scripts
           npm install
           npm run main -- "https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}/" ../README.md ../README.md
+          cd ..
+          git diff --exit-code -s README.md
+          echo "has_diff=$?" >> $GITHUB_ENV
       - name: create PR
+        if: env.has_diff == 1
         uses: peter-evans/create-pull-request@v3
         with:
           commit-message: Reorganize README.md
