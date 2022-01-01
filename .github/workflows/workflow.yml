@@ -16,13 +16,14 @@ jobs:
         run: |
           cd scripts
           npm install
-          npm run main -- "https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}/" ../README.md ../README.md
+          sed -i "s]<<GITHUB_ADDR>>]https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}/]" config.json
+          npm run main -- config.json
       - name: create PR
         uses: peter-evans/create-pull-request@v3
         with:
           commit-message: Reorganize README.md
           branch: reorganize-ci
-          add-paths: README.md
+          add-paths: README.md,plugins.json
           delete-branch: false
           title: '[CI] Reorganize README.md'
           body: |
