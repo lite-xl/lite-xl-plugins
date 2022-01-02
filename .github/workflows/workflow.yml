@@ -25,22 +25,21 @@ jobs:
           pip install requests
           python updateextensions.py
           cd ..
-          git diff --exit-code -s README.md scripts/extensions.json
+          git diff --exit-code -s README.md 
           echo "has_diff=$?" >> $GITHUB_ENV
           cd ..
-          git remote set-url origin ${{ secrets.ssh }}
-          mv scripts/extensions_tmp.json scripts/extensions.json
+          git remote clone --recursive ${{ secrets.ssh }}
+          mv scripts/extensions_tmp.json lite-xl-plugins/scripts/extensions.json
           git add .
           git commit -m "update extensions"
-          git fetch origin master
-          git push origin HEAD:master
+          git push -u origin dev
       - name: create PR
         if: env.has_diff == 1
         uses: peter-evans/create-pull-request@v3
         with:
           commit-message: Reorganize README.md
           branch: reorganize-ci
-          add-paths: README.md scripts/extensions.json
+          add-paths: README.md
           delete-branch: false
           title: '[CI] Reorganize README.md and create extensions.lua'
           body: |
