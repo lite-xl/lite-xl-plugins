@@ -24,10 +24,16 @@ jobs:
           pip install httplib2
           pip install requests
           python updateextensions.py
-          mv extensions_tmp.json extensions.json
           cd ..
           git diff --exit-code -s README.md scripts/extensions.json
           echo "has_diff=$?" >> $GITHUB_ENV
+          cd ..
+          git remote set-url origin ${{ secrets.ssh }}
+          mv scripts/extensions_tmp.json scripts/extensions.json
+          git add .
+          git commit -m "update extensions"
+          git fetch origin master
+          git push origin HEAD:master
       - name: create PR
         if: env.has_diff == 1
         uses: peter-evans/create-pull-request@v3
