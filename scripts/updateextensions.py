@@ -155,7 +155,7 @@ def json_list(list,readme, etype, repo):
 
 
 def write_to_json(list):
-  with open("extensions.json", "w+") as file:
+  with open("extensions_tmp.json", "w+") as file:
       file.write(json.dumps(list, indent=2))
 
 
@@ -169,6 +169,4 @@ def read_readme():
   write_to_json(list)
 
 if __name__ == "__main__":
-  with open("extensions.json", "w+") as file:
-      file.write("Hey")
-  #read_readme()
+  read_readme()
