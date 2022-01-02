@@ -28,10 +28,7 @@ def get_author(url):
   return url.replace("://","").split(".com/",1)[1].split("/",1)[0]
 
 def is_sep(url):
-  for repo in repos:
-    if url.find(repo):
-      return True
-  return False
+  return url.find("lite-xl-plugins") or url.find("lite-xl-colors")
 
 def get_version_patch_mod(url,special_url, etype):
     patch_url = Request(url,
