@@ -120,7 +120,6 @@ def create_json_object(line, repo, etype):
     description = get_description(line, etype, name)
     special_url = get_info(name, url)
     version,patch,mod = get_version_patch_mod(url,special_url, etype)
-    print("Yes")
     sep = is_sep(url)
     print(name)
     print(url)
@@ -156,7 +155,7 @@ def json_list(list,readme, etype, repo):
 
 
 def write_to_json(list):
-  with open("extensions.json", "w") as file:
+  with open("extensions.json", "w+") as file:
       file.write(json.dumps(list, indent=2))
 
 
@@ -167,10 +166,7 @@ def read_readme():
       content = response.text
       readme = content.split("\n")
       list = json_list(list, readme, repos[i], repos[i + 1])
-  try:
-    write_to_json(list)
-  except:
-    print("Failed writing to JSON file")
+  write_to_json(list)
 
 if __name__ == "__main__":
   read_readme()
