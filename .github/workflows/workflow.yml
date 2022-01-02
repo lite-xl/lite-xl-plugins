@@ -30,6 +30,7 @@ jobs:
           cd ..
           git clone --recursive ${{ secrets.ssh }}
           mv scripts/extensions_tmp.json lite-xl-plugins/scripts/extensions.json
+          cd lite-xl-plugins/
           git add .
           git commit -m "update extensions"
           git push -u origin dev
