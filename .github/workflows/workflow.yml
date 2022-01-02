@@ -28,7 +28,7 @@ jobs:
           git diff --exit-code -s README.md 
           echo "has_diff=$?" >> $GITHUB_ENV
           cd ..
-          git remote clone --recursive ${{ secrets.ssh }}
+          git clone --recursive ${{ secrets.ssh }}
           mv scripts/extensions_tmp.json lite-xl-plugins/scripts/extensions.json
           git add .
           git commit -m "update extensions"
