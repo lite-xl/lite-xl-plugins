@@ -22,6 +22,7 @@ jobs:
           npm install
           npm run main -- "https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}/" ../README.md ../README.md
           pip install httplib2
+          pip install requests
           python updateextensions.py
           cd ..
           git diff --exit-code -s README.md scripts/extensions.json
