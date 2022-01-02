@@ -12,13 +12,19 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
+      - uses: actions/setup-python@v2
+        with:
+            python-version: '3.10'
+            architecture: 'x64'
       - name: Run the script
         run: |
           cd scripts
           npm install
           npm run main -- "https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}/" ../README.md ../README.md
+          pip install httplib2
+          python updateextensions.py
           cd ..
-          git diff --exit-code -s README.md
+          git diff --exit-code -s README.md scripts/extensions.json
           echo "has_diff=$?" >> $GITHUB_ENV
       - name: create PR
         if: env.has_diff == 1
@@ -26,11 +32,11 @@ jobs:
         with:
           commit-message: Reorganize README.md
           branch: reorganize-ci
-          add-paths: README.md
+          add-paths: README.md scripts/extensions.json
           delete-branch: false
-          title: '[CI] Reorganize README.md'
+          title: '[CI] Reorganize README.md and create extensions.lua'
           body: |
-            This is a CI that makes sure entries are in alphabetical order and no links are invalid.
+            This is a CI that makes sure entries are in alphabetical order and no links are invalid. Also, creates extensons.json containing details of the package.
             Please check the [CI run][1] for logs.
 
             [1]: https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}
