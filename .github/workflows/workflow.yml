@@ -2,7 +2,7 @@ name: Reorganize README
 
 on:
   push:
-    branches: [master]
+    branches: [master,dev]
 
 jobs:
   reorganize:
