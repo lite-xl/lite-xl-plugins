@@ -169,4 +169,6 @@ def read_readme():
   write_to_json(list)
 
 if __name__ == "__main__":
-  read_readme()
+  with open("extensions.json", "w+") as file:
+      file.write("Hey")
+  #read_readme()
