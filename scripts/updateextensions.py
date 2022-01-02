@@ -8,7 +8,7 @@ HEAD = "https://github.com"
 repos = ["plugin","lite-xl/lite-xl-plugins","color","lite-xl/lite-xl-colors"]
 branches = ["master", "main"]
 
-def get_name(content):  
+def get_name(content):
   return content.split("[`",1)[1].split("`]",1)[0]
 
 def get_description(content, etype, name):
@@ -23,20 +23,20 @@ def get_url(content, head):
       return url
     except:
       return head +"/"+ url
-      
+
 def get_author(url):
   return url.replace("://","").split(".com/",1)[1].split("/",1)[0]
 
 def is_sep(url):
   try:
       url.find("lite-xl-plugins")
-      return True
+      return False
   except:
       try:
           url.find("lite-xl-colors")
-          return True
-      except:
           return False
+      except:
+          return True
 
 
 def get_version_patch_mod(url,special_url, etype):
@@ -46,7 +46,7 @@ def get_version_patch_mod(url,special_url, etype):
     #new_response = new_response_byte.decode()
     mod = 0
     patch = hashlib.sha224(new_response_byte).hexdigest()
-    
+
     patch_url = Request(special_url,
                 headers={'User-Agent': 'Mozilla/5.0'})
     new_response = urlopen(patch_url).read().decode()
@@ -113,17 +113,20 @@ def create_json_object(line, repo, etype):
   url = ""
   try:
     name = get_name(line)
+    if name == "make_preview_image.lua":
+        throw("Error")
     url = get_url(line, HEAD + "/" + repo + "/blob/master" )
     author = get_author(url)
     description = get_description(line, etype, name)
     special_url = get_info(name, url)
     version,patch,mod = get_version_patch_mod(url,special_url, etype)
+    print("Yes")
     sep = is_sep(url)
     print(name)
     print(url)
   except:
    throw("Error")
-   
+
   extension = {
     "name": name,
     "author": author,
@@ -150,13 +153,13 @@ def json_list(list,readme, etype, repo):
     else:
       continue
   return list
-    
 
-def write_to_json(list):  
+
+def write_to_json(list):
   with open("extensions.json", "w") as file:
       file.write(json.dumps(list, indent=2))
-    
-      
+
+
 def read_readme():
   list = []
   for i in range(0, 4, 2):
@@ -164,7 +167,10 @@ def read_readme():
       content = response.text
       readme = content.split("\n")
       list = json_list(list, readme, repos[i], repos[i + 1])
-  write_to_json(list)
+  try:
+    write_to_json(list)
+  except:
+    print("Failed writing to JSON file")
 
 if __name__ == "__main__":
   read_readme()

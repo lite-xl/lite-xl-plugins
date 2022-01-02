@@ -1,1315 +1,5 @@
 [
   {
-    "name": "autoinsert",
-    "author": "lite-xl",
-    "description": "Automatically inserts closing brackets and quotes. Also allows selected text to be wrapped with brackets or quotes.                                                                                                                                                                             ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/autoinsert.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "31b95b6f7dfce63f46cc7b97b7eb159dce81aea2f3f6e40f7d145086",
-    "sep": false
-  },
-  {
-    "name": "autosave",
-    "author": "lite-xl",
-    "description": "Automatically saves files when they are changed                                                                                                                                                                                                                                                 ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/autosave.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "b096b51510ed619e7850b7f06344bad48362e5a776342f7346d8eb16",
-    "sep": true
-  },
-  {
-    "name": "autosaveonfocuslost",
-    "author": "lite-xl",
-    "description": "Automatically saves files that were changed when the main window loses focus by switching to another application                                                                                                                                                                                ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/autosaveonfocuslost.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "5cac158c80b531ee76dbec70e218e23713930664548c06cf33702ccd",
-    "sep": true
-  },
-  {
-    "name": "autowrap",
-    "author": "lite-xl",
-    "description": "Automatically hardwraps lines when typing                                                                                                                                                                                                                                                       ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/autowrap.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "37d6d277e839ec6576bf5eb95374fb84592823dbdc87e5be75e8e73a",
-    "sep": true
-  },
-  {
-    "name": "bigclock",
-    "author": "lite-xl",
-    "description": "Shows the current time and date in a view with large text ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/bigclock.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "37bf3d5c1031ef5fb1321413216f9e820b21cda588e3376d4ff56a81",
-    "sep": true
-  },
-  {
-    "name": "bracketmatch",
-    "author": "lite-xl",
-    "description": "Underlines matching pair for bracket under the caret ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/bracketmatch.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "0f88067d206aee770b82c0e913e13128c727c3478d0b4e6399e6fae6",
-    "sep": true
-  },
-  {
-    "name": "centerdoc",
-    "author": "lite-xl",
-    "description": "Centers document's content on the screen ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/centerdoc.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "5c422da50c2c1aa1391262e1996766184795667d07b07cbe512e8053",
-    "sep": true
-  },
-  {
-    "name": "colorpreview",
-    "author": "lite-xl",
-    "description": "Underlays color values (eg. `#ff00ff` or `rgb(255, 0, 255)`) with their resultant color. ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/colorpreview.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "0603c2d8d6c9888ed5f8fe94450b1cfae63ce86ac68730e01671707e",
-    "sep": true
-  },
-  {
-    "name": "console",
-    "author": "franko",
-    "description": "A console for running external commands and capturing their output ",
-    "url": "https://github.com/franko/console",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "4f8bb375036d83eab7539b6e0ec424d1e648539b6f08e3225e4010f9",
-    "sep": true
-  },
-  {
-    "name": "contextmenu",
-    "author": "takase1121",
-    "description": "Simple context menu ",
-    "url": "https://github.com/takase1121/lite-contextmenu",
-    "lite_xl_version": "1.16",
-    "mod": 1,
-    "patch": "e66f7f1ef6a6d6033b553f6e5343aee44c44f2f99230195a463f774e",
-    "sep": true
-  },
-  {
-    "name": "copyfilelocation",
-    "author": "lite-xl",
-    "description": "Copy file location to clipboard                                                                                                                                                                                                                                                                 ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/copyfilelocation.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "a0fe097396eedea6a2adec4ddf15cf6fb920cb84834306f9239891ea",
-    "sep": true
-  },
-  {
-    "name": "datetimestamps",
-    "author": "lite-xl",
-    "description": "Insert date-, time- and date-time-stamps                                                                                                                                                                                                                                                        ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/datetimestamps.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "ff8bda1a893e82ba20c8422078bae35a1041315a694d2fbcf54e0570",
-    "sep": true
-  },
-  {
-    "name": "discord-presence",
-    "author": "vincens2005",
-    "description": "Adds the current workspace and file to your Discord Rich Presence                                                                                                                                                                                                                               ",
-    "url": "https://github.com/vincens2005/lite-xl-discord",
-    "lite_xl_version": "",
-    "mod": 1,
-    "patch": "e65713d147dac90812f65e49f846d36732ea146623fd17c09c8c48da",
-    "sep": true
-  },
-  {
-    "name": "dragdropselected",
-    "author": "lite-xl",
-    "description": "Provides basic drag and drop of selected text (in same document)                                                                                                                                                                                                                                ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/dragdropselected.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "ab34662ab78efccd325a1b2296910da299751f894d60a5355fe6b883",
-    "sep": true
-  },
-  {
-    "name": "eofnewline",
-    "author": "bokunodev",
-    "description": "Make sure the file ends with one blank line.                                                                                                                                                                                                                                                    ",
-    "url": "https://github.com/bokunodev/lite_modules/blob/master/plugins/eofnewline-xl.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "9787d907c217937d8eaef5707ba3083f8ba21560cf6dd7506a3318cb",
-    "sep": true
-  },
-  {
-    "name": "ephemeral_tabs",
-    "author": "lite-xl",
-    "description": "Preview tabs. Opening a doc will replace the contents of the preview tab. Marks tabs as non-preview on any change or tab double clicking.                                                                                                                                                       ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/ephemeral_tabs.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "107f63286107b9e6e29dfaa90510136667b9dc3ec96e347dc2255498",
-    "sep": true
-  },
-  {
-    "name": "eval",
-    "author": "lite-xl",
-    "description": "Replaces selected Lua code with its evaluated result                                                                                                                                                                                                                                            ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/eval.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "21c6a2d189587737418c8363d4c8153c28bd75a7900f92ae0381267b",
-    "sep": true
-  },
-  {
-    "name": "exec",
-    "author": "lite-xl",
-    "description": "Runs selected text through shell command and replaces with result                                                                                                                                                                                                                               ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/exec.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "1374bdb946784f377d0792788911f5d56bc638e1bd1224b0dd557e00",
-    "sep": true
-  },
-  {
-    "name": "extend_selection_line",
-    "author": "lite-xl",
-    "description": "When a selection crosses multiple lines, it is drawn to the end of the screen ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/extend_selection_line.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "677e98d95faa1a0608476502e3344157f058d483bd6ec9c3a0bfb3b0",
-    "sep": true
-  },
-  {
-    "name": "fallbackfonts",
-    "author": "takase1121",
-    "description": "Adds support for fallback fonts ",
-    "url": "https://github.com/takase1121/lite-fallback-fonts",
-    "lite_xl_version": "",
-    "mod": 99,
-    "patch": "44e26b65ffa76f0ac08d7ccb3199e71f7176843f999d8c8c9df036f2",
-    "sep": true
-  },
-  {
-    "name": "fontconfig",
-    "author": "lite-xl",
-    "description": "Allows users to load fonts with [fontconfig](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html).                                                                                                                                                                             ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/fontconfig.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "d8be3d58097515a8bd010ff057f0bf9471e624bab0986b48699afac0",
-    "sep": true
-  },
-  {
-    "name": "force_syntax",
-    "author": "lite-xl",
-    "description": "Change the syntax used for a file.                                                                                                                                                                                                                                                              ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/force_syntax.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "8b5d08a4cc5e014c77de83482ff4fc077a823796409344ca4bdc3d43",
-    "sep": true
-  },
-  {
-    "name": "formatter",
-    "author": "vincens2005",
-    "description": "formatters for various languages                                                                                                                                                                                                                                                                ",
-    "url": "https://github.com/vincens2005/lite-formatters",
-    "lite_xl_version": "",
-    "mod": 2,
-    "patch": "98e6bb1628db943a8df97540085c79bb692aecfcd48418758b87a59a",
-    "sep": true
-  },
-  {
-    "name": "ghmarkdown",
-    "author": "lite-xl",
-    "description": "Opens a preview of the current markdown file in a browser window ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/ghmarkdown.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "a0665f157ce66f5d8808873a7b995e3a275a7783359a2d31432a1d57",
-    "sep": true
-  },
-  {
-    "name": "gitdiff_highlight",
-    "author": "vincens2005",
-    "description": "highlight changed lines from git ",
-    "url": "https://github.com/vincens2005/lite-xl-gitdiff-highlight",
-    "lite_xl_version": "",
-    "mod": 99,
-    "patch": "ad05c97087545aa81e244f91fd14b99fe630a73321ece4ea8e2e8794",
-    "sep": true
-  },
-  {
-    "name": "gitstatus",
-    "author": "lite-xl",
-    "description": "Displays git branch and insert/delete count in status bar ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/gitstatus.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "c7cc779ecfc9d616a04451e3c0473ba5e19aceb1f48fcb4c5be88a25",
-    "sep": true
-  },
-  {
-    "name": "gofmt",
-    "author": "lite-xl",
-    "description": "Auto-formats the current go file, adds the missing imports and the missing return cases                                                                                                                                                                                                         ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/gofmt.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "8e52a62c14a4179c621fcad691f665b6e610043adf68bbd8524cab35",
-    "sep": true
-  },
-  {
-    "name": "hidelinenumbers",
-    "author": "lite-xl",
-    "description": "Hides the line numbers on the left of documents ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/hidelinenumbers.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "720abcd2eee7ba3e306cc1c41e4ccab89d39b5c46fe579134c2ccfd3",
-    "sep": true
-  },
-  {
-    "name": "hidestatus",
-    "author": "lite-xl",
-    "description": "Hides the status bar at the bottom of the window                                                                                                                                                                                                                                                ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/hidestatus.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "7e3413847216a1bfac1d6b77d4736a884f96278be07c664578ea9141",
-    "sep": true
-  },
-  {
-    "name": "immersive-title",
-    "author": "takase1121",
-    "description": "Dark (or even Mica!) title bar for Lite XL                                                                                                                                                                                                                                                      ",
-    "url": "https://github.com/takase1121/lite-xl-immersive-title",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "d3bdea687ce8b1bf6fa7629e9cdf80f14c4fe872167c5ccaeb2899eb",
-    "sep": true
-  },
-  {
-    "name": "indent_convert",
-    "author": "lite-xl",
-    "description": "Convert between tabs and spaces indentation                                                                                                                                                                                                                                                     ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/indent_convert.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "4f89a6f196712f1fd61b3fb9169f0c50548749ab7e5b0d4804004c1a",
-    "sep": true
-  },
-  {
-    "name": "indentguide",
-    "author": "lite-xl",
-    "description": "Adds indent guides ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/indentguide.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "5aeecc795691ee9e58396000a3cbb90b221b707c4abf7078744668d9",
-    "sep": true
-  },
-  {
-    "name": "Kinc Projects",
-    "author": "Kode-Community",
-    "description": "Adds [Kinc](https://github.com/Kode/Kinc) Project generation with basic build commands(depends on [`console`](https://github.com/franko/console))                                                                                                                                               ",
-    "url": "https://github.com/Kode-Community/kinc_plugin",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "1b33e05f425a0b733719f728536569a6ee8c6b6ff761883a1cfd0198",
-    "sep": true
-  },
-  {
-    "name": "language_angelscript",
-    "author": "lite-xl",
-    "description": "Syntax for the [Angelscript](https://www.angelcode.com/angelscript/) programming language                                                                                                                                                                                                       ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_angelscript.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "401b23e271e1c71da2fc855ce60b0a876d5ec4160ff035a9065d3150",
-    "sep": true
-  },
-  {
-    "name": "language_batch",
-    "author": "lite-xl",
-    "description": "Syntax for Windows [Batch Files](https://en.wikipedia.org/wiki/Batch_file)                                                                                                                                                                                                                      ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_batch.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "2f8cc518b7662ede1fb1c548eb309e43709667d3acbe600222a97296",
-    "sep": true
-  },
-  {
-    "name": "language_bib",
-    "author": "lite-xl",
-    "description": "Syntax for [BibTex](https://en.wikipedia.org/wiki/BibTeX) files                                                                                                                                                                                                                                 ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_bib.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "349cafdc9973da7f3b39b9dd94b883d06c5b8ffc37fb7dde37fc9a77",
-    "sep": true
-  },
-  {
-    "name": "language_cmake",
-    "author": "lite-xl",
-    "description": "Syntax for the CMake build system language                                                                                                                                                                                                                                                      ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_cmake.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "cb427a6bbb4bd857d43f9fa72a5839bb4a8f51b9e25aaac112688773",
-    "sep": true
-  },
-  {
-    "name": "language_cpp",
-    "author": "lite-xl",
-    "description": "Syntax for the [C++](https://isocpp.org/) programming language                                                                                                                                                                                                                                  ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_cpp.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "43f4461a71b6316839de7c6dd545b534d0ca6ed85c80c2b427adcdaf",
-    "sep": true
-  },
-  {
-    "name": "language_crystal",
-    "author": "Tamnac",
-    "description": "Syntax for the [Crystal](https://crystal-lang.org) programming language                                                                                                                                                                                                                         ",
-    "url": "https://github.com/Tamnac/lite-xl-plugins",
-    "lite_xl_version": "",
-    "mod": 99,
-    "patch": "bf1c5a22386a573aef75b530cd8d4ec55bb75ea160fc8a5dde7e6c1e",
-    "sep": true
-  },
-  {
-    "name": "language_csharp",
-    "author": "lite-xl",
-    "description": "Syntax for the [C#](http://csharp.net) programming language                                                                                                                                                                                                                                     ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_csharp.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "cec280f1f7fad504ed7d164d3c794e7e8def97b640f688dccf4dcf97",
-    "sep": true
-  },
-  {
-    "name": "language_d",
-    "author": "lite-xl",
-    "description": "Syntax for the [D](https://dlang.org/) programming language                                                                                                                                                                                                                                     ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_d.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "6bd1380c51b348989e9b459250c4a707caa6876f0cebf25b30f35f2f",
-    "sep": true
-  },
-  {
-    "name": "language_dart",
-    "author": "lite-xl",
-    "description": "Syntax for the [Dart](https://dart.dev/) programming languiage                                                                                                                                                                                                                                  ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_dart.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "3d4529a58799061540eba622b41b8a210438df3937316692068b1b2c",
-    "sep": true
-  },
-  {
-    "name": "language_elixir",
-    "author": "lite-xl",
-    "description": "Syntax for the [Elixir](https://elixir-lang.org) programming language                                                                                                                                                                                                                           ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_elixir.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "66a26729094df4495562924aff18d44ea70238716bb034726dd2e851",
-    "sep": true
-  },
-  {
-    "name": "language_elm",
-    "author": "lite-xl",
-    "description": "Syntax for the [Elm](https://elm-lang.org) programming language                                                                                                                                                                                                                                 ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_elm.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "7f1dc0c16ea526bd06c77afcb4218c4508ef6da59c0c57a06a95798b",
-    "sep": true
-  },
-  {
-    "name": "language_fe",
-    "author": "lite-xl",
-    "description": "Syntax for the [fe](https://github.com/rxi/fe) programming language                                                                                                                                                                                                                             ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_fe.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "6b7bd08eec61a93cc14c9a6eeb8830027f4dcde9dcaec2096453ae12",
-    "sep": true
-  },
-  {
-    "name": "language_fennel",
-    "author": "lite-xl",
-    "description": "Syntax for the [fennel](https://fennel-lang.org) programming language                                                                                                                                                                                                                           ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_fennel.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "0496c4cc1394ffdfeeb7ef439d01788a4af10287a6a47b0fc623b6fa",
-    "sep": true
-  },
-  {
-    "name": "language_fstab",
-    "author": "lite-xl",
-    "description": "Syntax for the [fstab](https://en.wikipedia.org/wiki/Fstab) config files                                                                                                                                                                                                                        ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_fstab.lua?raw=1",
-    "lite_xl_version": "",
-    "mod": 99,
-    "patch": "c7661c0e3f3fdf6478611206721ca2585980a68aa2624fbf70559f71",
-    "sep": true
-  },
-  {
-    "name": "language_gdscript",
-    "author": "lite-xl",
-    "description": "Syntax for the [Godot Engine](https://godotengine.org/)'s GDScript scripting language                                                                                                                                                                                                           ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_gdscript.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "ad7aecc8aa4f7e68c0541028a54507cb2114f125b859ac148d0d167d",
-    "sep": true
-  },
-  {
-    "name": "language_glsl",
-    "author": "lite-xl",
-    "description": "Syntax for the [GLSL](https://www.khronos.org/registry/OpenGL/specs/gl/) programming language                                                                                                                                                                                                   ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_glsl.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "9011615212d441f1c0e4663e87735e09a7b60a9300d3be46c8ca997c",
-    "sep": true
-  },
-  {
-    "name": "language_go",
-    "author": "lite-xl",
-    "description": "Syntax for the [Go](https://golang.org/) programming language                                                                                                                                                                                                                                   ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_go.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "70594c7cc467aa28bd8e1bf2854b7d7b951f671afe72b42a097f6a45",
-    "sep": true
-  },
-  {
-    "name": "language_hlsl",
-    "author": "lite-xl",
-    "description": "Syntax for the [HLSL](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl) programming language                                                                                                                                                                        ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_hlsl.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "119f0938cab756d509d4697097966d23e077d9d64725ff9257514e8a",
-    "sep": true
-  },
-  {
-    "name": "language_hs",
-    "author": "lite-xl",
-    "description": "Syntax for the [Haskell](https://www.haskell.org/) programming language                                                                                                                                                                                                                         ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_hs.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "90f803886e82496c8a84d86b93f68c7bbd3c9af20f4ebddaa398362f",
-    "sep": true
-  },
-  {
-    "name": "language_ini",
-    "author": "lite-xl",
-    "description": "Syntax for [ini](https://en.wikipedia.org/wiki/INI_file) files                                                                                                                                                                                                                                  ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_ini.lua?raw=1",
-    "lite_xl_version": "",
-    "mod": 99,
-    "patch": "55b6935371215dc9f247a1e71a9fe10e8e48b337683a86a4c0bc0370",
-    "sep": true
-  },
-  {
-    "name": "language_java",
-    "author": "lite-xl",
-    "description": "Syntax for the [Java](https://en.wikipedia.org/wiki/Java_\\(programming_language\\)) programming language                                                                                                                                                                                         ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_java.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "b4fdfe473b05fc488bb5aa3046e208e2fd9592ac00412b26176c0168",
-    "sep": true
-  },
-  {
-    "name": "language_jiyu",
-    "author": "lite-xl",
-    "description": "Syntax for the [jiyu](https://github.com/machinamentum/jiyu) programming language                                                                                                                                                                                                               ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_jiyu.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "934da4ecce67d30be167c1fed6dbbe7371e5ddf94f63de4903bd1ef2",
-    "sep": true
-  },
-  {
-    "name": "language_jsx",
-    "author": "lite-xl",
-    "description": "Syntax for the [JSX](https://reactjs.org/docs/introducing-jsx.html) language for the React framework in JavaScript                                                                                                                                                                              ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_jsx.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "501bb68c5ca272e26dcd485faeb718ecac40a434ed83b72653f8dd36",
-    "sep": true
-  },
-  {
-    "name": "language_julia",
-    "author": "lite-xl",
-    "description": "Syntax for the [Julia](https://julialang.org/) programming language                                                                                                                                                                                                                             ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_julia.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "3d0509bef75d0d56d93f59465867a9cbde0816f88cc0d238ea31333a",
-    "sep": true
-  },
-  {
-    "name": "language_ksy",
-    "author": "whiteh0le",
-    "description": "Syntax for [Kaitai](http://kaitai.io/) struct files                                                                                                                                                                                                                                             ",
-    "url": "https://raw.githubusercontent.com/whiteh0le/lite-plugins/main/plugins/language_ksy.lua?raw=1",
-    "lite_xl_version": "",
-    "mod": 99,
-    "patch": "ac3dde3e8b770c2f42647151f69e0e24855c7cbdc4062046c9abb5ed",
-    "sep": true
-  },
-  {
-    "name": "language_liquid",
-    "author": "lite-xl",
-    "description": "Syntax for [Liquid](https://shopify.github.io/liquid/) templating language                                                                                                                                                                                                                      ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_liquid.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "96e061e750c5d1f1982b3713e29080a8f490ae85702ce3565c4ec232",
-    "sep": true
-  },
-  {
-    "name": "language_lobster",
-    "author": "lite-xl",
-    "description": "Syntax for [Lobster](https://strlen.com/lobster/) programming language                                                                                                                                                                                                                          ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_lobster.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "916ed9129da874edddb9840f6ec3f96bdd3c510176407425ae2aa356",
-    "sep": true
-  },
-  {
-    "name": "language_make",
-    "author": "lite-xl",
-    "description": "Syntax for the Make build system language                                                                                                                                                                                                                                                       ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_make.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "c701636baa5ec3a21f259ba03ddb9ecf8a81521dcd4cc849c0ad2e58",
-    "sep": true
-  },
-  {
-    "name": "language_meson",
-    "author": "lite-xl",
-    "description": "Syntax for the [Meson](https://mesonbuild.com) build system language                                                                                                                                                                                                                            ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_meson.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "84b423f5fd1f815f0a1b9b944d9ab7e034b86f1685e4b616afdc8e3e",
-    "sep": true
-  },
-  {
-    "name": "language_moon",
-    "author": "lite-xl",
-    "description": "Syntax for the [MoonScript](https://moonscript.org) scripting language                                                                                                                                                                                                                          ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_moon.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "8780c35d81b6b6d0030c67c8793bf79826c7bf95507e0fac3f8fdcf5",
-    "sep": true
-  },
-  {
-    "name": "language_nginx",
-    "author": "lite-xl",
-    "description": "Syntax for [Nginx](https://www.nginx.com/) config files                                                                                                                                                                                                                                         ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_nginx.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "798759c18ce2be69e202454155a8ab374fe18c1727e7c6e958ea67e2",
-    "sep": true
-  },
-  {
-    "name": "language_nim",
-    "author": "lite-xl",
-    "description": "Syntax for the [Nim](https://nim-lang.org) programming language                                                                                                                                                                                                                                 ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_nim.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "ce271afbdbc7a8e53d845404bdb00fcdd2a474d920c052a3fc2189c9",
-    "sep": true
-  },
-  {
-    "name": "language_objc",
-    "author": "lite-xl",
-    "description": "Syntax for the [Objective C](https://en.wikipedia.org/wiki/Objective-C) programming language                                                                                                                                                                                                    ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_objc.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "3e07cbf414d2f306acc212102947003cb7fbcfd7dcaaf04391a0ba16",
-    "sep": true
-  },
-  {
-    "name": "language_odin",
-    "author": "lite-xl",
-    "description": "Syntax for the [Odin](https://github.com/odin-lang/Odin) programming language                                                                                                                                                                                                                   ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_odin.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "58f31ea4bc36f9004e0947895266e267d44285e5a5f2852ba8501e6d",
-    "sep": true
-  },
-  {
-    "name": "language_perl",
-    "author": "lite-xl",
-    "description": "Syntax for the [Perl](https://perl.org) programming language                                                                                                                                                                                                                                    ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_perl.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "2df3f1498e0ed14bd4eb6fea3d2101c64295f519c5ce2d54e87fb339",
-    "sep": true
-  },
-  {
-    "name": "language_php",
-    "author": "lite-xl",
-    "description": "Syntax for the [PHP](https://php.net) programming language                                                                                                                                                                                                                                      ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_php.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "82facaf41d29a62ae318387e4d49ec64f674eccee56a36fdce42a866",
-    "sep": true
-  },
-  {
-    "name": "language_pico8",
-    "author": "lite-xl",
-    "description": "Syntax for [Pico-8](https://www.lexaloffle.com/pico-8.php) cartridge files                                                                                                                                                                                                                      ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_pico8.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "e7e957ce31341c98f22e7445f625df0cdc72062a87f31dac868e4f8b",
-    "sep": true
-  },
-  {
-    "name": "language_po",
-    "author": "lite-xl",
-    "description": "Syntax for [PO](https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html) translation files                                                                                                                                                                                          ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_po.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "968e57c7215fb4318f03ab7d5a327c82aeb109dba81c0dbe135a406c",
-    "sep": true
-  },
-  {
-    "name": "language_pony",
-    "author": "MrAnyx",
-    "description": "Syntax for [Pony](https://www.ponylang.io/) programming language                                                                                                                                                                                                                                ",
-    "url": "https://github.com/MrAnyx/lite-plugin-pony",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "3d4b03f43c2583a40d9b293cdedd49e2a728eb31e3dae3dafe6aedcd",
-    "sep": true
-  },
-  {
-    "name": "language_powershell",
-    "author": "lite-xl",
-    "description": "Syntax for [PowerShell](https://docs.microsoft.com/en-us/powershell) scripting language                                                                                                                                                                                                         ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_powershell.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "2ac2f4b844a3fa138e0b62f2bb7fbfd9a8b1da111e3c2de08012c0f0",
-    "sep": true
-  },
-  {
-    "name": "language_psql",
-    "author": "lite-xl",
-    "description": "Syntax for the postgresql database access language                                                                                                                                                                                                                                              ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_psql.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "8079975fa4f3244d11ccc17f5f11d721403aefd6ced72bcfb25a87cb",
-    "sep": true
-  },
-  {
-    "name": "language_r",
-    "author": "lite-xl",
-    "description": "Syntax for [R](https://www.r-project.org/) scripting language                                                                                                                                                                                                                                   ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_R.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "8fd3b2cc58b26f501aea268d338d5b54cce81fbbfb086f044aea82cd",
-    "sep": true
-  },
-  {
-    "name": "language_rescript",
-    "author": "lite-xl",
-    "description": "Syntax for the [ReScript](https://rescript-lang.org/) programming language                                                                                                                                                                                                                      ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_rescript.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "2164870e5bafb400d4c61f9b8a62794dd24879942a126cc1dea02da4",
-    "sep": true
-  },
-  {
-    "name": "language_ruby",
-    "author": "lite-xl",
-    "description": "Syntax for the [Ruby](https://www.ruby-lang.org/) programming language                                                                                                                                                                                                                          ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_ruby.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "57fe6f556f7b3c040eaef0abc710688ec27a8c7eb8144ec0c7ab22a5",
-    "sep": true
-  },
-  {
-    "name": "language_rust",
-    "author": "lite-xl",
-    "description": "Syntax for the [Rust](https://rust-lang.org/) programming language                                                                                                                                                                                                                              ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_rust.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "6b2b52094190010186726f99cee564ed30a13a42735d4da0e9d5a30c",
-    "sep": true
-  },
-  {
-    "name": "language_sass",
-    "author": "lite-xl",
-    "description": "Syntax for the [Sass](https://sass-lang.com/) CSS preprocessor                                                                                                                                                                                                                                  ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_sass.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "cefda46f7b634a8ea752eba024dc5ac0a49502c83d427050c6f6ec3e",
-    "sep": true
-  },
-  {
-    "name": "language_scala",
-    "author": "lite-xl",
-    "description": "Syntax for the [Scala](https://scala-lang.org/) programming language                                                                                                                                                                                                                            ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_scala.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "f4100d0415423e6de465fea0171211825aa0599e0e85f4de7f7795e9",
-    "sep": true
-  },
-  {
-    "name": "language_sh",
-    "author": "lite-xl",
-    "description": "Syntax for shell scripting language                                                                                                                                                                                                                                                             ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_sh.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "1843db2c46d7681883386f9c5c72c55b8ce415fefb77ade455e5f013",
-    "sep": true
-  },
-  {
-    "name": "language_ssh_config",
-    "author": "lite-xl",
-    "description": "Syntax for ssh & sshd config files                                                                                                                                                                                                                                                              ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_ssh_config.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "17484f8fa5ff097f43d2817914293152a729e65f3f5be108fb34d406",
-    "sep": true
-  },
-  {
-    "name": "language_tcl",
-    "author": "lite-xl",
-    "description": "Syntax for the [Tcl](https://www.tcl.tk/) programming language                                                                                                                                                                                                                                  ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_tcl.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "d43fb32b8f1f6e17ebb77f8d84ec6ba8dd6d58085ab79c9b59537083",
-    "sep": true
-  },
-  {
-    "name": "language_teal",
-    "author": "lite-xl",
-    "description": "Syntax for the [Teal](https://github.com/teal-language/tl) programming language, a typed dialect of Lua.                                                                                                                                                                                        ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_teal.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "57f0dfcb8ccec5f48a4a89a2216aa192453f074f0bf667fb96a1248e",
-    "sep": true
-  },
-  {
-    "name": "language_tex",
-    "author": "lite-xl",
-    "description": "Syntax for the [LaTeX](https://www.latex-project.org/) typesetting language                                                                                                                                                                                                                     ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_tex.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "9e1400dfd57c9b6f175319034e72bdbc4021f08a8498616213e3ef04",
-    "sep": true
-  },
-  {
-    "name": "language_toml",
-    "author": "lite-xl",
-    "description": "Syntax for the [TOML](https://toml.io/en/) configuration language                                                                                                                                                                                                                               ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_toml.lua?raw=1",
-    "lite_xl_version": "",
-    "mod": 99,
-    "patch": "12d948776fc5e1456310ad6edc755d4c2d293d0cf7bbbb9cfee3d607",
-    "sep": true
-  },
-  {
-    "name": "language_ts",
-    "author": "lite-xl",
-    "description": "Syntax for the [TypeScript](https://www.typescriptlang.org/) programming language, a typed dialect of JavaScript.                                                                                                                                                                               ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_ts.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "4b02e467be3ec41463b8799574d8b38ddfdb51067c70aa2a3abc411f",
-    "sep": true
-  },
-  {
-    "name": "language_tsx",
-    "author": "lite-xl",
-    "description": "Syntax for [TSX](https://www.typescriptlang.org/docs/handbook/jsx.html) language                                                                                                                                                                                                                ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_tsx.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "b074c87282561cadc53b4570182febe7afd071449746e21890f9b39d",
-    "sep": true
-  },
-  {
-    "name": "language_v",
-    "author": "lite-xl",
-    "description": "Syntax for the [V](https://vlang.io/) programming language                                                                                                                                                                                                                                      ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_v.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "ffc91d1a8836401d3f3b883fefb1ab6b5c6e0d103165596d44172f01",
-    "sep": true
-  },
-  {
-    "name": "language_wren",
-    "author": "lite-xl",
-    "description": "Syntax for the [Wren](http://wren.io/) programming language                                                                                                                                                                                                                                     ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_wren.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "a1eef746f585b87a55ac1bfa64329a23f55c6207b3c245cd11690d41",
-    "sep": true
-  },
-  {
-    "name": "language_yaml",
-    "author": "lite-xl",
-    "description": "Syntax for [YAML](https://yaml.org/) serialization language                                                                                                                                                                                                                                     ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_yaml.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "1003d46c5ac42cf7a3c435b725db856f36fe0ac5fd086e27e6165f86",
-    "sep": true
-  },
-  {
-    "name": "language_zig",
-    "author": "lite-xl",
-    "description": "Syntax for the [Zig](https://ziglang.org/) programming language                                                                                                                                                                                                                                 ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/language_zig.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "206976fd6ecd353ed3fe1200da10bcd4925a55525603240765021287",
-    "sep": true
-  },
-  {
-    "name": "lfautoinsert",
-    "author": "lite-xl",
-    "description": "Automatically inserts indentation and closing bracket/text after newline                                                                                                                                                                                                                        ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/lfautoinsert.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "f348e1748ad2123d2aafd0e8033f52a8c42a44d691527438e626a9fe",
-    "sep": true
-  },
-  {
-    "name": "linecopypaste",
-    "author": "lite-xl",
-    "description": "Copy, cut and paste the current line when nothing is selected                                                                                                                                                                                                                                   ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/linecopypaste.lua?raw=1",
-    "lite_xl_version": "2.0\r",
-    "mod": 2,
-    "patch": "4feae1e68b1b67e24499cda75d76e0798852e6fe30b3e6dfe4439393",
-    "sep": true
-  },
-  {
-    "name": "linenumbers",
-    "author": "lite-xl",
-    "description": "The ability to change the display of the line number ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/linenumbers.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "b94af321a64425787ee2ccbefa6cdda237b4f5ffe5bf8366060f6aff",
-    "sep": true
-  },
-  {
-    "name": "lint+",
-    "author": "liquid600pgm",
-    "description": "Advanced linter with ErrorLens-like error reporting. Compatible with linters made for `linter` ",
-    "url": "https://github.com/liquid600pgm/lintplus",
-    "lite_xl_version": "",
-    "mod": 99,
-    "patch": "f1ee05735784bcf19211eac2fd1c1121305ce55e792385d836ae3135",
-    "sep": true
-  },
-  {
-    "name": "linter",
-    "author": "drmargarido",
-    "description": "Linters for multiple languages                                                                                                                                                                                                                                                                  ",
-    "url": "https://github.com/drmargarido/linters",
-    "lite_xl_version": "",
-    "mod": 99,
-    "patch": "01328f488545cc3d96b7d01cc9c4785aa1f212df1415038a6e2b69d4",
-    "sep": true
-  },
-  {
-    "name": "macmodkeys",
-    "author": "lite-xl",
-    "description": "Remaps mac modkeys `command/option` to `ctrl/alt`                                                                                                                                                                                                                                               ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/macmodkeys.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "dc92ee8c4e702eae98b1367245892aeb045b583110e1c3b02575ce9c",
-    "sep": true
-  },
-  {
-    "name": "markers",
-    "author": "lite-xl",
-    "description": "Add markers to docs and jump between them quickly ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/markers.lua?raw=1",
-    "lite_xl_version": "2.0\r",
-    "mod": 2,
-    "patch": "371f82524e6052b410551840c5062451e1e1c7c7ab2be39bd97a6637",
-    "sep": true
-  },
-  {
-    "name": "memoryusage",
-    "author": "lite-xl",
-    "description": "Show memory usage in the status view                                                                                                                                                                                                                                                            ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/memoryusage.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "4130d2d579a1c2d132b49e9b91092d4f8caec5bc2ce3dff79fa1f05a",
-    "sep": true
-  },
-  {
-    "name": "minimap",
-    "author": "lite-xl",
-    "description": "Shows a minimap on the right-hand side of the docview. Taken from [@andsve](https://github.com/andsve/lite-plugins/tree/minimap-plugin), and improved upon.                                                                                                                                     ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/minimap.lua?raw=1",
-    "lite_xl_version": "",
-    "mod": 99,
-    "patch": "a1e32d54638b937959f2fdeca9dbe6672cefce98967ca80ed08b12b9",
-    "sep": true
-  },
-  {
-    "name": "motiontrail",
-    "author": "lite-xl",
-    "description": "Adds a motion-trail to the caret ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/motiontrail.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "75a3177264f95a3c02aaef9763f9de8ff09368146b507c51ccf77e6d",
-    "sep": true
-  },
-  {
-    "name": "navigate",
-    "author": "lite-xl",
-    "description": "Allows moving back and forward between document positions, reducing the amount of scrolling                                                                                                                                                                                                     ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/navigate.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "a2ee663a7bf730f3456cbbbf462224817ca7859e6a9d4bc033a8ff03",
-    "sep": true
-  },
-  {
-    "name": "nonicons",
-    "author": "lite-xl",
-    "description": "File icons set for TreeView. Download [font](https://github.com/yamatsum/nonicons/raw/master/dist/nonicons.ttf) to your config/fonts folder                                                                                                                                                     ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/nonicons.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "e313a69a5ead878e4c28e703d150964717cbbd0dc05d0fd52bc7badb",
-    "sep": true
-  },
-  {
-    "name": "opacity",
-    "author": "lite-xl",
-    "description": "Change the opaqueness/transparency of `lite-xl` using shift+mousewheel or a command.                                                                                                                                                                                                            ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/opacity.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "35b6b0c5623e5efda0c32a9c6b46c16833be3c6839913253f4c28a38",
-    "sep": true
-  },
-  {
-    "name": "open_ext",
-    "author": "lite-xl",
-    "description": "Automatically prompts you if you tried to open a binary file in the editor                                                                                                                                                                                                                      ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/open_ext.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "aecf4c73855317222d644b2ccacb0c762d1188e2c5116ed9f55912cb",
-    "sep": true
-  },
-  {
-    "name": "openfilelocation",
-    "author": "lite-xl",
-    "description": "Opens the parent directory of the current file in the file manager                                                                                                                                                                                                                              ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/openfilelocation.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "27055af34113d141a15b86692230cecf470701a76faeccdb2d7cde1e",
-    "sep": true
-  },
-  {
-    "name": "openselected",
-    "author": "lite-xl",
-    "description": "Opens the selected filename or url                                                                                                                                                                                                                                                              ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/openselected.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "0d5f9ed3a16833f325e455e111fd8276056c2094e233199beb67e636",
-    "sep": true
-  },
-  {
-    "name": "pdfview",
-    "author": "lite-xl",
-    "description": "PDF preview for TeX files                                                                                                                                                                                                                                                                       ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/pdfview.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "db2042316ca577b51bbe1613969907ebd5672824418cf33cc1409da7",
-    "sep": true
-  },
-  {
-    "name": "rainbowparen",
-    "author": "lite-xl",
-    "description": "Show nesting of parentheses with rainbow colours                                                                                                                                                                                                                                                ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/rainbowparen.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "4122a7c8c7aa4c14b6f787bc8b4facd631688c912e189c46778022d2",
-    "sep": true
-  },
-  {
-    "name": "regexreplacepreview",
-    "author": "lite-xl",
-    "description": "Allows for you to write a regex and its replacement in one go, and live preview the results.                                                                                                                                                                                                    ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/regexreplacepreview.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "8f55ca15afbf9e23c6a59e797e974b3517a80dc779530c22e0fa53f8",
-    "sep": true
-  },
-  {
-    "name": "restoretabs",
-    "author": "lite-xl",
-    "description": "Keep a list of recently closed tabs, and restore the tab in order on cntrl+shift+t.                                                                                                                                                                                                             ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/restoretabs.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "e3cf9fa0979394ff3265d1fea5714047223f357566f2c51763df6a1e",
-    "sep": true
-  },
-  {
-    "name": "scalestatus",
-    "author": "lite-xl",
-    "description": "Displays current scale (zoom) in status view (depends on scale plugin)                                                                                                                                                                                                                          ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/scalestatus.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "eafac392b2cb358f8706c7cafc906bb5c9784217adc8124cabe21dc6",
-    "sep": true
-  },
-  {
-    "name": "selectionhighlight",
-    "author": "lite-xl",
-    "description": "Highlights regions of code that match the current selection ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/selectionhighlight.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "581c4752635ea610db8c8f24595b4b1dc22f826b3ceb614cb1cd16b5",
-    "sep": true
-  },
-  {
-    "name": "smallclock",
-    "author": "lite-xl",
-    "description": "Displays the current time in the corner of the status view                                                                                                                                                                                                                                      ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/smallclock.lua?raw=1",
-    "lite_xl_version": "2.00",
-    "mod": 2,
-    "patch": "61c4fd6700c2d48b14168561e99274a83cc1a1820d72a238df6a36cb",
-    "sep": true
-  },
-  {
-    "name": "smoothcaret",
-    "author": "lite-xl",
-    "description": "Smooth caret animation ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/smoothcaret.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "34dd4730ec50befd06b9f2fcc5a0f697aaeef76175e98321b411e0d3",
-    "sep": true
-  },
-  {
-    "name": "sort",
-    "author": "lite-xl",
-    "description": "Sorts selected lines alphabetically                                                                                                                                                                                                                                                             ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/sort.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "0acc3b3ebdec6a6544525deaa20d149adccdb8b33fde2ce1e74fc01f",
-    "sep": true
-  },
-  {
-    "name": "spellcheck",
-    "author": "lite-xl",
-    "description": "Underlines misspelt words ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/spellcheck.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "c8ad63970e798871e308e800395d7dbcfc600c4d9f002a783292e42c",
-    "sep": true
-  },
-  {
-    "name": "statusclock",
-    "author": "lite-xl",
-    "description": "Displays the current date and time in the corner of the status view                                                                                                                                                                                                                             ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/statusclock.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "59cb3d3ded3bb3301ff65347983ef2b6cbfcec0f62199f06177a0225",
-    "sep": true
-  },
-  {
-    "name": "tabnumbers",
-    "author": "lite-xl",
-    "description": "Displays tab numbers from 1\u20139 next to their names \\",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/tabnumbers.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "fa2f05507d1c4827e40d0f20eb19cdcdda54b098f84369f3c3adfc3e",
-    "sep": true
-  },
-  {
-    "name": "texcompile",
-    "author": "lite-xl",
-    "description": "Compile Tex files into PDF                                                                                                                                                                                                                                                                      ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/texcompile.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "487e88d3c987ee2e8dc1209507ccd15da38008b12c82ebec53334946",
-    "sep": true
-  },
-  {
-    "name": "theme16",
-    "author": "monolifed",
-    "description": "Theme manager with base16 themes                                                                                                                                                                                                                                                                ",
-    "url": "https://github.com/monolifed/theme16",
-    "lite_xl_version": "1.16",
-    "mod": 99,
-    "patch": "35e50d6b125ab99f83010467f67ab01a2d6ca9193897d675e700feec",
-    "sep": true
-  },
-  {
-    "name": "themescheduler",
-    "author": "BenStigsen",
-    "description": "Schedule themes to be used at certain times                                                                                                                                                                                                                                                     ",
-    "url": "https://github.com/BenStigsen/lite-config/blob/main/plugins/themescheduler.lua?raw=1",
-    "lite_xl_version": "1.16",
-    "mod": 1,
-    "patch": "71e48a7aa5a0b521466a76296f6e53e2a2fbddd2d3df359b93e98ed2",
-    "sep": true
-  },
-  {
-    "name": "themeselect",
-    "author": "lite-xl",
-    "description": "Select a theme based on filename of active document                                                                                                                                                                                                                                             ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/themeselect.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "50af39b4f388cfe3ca100c01fe380030423fe647e058edfccdd27fa7",
-    "sep": true
-  },
-  {
-    "name": "titleize",
-    "author": "lite-xl",
-    "description": "Titleizes selected string (`hello world` => `Hello World`)                                                                                                                                                                                                                                      ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/titleize.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "01295d330559bec254bf93951cdbdbb9444320f5d7171f8315c3b80f",
-    "sep": true
-  },
-  {
-    "name": "todotreeview",
-    "author": "drmargarido",
-    "description": "Todo tree viewer for annotations in code like `TODO`, `BUG`, `FIX`, `IMPROVEMENT`                                                                                                                                                                                                               ",
-    "url": "https://github.com/drmargarido/TodoTreeView",
-    "lite_xl_version": "",
-    "mod": 99,
-    "patch": "d139ea9ae9ba763b8098d68aaa2d6aa8c2fd731169901eb8bf34c83f",
-    "sep": true
-  },
-  {
-    "name": "togglesnakecamel",
-    "author": "lite-xl",
-    "description": "Toggles symbols between `snake_case` and `camelCase`                                                                                                                                                                                                                                            ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/togglesnakecamel.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "fc52d003aa1b325a6f89c5e6130294563b187d2a8f8b453f5dfd0720",
-    "sep": true
-  },
-  {
-    "name": "unboundedscroll",
-    "author": "lite-xl",
-    "description": "Allows scrolling outside the bounds of a document                                                                                                                                                                                                                                               ",
-    "url": "https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/unboundedscroll.lua?raw=1",
-    "lite_xl_version": "2.0",
-    "mod": 2,
-    "patch": "35255bcabade6ddbff5277f8f52373798bdaf67fed9a18c8cf03dad0",
-    "sep": true
-  },
-  {
-    "name": "updatechecker",
-    "author": "vincens2005",
-    "description": "Automatically checks for updates and notifies you                                                                                                                                                                                                                                               ",
-    "url": "https://github.com/vincens2005/lite-xl-updatechecker",
-    "lite_xl_version": "",
-    "mod": 1,
-    "patch": "8304c071f3a25ccaa604b941be2589e37121b7156802469ef23a5e94",
-    "sep": true
-  },
-  {
-    "name": "vibe",
-    "author": "eugenpt",
-    "description": "VI(vim?) bindings with a hint of DOOM Emacs, for lite-xl                                                                                                                                                                                                                                        ",
-    "url": "https://github.com/eugenpt/lite-xl-vibe",
-    "lite_xl_version": "",
-    "mod": 99,
-    "patch": "c3bcd7e575b6bdc28a25a12324479a6ebb2ed74fbd665c0f52c74582",
-    "sep": true
-  },
-  {
-    "name": "make_preview_image.lua",
-    "author": "lite-xl",
-    "description": "make_preview_image.lua",
-    "url": "https://github.com/lite-xl/lite-xl-colors/blob/master/make_preview_image.lua",
-    "lite_xl_version": "master",
-    "mod": 0,
-    "patch": "efd1541ff1b724007e3e9a8845314acd26b0dcb0c7779d6eb7dd51c4",
-    "sep": true
-  },
-  {
     "name": "cold_lime",
     "author": "lite-xl",
     "description": "cold_lime",
@@ -1317,7 +7,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "d5751efb76d3493d2d2164ded5fc8d4758ce4cb932b3cc2a0c3eac32",
-    "sep": true
+    "sep": false
   },
   {
     "name": "dracula",
@@ -1327,7 +17,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "f86ddc1b4f891a852dc5bdeedfb1f60bdcaa484bd07406f4abae697c",
-    "sep": true
+    "sep": false
   },
   {
     "name": "duorand",
@@ -1337,7 +27,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "baa47c4dc7fbc4d7d262662f0aeb4897fdf2c97c21a63b1ff9f14d88",
-    "sep": true
+    "sep": false
   },
   {
     "name": "duotone",
@@ -1347,7 +37,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "1bd4326bf7c8114199abfa206762292ab22f980a2eeedc19a6705174",
-    "sep": true
+    "sep": false
   },
   {
     "name": "gruvbox_dark",
@@ -1357,7 +47,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "b23f2b8bafc3a6fd9744dafc14ed8ec316237a9d862df3ecbbdb3667",
-    "sep": true
+    "sep": false
   },
   {
     "name": "liqube",
@@ -1367,7 +57,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "fb9970db575ba1e2023ce68301725da51c704f6d9636a9ebbc598aac",
-    "sep": true
+    "sep": false
   },
   {
     "name": "mariana",
@@ -1377,7 +67,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "eb1d0c36afed46d3c5965456eeaf47db0d25d4ba843ace147802a808",
-    "sep": true
+    "sep": false
   },
   {
     "name": "monodark",
@@ -1387,7 +77,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "890762ae61863e8dc8d966b60d55606adcb9fcce9a570f756394f6e8",
-    "sep": true
+    "sep": false
   },
   {
     "name": "monokai",
@@ -1397,7 +87,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "82d0002f6d3c793d4e72d7d2fd96db9a6be990fcb6ea8d246ab0a67d",
-    "sep": true
+    "sep": false
   },
   {
     "name": "monokai-pro-classic",
@@ -1407,7 +97,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "34577cf8c233e1167924b99773565d46106500a127518a32f067a4f5",
-    "sep": true
+    "sep": false
   },
   {
     "name": "nord",
@@ -1417,7 +107,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "d31240a38e80f85f3d3a627687c87a1600d62b76251737bc40f45202",
-    "sep": true
+    "sep": false
   },
   {
     "name": "onedark",
@@ -1427,7 +117,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "ea7befb62bf2fe34490ebe4f75c473c5ce83674972e4056055340701",
-    "sep": true
+    "sep": false
   },
   {
     "name": "only_dark",
@@ -1437,7 +127,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "52b66bb8bde7449bc0e19b73c42b0856a2b0a9663933ec582a32e4fe",
-    "sep": true
+    "sep": false
   },
   {
     "name": "vscode-dark",
@@ -1447,7 +137,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "7dbbfb18446196b82a8dba1c9f7ba80ff935be33cbc2479fce522630",
-    "sep": true
+    "sep": false
   },
   {
     "name": "winter",
@@ -1457,7 +147,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "81ddae771d70efdd3908d6ffb5c4214549786f7366219dfc1ee3b2fa",
-    "sep": true
+    "sep": false
   },
   {
     "name": "zenburn",
@@ -1467,7 +157,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "8c5808a3bb6c3c46540bdd42e7fc1a0ffb42828c3cd60308bf37e327",
-    "sep": true
+    "sep": false
   },
   {
     "name": "github",
@@ -1477,7 +167,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "97849c175a391e9f9481a224046e33c198891d4c2129e87381abbb67",
-    "sep": true
+    "sep": false
   },
   {
     "name": "moe",
@@ -1487,7 +177,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "e1edc0cfe90b5d98d0bf44c6802d40e5c5308058c87440a209d2a767",
-    "sep": true
+    "sep": false
   },
   {
     "name": "solarized_light",
@@ -1497,7 +187,7 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "efefa3776cbd58570f65d37a455e8669ab59a5efc2590b8123532aa7",
-    "sep": true
+    "sep": false
   },
   {
     "name": "solarobj",
@@ -1507,6 +197,6 @@
     "lite_xl_version": "master",
     "mod": 0,
     "patch": "850238c5487f2c70b20ff3ce1649b0cd1948d6548d55749268f594dc",
-    "sep": true
+    "sep": false
   }
 ]
