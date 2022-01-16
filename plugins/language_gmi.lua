@@ -4,11 +4,12 @@ local syntax = require "core.syntax"
 
 
 syntax.add {
+  name = "Gemtext",
   files = { "%.gmi$" },
   patterns = {
     { pattern = { "```", "```" },           type = "string"   },
-    { pattern = "#.-\n",                    type = "keyword"  },
-    { pattern = "%*.*\n",                   type = "keyword2" },
+    { pattern = "#.-",                      type = "keyword"  },
+    { pattern = "%*.*",                     type = "keyword2" },
     { pattern = "=>",                       type = "function" },    
     { pattern = "!?%[.-%]%(.-%)",           type = "function" },
     { pattern = "https?://%S+",             type = "literal"  },
