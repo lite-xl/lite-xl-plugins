@@ -8,10 +8,9 @@ syntax.add {
   files = { "%.gmi$" },
   patterns = {
     { pattern = { "```", "```" },           type = "string"   },
-    { pattern = "#.-",                      type = "keyword"  },
-    { pattern = "%*.*",                     type = "keyword2" },
+    { pattern = "#.+",                      type = "keyword"  },
+    { pattern = "%*.+",                     type = "keyword2" },
     { pattern = "=>",                       type = "function" },    
-    { pattern = "!?%[.-%]%(.-%)",           type = "function" },
     { pattern = "https?://%S+",             type = "literal"  },
     { pattern = "gemini?://%S+",            type = "literal"  },
     { pattern = ">.*",                      type = "comment"  },
