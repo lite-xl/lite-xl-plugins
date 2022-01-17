@@ -89,12 +89,14 @@ syntax.add {
     ["finally"] = "keyword",
 
     ["class"] = "keyword",
+    ["enum"] = "keyword",
     ["trait"] = "keyword",
     ["interface"] = "keyword",
     ["public"] = "keyword",
     ["static"] = "keyword",
     ["protected"] = "keyword",
     ["private"] = "keyword",
+    ["readonly"] = "keyword",
     ["abstract"] = "keyword",
     ["final"] = "keyword",
     ["$this"] = "literal",
@@ -120,6 +122,7 @@ syntax.add {
     ["parent"] = "literal",
     ["self"] = "literal",
     ["mixed"] = "literal",
+    ["never"] = "literal",
 
     ["namespace"] = "keyword",
     ["extends"] = "keyword",
