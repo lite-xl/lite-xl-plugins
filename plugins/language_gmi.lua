@@ -9,7 +9,7 @@ syntax.add {
   patterns = {
     { pattern = { "```", "```" },           type = "string"   },
     { pattern = "#.*",                      type = "keyword"  },
-    { pattern = "%*.+",                     type = "keyword2" },
+    { pattern = "%*%s",                     type = "keyword2" },
     { pattern = "=>",                       type = "function" },    
     { pattern = "https?://%S+",             type = "literal"  },
     { pattern = "gemini?://%S+",            type = "literal"  },
