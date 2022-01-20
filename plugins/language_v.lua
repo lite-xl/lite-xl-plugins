@@ -60,6 +60,7 @@ syntax.add {
     ["unsafe"] = "keyword",
     ["__offsetof"] = "keyword",
     
+    ["bool"] = "keyword2",
     ["mut"] = "keyword2",
     ["i8"] = "keyword2",
     ["i16"] = "keyword2",
