@@ -17,7 +17,9 @@ jobs:
           cd scripts
           npm install
           npm run main -- "https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}/" ../README.md ../README.md
-          cd ..
+      - name: Set environment variables
+        run: |
+          set +e # need to disable this
           git diff --exit-code -s README.md
           echo "has_diff=$?" >> $GITHUB_ENV
       - name: create PR
