@@ -11,6 +11,7 @@ syntax.add {
     { pattern = { "/%*", "%*/" },           type = "comment"  },
     { pattern = { '"', '"', '\\' },         type = "string"   },
     { pattern = { "'", "'", '\\' },         type = "string"   },
+    { pattern = { "`", "`", '\\' },         type = "string"   },
     { pattern = "0x[%da-fA-F_]+",           type = "number"   },
     { pattern = "0b[01_]+",                 type = "number"   },
     { pattern = "00[01234567_]+",           type = "number"   },
