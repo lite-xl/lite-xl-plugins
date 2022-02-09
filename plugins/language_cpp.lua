@@ -20,7 +20,16 @@ syntax.add {
     { pattern = "-?%.?%d+f?",           type = "number"   },
     { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
     { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
-    { pattern = "#[%a_][%w_]*",          type = "symbol"   },
+    -- Match scope operator element access
+    { pattern = "[%a_][%w_]*[%s]*%f[:]",type = "literal"  },
+    -- Uppercase constants of at least 3 characters in len
+    { pattern = "%u[%u_][%u%d_]+",      type = "number"   },
+    -- Magic constants
+    { pattern = "__[%u]+__",            type = "number"   },
+    -- Somehow makes macros properly work
+    { pattern = "#[%a_][%w_]*",         type = "symbol"   },
+    -- Everything else to make the tokenizer work properly
+    { pattern = "[%a_][%w_]*",          type = "symbol"   },
   },
   symbols = {
     ["alignof"]  = "keyword",
@@ -122,6 +131,7 @@ syntax.add {
     ["#if"]      = "keyword",
     ["#ifdef"]   = "keyword",
     ["#ifndef"]  = "keyword",
+    ["#elif"]    = "keyword",
     ["#else"]    = "keyword",
     ["#elseif"]  = "keyword",
     ["#endif"]   = "keyword",
