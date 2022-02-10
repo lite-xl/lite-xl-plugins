@@ -150,6 +150,7 @@ syntax.add {
 -- allows html, css and js coloring on php files
 syntax.add {
   files = { "%.php$", "%.phtml" },
+  comment = "//",
   patterns = {
     {
       pattern = {
