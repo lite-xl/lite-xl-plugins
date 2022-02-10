@@ -18,6 +18,10 @@ syntax.add {
     { pattern = "-?0x%x+",              type = "number"   },
     { pattern = "-?%d+[%d%.eE]*f?",     type = "number"   },
     { pattern = "-?%.?%d+f?",           type = "number"   },
+    {
+      pattern = "#include%s*()<.->",
+      type = { "keyword", "string" }
+    },
     { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
     { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
     -- Match scope operator element access
