@@ -19,8 +19,8 @@ local function draw_color_previews(self, idx, x, y, ptn, base, nibbles)
     local str = text:sub(s, e)
     local r, g, b, a = str:match(ptn)
     r, g, b = tonumber(r, base), tonumber(g, base), tonumber(b, base)
-    if (a ~= nil) and (a ~= "") then
-      a = tonumber(a, base)
+    a = tonumber(a or "", base)
+    if a ~= nil then
       if base ~= 16 then
         a = a * 0xff
       end
