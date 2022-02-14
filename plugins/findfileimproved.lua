@@ -31,7 +31,7 @@ local function basedir_files()
         project_directory .. PATHSEP .. file
       )
 
-      if not common.match_pattern(file, config.ignore_files) then
+      if info and not common.match_pattern(file, config.ignore_files) then
         if info.type ~= "dir" then
           table.insert(files_return, file)
         end
@@ -80,16 +80,7 @@ end
 
 
 local function index_files_thread(pathsep, ignore_files)
-  local function match_pattern(text, pattern, ...)
-    if type(pattern) == "string" then
-      return text:find(pattern, ...)
-    end
-    for _, p in ipairs(pattern) do
-      local s, e = match_pattern(text, p, ...)
-      if s then return s, e end
-    end
-    return false
-  end
+  local commons = require "core.common"
 
   ---@type thread.Channel
   local input = thread.getChannel("findfileimproved_write")
@@ -125,7 +116,7 @@ local function index_files_thread(pathsep, ignore_files)
           )
 
           if
-            not match_pattern(
+            info and not commons.match_pattern(
               file, ignore_files
             )
           then
@@ -249,7 +240,7 @@ local function index_files_coroutine()
               )
 
               if
-                not common.match_pattern(
+                info and not common.match_pattern(
                   file, config.ignore_files
                 )
               then
