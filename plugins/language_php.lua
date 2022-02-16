@@ -12,7 +12,7 @@ require "plugins.language_js"
 
 -- define the core php syntax coloring
 syntax.add {
-  name = "PHP",
+  name = "PHP Source",
   files = { "%.phps$" },
   headers = "^<%?php",
   comment = "//",
@@ -149,6 +149,7 @@ syntax.add {
 
 -- allows html, css and js coloring on php files
 syntax.add {
+  name = "PHP",
   files = { "%.php$", "%.phtml" },
   comment = "//",
   patterns = {
