@@ -46,6 +46,7 @@ syntax.add {
     ["defer"]       = "keyword",
     ["go"]          = "keyword",
     ["fallthrough"] = "keyword",
+    ["goto"]        = "keyword",
     ["int"]         = "keyword2",
     ["int64"]       = "keyword2",
     ["int32"]       = "keyword2",
