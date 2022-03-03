@@ -71,4 +71,4 @@ command.add("core.docview", {
 })
 
 
-keymap.add { ["ctrl+shift+m"] = "ghmarkdown:show-preview" }
+keymap.add { ["ctrl+alt+m"] = "ghmarkdown:show-preview" }
