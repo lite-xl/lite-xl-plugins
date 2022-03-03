@@ -13,11 +13,11 @@ syntax.add {
   headers = "^diff ",
   patterns = {
     -- Method the patch was generated with and source/target files
-    { regex = "^diff .+\n$",       type = "function" },
+    { regex = "^diff .+\n$",                 type = "function" },
     -- Seen for changing the file permissions
-    { regex = "^new .+\n$",        type = "comment"  },
+    { regex = "^new .+\n$",                  type = "comment"  },
     -- Usually holds starting and ending commit
-    { regex = "^index .+\n$",      type = "comment"  },
+    { regex = "^index .+\n$",                type = "comment"  },
     -- Position to patch
     {
       pattern = "@@.-@@ ().+\n",            --with heading
@@ -64,9 +64,7 @@ syntax.add {
     {
       regex = "<[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+>\n",
       type = "keyword2"
-    },
-    -- Everything else is normal text
-    { pattern = "[%a_][%w_]*",               type = "normal"   },
+    }
   },
   symbols = {}
 }
