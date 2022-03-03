@@ -13,46 +13,46 @@ syntax.add {
   headers = "^diff ",
   patterns = {
     -- Method the patch was generated with and source/target files
-    { regex = "^diff .+\n$",                 type = "function" },
+    { regex = "^diff .+",                    type = "function" },
     -- Seen for changing the file permissions
-    { regex = "^new .+\n$",                  type = "comment"  },
+    { regex = "^new .+",                     type = "comment"  },
     -- Usually holds starting and ending commit
-    { regex = "^index .+\n$",                type = "comment"  },
+    { regex = "^index .+",                   type = "comment"  },
     -- Position to patch
     {
-      pattern = "@@.-@@ ().+\n",            --with heading
+      pattern = "@@.-@@ ().+",             --with heading
       type = { "number", "string" }
     },
     {
-      regex = "^@@ [\\d,\\-\\+ ]+ @@\n$",   --wihtout heading
+      regex = "^@@ [\\d,\\-\\+ ]+ @@\n",   --wihtout heading
       type = "number"
     },
     -- Other position to patch formats
     {
-      regex = "^\\-{3} [\\d]+,[\\d]+ \\-{4}\n$",
+      regex = "^-{3} [\\d]+,[\\d]+ \\-{4}\n",
       type = "number"
     },
     {
-      regex = "^\\*{3} [\\d]+,[\\d]+ \\*{4}\n$",
+      regex = "^\\*{3} [\\d]+,[\\d]+ \\*{4}\n",
       type = "number"
     },
     -- Source and target file
-    { regex = "^-{3} .+\n$",                 type = "keyword"  },
-    { regex = "^\\+{3} .+\n$",               type = "keyword"  },
+    { regex = "^-{3} .+",                    type = "keyword"  },
+    { regex = "^\\+{3} .+",                  type = "keyword"  },
     -- Rarely used source file indicator
-    { regex = "^\\*{3} .+\n$",               type = "keyword"  },
+    { regex = "^\\*{3} .+",                  type = "keyword"  },
     -- git patches seem to add 3 dashes to separate message from changed files
-    { regex = "^\\-{3}\n$",                  type = "normal"   },
+    { regex = "^-{3}\n",                     type = "normal"   },
     -- Addition and deletion of lines
-    { regex = "^\\-.*\n$",                   type = "diff_del" },
-    { regex = "^\\+.*\n$",                   type = "diff_add" },
-    { regex = "^<.*\n$",                     type = "diff_del" },
-    { regex = "^>.*\n$",                     type = "diff_add" },
+    { regex = "^-.*",                        type = "diff_del" },
+    { regex = "^\\+.*",                      type = "diff_add" },
+    { regex = "^<.*",                        type = "diff_del" },
+    { regex = "^>.*",                        type = "diff_add" },
     -- Change between two lines
-    { regex = "^!.*\n$",                     type = "number"   },
+    { regex = "^!.*",                        type = "number"   },
     -- Stuff usually found on a authored patch heading
     {
-      pattern = "From ()[a-fA-F0-9]+ ().+\n",
+      pattern = "From ()[a-fA-F0-9]+ ().+",
       type = { "keyword", "number", "string" }
     },
     { regex = "^[a-zA-Z\\-]+: ",             type = "keyword" },
@@ -62,9 +62,9 @@ syntax.add {
     { regex = "[\\d]+ deletions?\\(\\-\\)",  type = "diff_del" },
     -- Match e-mail
     {
-      regex = "<[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+>\n",
-      type = "keyword2"
-    }
+      pattern = ".*()<[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+%.[a-zA-Z0-9-.]+>",
+      type = {"string", "keyword2"}
+    },
   },
   symbols = {}
 }
