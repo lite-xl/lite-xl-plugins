@@ -10,7 +10,7 @@ style.syntax["diff_del"] = { common.color "#F36161" }
 syntax.add {
   name = "Diff",
   files = { "%.diff$", "%.patch$", "%.rej$" },
-  headers = "^diff ",
+  headers = "^diff %-",
   patterns = {
     -- Method the patch was generated with and source/target files
     { regex = "^diff .+",                    type = "function" },
