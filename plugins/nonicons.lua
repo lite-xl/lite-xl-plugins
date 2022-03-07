@@ -39,7 +39,7 @@ local extension_icons = {
   [".swift"] = { "#e37933", "" },
   [".ts"] = { "#519aba", "" },  -- TypeScript
   [".elm"] = { "#519aba", "" },
-  [".diff"] = { "#41535b", "" },
+  [".diff"] = { "#41535b", "" }, [".patch"] = { "#41535b", "" },
   [".ex"] = { "#a074c4", "" }, [".exs"] = { "#a074c4", "" },  -- Elixir
   -- Following without special icon:
   [".awk"] = { "#4d5a5e", "" },
@@ -68,6 +68,7 @@ end
 
 -- Replace original draw
 function TreeView:draw()
+  if not self.visible then return end
   self:draw_background(style.background2)
 
   local icon_width = icon_font:get_width("")
