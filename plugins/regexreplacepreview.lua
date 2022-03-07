@@ -8,7 +8,7 @@ local command = require "core.command"
 local function regex_replace_file(view, pattern, old_lines, raw, start_line, end_line)
    local doc = view.doc
    local start_pattern, end_pattern, end_replacement, start_replacement = 2, 2;
-   repeat 
+   repeat
       end_pattern = string.find(pattern, "/", end_pattern)
    until end_pattern == nil or pattern[end_pattern-1] ~= "\\"
    if end_pattern == nil then
@@ -22,9 +22,9 @@ local function regex_replace_file(view, pattern, old_lines, raw, start_line, end
       until end_replacement == nil or pattern[end_replacement-1] ~= "\\"
    end
    end_replacement = end_replacement and (end_replacement - 1)
-      
+
    local re = start_pattern ~= end_pattern and regex.compile(pattern:sub(start_pattern, end_pattern))
-   
+
    local replacement = end_replacement and pattern:sub(start_replacement, end_replacement)
    local replace_line = raw and function(line, new_text)
       if line == #doc.lines then
@@ -41,7 +41,7 @@ local function regex_replace_file(view, pattern, old_lines, raw, start_line, end
       end
       doc:insert(line, 1, new_text)
    end
-   
+
    local line_scroll = nil
    if re then
       for i = (start_line or 1), (end_line or #doc.lines) do
@@ -93,7 +93,7 @@ command.add("core.docview", {
       local original_selection = { doc:get_selection(true) }
       local selection = doc:has_selection() and { doc:get_selection(true) } or {}
       core.command_view:enter(
-         "Regex Replace (enter pattern as /old/new/)", 
+         "Regex Replace (enter pattern as /old/new/)",
          function(pattern)
             regex_replace_file(view, pattern, {}, false, selection[1], selection[3])
          end,
@@ -103,7 +103,7 @@ command.add("core.docview", {
                old_lines = incremental
             end
             if not has_replacement then
-               doc:set_selection(unpack(original_selection))
+               doc:set_selection(table.unpack(original_selection))
             end
          end,
          function(pattern)
@@ -117,9 +117,9 @@ command.add("core.docview", {
                   doc:raw_insert(k, 1, v, { idx = 1 }, 0)
                end
             end
-            doc:set_selection(unpack(original_selection))
+            doc:set_selection(table.unpack(original_selection))
          end
-      ) 
+      )
    end
 })
 
