@@ -61,7 +61,7 @@ function Settings:get_color_scheme()
 end
 
 local function make_color_module_name(name)
-  return (name == color_default.name) and color_default.module or "colors."..name  
+  return (name == color_default.name) and color_default.module or "colors."..name
 end
 
 function Settings:change_color(name)
@@ -83,8 +83,10 @@ function Settings:load_settings()
   local fp = io.open(PATH_CONFIG, "r")
   if fp then
     local name = fp:read("*a")
-    core.reload_module(make_color_module_name(name))
-    Settings.color_scheme = name
+    if name and name ~= "" then
+      core.reload_module(make_color_module_name(name))
+      Settings.color_scheme = name
+    end
     fp:close()
   end
 end
