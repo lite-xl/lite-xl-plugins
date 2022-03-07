@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3 --lite-xl 2.1
 local syntax = require "core.syntax"
 
 
@@ -10,7 +10,7 @@ syntax.add {
     { pattern = { "```", "```" },           type = "string"   },
     { pattern = "#.*",                      type = "keyword"  },
     { pattern = "%*%s",                     type = "keyword2" },
-    { pattern = "=>",                       type = "function" },    
+    { pattern = "=>",                       type = "function" },
     { pattern = "https?://%S+",             type = "literal"  },
     { pattern = "gemini?://%S+",            type = "literal"  },
     { pattern = ">.*",                      type = "comment"  },
