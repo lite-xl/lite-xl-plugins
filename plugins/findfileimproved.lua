@@ -7,9 +7,9 @@ local command = require "core.command"
 local StatusView = require "core.statusview"
 
 ---@type thread
-local threads = nil
+local thread = nil
 if pcall(require, "thread") then
-  threads = require "thread"
+  thread = require "thread"
 end
 
 local project_files = {}
@@ -82,10 +82,12 @@ end
 local function index_files_thread(pathsep, ignore_files)
   local commons = require "core.common"
 
+  local thread = require("thread")
+
   ---@type thread.Channel
-  local input = thread.getChannel("findfileimproved_write")
+  local input = thread.get_channel("findfileimproved_write")
   ---@type thread.Channel
-  local output = thread.getChannel("findfileimproved_read")
+  local output = thread.get_channel("findfileimproved_read")
 
   local root = input:wait()
   input:pop()
@@ -150,17 +152,17 @@ end
 local function index_files_coroutine()
   while true do
     -- Indexing with thread module/plugin
-    if threads and refresh_files then
+    if thread and refresh_files then
       ---@type thread.Channel
-      local input = threads.getChannel("findfileimproved_read")
+      local input = thread.get_channel("findfileimproved_read")
       ---@type thread.Channel
-      local output = threads.getChannel("findfileimproved_write")
+      local output = thread.get_channel("findfileimproved_write")
 
       -- Tell the thread to start indexing the pushed directory
       output:push(project_directory)
       local count = 0
 
-      local indexing_thread = threads.create(
+      local indexing_thread = thread.create(
         "findfileimproved", index_files_thread, PATHSEP, config.ignore_files
       )
 
@@ -191,7 +193,7 @@ local function index_files_coroutine()
           local total_project_files = #project_files
           if total_project_files ~= project_total_files then
             project_total_files = total_project_files
-            if count % 10000 == 0 then
+            if project_total_files <= 100000 and count % 10000 == 0 then
               update_suggestions()
             end
           end
@@ -262,7 +264,7 @@ local function index_files_coroutine()
         if count % 100 == 0 then
           update_loading_text()
 
-          if count % 10000 == 0 then
+          if project_total_files <= 100000 and count % 10000 == 0 then
             update_suggestions()
             suggestions_updated = true
           end
@@ -285,6 +287,10 @@ end
 
 local function fuzzy_match_extended(files, visited, text)
   local results = common.fuzzy_match_with_recents(files, visited, text)
+
+  if #results > 80000 then
+    return results
+  end
 
   local last_char = text:sub(text:len())
 
@@ -316,7 +322,7 @@ local function open_project_file()
   end
 
   refresh_files = true
-  if threads and not coroutine_running then
+  if thread and not coroutine_running then
     coroutine_running = true
     core.add_thread(index_files_coroutine)
   end
@@ -328,11 +334,11 @@ local function open_project_file()
     function(text)
       local results = {}
       if text == "" or #project_files == 0 then
-        results = fuzzy_match_extended(
+        results = common.fuzzy_match_with_recents(
           base_files, core.visited_files, text
         )
       else
-        results = fuzzy_match_extended(
+        results = common.fuzzy_match_with_recents(
           project_files, core.visited_files, text
         )
       end
@@ -372,7 +378,7 @@ function StatusView:get_items()
 end
 
 -- register the indexing coroutine
-if not threads then
+if not thread then
   core.add_thread(index_files_coroutine)
 end
 
