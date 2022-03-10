@@ -352,29 +352,46 @@ end
 -- inject changes to lite-xl
 --
 
-local status_view_get_items = StatusView.get_items
-
 -- display amount of files and matching results
-function StatusView:get_items()
-  local left, right = status_view_get_items(self)
-  if
-    core.active_view == core.command_view
-    and
-    core.command_view.label == "Open File From Project: "
-  then
-    local t = {
-      style.text,
-      style.font,
-      loading_text .. " " ..
-        tostring(matching_files) ..
-        "/" ..
-        tostring(project_total_files)
-    }
-    for i, item in ipairs(t) do
-      table.insert(left, i, item)
+local function status_view_items()
+  return {
+    style.text,
+    style.font,
+    loading_text .. " "
+      .. tostring(matching_files)
+      .. "/"
+      .. tostring(project_total_files)
+  }
+end
+
+if StatusView["add_item"] then
+  core.status_view:add_item(
+    function()
+      return core.active_view == core.command_view
+        and core.command_view.label == "Open File From Project: "
+    end,
+    "command:find-file-matches",
+    StatusView.Item.LEFT,
+    status_view_items,
+    nil,
+    1
+  )
+else
+  local status_view_get_items = StatusView.get_items
+  function StatusView:get_items()
+    local left, right = status_view_get_items(self)
+    if
+      core.active_view == core.command_view
+      and
+      core.command_view.label == "Open File From Project: "
+    then
+      local t = status_view_items()
+      for i, item in ipairs(t) do
+        table.insert(left, i, item)
+      end
     end
+    return left, right
   end
-  return left, right
 end
 
 -- register the indexing coroutine
