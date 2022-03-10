@@ -51,8 +51,11 @@ syntax.add {
     { pattern = "array",                     type = "literal"  },
     -- Match static or namespace container on sub element access
     { pattern = "[%a_][%w_]*[%s]*%f[:]",     type = "literal"  },
-    -- Uppercase constants of at least 3 characters in len
-    { pattern = "%u[%u_][%u%d_]+",           type = "number"   },
+    -- Uppercase constants of at least 2 chars in len
+    {
+        pattern = "%u[%u_][%u%d_]*%f[%s%+%*%-%.%(%)%?%^%%=/<>~|&;:,!]",
+        type = "number"
+    },
     -- Magic constants
     { pattern = "__[%u]+__",                 type = "number"   },
     -- Everything else
