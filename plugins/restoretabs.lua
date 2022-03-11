@@ -17,7 +17,7 @@ RootView.update = function(self)
   if not initialized_tab_system then
     local Node = getmetatable(self.root_node)
     local old_close = Node.close_view
-    
+
     Node.close_view = function(self, root, view)
       if view.doc and view.doc.abs_filename then
         local closing_filename = view.doc.abs_filename
@@ -40,7 +40,7 @@ RootView.update = function(self)
 end
 
 
-command.add("core.docview", {
+command.add(nil, {
   ["restore-tabs:restore-tab"] = function()
     if #tab_history > 0 then
       local file = tab_history[#tab_history]
