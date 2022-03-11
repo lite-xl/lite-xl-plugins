@@ -2,8 +2,8 @@
 local core = require "core"
 local command = require "core.command"
 local keymap = require "core.keymap"
-local common = require "core.common"
 local config = require "core.config"
+local contextmenu = require "plugins.contextmenu"
 
 
 config.plugins.openselected = {}
@@ -42,5 +42,11 @@ command.add("core.docview", {
 })
 
 
-keymap.add { ["ctrl+shift+o"] = "open-selected:open-selected" }
+contextmenu:register("core.docview", {
+  contextmenu.DIVIDER,
+  { text = "Open Selection",  command = "open-selected:open-selected" }
+})
+
+
+keymap.add { ["ctrl+alt+o"] = "open-selected:open-selected" }
 
