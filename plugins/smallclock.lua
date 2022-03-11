@@ -1,27 +1,27 @@
 -- mod-version:3 --lite-xl 2.1
 local core = require "core"
 local style = require "core.style"
-local status_view = require "core.statusview"
+local StatusView = require "core.statusview"
 
 local time = ""
 
-core.add_thread(function()
-  while true do
+local last_time = os.time()
+local function update_time()
+  if os.time() > last_time then
     local t = os.date("*t")
     time = string.format("%02d:%02d", t.hour, t.min)
-    coroutine.yield(1)
+    last_time = os.time()
   end
-end)
-
-local get_items = status_view.get_items
-
-function status_view:get_items()
-  local left, right = get_items(self)
-  local t = {style.dim, self.separator2, style.accent, time}
-
-  for _, item in ipairs(t) do
-    table.insert(right, item)
-  end
-
-  return left, right
 end
+
+core.status_view:add_item(
+  nil,
+  "status:small-clock",
+  StatusView.Item.RIGHT,
+  function()
+    update_time()
+    return {style.accent, time}
+  end,
+  nil,
+  -1
+).separator = core.status_view.separator2
