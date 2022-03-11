@@ -2,15 +2,21 @@
 require "plugins.reflow"
 local config = require "core.config"
 local command = require "core.command"
+local common = require "core.common"
 local DocView = require "core.docview"
 
-config.plugins.autowrap = common.merge({ files = { "%.md$", "%.txt$" } }, config.plugins.autowrap)
+config.plugins.autowrap = common.merge({
+  enable = false,
+  files = { "%.md$", "%.txt$" }
+}, config.plugins.autowrap)
 
 
 local on_text_input = DocView.on_text_input
 
 DocView.on_text_input = function(self, ...)
   on_text_input(self, ...)
+
+  if not config.plugins.autowrap.enable then return end
 
   -- early-exit if the filename does not match a file type pattern
   local filename = self.doc.filename or ""
@@ -35,3 +41,9 @@ DocView.on_text_input = function(self, ...)
     command.perform("doc:move-to-end-of-line")
   end
 end
+
+command.add(nil, {
+  ["auto-wrap:toggle"] = function()
+    config.plugins.autowrap.enable = not config.plugins.autowrap.enable
+  end
+})
