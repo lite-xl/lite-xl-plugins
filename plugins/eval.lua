@@ -19,6 +19,10 @@ command.add("core.docview", {
   end,
 
   ["eval:replace"] = function()
-    core.active_view.doc:replace(eval)
+    core.command_view:enter("Evaluate And Replace With Result", function(cmd)
+      core.active_view.doc:replace(function(str)
+        return eval(cmd)
+      end)
+    end)
   end,
 })
