@@ -1,4 +1,5 @@
 -- mod-version:3 --lite-xl 2.1
+local core = require "core"
 local common = require "core.common"
 local command = require "core.command"
 local keymap = require "core.keymap"
@@ -11,7 +12,7 @@ local default_opacity = 1
 local current_opacity = default_opacity
 
 local function set_opacity(opacity)
-  if not opacity_on then opacity_on = true end
+  if not opacity_on then return end
   current_opacity = common.clamp(opacity, 0.2, 1)
   system.set_window_opacity(current_opacity)
 end
@@ -30,8 +31,10 @@ end
 local function tog_opacity()
   opacity_on = not opacity_on
   if opacity_on then
+    core.log("Opacity: on")
     system.set_window_opacity(current_opacity)
   else
+    core.log("Opacity: off")
     system.set_window_opacity(default_opacity)
   end
 end
@@ -53,7 +56,14 @@ command.add(nil, {
   ["opacity:reset"   ] = function() res_opacity() end,
   ["opacity:decrease"] = function() dec_opacity() end,
   ["opacity:increase"] = function() inc_opacity() end,
-  ["opacity:toggle mouse wheel use"] = function() use_mousewheel = not use_mousewheel end,
+  ["opacity:toggle mouse wheel use"] = function()
+    use_mousewheel = not use_mousewheel
+    if use_mousewheel then
+      core.log("Opacity (shift + mouse wheel): on")
+    else
+      core.log("Opacity (shift + mouse wheel): off")
+    end
+  end,
 })
 
 keymap.add {
