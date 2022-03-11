@@ -5,30 +5,31 @@
     version: 20200628_155804
     originally by SwissalpS
 --]]
-local scale = require "plugins.scale"
+local core = require "core"
 local common = require "core.common"
 local config = require "core.config"
+local scale = require "plugins.scale"
 local StatusView = require "core.statusview"
 
-config.plugins.scalestatus = common.merge({ format = '%.0f%%' }, config.plugins.scalestatus)
+config.plugins.scalestatus = common.merge(
+  { format = '%.0f%%' },
+  config.plugins.scalestatus
+)
 
-local get_items = StatusView.get_items
-function StatusView:get_items()
-
-  local left, right = get_items(self)
-
-  local t = {
-    self.separator,
-    string.format(config.plugins.scalestatus.format, scale.get() * 100),
-  }
-
-  for _, item in ipairs(t) do
-    table.insert(right, item)
-  end
-
-  return left, right
-
-end
+core.status_view:add_item(
+  nil,
+  "status:scale",
+  StatusView.Item.RIGHT,
+  function()
+    return {string.format(
+      config.plugins.scalestatus.format,
+      scale.get() * 100
+    )}
+  end,
+  nil,
+  1,
+  "scale"
+).separator = core.status_view.separator2
 
 return true
 
