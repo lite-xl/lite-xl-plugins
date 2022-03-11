@@ -99,27 +99,24 @@ core.add_thread(function()
 end)
 
 
-local get_items = StatusView.get_items
-
-function StatusView:get_items()
-  if not git.branch then
-    return get_items(self)
-  end
-  local left, right = get_items(self)
-
-  local t = {
-    style.dim, self.separator,
-    (git.inserts ~= 0 or git.deletes ~= 0) and style.accent or style.text,
-    git.branch,
-    style.dim, "  ",
-    git.inserts ~= 0 and style.accent or style.text, "+", git.inserts,
-    style.dim, " / ",
-    git.deletes ~= 0 and style.accent or style.text, "-", git.deletes,
-  }
-  for _, item in ipairs(t) do
-    table.insert(right, item)
-  end
-
-  return left, right
-end
-
+core.status_view:add_item(
+  nil,
+  "status:git",
+  StatusView.Item.RIGHT,
+  function()
+    if not git.branch then
+      return {}
+    end
+    return {
+      (git.inserts ~= 0 or git.deletes ~= 0) and style.accent or style.text,
+      git.branch,
+      style.dim, "  ",
+      git.inserts ~= 0 and style.accent or style.text, "+", git.inserts,
+      style.dim, " / ",
+      git.deletes ~= 0 and style.accent or style.text, "-", git.deletes,
+    }
+  end,
+  nil,
+  -1,
+  "branch and changes"
+).separator = core.status_view.separator2
