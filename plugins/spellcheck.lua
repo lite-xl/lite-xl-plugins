@@ -9,7 +9,9 @@ local Doc = require "core.doc"
 
 config.plugins.spellcheck = common.merge({
   files = { "%.txt$", "%.md$", "%.markdown$" },
-  dictionary_file = (PLATFORM == "Windows" and EXEDIR .. "/words.txt" or "/usr/share/dict/words")
+  dictionary_file = PLATFORM == "Windows"
+    and EXEDIR .. "/words.txt"
+    or "/usr/share/dict/words"
 }, config.plugins.spellcheck)
 
 local last_input_time = 0
@@ -28,7 +30,10 @@ core.add_thread(function()
   end
   words = t
   core.redraw = true
-  core.log_quiet("Finished loading dictionary file: \"%s\"", config.plugins.spellcheck.dictionary_file)
+  core.log_quiet(
+    "Finished loading dictionary file: \"%s\"",
+    config.plugins.spellcheck.dictionary_file
+  )
 end)
 
 
@@ -60,8 +65,11 @@ local draw_line_text = DocView.draw_line_text
 function DocView:draw_line_text(idx, x, y)
   draw_line_text(self, idx, x, y)
 
-  if not words
-  or not matches_any(self.doc.filename or "", config.plugins.spellcheck.files) then
+  if
+    not words
+    or
+    not matches_any(self.doc.filename or "", config.plugins.spellcheck.files)
+  then
     return
   end
 
@@ -174,4 +182,11 @@ command.add("core.docview", {
     end)
   end,
 
+})
+
+local contextmenu = require "plugins.contextmenu"
+contextmenu:register("core.docview", {
+  contextmenu.DIVIDER,
+  { text = "View Suggestions",  command = "spell-check:replace" },
+  { text = "Add to Dictionary", command = "spell-check:add-to-dictionary" }
 })
