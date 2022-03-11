@@ -4,7 +4,6 @@ local config = require "core.config"
 local style = require "core.style"
 local common = require "core.common"
 local StatusView = require "core.statusview"
-local scan_rate = 1
 
 config.plugins.statusclock = common.merge({
   time_format = "%H:%M:%S",
@@ -16,40 +15,40 @@ local time_data = {
   date_text = '',
 }
 
-core.add_thread(function()
-  while true do
+local last_time = os.time()
+local function update_time()
+  if os.time() > last_time then
     local time_text = os.date(config.plugins.statusclock.time_format)
     local date_text = os.date(config.plugins.statusclock.date_format)
-    
+
     if time_data.time_text ~= time_text or time_data.time_text ~= date_text then
-      core.redraw = true
       time_data.time_text = time_text
       time_data.date_text = date_text
     end
-    
-    coroutine.yield(scan_rate)
+    -- only redraw if seconds enabled
+    if config.plugins.statusclock.time_format:find("%S", 1, true) then
+      core.redraw = true
+    end
+    last_time = os.time()
   end
-end)
-
-local get_items = StatusView.get_items
-
-function StatusView:get_items()
-  local left, right = get_items(self)
-  
-  local t = {
-    style.dim, 
-    self.separator,
-    style.dim and style.text,
-    time_data.date_text,
-    style.dim, 
-    self.separator,
-    style.dim and style.text,
-    time_data.time_text,
-  }
-  for _, item in ipairs(t) do
-    table.insert(right, item)
-  end
-
-  return left, right
 end
+
+core.status_view:add_item(
+  nil,
+  "status:clock",
+  StatusView.Item.RIGHT,
+  function(self)
+    update_time()
+    return {
+      style.text,
+      time_data.date_text,
+      style.dim,
+      self.separator,
+      style.text,
+      time_data.time_text,
+    }
+  end,
+  nil,
+  -1
+).separator = core.status_view.separator2
 
