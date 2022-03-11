@@ -21,6 +21,7 @@ function ClockView:new()
   ClockView.super.new(self)
   self.time_text = ""
   self.date_text = ""
+  self.last_scale = 0
 end
 
 
@@ -30,14 +31,18 @@ end
 
 
 function ClockView:update_fonts()
+  if self.last_scale ~= config.plugins.bigclock.scale then
+    self.last_scale = config.plugins.bigclock.scale
+  else
+    return
+  end
   local size = math.floor(self.size.x * 0.15 / 15) * 15 * config.plugins.bigclock.scale
   if self.font_size ~= size then
-    self.time_font = renderer.font.load(DATADIR .. "/fonts/font.ttf", size)
-    self.date_font = renderer.font.load(DATADIR .. "/fonts/font.ttf", size * 0.3)
+    self.time_font = renderer.font.copy(style["font"], size)
+    self.date_font = renderer.font.copy(style["font"], size * 0.3)
     self.font_size = size
     collectgarbage()
   end
-  return self.font
 end
 
 
