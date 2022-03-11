@@ -8,6 +8,7 @@ local DocView = require "core.docview"
 local Doc = require "core.doc"
 
 config.plugins.spellcheck = common.merge({
+  enable = true,
   files = { "%.txt$", "%.md$", "%.markdown$" },
   dictionary_file = PLATFORM == "Windows"
     and EXEDIR .. "/words.txt"
@@ -66,6 +67,8 @@ function DocView:draw_line_text(idx, x, y)
   draw_line_text(self, idx, x, y)
 
   if
+    not config.plugins.spellcheck.enable
+    or
     not words
     or
     not matches_any(self.doc.filename or "", config.plugins.spellcheck.files)
@@ -117,6 +120,10 @@ end
 
 
 command.add("core.docview", {
+
+  ["spell-check:toggle"] = function()
+    config.plugins.spellcheck.enable = not config.plugins.spellcheck.enable
+  end,
 
   ["spell-check:add-to-dictionary"] = function()
     local word = get_word_at_caret()
