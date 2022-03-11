@@ -23,6 +23,6 @@ function Node:draw_tabs(...)
       color = style.accent
     end
     -- renderer.draw_rect(x, y + h - 1, free_real_estate, 1, color)
-    common.draw_text(style.font, color, tostring(i), "center", x, y, free_real_estate, h)
+    common.draw_text(style.font, color, number, "center", x, y, free_real_estate, h)
   end
 end
