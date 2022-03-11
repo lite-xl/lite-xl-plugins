@@ -27,8 +27,8 @@ from https://www.lua.org/pil/22.1.html
 %%	the character `%´
 --]]
 config.plugins.datetimestamps = common.merge({
-  format_datestamp = "%Y%m%d"
-  format_datetimestamp = "%Y%m%d_%H%M%S"
+  format_datestamp = "%Y%m%d",
+  format_datetimestamp = "%Y%m%d_%H%M%S",
   format_timestamp = "%H%M%S"
 }, config.plugins.datetimestamps)
 
@@ -50,6 +50,11 @@ end
 command.add("core.docview", {
   ["datetimestamps:insert-datestamp"] = datestamp,
   ["datetimestamps:insert-timestamp"] = timestamp,
-  ["datetimestamps:insert-datetimestamp"] = datetimestamp
+  ["datetimestamps:insert-datetimestamp"] = datetimestamp,
+  ["datetimestamps:insert-custom"] = function()
+    core.command_view:enter("Date format eg: %H:%M:%S", function(cmd)
+      core.active_view.doc:text_input(os.date(cmd) or "")
+    end)
+  end,
 })
 
