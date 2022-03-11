@@ -5,15 +5,24 @@ local DocView = require "core.docview"
 local common = require "core.common"
 local command = require "core.command"
 
+config.plugins.linenumbers = common.merge({
+  show = true,
+  relative = false
+}, config.plugins.linenumbers)
+
 local draw = DocView.draw_line_gutter
 local get_width = DocView.get_gutter_width
 
 function DocView:draw_line_gutter(idx, x, y, width)
-  if not config.line_numbers and not config.relative_line_numbers then
+  if
+    not config.plugins.linenumbers.show
+    and
+    not config.plugins.linenumbers.relative
+  then
     return
   end
 
-  if config.relative_line_numbers then
+  if config.plugins.linenumbers.relative then
 
     local color = style.line_number
     local local_idx = idx
@@ -51,7 +60,11 @@ function DocView:draw_line_gutter(idx, x, y, width)
 end
 
 function DocView:get_gutter_width(...)
-  if not config.line_numbers and not config.relative_line_numbers then
+  if
+    not config.plugins.linenumbers.show
+    and
+    not config.plugins.linenumbers.relative
+  then
     return style.padding.x
   else
     return get_width(self, ...)
@@ -60,26 +73,26 @@ end
 
 command.add(nil, {
   ["line-numbers:toggle"]  = function()
-    config.line_numbers = not config.line_numbers
+    config.plugins.linenumbers.show = not config.plugins.linenumbers.show
   end,
 
   ["line-numbers:disable"] = function()
-    config.line_numbers = false
+    config.plugins.linenumbers.show = false
   end,
 
   ["line-numbers:enable"]  = function()
-    config.line_numbers = true
+    config.plugins.linenumbers.show = true
   end,
 
   ["relative-line-numbers:toggle"]  = function()
-    config.relative_line_numbers = not config.relative_line_numbers
+    config.plugins.linenumbers.relative = not config.plugins.linenumbers.relative
   end,
 
   ["relative-line-numbers:enable"]  = function()
-    config.relative_line_numbers = true
+    config.plugins.linenumbers.relative = true
   end,
 
   ["relative-line-numbers:disable"]  = function()
-    config.relative_line_numbers = false
+    config.plugins.linenumbers.relative = false
   end
 })
