@@ -39,30 +39,23 @@ local function get_syntax_name(s)
   return name or "Undefined"
 end
 
-local statusview_get_items = StatusView.get_items
-function StatusView:get_items()
-  local left, right = statusview_get_items(self)
-
-  local is_dv = core.active_view and getmetatable(core.active_view) == DocView
-  if not is_dv then return left, right end
-
-  local syntax_name = get_syntax_name(doc().syntax)
-
-  local ins = {
-    style.dim, 
-    self.separator2,
-    style.text,
-    syntax_name
-  }
-
-  if syntax_name then
-    for _,item in pairs(ins) do
-      table.insert(right, item)
-    end
-  end
-
-  return left, right
-end
+core.status_view:add_item(
+  function()
+    return core.active_view and getmetatable(core.active_view) == DocView
+  end,
+  "doc:syntax",
+  StatusView.Item.RIGHT,
+  function()
+    local syntax_name = get_syntax_name(doc().syntax)
+    return {
+      style.text,
+      syntax_name
+    }
+  end,
+  "force-syntax:select-file-syntax",
+  -1,
+  "file syntax"
+).separator = core.status_view.separator2
 
 local function get_syntax_list()
   local pt_name = plain_text_syntax.name
