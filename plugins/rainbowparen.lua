@@ -1,7 +1,15 @@
 -- mod-version:3 --lite-xl 2.1
-local tokenizer = require "core.tokenizer"
+local core = require "core"
 local style = require "core.style"
+local config = require "core.config"
 local common = require "core.common"
+local command = require "core.command"
+local tokenizer = require "core.tokenizer"
+local Highlighter = require "core.doc.highlighter"
+
+config.plugins.rainbowparen = common.merge({
+  enable = true
+}, config.plugins.rainbowparen)
 
 local tokenize = tokenizer.tokenize
 local closers = {
@@ -13,6 +21,9 @@ local function parenstyle(parenstack)
   return "paren" .. ((#parenstack % 5) + 1)
 end
 function tokenizer.tokenize(syntax, text, state)
+  if not config.plugins.rainbowparen.enable then
+    return tokenize(syntax, text, state)
+  end
   state = state or {}
   local res, istate = tokenize(syntax, text, state.istate)
   local parenstack = state.parenstack or ""
@@ -57,3 +68,14 @@ style.syntax.paren2  =  style.syntax.paren2 or { common.color "#fcb053"}
 style.syntax.paren3  =  style.syntax.paren3 or { common.color "#fcd476"}
 style.syntax.paren4  =  style.syntax.paren4 or { common.color "#52dab2"}
 style.syntax.paren5  =  style.syntax.paren5 or { common.color "#5a98cf"}
+
+
+command.add(nil, {
+  ["rainbow-parentheses:toggle"] = function()
+    config.plugins.rainbowparen.enable = not config.plugins.rainbowparen.enable
+    for _, doc in ipairs(core.docs) do
+      doc.highlighter = Highlighter(doc)
+      doc:reset_syntax()
+    end
+  end
+})
