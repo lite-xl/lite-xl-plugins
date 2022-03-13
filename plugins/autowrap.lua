@@ -1,5 +1,5 @@
 -- mod-version:3 --lite-xl 2.1
-require "plugins.reflow"
+local core = require "core"
 local config = require "core.config"
 local command = require "core.command"
 local common = require "core.common"
@@ -45,5 +45,10 @@ end
 command.add(nil, {
   ["auto-wrap:toggle"] = function()
     config.plugins.autowrap.enable = not config.plugins.autowrap.enable
+    if config.plugins.autowrap.enable then
+      core.log("Auto wrap: on")
+    else
+      core.log("Auto wrap: off")
+    end
   end
 })
