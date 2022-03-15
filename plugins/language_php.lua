@@ -16,6 +16,7 @@ syntax.add {
   files = { "%.phps$" },
   headers = "^<%?php",
   comment = "//",
+  block_comment = {"/*", "*/"},
   patterns = {
     -- Attributes
     { pattern = {"#%[", "%]"},               type = "normal"   },
@@ -155,6 +156,7 @@ syntax.add {
   name = "PHP",
   files = { "%.php$", "%.phtml" },
   comment = "//",
+  block_comment = {"/*", "*/"},
   patterns = {
     {
       pattern = {
