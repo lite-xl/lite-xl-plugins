@@ -4,7 +4,7 @@ local syntax = require "core.syntax"
 
 syntax.add {
     name = "Glaz",
-    files = {"%.glaz$", "%glaz.proj$"},
+    files = {"%.glaz$", "^glaz%.proj$"},
     comment = "//",
     block_comment = {"/*", "*/"},
     patterns = {
