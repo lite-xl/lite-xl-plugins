@@ -37,7 +37,6 @@ DocView.on_text_input = function(self, ...)
     command.perform("doc:select-lines")
     command.perform("reflow:reflow")
     command.perform("doc:move-to-next-char")
-    command.perform("doc:move-to-previous-char")
     command.perform("doc:move-to-end-of-line")
   end
 end
