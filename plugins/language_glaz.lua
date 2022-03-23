@@ -1,5 +1,7 @@
 -- mod-version:2 -- lite-xl 2.0
 
+-- by StunxFS :)
+
 local syntax = require "core.syntax"
 
 syntax.add {
@@ -65,11 +67,14 @@ syntax.add {
         ["try"] = "keyword",
         ["orelse"] = "keyword",
         ["catch"] = "keyword",
+        ["cast"] = "keyword",
         ["as"] = "keyword",
         ["is"] = "keyword",
         ["in"] = "keyword",
         ["and"] = "keyword",
         ["or"] = "keyword",
+        ["Self"] = "keyword",
+
         -- types
         ["i8"] = "keyword2",
         ["i16"] = "keyword2",
@@ -89,6 +94,7 @@ syntax.add {
         ["charptr"] = "keyword2",
         ["rawptr"] = "keyword2",
         ["map"] = "keyword2",
+
         -- literals
         ["base"] = "literal",
         ["self"] = "literal",
