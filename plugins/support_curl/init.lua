@@ -12,7 +12,7 @@ local native_curl = has_cc and cc.compile_plugin(
 }) or require "plugins.support_curl.native"
 
 local support_curl = common.merge({ 
-  timeout = 1000,
+  timeout = 1,
   verbose = false
 }, config.plugins.support_curl)
 
@@ -26,7 +26,7 @@ local agent = native_curl.new()
 function support_curl.request(request, done, fail)
   return agent:request(common.merge({
     method = "GET",
-    headers = {},
+    headers = { ["User-Agent"] = "lite-xl/2.1" },
     timeout = support_curl.timeout,
     verbose = support_curl.verbose,
     done = function(response) done(support_curl.parse(response)) end,
