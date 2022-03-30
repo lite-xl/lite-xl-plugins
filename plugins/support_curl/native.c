@@ -1,5 +1,6 @@
 #include <curl/curl.h>
 #include <string.h>
+#include <stdio.h>
 #include "lite_xl_plugin_api.h"
 
 #define API_TYPE_CURL "curl"
@@ -35,11 +36,11 @@ static int f_curl_request(lua_State* L) {
   lua_getfield(L, 2, "verbose"); if (lua_isnil(L, -1)) return luaL_error(L, "requires verbose");
   int verbose = lua_toboolean(L, -1);
   lua_getfield(L, 2, "done"); if (lua_isnil(L, -1)) return luaL_error(L, "requires done"); 
-  int doneIdx = lua_gettop(L);
+  int done_idx = lua_gettop(L);
   lua_getfield(L, 2, "fail"); if (lua_isnil(L, -1)) return luaL_error(L, "requires fail"); 
-  int failIdx = lua_gettop(L);
+  int fail_idx = lua_gettop(L);
   lua_getfield(L, 2, "headers"); if (lua_isnil(L, -1)) return luaL_error(L, "requires headers"); 
-  int headersIdx = lua_gettop(L);
+  int headers_idx = lua_gettop(L);
   CURL* handle = curl_easy_init();
   curl_easy_setopt(handle, CURLOPT_URL, url);
   if (strcmp(method, "GET") != 0) {
@@ -49,18 +50,17 @@ static int f_curl_request(lua_State* L) {
     const char* body = lua_tolstring(L, 1, &bodyLen);
     curl_easy_setopt(handle, CURLOPT_POSTFIELDS, body);
   }
-  struct curl_slist *headers = NULL;
-  char header_buffer[1024];
-  lua_pushvalue(L, headersIdx);
-  lua_pushnil(L);
-  while (lua_next(L, -2)) {
-      lua_pushvalue(L, -2);
-      snprintf(header_buffer, sizeof(header_buffer), "%s: %s", lua_tostring(L, -1), lua_tostring(L, -2));
-      headers = curl_slist_append(headers, header_buffer);
-      lua_pop(L, 2);
+  
+  lua_pushnil(L); 
+  struct curl_slist *headers_chunk = NULL;
+  while (lua_next(L, headers_idx) != 0) {
+    char buffer[1024];
+    snprintf(buffer, sizeof(buffer), "%s: %s", lua_tostring(L, -2), lua_tostring(L, -1));
+    headers_chunk = curl_slist_append(headers_chunk, buffer);
+    lua_pop(L, 1);
   }
   lua_pop(L, 1);
-  curl_easy_setopt(handle, CURLOPT_HTTPHEADER, headers);
+  curl_easy_setopt(handle, CURLOPT_HTTPHEADER, headers_chunk);
   curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, f_curl_write_data);
   curl_easy_setopt(handle, CURLOPT_TIMEOUT_MS, (long)(timeout*1000));
   curl_easy_setopt(handle, CURLOPT_FAILONERROR, 1L);
@@ -68,9 +68,9 @@ static int f_curl_request(lua_State* L) {
   curl_easy_setopt(handle, CURLOPT_VERBOSE, verbose);
   lua_pushlightuserdata(L, handle);
   lua_newtable(L);
-  lua_pushvalue(L, doneIdx);
+  lua_pushvalue(L, done_idx);
   lua_rawseti(L, -2, 1);
-  lua_pushvalue(L, failIdx);
+  lua_pushvalue(L, fail_idx);
   lua_rawseti(L, -2, 2);
   lua_rawset(L, LUA_REGISTRYINDEX);
   curl_easy_setopt(handle, CURLOPT_PRIVATE, L);

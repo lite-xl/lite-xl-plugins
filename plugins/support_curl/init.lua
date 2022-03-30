@@ -12,8 +12,9 @@ local native_curl = has_cc and cc.compile_plugin(
 }) or require "plugins.support_curl.native"
 
 local support_curl = common.merge({ 
-  timeout = 1,
-  verbose = false
+  timeout = 5,
+  verbose = false,
+  log = true
 }, config.plugins.support_curl)
 
 -- Parse out a response body.
@@ -24,7 +25,7 @@ end
 local agent = native_curl.new()
 
 function support_curl.request(request, done, fail)
-  return agent:request(common.merge({
+  local options = common.merge({
     method = "GET",
     headers = { ["User-Agent"] = "lite-xl/2.1" },
     timeout = support_curl.timeout,
@@ -37,7 +38,11 @@ function support_curl.request(request, done, fail)
         error("error making request (" .. code .. "): " .. tostring(response)) 
       end 
     end
-  }, request))
+  }, request)
+  if support_curl.log then
+    core.log("Requesting " .. options.method .. " " .. options.url)
+  end
+  return agent:request(options)
 end
 
 core.add_thread(function()
