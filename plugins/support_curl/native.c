@@ -10,10 +10,16 @@ static size_t f_curl_write_data(void *buffer, size_t size, size_t nmemb, void *h
   curl_easy_getinfo(handle, CURLINFO_PRIVATE, &L);
   lua_pushlightuserdata(L, handle);
   lua_rawget(L, LUA_REGISTRYINDEX);
+  lua_rawgeti(L, -1, 3);
+  if (lua_isnil(L, -1)) {
+    lua_pop(L, 1);
+    lua_pushliteral(L, "");
+  }
   lua_pushlstring(L, buffer, nmemb*size);
+  lua_concat(L, 2);
   lua_rawseti(L, -2, 3);
   lua_pop(L, 1);
-  return size;
+  return size*nmemb;
 }
 
 static int f_curl_request(lua_State* L) {
@@ -32,6 +38,8 @@ static int f_curl_request(lua_State* L) {
   int doneIdx = lua_gettop(L);
   lua_getfield(L, 2, "fail"); if (lua_isnil(L, -1)) return luaL_error(L, "requires fail"); 
   int failIdx = lua_gettop(L);
+  lua_getfield(L, 2, "headers"); if (lua_isnil(L, -1)) return luaL_error(L, "requires headers"); 
+  int headersIdx = lua_gettop(L);
   CURL* handle = curl_easy_init();
   curl_easy_setopt(handle, CURLOPT_URL, url);
   if (strcmp(method, "GET") != 0) {
@@ -41,6 +49,18 @@ static int f_curl_request(lua_State* L) {
     const char* body = lua_tolstring(L, 1, &bodyLen);
     curl_easy_setopt(handle, CURLOPT_POSTFIELDS, body);
   }
+  struct curl_slist *headers = NULL;
+  char header_buffer[1024];
+  lua_pushvalue(L, headersIdx);
+  lua_pushnil(L);
+  while (lua_next(L, -2)) {
+      lua_pushvalue(L, -2);
+      snprintf(header_buffer, sizeof(header_buffer), "%s: %s", lua_tostring(L, -1), lua_tostring(L, -2));
+      headers = curl_slist_append(headers, header_buffer);
+      lua_pop(L, 2);
+  }
+  lua_pop(L, 1);
+  curl_easy_setopt(handle, CURLOPT_HTTPHEADER, headers);
   curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, f_curl_write_data);
   curl_easy_setopt(handle, CURLOPT_TIMEOUT_MS, (long)(timeout*1000));
   curl_easy_setopt(handle, CURLOPT_FAILONERROR, 1L);
@@ -90,7 +110,7 @@ static int f_curl_step(lua_State* L) {
       curl_easy_cleanup(handle);
       lua_rawgeti(L, -1, m->data.result == CURLE_OK ? 1 : 2);
       lua_rawgeti(L, -2, 3);
-      lua_pushinteger(L, m->data.result);
+      lua_pushstring(L, curl_easy_strerror(m->data.result));
       lua_call(L, 2, 0);
     }
   } while(m);
