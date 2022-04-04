@@ -1,5 +1,6 @@
 -- mod-version:2 -- lite-xl 2.0
 
+-- Syntax highlighting for the Glaz programming language.
 -- by StunxFS :)
 
 local syntax = require "core.syntax"
@@ -93,6 +94,7 @@ syntax.add {
         ["str"] = "keyword2",
         ["charptr"] = "keyword2",
         ["rawptr"] = "keyword2",
+        ["vec"] = "keyword2",
         ["map"] = "keyword2",
 
         -- literals
