@@ -79,6 +79,14 @@ syntax.add {
       pattern = { "^%s*{", "}" },
       syntax = yaml_bracket_list, type = "operator"
     },
+    {
+      pattern = { "^%s*%-%s*%[", "%]" },
+      syntax = yaml_bracket_list, type = "operator"
+    },
+    {
+      pattern = { "^%s*%-%s*{", "}" },
+      syntax = yaml_bracket_list, type = "operator"
+    },
     -- rule to optimize space handling
     { pattern = "%s+",                         type = "normal"   },
   --- all the other rules
