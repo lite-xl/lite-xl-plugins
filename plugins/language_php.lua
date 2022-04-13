@@ -12,10 +12,11 @@ require "plugins.language_js"
 
 -- define the core php syntax coloring
 syntax.add {
-  name = "PHP",
+  name = "PHP Source",
   files = { "%.phps$" },
   headers = "^<%?php",
   comment = "//",
+  block_comment = {"/*", "*/"},
   patterns = {
     -- Attributes
     { pattern = {"#%[", "%]"},               type = "normal"   },
@@ -51,8 +52,11 @@ syntax.add {
     { pattern = "array",                     type = "literal"  },
     -- Match static or namespace container on sub element access
     { pattern = "[%a_][%w_]*[%s]*%f[:]",     type = "literal"  },
-    -- Uppercase constants of at least 3 characters in len
-    { pattern = "%u[%u_][%u%d_]+",           type = "number"   },
+    -- Uppercase constants of at least 2 chars in len
+    {
+        pattern = "%u[%u_][%u%d_]*%f[%s%+%*%-%.%(%)%?%^%%=/<>~|&;:,!]",
+        type = "number"
+    },
     -- Magic constants
     { pattern = "__[%u]+__",                 type = "number"   },
     -- Everything else
@@ -149,7 +153,10 @@ syntax.add {
 
 -- allows html, css and js coloring on php files
 syntax.add {
+  name = "PHP",
   files = { "%.php$", "%.phtml" },
+  comment = "//",
+  block_comment = {"/*", "*/"},
   patterns = {
     {
       pattern = {

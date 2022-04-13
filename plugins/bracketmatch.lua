@@ -36,6 +36,7 @@ end
 
 
 local state = {}
+local select_adj = 0
 
 local function update_state(line_limit)
   line_limit = line_limit or math.huge
@@ -63,6 +64,8 @@ local function update_state(line_limit)
       local open = doc.lines[line]:byte(col)
       local close = map[open]
       if close then
+        -- i == 0 if the cursor is on the left side of a bracket (or -1 when on right)
+        select_adj = i + 1 -- if i == 0 then select_adj = 1 else select_adj = 0 end
         line2, col2 = get_matching_bracket(doc, line, col, line_limit, open, close, map.step)
         goto found
       end
@@ -113,6 +116,15 @@ command.add("core.docview", {
       core.active_view.doc:set_selection(state.line2, state.col2)
     end
   end,
+  ["bracket-match:select-to-matching"] = function()
+    update_state()
+    if state.line2 then
+        core.active_view.doc:set_selection(state.line, state.col, state.line2, state.col2 + select_adj)
+    end
+  end,
 })
 
-keymap.add { ["ctrl+m"] = "bracket-match:move-to-matching" }
+keymap.add {
+  ["ctrl+m"] = "bracket-match:move-to-matching",
+  ["ctrl+shift+m"] = "bracket-match:select-to-matching",
+}

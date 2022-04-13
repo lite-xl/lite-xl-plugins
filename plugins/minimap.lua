@@ -1,4 +1,5 @@
 -- mod-version:2
+local core = require "core"
 local command = require "core.command"
 local common = require "core.common"
 local config = require "core.config"
@@ -56,10 +57,17 @@ end
 
 local minimap = MiniMap()
 
+local function show_minimap()
+	return config.plugins.minimap.enabled
+		and getmetatable(core.active_view) == DocView
+		and core.active_view ~= core.command_view
+		and core.active_view.doc
+end
+
 -- Overloaded since the default implementation adds a extra x3 size of hotspot for the mouse to hit the scrollbar.
 local prev_scrollbar_overlaps_point = DocView.scrollbar_overlaps_point
 DocView.scrollbar_overlaps_point = function(self, x, y)
-	if not config.plugins.minimap.enabled then
+	if not show_minimap() then
 		return prev_scrollbar_overlaps_point(self, x, y)
 	end
 
@@ -80,7 +88,7 @@ end
 -- Overloaded with an extra check if the user clicked inside the minimap to automatically scroll to that line.
 local prev_on_mouse_pressed = DocView.on_mouse_pressed
 DocView.on_mouse_pressed = function(self, button, x, y, clicks)
-	if not config.plugins.minimap.enabled then
+	if not show_minimap() then
 		return prev_on_mouse_pressed(self, button, x, y, clicks)
 	end
 
@@ -147,7 +155,7 @@ end
 -- since the "scrollbar" essentially represents the lines visible in the content view.
 local prev_on_mouse_moved = DocView.on_mouse_moved
 DocView.on_mouse_moved = function(self, x, y, dx, dy)
-	if not config.plugins.minimap.enabled then
+	if not show_minimap() then
 		return prev_on_mouse_moved(self, x, y, dx, dy)
 	end
 
@@ -176,7 +184,7 @@ end
 -- not juse the scrollbar.
 local prev_get_scrollbar_rect = DocView.get_scrollbar_rect
 DocView.get_scrollbar_rect = function(self)
-	if not config.plugins.minimap.enabled then return prev_get_scrollbar_rect(self) end
+	if not show_minimap() then return prev_get_scrollbar_rect(self) end
 
 	return self.position.x + self.size.x - config.plugins.minimap.width * SCALE,
 	       self.position.y, config.plugins.minimap.width * SCALE, self.size.y
@@ -185,7 +193,7 @@ end
 -- Overloaded so we can render the minimap in the "scrollbar area".
 local prev_draw_scrollbar = DocView.draw_scrollbar
 DocView.draw_scrollbar = function(self)
-	if not config.plugins.minimap.enabled then return prev_draw_scrollbar(self) end
+	if not show_minimap() then return prev_draw_scrollbar(self) end
 
 	local x, y, w, h = self:get_scrollbar_rect()
 
@@ -356,7 +364,7 @@ end
 
 local prev_update = DocView.update
 DocView.update = function (self)
-	if not config.plugins.minimap.enabled then return prev_update(self) end
+	if not show_minimap() then return prev_update(self) end
 	self.size.x = self.size.x - config.plugins.minimap.width * SCALE
 	return prev_update(self)
 end
