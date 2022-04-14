@@ -190,6 +190,14 @@ DocView.get_scrollbar_rect = function(self)
 	       self.position.y, config.plugins.minimap.width * SCALE, self.size.y
 end
 
+local prev_get_scrollbar_track_rect = DocView.get_scrollbar_track_rect
+DocView.get_scrollbar_track_rect = function(self)
+	if not show_minimap() then return prev_get_scrollbar_track_rect(self) end
+
+	return self.position.x + self.size.x - config.plugins.minimap.width * SCALE,
+	       self.position.y, config.plugins.minimap.width * SCALE, self.size.y
+end
+
 -- Overloaded so we can render the minimap in the "scrollbar area".
 local prev_draw_scrollbar = DocView.draw_scrollbar
 DocView.draw_scrollbar = function(self)
