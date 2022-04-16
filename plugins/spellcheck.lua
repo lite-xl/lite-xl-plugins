@@ -64,7 +64,7 @@ end
 local draw_line_text = DocView.draw_line_text
 
 function DocView:draw_line_text(idx, x, y)
-  draw_line_text(self, idx, x, y)
+  local lh = draw_line_text(self, idx, x, y)
 
   if
     not config.plugins.spellcheck.enable
@@ -73,7 +73,7 @@ function DocView:draw_line_text(idx, x, y)
     or
     not matches_any(self.doc.filename or "", config.plugins.spellcheck.files)
   then
-    return
+    return lh
   end
 
   local s, e = 0, 0
@@ -85,12 +85,13 @@ function DocView:draw_line_text(idx, x, y)
     local word = text:sub(s, e):lower()
     if not words[word] and not active_word(self.doc, idx, e + 1) then
       local color = style.spellcheck_error or style.syntax.keyword2
-      local x1 = x + self:get_col_x_offset(idx, s)
-      local x2 = x + self:get_col_x_offset(idx, e + 1)
+      local x1, y1 = self:get_line_screen_position(idx, s)
+      local x2, y2 = self:get_line_screen_position(idx, e + 1)
       local h = math.ceil(1 * SCALE)
-      renderer.draw_rect(x1, y + self:get_line_height() - h, x2 - x1, h, color)
+      renderer.draw_rect(x1, y1 + self:get_line_height() - h, x2 - x1, h, color)
     end
   end
+  return lh
 end
 
 
