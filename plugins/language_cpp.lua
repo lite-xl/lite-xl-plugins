@@ -1,6 +1,4 @@
 -- mod-version:2 -- lite-xl 2.0
-pcall(require, "plugins.language_c")
-
 local syntax = require "core.syntax"
 
 syntax.add {
@@ -10,30 +8,89 @@ syntax.add {
     "%.c++$", "%.hh$", "%.H$", "%.hxx$", "%.hpp$", "%.h++$"
   },
   comment = "//",
+  block_comment = { "/*", "*/" },
   patterns = {
-    { pattern = "//.-\n",               type = "comment"  },
-    { pattern = { "/%*", "%*/" },       type = "comment"  },
-    { pattern = { '"', '"', '\\' },     type = "string"   },
-    { pattern = { "'", "'", '\\' },     type = "string"   },
-    { pattern = "-?0x%x+",              type = "number"   },
-    { pattern = "-?%d+[%d%.eE]*f?",     type = "number"   },
-    { pattern = "-?%.?%d+f?",           type = "number"   },
-    {
-      pattern = "#include%s+()<.->",
+    { pattern = "//.-\n",                   type = "comment"  },
+    { pattern = { "/%*", "%*/" },           type = "comment"  },
+    { pattern = { '"', '"', '\\' },         type = "string"   },
+    { pattern = { "'", "'", '\\' },         type = "string"   },
+    { pattern = "0x%x+",                    type = "number"   },
+    { pattern = "%d+[%d%.'eE]*f?",          type = "number"   },
+    { pattern = "%.?%d+f?",                 type = "number"   },
+    { pattern = "[%+%-=/%*%^%%<>!~|:&]",    type = "operator" },
+    { pattern = "##",                       type = "operator" },
+    { pattern = "struct%s()[%a_][%w_]*",    type = {"keyword", "keyword2"} },
+    { pattern = "class%s()[%a_][%w_]*",     type = {"keyword", "keyword2"} },
+    { pattern = "union%s()[%a_][%w_]*",     type = {"keyword", "keyword2"} },
+    { pattern = "namespace%s()[%a_][%w_]*", type = {"keyword", "keyword2"} },
+    -- static declarations
+    { pattern = "static()%s+()inline",
+      type = { "keyword", "normal", "keyword" }
+    },
+    { pattern = "static()%s+()const",
+      type = { "keyword", "normal", "keyword" }
+    },
+    { pattern = "static()%s+()[%a_][%w_]*",
+      type = { "keyword", "normal", "literal" }
+    },
+    -- match method type declarations
+    { pattern = "[%a_][%w_]*()%s*()%**()%s*()[%a_][%w_]*()%s*()::",
+      type = {
+        "literal", "normal", "operator", "normal",
+        "literal", "normal", "operator"
+      }
+    },
+    -- match function type declarations
+    { pattern = "[%a_][%w_]*()%*+()%s+()[%a_][%w_]*%f[%(]",
+      type = { "literal", "operator", "normal", "function" }
+    },
+    { pattern = "[%a_][%w_]*()%s+()%*+()[%a_][%w_]*%f[%(]",
+      type = { "literal", "normal", "operator", "function" }
+    },
+    { pattern = "[%a_][%w_]*()%s+()[%a_][%w_]*%f[%(]",
+      type = { "literal", "normal", "function" }
+    },
+    -- match variable type declarations
+    { pattern = "[%a_][%w_]*()%*+()%s+()[%a_][%w_]*",
+      type = { "literal", "operator", "normal", "normal" }
+    },
+    { pattern = "[%a_][%w_]*()%s+()%*+()[%a_][%w_]*",
+      type = { "literal", "normal", "operator", "normal" }
+    },
+    { pattern = "[%a_][%w_]*()%s+()[%a_][%w_]*()%s*()[;,%[%)]",
+      type = { "literal", "normal", "normal", "normal", "normal" }
+    },
+    { pattern = "[%a_][%w_]*()%s+()[%a_][%w_]*()%s*()=",
+      type = { "literal", "normal", "normal", "normal", "operator" }
+    },
+    { pattern = "[%a_][%w_]*()&()%s+()[%a_][%w_]*",
+      type = { "literal", "operator", "normal", "normal" }
+    },
+    { pattern = "[%a_][%w_]*()%s+()&()[%a_][%w_]*",
+      type = { "literal", "normal", "operator", "normal" }
+    },
+    -- Match scope operator element access
+    { pattern = "[%a_][%w_]*()%s*()::",
+      type = { "literal", "normal", "operator" }
+    },
+    -- Uppercase constants of at least 2 chars in len
+    { pattern = "_?%u[%u_][%u%d_]*%f[%s%+%*%-%.%)%]}%?%^%%=/<>~|&;:,!]",
+      type = "number"
+    },
+    -- Magic constants
+    { pattern = "__[%u%l]+__",              type = "number"   },
+    -- all other functions
+    { pattern = "[%a_][%w_]*%f[(]",         type = "function" },
+    -- Macros
+    { pattern = "^%s*#%s*define%s+()[%a_][%a%d_]*",
+      type = { "keyword", "symbol" }
+    },
+    { pattern = "#%s*include%s+()<.->",
       type = { "keyword", "string" }
     },
-    { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
-    { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
-    -- Match scope operator element access
-    { pattern = "[%a_][%w_]*[%s]*%f[:]",type = "literal"  },
-    -- Uppercase constants of at least 3 characters in len
-    { pattern = "%u[%u_][%u%d_]+",      type = "number"   },
-    -- Magic constants
-    { pattern = "__[%u]+__",            type = "number"   },
-    -- Somehow makes macros properly work
-    { pattern = "#[%a_][%w_]*",         type = "symbol"   },
+    { pattern = "%f[#]#%s*[%a_][%w_]*",     type = "keyword"   },
     -- Everything else to make the tokenizer work properly
-    { pattern = "[%a_][%w_]*",          type = "symbol"   },
+    { pattern = "[%a_][%w_]*",              type = "symbol"   },
   },
   symbols = {
     ["alignof"]  = "keyword",
@@ -84,6 +141,7 @@ syntax.add {
     ["typeid"]   = "keyword",
     ["typename"] = "keyword",
     ["mutable"]  = "keyword",
+    ["override"] = "keyword",
     ["virtual"]  = "keyword",
     ["using"]    = "keyword",
     ["namespace"] = "keyword",
@@ -100,7 +158,7 @@ syntax.add {
     ["continue"] = "keyword",
     ["return"]   = "keyword",
     ["goto"]     = "keyword",
-    ["struct"]   = "keyword2",
+    ["struct"]   = "keyword",
     ["union"]    = "keyword",
     ["typedef"]  = "keyword",
     ["enum"]     = "keyword",
@@ -113,7 +171,7 @@ syntax.add {
     ["case"]     = "keyword",
     ["default"]  = "keyword",
     ["auto"]     = "keyword",
-    ["void"]     = "keyword",
+    ["void"]     = "keyword2",
     ["int"]      = "keyword2",
     ["short"]    = "keyword2",
     ["long"]     = "keyword2",
@@ -122,13 +180,13 @@ syntax.add {
     ["char"]     = "keyword2",
     ["unsigned"] = "keyword2",
     ["bool"]     = "keyword2",
-    ["true"]     = "keyword2",
-    ["false"]    = "keyword2",
+    ["true"]     = "literal",
+    ["false"]    = "literal",
+    ["NULL"]     = "literal",
     ["wchar_t"]  = "keyword2",
     ["char8_t"]  = "keyword2",
     ["char16_t"] = "keyword2",
     ["char32_t"] = "keyword2",
-    ["NULL"]     = "literal",
     ["#include"] = "keyword",
     ["#if"]      = "keyword",
     ["#ifdef"]   = "keyword",
