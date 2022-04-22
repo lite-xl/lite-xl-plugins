@@ -1,7 +1,11 @@
 Plugins for the [Lite XL text editor](https://github.com/lite-xl/lite-xl), originally forked from the [lite plugins repository](https://github.com/rxi/lite-plugins).
 
-To install a plugin, go to your OS's config folder then to the folder 'lite-xl/plugins'
-(on Linux: '~/.config/lite-xl/plugins') and simply paste the '.lua' file in there.
+To install a plugin:
+- If the plugin links to a repository, follow its `README`.
+- If the plugin is a single file, drop it directly in:
+  - Linux `~/.config/lite-xl/plugins/`
+  - MacOS `~/.config/lite-xl/plugins/`
+  - Windows `C:\\Users\\(username)\\.config\\lite-xl\\plugins\\`
 
 *Note: if you make a pull request, the table should be updated and kept in
 alphabetical order. If your plugin is large (or you'd otherwise prefer it to
