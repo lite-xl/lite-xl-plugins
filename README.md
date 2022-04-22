@@ -1,11 +1,12 @@
 Plugins for the [Lite XL text editor](https://github.com/lite-xl/lite-xl), originally forked from the [lite plugins repository](https://github.com/rxi/lite-plugins).
 
 To install a plugin:
-- If the plugin links to a repository, follow its `README`.
-- If the plugin is a single file, drop it directly in:
-  - Linux `~/.config/lite-xl/plugins/`
-  - MacOS `~/.config/lite-xl/plugins/`
-  - Windows `C:\\Users\\(username)\\.config\\lite-xl\\plugins\\`
+
+*   If the plugin links to a repository, follow its `README`.
+*   If the plugin is a single file, drop it directly in:
+    *   Linux `~/.config/lite-xl/plugins/`
+    *   MacOS `~/.config/lite-xl/plugins/`
+    *   Windows `C:\\Users\\(username)\\.config\\lite-xl\\plugins\\`
 
 *Note: if you make a pull request, the table should be updated and kept in
 alphabetical order. If your plugin is large (or you'd otherwise prefer it to
@@ -53,7 +54,7 @@ to something other than a raw file it should be marked with an asterisk.*
 | [`indentguide`](plugins/indentguide.lua?raw=1)                                                                 | Adds indent guides *([screenshot](https://user-images.githubusercontent.com/3920290/79640716-f9860000-818a-11ea-9c3b-26d10dd0e0c0.png))*                                                                                                                                                        |
 | [`Kinc Projects`](https://github.com/Kode-Community/kinc_plugin)\*                                             | Adds [Kinc](https://github.com/Kode/Kinc) Project generation with basic build commands(depends on [`console`](https://github.com/franko/console))                                                                                                                                               |
 | [`language_angelscript`](plugins/language_angelscript.lua?raw=1)                                               | Syntax for the [Angelscript](https://www.angelcode.com/angelscript/) programming language                                                                                                                                                                                                       |
-| [`language_autohotkey`](https://github.com/devPnal/lite-plugin-autohotkey)\*                                   | Syntax for the [AutoHotkey](https://www.autohotkey.com) programming language                                                                                                                                                                                                       |
+| [`language_autohotkey`](https://github.com/devPnal/lite-plugin-autohotkey)\*                                   | Syntax for the [AutoHotkey](https://www.autohotkey.com) programming language                                                                                                                                                                                                                    |
 | [`language_batch`](plugins/language_batch.lua?raw=1)                                                           | Syntax for Windows [Batch Files](https://en.wikipedia.org/wiki/Batch_file)                                                                                                                                                                                                                      |
 | [`language_bib`](plugins/language_bib.lua?raw=1)                                                               | Syntax for [BibTex](https://en.wikipedia.org/wiki/BibTeX) files                                                                                                                                                                                                                                 |
 | [`language_cmake`](plugins/language_cmake.lua?raw=1)                                                           | Syntax for the CMake build system language                                                                                                                                                                                                                                                      |
