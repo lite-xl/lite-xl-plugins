@@ -60,39 +60,44 @@ function DocView:update()
     self.lineguide_indents[i] = get_line_indent_guide_spaces(self.doc, i)
   end
 
-  local line = self.doc:get_selection()
-  local lvl = get_indent(line)
-  local top, bottom
   local _, indent_size = get_indent_info(self.doc)
+  for _,line in self.doc:get_selections() do
+    local lvl = get_indent(line)
+    local top, bottom
 
-  -- check if we're the header or the footer of a block
-  if get_indent(line + 1) > lvl and get_indent(line + 1) <= lvl + indent_size then
-    top = true
-    lvl = get_indent(line + 1)
-  elseif get_indent(line - 1) > lvl and get_indent(line - 1) <= lvl + indent_size then
-    bottom = true
-    lvl = get_indent(line - 1)
-  end
+    if not self.lineguide_indent_active[line]
+     or self.lineguide_indent_active[line] > lvl then
 
-  self.lineguide_indent_active[line] = lvl
+      -- check if we're the header or the footer of a block
+      if get_indent(line + 1) > lvl and get_indent(line + 1) <= lvl + indent_size then
+        top = true
+        lvl = get_indent(line + 1)
+      elseif get_indent(line - 1) > lvl and get_indent(line - 1) <= lvl + indent_size then
+        bottom = true
+        lvl = get_indent(line - 1)
+      end
 
-  -- check if the lines before the current are part of the block
-  local i = line - 1
-  if i > 0 and not top then
-    repeat
-      if get_indent(i) <= lvl - indent_size then break end
-      self.lineguide_indent_active[i] = lvl
-      i = i - 1
-    until i < minline
-  end
-  -- check if the lines after the current are part of the block
-  i = line + 1
-  if i <= #self.doc.lines and not bottom then
-    repeat
-      if get_indent(i) <= lvl - indent_size then break end
-      self.lineguide_indent_active[i] = lvl
-      i = i + 1
-    until i > maxline
+      self.lineguide_indent_active[line] = lvl
+
+      -- check if the lines before the current are part of the block
+      local i = line - 1
+      if i > 0 and not top then
+        repeat
+          if get_indent(i) <= lvl - indent_size then break end
+          self.lineguide_indent_active[i] = lvl
+          i = i - 1
+        until i < minline
+      end
+      -- check if the lines after the current are part of the block
+      i = line + 1
+      if i <= #self.doc.lines and not bottom then
+        repeat
+          if get_indent(i) <= lvl - indent_size then break end
+          self.lineguide_indent_active[i] = lvl
+          i = i + 1
+        until i > maxline
+      end
+    end
   end
 end
 
