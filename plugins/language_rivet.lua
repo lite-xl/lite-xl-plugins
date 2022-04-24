@@ -1,17 +1,20 @@
 -- mod-version:2 -- lite-xl 2.0
 
+-- Syntax highlighting for the Rivet programming language.
+-- by StunxFS :)
+
 local syntax = require "core.syntax"
 
 syntax.add {
-    name = "Glaz",
-    files = {"%.glaz$", "^glaz%.proj$"},
+    name = "Rivet",
+    files = {"%.ri$"},
     comment = "//",
     block_comment = {"/*", "*/"},
     patterns = {
         {pattern = "//.-\n", type = "comment"},
         {pattern = {"/%*", "%*/"}, type = "comment"},
         {pattern = {'"', '"', "\\"}, type = "string"},
-        {pattern = "'.'", type = "string"},
+        {pattern = "'\\?.'", type = "string"},
         {pattern = "0b[01_]+", type = "number"},
         {pattern = "0o[0-7_]+", type = "number"},
         {pattern = "0x[%x_]+", type = "number"},
@@ -25,52 +28,57 @@ syntax.add {
         {pattern = "[%a_][%w_]*%f[(]", type = "function"},
         {pattern = "[%a_][%w_]*!%f[%[(]", type = "keyword2"},
         {pattern = "[%a_][%w_]*", type = "symbol"},
-        {pattern = {"@%[", "%]"}, type = "keyword"},
         {pattern = "%$%s?[%a_][%w_]*", type = "keyword"},
         {pattern = "#%s?include%s()<.->", type = {"keyword", "string"}},
         {pattern = "#%s?[%a_][%w_]*", type = "keyword"}
     },
     symbols = {
-        ["mod"] = "keyword",
-        ["src"] = "keyword",
         ["extern"] = "keyword",
-        ["interface"] = "keyword",
+        ["use"] = "keyword",
+
+        ["pub"] = "keyword",
+        ["as"] = "keyword",
+
+        ["pkg"] = "keyword",
+        ["mod"] = "keyword",
+        ["const"] = "keyword",
+        ["trait"] = "keyword",
         ["struct"] = "keyword",
         ["union"] = "keyword",
         ["type"] = "keyword",
         ["enum"] = "keyword",
-        ["impl"] = "keyword",
         ["fn"] = "keyword",
         ["test"] = "keyword",
-        ["pub"] = "keyword",
-        ["use"] = "keyword",
+        ["impl"] = "keyword",
+
+        ["match"] = "keyword",
         ["if"] = "keyword",
         ["elif"] = "keyword",
         ["else"] = "keyword",
-        ["do"] = "keyword",
+        ["loop"] = "keyword",
         ["while"] = "keyword",
         ["for"] = "keyword",
-        ["loop"] = "keyword",
+
         ["break"] = "keyword",
         ["continue"] = "keyword",
         ["return"] = "keyword",
         ["raise"] = "keyword",
-        ["goto"] = "keyword",
-        ["unsafe"] = "keyword",
-        ["const"] = "keyword",
+
         ["let"] = "keyword",
         ["mut"] = "keyword",
-        ["switch"] = "keyword",
-        ["defer"] = "keyword",
+        ["unsafe"] = "keyword",
+        ["goto"] = "keyword",
         ["try"] = "keyword",
         ["orelse"] = "keyword",
         ["catch"] = "keyword",
-        ["as"] = "keyword",
+        ["cast"] = "keyword",
         ["is"] = "keyword",
         ["in"] = "keyword",
-        ["and"] = "keyword",
         ["or"] = "keyword",
+        ["and"] = "keyword",
+
         -- types
+        ["bool"] = "keyword2",
         ["i8"] = "keyword2",
         ["i16"] = "keyword2",
         ["i32"] = "keyword2",
@@ -81,20 +89,19 @@ syntax.add {
         ["u64"] = "keyword2",
         ["f32"] = "keyword2",
         ["f64"] = "keyword2",
-        ["bool"] = "keyword2",
-        ["rune"] = "keyword2",
+        ["char"] = "keyword2",
         ["isize"] = "keyword2",
         ["usize"] = "keyword2",
         ["str"] = "keyword2",
-        ["charptr"] = "keyword2",
         ["rawptr"] = "keyword2",
-        ["map"] = "keyword2",
+        ["Self"] = "keyword2",
+
         -- literals
         ["base"] = "literal",
         ["self"] = "literal",
         ["true"] = "literal",
         ["false"] = "literal",
-        ["null"] = "literal"
+        ["none"] = "literal"
     }
 }
 
