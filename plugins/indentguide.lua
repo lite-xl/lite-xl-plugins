@@ -46,18 +46,18 @@ function DocView:update()
 
   local function get_indent(idx)
     if idx < 1 or idx > #self.doc.lines then return -1 end
-    if not self.lineguide_indents[idx] then
-      self.lineguide_indents[idx] = get_line_indent_guide_spaces(self.doc, idx)
+    if not self.indentguide_indents[idx] then
+      self.indentguide_indents[idx] = get_line_indent_guide_spaces(self.doc, idx)
     end
-    return self.lineguide_indents[idx]
+    return self.indentguide_indents[idx]
   end
 
-  self.lineguide_indents = {}
-  self.lineguide_indent_active = {}
+  self.indentguide_indents = {}
+  self.indentguide_indent_active = {}
 
   local minline, maxline = self:get_visible_line_range()
   for i = minline, maxline do
-    self.lineguide_indents[i] = get_line_indent_guide_spaces(self.doc, i)
+    self.indentguide_indents[i] = get_line_indent_guide_spaces(self.doc, i)
   end
 
   local _, indent_size = get_indent_info(self.doc)
@@ -65,8 +65,8 @@ function DocView:update()
     local lvl = get_indent(line)
     local top, bottom
 
-    if not self.lineguide_indent_active[line]
-     or self.lineguide_indent_active[line] > lvl then
+    if not self.indentguide_indent_active[line]
+     or self.indentguide_indent_active[line] > lvl then
 
       -- check if we're the header or the footer of a block
       if get_indent(line + 1) > lvl and get_indent(line + 1) <= lvl + indent_size then
@@ -77,14 +77,14 @@ function DocView:update()
         lvl = get_indent(line - 1)
       end
 
-      self.lineguide_indent_active[line] = lvl
+      self.indentguide_indent_active[line] = lvl
 
       -- check if the lines before the current are part of the block
       local i = line - 1
       if i > 0 and not top then
         repeat
           if get_indent(i) <= lvl - indent_size then break end
-          self.lineguide_indent_active[i] = lvl
+          self.indentguide_indent_active[i] = lvl
           i = i - 1
         until i < minline
       end
@@ -93,7 +93,7 @@ function DocView:update()
       if i <= #self.doc.lines and not bottom then
         repeat
           if get_indent(i) <= lvl - indent_size then break end
-          self.lineguide_indent_active[i] = lvl
+          self.indentguide_indent_active[i] = lvl
           i = i + 1
         until i > maxline
       end
@@ -104,7 +104,7 @@ end
 
 local draw_line_text = DocView.draw_line_text
 function DocView:draw_line_text(idx, x, y)
-  local spaces = self.lineguide_indents[idx] or -1
+  local spaces = self.indentguide_indents[idx] or -1
   local _, indent_size = get_indent_info(self.doc)
   local w = math.max(1, SCALE)
   local h = self:get_line_height()
@@ -112,7 +112,7 @@ function DocView:draw_line_text(idx, x, y)
   local space_sz = font:get_width(" ")
   for i = 0, spaces - 1, indent_size do
     local color = style.guide or style.selection
-    local active_lvl = self.lineguide_indent_active[idx] or -1
+    local active_lvl = self.indentguide_indent_active[idx] or -1
     if i < active_lvl and i + indent_size >= active_lvl then
       color = style.guide_highlight or style.accent
     end
