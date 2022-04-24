@@ -114,7 +114,7 @@ function DocView:draw_line_text(idx, x, y)
     local color = style.guide or style.selection
     local active_lvl = self.lineguide_indent_active[idx] or -1
     if i < active_lvl and i + indent_size >= active_lvl then
-      color = style.accent
+      color = style.guide_highlight or style.accent
     end
     local sw = space_sz * i
     renderer.draw_rect(math.ceil(x + sw), y, w, h, color)
