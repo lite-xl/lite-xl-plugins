@@ -1,4 +1,5 @@
 # Lite XL plugins
+
 Plugins for the [Lite XL text editor](https://github.com/lite-xl/lite-xl), originally forked from the [lite plugins repository](https://github.com/rxi/lite-plugins).
 
 If you can't find a plugin that suits your needs,
@@ -6,6 +7,7 @@ check if someone has already created an issue about it,
 otherwise feel free to create one yourself.
 
 ## How to install
+
 To install a plugin:
 
 *   If the plugin links to a repository, follow its `README`.
@@ -64,7 +66,7 @@ to something other than a raw file it should be marked with an asterisk.*
 | [`language_batch`](plugins/language_batch.lua?raw=1)                                                           | Syntax for Windows [Batch Files](https://en.wikipedia.org/wiki/Batch_file)                                                                                                                                                                                                                      |
 | [`language_bib`](plugins/language_bib.lua?raw=1)                                                               | Syntax for [BibTex](https://en.wikipedia.org/wiki/BibTeX) files                                                                                                                                                                                                                                 |
 | [`language_cmake`](plugins/language_cmake.lua?raw=1)                                                           | Syntax for the CMake build system language                                                                                                                                                                                                                                                      |
-| [`language_containerfile`](https://github.com/FilBot3/lite-xl-language-containerfile)\* | Syntax for [Containerfile](https://github.com/containers/common/blob/main/docs/Containerfile.5.md)/[Dockerfile](https://docs.docker.com/engine/reference/builder/) |
+| [`language_containerfile`](https://github.com/FilBot3/lite-xl-language-containerfile)\*                        | Syntax for [Containerfile](https://github.com/containers/common/blob/main/docs/Containerfile.5.md)/[Dockerfile](https://docs.docker.com/engine/reference/builder/)                                                                                                                              |
 | [`language_cpp`](plugins/language_cpp.lua?raw=1)                                                               | Syntax for the [C++](https://isocpp.org/) programming language                                                                                                                                                                                                                                  |
 | [`language_crystal`](https://github.com/Tamnac/lite-xl-plugins)                                                | Syntax for the [Crystal](https://crystal-lang.org) programming language                                                                                                                                                                                                                         |
 | [`language_csharp`](plugins/language_csharp.lua?raw=1)                                                         | Syntax for the [C#](http://csharp.net) programming language                                                                                                                                                                                                                                     |
