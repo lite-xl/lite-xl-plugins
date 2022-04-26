@@ -17,6 +17,7 @@ local Toggle = require "widget.toggle"
 local CheckBox = require "widget.checkbox"
 local ListBox = require "widget.listbox"
 local FoldingBook = require "widget.foldingbook"
+local ToolbarView = require "plugins.toolbarview"
 
 local settings = {}
 
@@ -34,7 +35,8 @@ settings.type = {
   TOGGLE = 3,
   SELECTION = 4,
   LIST_NUMBERS = 5,
-  LIST_STRINGS = 6
+  LIST_STRINGS = 6,
+  BUTTON = 7
 }
 
 ---@alias settings.types
@@ -44,6 +46,7 @@ settings.type = {
 ---| 'settings.type.SELECTION'
 ---| 'settings.type.LIST_NUMBERS'
 ---| 'settings.type.LIST_STRINGS'
+---| 'settings.type.BUTTON'
 
 ---Represents a setting to render on a settings pane.
 ---@class settings.option
@@ -59,6 +62,8 @@ settings.type = {
 ---@field public values table Used in SELECTION
 ---@field public get_value nil | function(value:any):any
 ---@field public set_value nil | function(value:any):any
+---@field public icon string Used in BUTTON
+---@field public on_click string | function Command or function executed when a BUTTON is clicked
 settings.option = {}
 
 ---Add a new settings section to the settings UI
@@ -102,6 +107,13 @@ end
 
 settings.add("General",
   {
+    {
+      label = "User Module",
+      description = "Open your init.lua for customizations.",
+      type = settings.type.BUTTON,
+      icon = "P",
+      on_click = "core:open-user-module"
+    },
     {
       label = "Maximum Project Files",
       description = "The maximum amount of project files to register.",
@@ -567,9 +579,11 @@ local function merge_settings()
     local options = settings.core[section]
 
     for _, option in ipairs(options) do
-      local saved_value = get_config_value(settings.config, option.path)
-      if type(saved_value) ~= "nil" then
-        set_config_value(config, option.path, saved_value)
+      if type(option.path) == "string" then
+        local saved_value = get_config_value(settings.config, option.path)
+        if type(saved_value) ~= "nil" then
+          set_config_value(config, option.path, saved_value)
+        end
       end
     end
   end
@@ -581,10 +595,12 @@ local function merge_settings()
 
     for plugin_name, options in pairs(plugins) do
       for _, option in pairs(options) do
-        local path = "plugins." .. plugin_name .. "." .. option.path
-        local saved_value = get_config_value(settings.config, path)
-        if type(saved_value) ~= "nil" then
-          set_config_value(config, path, saved_value)
+        if type(option.path) == "string" then
+          local path = "plugins." .. plugin_name .. "." .. option.path
+          local saved_value = get_config_value(settings.config, path)
+          if type(saved_value) ~= "nil" then
+            set_config_value(config, path, saved_value)
+          end
         end
       end
     end
@@ -617,9 +633,11 @@ function Settings:new()
 
   self.core = self.notebook:add_pane("core", "Core")
   self.plugins = self.notebook:add_pane("plugins", "Plugins")
+  self.keybinds = self.notebook:add_pane("keybindings", "Keybindings")
 
   self.notebook:set_pane_icon("core", "P")
   self.notebook:set_pane_icon("plugins", "B")
+  self.notebook:set_pane_icon("keybindings", "M")
 
   self.core_sections = FoldingBook(self.core)
   self.core_sections.border.width = 0
@@ -641,7 +659,10 @@ local function add_control(pane, option, plugin_name)
   local found = false
   local path = type(plugin_name) ~= "nil" and
     "plugins." .. plugin_name .. "." .. option.path or option.path
-  local option_value = get_config_value(config, path, option.default)
+  local option_value = nil
+  if type(path) ~= "nil" then
+    option_value = get_config_value(config, path, option.default)
+  end
 
   if option.get_value then
     option_value = option.get_value(option_value)
@@ -688,9 +709,28 @@ local function add_control(pane, option, plugin_name)
     end
     widget = select
     found = true
+
+  elseif option.type == settings.type.BUTTON then
+    ---@type widget.button
+    local button = Button(pane, option.label)
+    if option.icon then
+      button:set_icon(option.icon)
+    end
+    if option.on_click then
+      local command_type = type(option.on_click)
+      if command_type == "string" then
+        function button:on_click(button, x, y)
+          command.perform(option.on_click)
+        end
+      elseif command_type == "function" then
+        button.on_click = option.on_click
+      end
+    end
+    widget = button
+    found = true
   end
 
-  if widget then
+  if widget and type(path) ~= "nil" then
     function widget:on_change(value)
       if self:is(SelectBox) then
         value = widget:get_selected_data()
@@ -905,5 +945,21 @@ command.add(nil, {
 keymap.add {
   ["ctrl+alt+p"]        = "ui:settings"
 }
+
+--------------------------------------------------------------------------------
+-- Overwrite toolbar preferences command to open the settings gui
+--------------------------------------------------------------------------------
+local toolbarview_on_mouse_moved = ToolbarView.on_mouse_moved
+function ToolbarView:on_mouse_moved(px, py, ...)
+  toolbarview_on_mouse_moved(self, px, py, ...)
+  if
+    self.hovered_item
+    and
+    self.hovered_item.command == "core:open-user-module"
+  then
+    self.hovered_item.command = "ui:settings"
+  end
+end
+
 
 return settings;
