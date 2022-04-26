@@ -152,7 +152,7 @@ settings.add("Graphics",
     },
     {
       label = "Transitions",
-      description = "Disabling this option will improve rendering performance.",
+      description = "If disabled turns off all transitions but improves rendering performance.",
       path = "transitions",
       type = settings.type.TOGGLE,
       default = true
@@ -166,6 +166,61 @@ settings.add("Graphics",
       min = 0.5,
       max = 3.0,
       step = 0.1
+    },
+    {
+      label = "Animate Mouse Drag Scroll",
+      description = "Causes higher cpu usage but smoother scroll transition.",
+      path = "animate_drag_scroll",
+      type = settings.type.TOGGLE,
+      default = false
+    },
+    {
+      label = "Disable Scrolling Transitions",
+      path = "disabled_transitions.scroll",
+      type = settings.type.TOGGLE,
+      default = false
+    },
+    {
+      label = "Disable Command View Transitions",
+      path = "disabled_transitions.commandview",
+      type = settings.type.TOGGLE,
+      default = false
+    },
+    {
+      label = "Disable Context Menu Transitions",
+      path = "disabled_transitions.contextmenu",
+      type = settings.type.TOGGLE,
+      default = false
+    },
+    {
+      label = "Disable Log View Transitions",
+      path = "disabled_transitions.logview",
+      type = settings.type.TOGGLE,
+      default = false
+    },
+    {
+      label = "Disable Nag Bar Transitions",
+      path = "disabled_transitions.nagbar",
+      type = settings.type.TOGGLE,
+      default = false
+    },
+    {
+      label = "Disable Tab Transitions",
+      path = "disabled_transitions.tabs",
+      type = settings.type.TOGGLE,
+      default = false
+    },
+    {
+      label = "Disable Tab Drag Transitions",
+      path = "disabled_transitions.tab_drag",
+      type = settings.type.TOGGLE,
+      default = false
+    },
+    {
+      label = "Disable Status Bar Transitions",
+      path = "disabled_transitions.statusbar",
+      type = settings.type.TOGGLE,
+      default = false
     },
   }
 )
