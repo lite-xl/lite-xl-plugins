@@ -18,6 +18,7 @@ local CheckBox = require "widget.checkbox"
 local ListBox = require "widget.listbox"
 local FoldingBook = require "widget.foldingbook"
 local ToolbarView = require "plugins.toolbarview"
+local KeybindingDialog = require "widget.keybinddialog"
 
 local settings = {}
 
@@ -26,6 +27,7 @@ settings.plugins = {}
 settings.sections = {}
 settings.plugin_sections = {}
 settings.config = {}
+settings.default_keybindings = {}
 
 ---Enumeration for the different types of settings.
 ---@type table<string, string>
@@ -607,10 +609,20 @@ local function merge_settings()
   end
 end
 
+local function store_default_keybindings()
+  for name, _ in pairs(command.map) do
+    local keys = keymap.get_binding(name)
+    if keys then
+      settings.default_keybindings[name] = keys
+    end
+  end
+end
+
 ---@class settings.ui : widget
 ---@field private notebook widget.notebook
 ---@field private core widget
 ---@field private plugins widget
+---@field private keybinds widget
 ---@field private core_sections widget.foldingbook
 ---@field private plugin_sections widget.foldingbook
 local Settings = Widget:extend()
@@ -649,6 +661,7 @@ function Settings:new()
 
   self:load_core_settings()
   self:load_plugin_settings()
+  self:load_keymap_settings()
 end
 
 ---Helper function to add control for both core and plugin settings.
@@ -846,6 +859,99 @@ function Settings:load_plugin_settings()
   end
 end
 
+---@type widget.keybinddialog
+local keymap_dialog = KeybindingDialog()
+function keymap_dialog:on_save(binding)
+  if not binding:match("%+$") and binding ~= "" and binding ~= "none" then
+    local current_key = keymap.get_binding(self.command)
+
+    if current_key ~= binding and type(current_key) == "string" then
+      keymap.unbind(current_key, self.command)
+    end
+
+    if type(current_key) ~= "table" then
+      keymap.add({[binding] = self.command}, true)
+      self.listbox:set_row(self.row_id, {
+        style.text, self.command, ListBox.COLEND, style.dim, binding
+      })
+    end
+  end
+end
+function keymap_dialog:on_reset()
+  local default_key = settings.default_keybindings[self.command]
+  local current_key = keymap.get_binding(self.command)
+  if default_key then
+    if type(default_key) == "string" then
+      if current_key ~= default_key and type(current_key) == "string" then
+        keymap.unbind(current_key, self.command)
+        keymap.add({[default_key] = self.command}, true)
+        self.listbox:set_row(self.row_id, {
+          style.text, self.command, ListBox.COLEND, style.dim, default_key
+        })
+      end
+    end
+  else
+    if current_key and type(current_key) == "string" then
+      keymap.unbind(current_key, self.command)
+    end
+    self.listbox:set_row(self.row_id, {
+      style.text, self.command, ListBox.COLEND, style.dim, "none"
+    })
+  end
+end
+
+---Generate the list of all available commands and allow editing their keymaps.
+function Settings:load_keymap_settings()
+  self.keybinds.scrollable = false
+
+  local ordered = {}
+  for name, _ in pairs(command.map) do
+    table.insert(ordered, name)
+  end
+  table.sort(ordered)
+
+  ---@type widget.listbox
+  local listbox = ListBox(self.keybinds)
+
+  listbox.border.width = 0
+  listbox:enable_expand(true)
+
+  listbox:add_column("Command")
+  listbox:add_column("Bindings")
+
+  for _, name in ipairs(ordered) do
+    local keys = keymap.get_binding(name)
+    local cmdtype = type(keys or true)
+    local binding = ""
+    if cmdtype == "string" then
+      binding = keys
+    elseif cmdtype == "table" and #keys > 0 then
+      binding = keys[1]
+      for idx, key in ipairs(keys) do
+        if idx ~= 1 then
+          binding = binding .. "\n" .. key
+        end
+      end
+    else
+      binding = "none"
+    end
+    listbox:add_row({
+      style.text, name, ListBox.COLEND, style.dim, binding
+    }, name)
+  end
+
+  function listbox:on_row_click(idx, data)
+    if not keymap_dialog:is_visible() then
+      local binding = keymap.get_binding(data) or "none"
+      keymap_dialog.binding:set_label(binding)
+      keymap_dialog.row_id = idx
+      keymap_dialog.command = data
+      keymap_dialog.listbox = self
+      keymap_dialog:show()
+    end
+  end
+end
+
 ---Reposition and resize core and plugin widgets.
 function Settings:update()
   if not Settings.super.update(self) then return end
@@ -914,6 +1020,7 @@ end
 --------------------------------------------------------------------------------
 local core_run = core.run
 function core.run()
+  store_default_keybindings()
   load_settings()
   merge_settings()
   settings.ui = Settings()
