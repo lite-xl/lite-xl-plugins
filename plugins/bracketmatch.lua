@@ -7,27 +7,34 @@ local DocView = require "core.docview"
 
 local bracket_maps = {
   -- [     ]    (     )    {      }
-  { [91] = 93, [40] = 41, [123] = 125, step =  1 },
+  { [91] = 93, [40] = 41, [123] = 125, direction =  1 },
   -- ]     [    )     (    }      {
-  { [93] = 91, [41] = 40, [125] = 123, step = -1 },
+  { [93] = 91, [41] = 40, [125] = 123, direction = -1 },
 }
 
+local function get_token_at(doc, line, col)
+  local column = 0
+  for _,type,text in doc.highlighter:each_token(line) do
+    column = column + #text
+    if column >= col then return type, text end
+  end
+end
 
-local function get_matching_bracket(doc, line, col, line_limit, open_byte, close_byte, step)
-  local end_line = line + line_limit * step
+local function get_matching_bracket(doc, line, col, line_limit, open_byte, close_byte, direction)
+  local end_line = line + line_limit * direction
   local depth = 0
 
   while line ~= end_line do
     local byte = doc.lines[line]:byte(col)
-    if byte == open_byte then
+    if byte == open_byte and get_token_at(doc, line, col) ~= "comment" then
       depth = depth + 1
-    elseif byte == close_byte then
+    elseif byte == close_byte and get_token_at(doc, line, col) ~= "comment" then
       depth = depth - 1
       if depth == 0 then return line, col end
     end
 
     local prev_line, prev_col = line, col
-    line, col = doc:position_offset(line, col, step)
+    line, col = doc:position_offset(line, col, direction)
     if line == prev_line and col == prev_col then
       break
     end
@@ -63,10 +70,10 @@ local function update_state(line_limit)
       local line, col = doc:position_offset(line, col, i)
       local open = doc.lines[line]:byte(col)
       local close = map[open]
-      if close then
+      if close and get_token_at(doc, line, col) ~= "comment" then
         -- i == 0 if the cursor is on the left side of a bracket (or -1 when on right)
         select_adj = i + 1 -- if i == 0 then select_adj = 1 else select_adj = 0 end
-        line2, col2 = get_matching_bracket(doc, line, col, line_limit, open, close, map.step)
+        line2, col2 = get_matching_bracket(doc, line, col, line_limit, open, close, map.direction)
         goto found
       end
     end
