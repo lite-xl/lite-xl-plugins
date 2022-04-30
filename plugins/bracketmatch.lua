@@ -10,11 +10,13 @@ local config = require "core.config"
 --   underline color  = `style.bracketmatch_color`
 --   bracket color    = `style.bracketmatch_char_color`
 --   background color = `style.bracketmatch_block_color`
+--   frame color      = `style.bracketmatch_frame_color`
 
 config.plugins.bracketmatch = {
   highligh_both = true, -- highlight the current bracket too
-  style = "underline",  -- can be "underline", "block", "none"
+  style = "underline",  -- can be "underline", "block", "frame", "none"
   color_char = false,   -- color the bracket
+  line_size = math.ceil(1 * SCALE), -- the size of the lines used in "underline" and "frame"
 }
 
 
@@ -148,6 +150,9 @@ local function draw_decoration(dv, x, y, line, col)
   local char_color = style.bracketmatch_char_color
                      or (conf.style == "block" and style.background or style.syntax["keyword"])
   local block_color = style.bracketmatch_block_color or style.line_number2
+  local frame_color = style.bracketmatch_frame_color or style.line_number2
+
+  local h = conf.line_size
 
   if conf.color_char or conf.style == "block" then
     redraw_char(dv, x, y, line, col,
@@ -156,10 +161,18 @@ local function draw_decoration(dv, x, y, line, col)
   if conf.style == "underline" then
     local x1 = x + dv:get_col_x_offset(line, col)
     local x2 = x + dv:get_col_x_offset(line, col + 1)
-    local h = math.ceil(1 * SCALE)
     local lh = dv:get_line_height()
 
     renderer.draw_rect(x1, y + lh - h, x2 - x1, h, color)
+  elseif conf.style == "frame" then
+    local x1 = x + dv:get_col_x_offset(line, col)
+    local x2 = x + dv:get_col_x_offset(line, col + 1)
+    local lh = dv:get_line_height()
+
+    renderer.draw_rect(x1, y + lh - h, x2 - x1, h, frame_color)
+    renderer.draw_rect(x1, y, x2 - x1, h, frame_color)
+    renderer.draw_rect(x1, y, h, lh, frame_color)
+    renderer.draw_rect(x2, y, h, lh, frame_color)
   end
 end
 
