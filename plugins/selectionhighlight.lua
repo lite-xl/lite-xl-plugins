@@ -31,10 +31,13 @@ function DocView:draw_line_body(idx, x, y)
           selected_text, last_col, true
         )
         if start_col == nil then break end
-        local x1 = x + self:get_col_x_offset(idx, start_col)
-        local x2 = x + self:get_col_x_offset(idx, end_col + 1)
-        local color = style.selectionhighlight or style.syntax.comment
-        draw_box(x1, y, x2 - x1, lh, color)
+        -- don't draw box around the selection
+        if idx ~= line1 or start_col ~= col1 then
+          local x1 = x + self:get_col_x_offset(idx, start_col)
+          local x2 = x + self:get_col_x_offset(idx, end_col + 1)
+          local color = style.selectionhighlight or style.syntax.comment
+          draw_box(x1, y, x2 - x1, lh, color)
+        end
         last_col = end_col + 1
       end
     end
