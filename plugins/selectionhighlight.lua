@@ -17,6 +17,7 @@ end
 local draw_line_body = DocView.draw_line_body
 
 function DocView:draw_line_body(idx, x, y)
+  draw_line_body(self, idx, x, y)
   local line1, col1, line2, col2 = self.doc:get_selection(true)
   if line1 == line2 and col1 ~= col2 then
     local selection = self.doc:get_text(line1, col1, line2, col2)
@@ -38,6 +39,5 @@ function DocView:draw_line_body(idx, x, y)
       end
     end
   end
-  draw_line_body(self, idx, x, y)
 end
 
