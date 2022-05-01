@@ -68,6 +68,7 @@ syntax.add {
         ["mut"] = "keyword",
         ["unsafe"] = "keyword",
         ["goto"] = "keyword",
+        ["go"] = "keyword",
         ["try"] = "keyword",
         ["orelse"] = "keyword",
         ["catch"] = "keyword",
@@ -78,6 +79,7 @@ syntax.add {
         ["and"] = "keyword",
 
         -- types
+        ["ptr"] = "keyword2",
         ["bool"] = "keyword2",
         ["i8"] = "keyword2",
         ["i16"] = "keyword2",
@@ -93,7 +95,6 @@ syntax.add {
         ["isize"] = "keyword2",
         ["usize"] = "keyword2",
         ["str"] = "keyword2",
-        ["rawptr"] = "keyword2",
         ["Self"] = "keyword2",
 
         -- literals
