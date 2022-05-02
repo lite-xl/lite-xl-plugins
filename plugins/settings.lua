@@ -17,6 +17,7 @@ local Toggle = require "widget.toggle"
 local CheckBox = require "widget.checkbox"
 local ListBox = require "widget.listbox"
 local FoldingBook = require "widget.foldingbook"
+local ItemsList = require "widget.itemslist"
 local ToolbarView = require "plugins.toolbarview"
 local KeybindingDialog = require "widget.keybinddialog"
 
@@ -741,12 +742,27 @@ local function add_control(pane, option, plugin_name)
     end
     widget = button
     found = true
+
+  elseif option.type == settings.type.LIST_STRINGS then
+     ---@type widget.label
+    Label(pane, option.label .. ":")
+    ---@type widget.itemslist
+    local list = ItemsList(pane)
+    if type(option_value) == "table" then
+      for _, value in ipairs(option_value) do
+        list:add_item(value)
+      end
+    end
+    widget = list
+    found = true
   end
 
   if widget and type(path) ~= "nil" then
     function widget:on_change(value)
       if self:is(SelectBox) then
-        value = widget:get_selected_data()
+        value = self:get_selected_data()
+      elseif self:is(ItemsList) then
+        value = self:get_items()
       end
       if option.set_value then
         value = option.set_value(value)
@@ -1007,6 +1023,8 @@ function Settings:update()
         end
         if child:is(Line) then
           x = 0
+        elseif child:is(ItemsList) then
+          child:set_size(pane.container:get_width() - 20, child.size.y)
         end
         child:set_position(x, y)
         prev_child = child
