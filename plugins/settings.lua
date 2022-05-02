@@ -14,7 +14,6 @@ local TextBox = require "widget.textbox"
 local SelectBox = require "widget.selectbox"
 local NumberBox = require "widget.numberbox"
 local Toggle = require "widget.toggle"
-local CheckBox = require "widget.checkbox"
 local ListBox = require "widget.listbox"
 local FoldingBook = require "widget.foldingbook"
 local ItemsList = require "widget.itemslist"
@@ -497,7 +496,7 @@ end
 
 ---Format the lua table returned by common.serialize
 ---@param text string
----@param indent_width integer
+---@param indent_width? integer
 local function prettify_lua_table(text, indent_width)
   if type(text) ~= "string" then
     return ""
@@ -548,10 +547,10 @@ local function prettify_lua_table(text, indent_width)
       elseif previous_was_escape and not pe_set then
         previous_was_escape = false
       end
-    elseif char == "[" and not inside_string then
+    elseif char == "[" then
       out = out .. indent(char, indent_level, indent_width)
       inside_square = true
-    elseif char == "]" and not inside_string then
+    elseif char == "]" then
       out = out .. char
       inside_square = false
     elseif char == "=" then
@@ -719,8 +718,59 @@ local function save_settings()
   end
 end
 
+---Apply a keybinding and optionally save it.
+---@param cmd string
+---@param binding string
+---@param skip_save? boolean
+---@return table | nil
+local function apply_keybinding(cmd, binding, skip_save)
+  local row_value = nil
+  local changed = false
+
+  if not binding:match("%+$") and binding ~= "" and binding ~= "none" then
+    local current_key = keymap.get_binding(cmd)
+
+    if current_key ~= binding and type(current_key) == "string" then
+      keymap.unbind(current_key, cmd)
+    end
+
+    if type(current_key) ~= "table" then
+      keymap.add({[binding] = cmd}, true)
+      row_value = {
+        style.text, cmd, ListBox.COLEND, style.dim, binding
+      }
+      if not skip_save then
+        if not settings.config.custom_keybindings then
+          settings.config.custom_keybindings = {}
+        end
+        settings.config.custom_keybindings[cmd] = binding
+        changed = true
+      end
+    end
+  elseif
+    not skip_save
+    and
+    binding == "none"
+    and
+    settings.config.custom_keybindings
+    and
+    settings.config.custom_keybindings[cmd]
+  then
+    settings.config.custom_keybindings[cmd] = nil
+    changed = true
+  end
+
+  if changed then
+    save_settings()
+  end
+
+  return row_value
+end
+
 ---Merge previously saved settings without destroying the config table.
 local function merge_settings()
+  if type(settings.config) ~= "table" then return end
+
   -- merge core settings
   for _, section in ipairs(settings.sections) do
     local options = settings.core[section]
@@ -756,8 +806,16 @@ local function merge_settings()
       end
     end
   end
+
+  -- apply custom keybindings
+  if settings.config.custom_keybindings then
+    for cmd, binding in pairs(settings.config.custom_keybindings) do
+      apply_keybinding(cmd, binding, true)
+    end
+  end
 end
 
+---Called at core first run to store the default keybindings.
 local function store_default_keybindings()
   for name, _ in pairs(command.map) do
     local keys = keymap.get_binding(name)
@@ -881,7 +939,7 @@ local function add_control(pane, option, plugin_name)
     if option.on_click then
       local command_type = type(option.on_click)
       if command_type == "string" then
-        function button:on_click(button, x, y)
+        function button:on_click()
           command.perform(option.on_click)
         end
       elseif command_type == "function" then
@@ -1029,22 +1087,14 @@ end
 
 ---@type widget.keybinddialog
 local keymap_dialog = KeybindingDialog()
+
 function keymap_dialog:on_save(binding)
-  if not binding:match("%+$") and binding ~= "" and binding ~= "none" then
-    local current_key = keymap.get_binding(self.command)
-
-    if current_key ~= binding and type(current_key) == "string" then
-      keymap.unbind(current_key, self.command)
-    end
-
-    if type(current_key) ~= "table" then
-      keymap.add({[binding] = self.command}, true)
-      self.listbox:set_row(self.row_id, {
-        style.text, self.command, ListBox.COLEND, style.dim, binding
-      })
-    end
+  local row_value = apply_keybinding(self.command, binding)
+  if row_value then
+    self.listbox:set_row(self.row_id, row_value)
   end
 end
+
 function keymap_dialog:on_reset()
   local default_key = settings.default_keybindings[self.command]
   local current_key = keymap.get_binding(self.command)
@@ -1065,6 +1115,14 @@ function keymap_dialog:on_reset()
     self.listbox:set_row(self.row_id, {
       style.text, self.command, ListBox.COLEND, style.dim, "none"
     })
+  end
+  if
+    settings.config.custom_keybindings
+    and
+    settings.config.custom_keybindings[self.command]
+  then
+    settings.config.custom_keybindings[self.command] = nil
+    save_settings()
   end
 end
 
@@ -1220,7 +1278,7 @@ command.add(nil, {
 })
 
 keymap.add {
-  ["ctrl+alt+p"]        = "ui:settings"
+  ["ctrl+alt+p"] = "ui:settings"
 }
 
 --------------------------------------------------------------------------------
