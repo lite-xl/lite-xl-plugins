@@ -31,7 +31,7 @@ settings.config = {}
 settings.default_keybindings = {}
 
 ---Enumeration for the different types of settings.
----@type table<string, string>
+---@type table<string, integer>
 settings.type = {
   STRING = 1,
   NUMBER = 2,
@@ -53,26 +53,55 @@ settings.type = {
 
 ---Represents a setting to render on a settings pane.
 ---@class settings.option
----@field public label string Title displayed to the user eg: "My Option"
----@field public description string Description of the option eg: "Modifies the document indentation"
----@field public path string Config path in the config table, eg: section.value, myvalue, etc...
----@field public type settings.types Type of option
----@field public default string | number | table<integer, string> | table<integer, integer> Default value of the option
----@field public range table <integer, string> | table <integer, number> A list of valid values if type is LIST_NUMBERS or LIST_STRINGS
----@field public min number Used for NUMBER
----@field public max number Used for NUMBER
----@field public step number Used for NUMBER
----@field public values table Used in SELECTION
----@field public get_value nil | function(value:any):any
----@field public set_value nil | function(value:any):any
----@field public icon string Used in BUTTON
----@field public on_click string | function Command or function executed when a BUTTON is clicked
-settings.option = {}
+---@field public label string
+---@field public description string
+---@field public path string
+---@field public type settings.types
+---@field public default string | number | table<integer, string> | table<integer, integer>
+---@field public min number
+---@field public max number
+---@field public step number
+---@field public values table
+---@field public get_value nil | fun(value:any):any
+---@field public set_value nil | fun(value:any):any
+---@field public icon string
+---@field public on_click nil | string | fun(button:string, x:integer, y:integer)
+---@field public on_apply nil | fun(value:any)
+settings.option = {
+  ---Title displayed to the user eg: "My Option"
+  label = "",
+  ---Description of the option eg: "Modifies the document indentation"
+  description = "",
+  ---Config path in the config table, eg: section.myoption, myoption, etc...
+  path = "",
+  ---Type of option that will be used to render an appropriate control
+  type = "",
+  ---Default value of the option
+  default = "",
+  ---Used for NUMBER to indiciate the minimum number allowed
+  min = 0,
+  ---Used for NUMBER to indiciate the maximum number allowed
+  max = 0,
+  ---Used for NUMBER to indiciate the increment/decrement amount
+  step = 0,
+  ---Used in a SELECTION to provide the list of valid options
+  values = {},
+  ---Optional function that is used to manipulate the current value on retrieval.
+  get_value = nil,
+  ---Optional function that is used to manipulate the saved value on save.
+  set_value = nil,
+  ---The icon set for a BUTTON
+  icon = "",
+  ---Command or function executed when a BUTTON is clicked
+  on_click = nil,
+  ---Optional function executed when the option value is applied.
+  on_apply = nil
+}
 
 ---Add a new settings section to the settings UI
 ---@param section string
 ---@param options settings.option[]
----@param plugin_name? string|nil Optional name of plugin
+---@param plugin_name? string Optional name of plugin
 function settings.add(section, options, plugin_name)
   local category = ""
   if plugin_name ~= nil then
@@ -124,7 +153,10 @@ settings.add("General",
       type = settings.type.NUMBER,
       default = 2000,
       min = 1,
-      max = 100000
+      max = 100000,
+      on_apply = function()
+        core.rescan_project_directories()
+      end
     },
     {
       label = "File Size Limit",
@@ -140,7 +172,10 @@ settings.add("General",
       description = "List of lua patterns matching files to be ignored by the editor.",
       path = "ignore_files",
       type = settings.type.LIST_STRINGS,
-      default = { "^%." }
+      default = { "^%." },
+      on_apply = function()
+        core.rescan_project_directories()
+      end
     },
     {
       label = "Maximum Clicks",
@@ -247,7 +282,10 @@ settings.add("User Interface",
       description = "Use built-in window decorations.",
       path = "borderless",
       type = settings.type.TOGGLE,
-      default = false
+      default = false,
+      on_apply = function()
+        core.configure_borderless_window()
+      end
     },
     {
       label = "Messages Timeout",
@@ -449,6 +487,108 @@ settings.add("Development",
   }
 )
 
+---Helper for prettify_lua_table
+---@param char string
+---@param level integer
+---@param indent_width integer
+local function indent(char, level, indent_width)
+  return string.rep(" ", level * indent_width) .. char
+end
+
+---Format the lua table returned by common.serialize
+---@param text string
+---@param indent_width integer
+local function prettify_lua_table(text, indent_width)
+  if type(text) ~= "string" then
+    return ""
+  end
+
+  local out = ""
+  indent_width = indent_width or 2
+
+  local indent_level = 0
+  local reading_literal = false
+  local previous_was_escape = false
+  local inside_string = false
+  local in_value = false
+  local last_was_bracket = false
+  local inside_square = false
+  local string_char = ""
+  local last_char = ""
+
+  for char in text:gmatch(".") do
+    if char == "{" and not inside_string then
+      if not in_value or last_was_bracket then
+        out = out .. indent(char, indent_level, indent_width) .. "\n"
+      else
+        out = out .. char .. "\n"
+      end
+      last_was_bracket = true
+      in_value = false
+      indent_level = indent_level + 1
+    elseif (char == '"' or char == "'") and not inside_string then
+      inside_string = true
+      string_char = char
+      if not in_value and not inside_square then
+        out = out .. indent(char, indent_level, indent_width)
+      else
+        out = out .. char
+      end
+    elseif inside_string then
+      local pe_set = false
+      if char == "\\" and previous_was_escape then
+        previous_was_escape = false
+      elseif char == "\\" then
+        previous_was_escape = true
+        pe_set = true
+      end
+      out = out .. char
+      if char == string_char and not previous_was_escape then
+        inside_string = false
+      elseif previous_was_escape and not pe_set then
+        previous_was_escape = false
+      end
+    elseif char == "[" and not inside_string then
+      out = out .. indent(char, indent_level, indent_width)
+      inside_square = true
+    elseif char == "]" and not inside_string then
+      out = out .. char
+      inside_square = false
+    elseif char == "=" then
+      in_value = true
+      last_was_bracket = false
+      out = out .. " " .. char .. " "
+    elseif char == "," then
+      in_value = false
+      reading_literal = false
+      out = out .. char .. "\n"
+    elseif char == "}" then
+      indent_level = indent_level - 1
+      if char == "}" and last_char == "{" then
+        out = out:gsub("%s*\n$", "") .. char
+      else
+        out = out .. "\n" .. indent(char, indent_level, indent_width)
+      end
+    elseif not char:match("%s") and not reading_literal then
+      reading_literal = true
+      if not inside_square and (not in_value or last_was_bracket) then
+        out = out .. indent(char, indent_level, indent_width)
+        last_was_bracket = false
+      else
+        out = out .. char
+      end
+    elseif not char:match("%s") then
+      out = out .. char
+    end
+
+    if not char:match("%s") then
+      last_char = char
+    end
+  end
+
+  return out
+end
+
 ---Retrieve from given config the associated value using the given path.
 ---@param conf table
 ---@param path string
@@ -499,6 +639,7 @@ local function set_config_value(conf, path, value)
   for idx, section in ipairs(sections) do
     if type(element[section]) ~= "table" then
       element[section] = {}
+      element = element[section]
     else
       element = element[section]
     end
@@ -570,7 +711,10 @@ end
 local function save_settings()
   local fp = io.open(USERDIR .. "/user_settings.lua", "w")
   if fp then
-    fp:write("return {config=", common.serialize(config), "}\n")
+    local output = prettify_lua_table(
+      "{ [\"config\"]=" .. common.serialize(settings.config) .. "}\n"
+    )
+    fp:write("return ", output)
     fp:close()
   end
 end
@@ -580,12 +724,14 @@ local function merge_settings()
   -- merge core settings
   for _, section in ipairs(settings.sections) do
     local options = settings.core[section]
-
     for _, option in ipairs(options) do
       if type(option.path) == "string" then
         local saved_value = get_config_value(settings.config, option.path)
         if type(saved_value) ~= "nil" then
           set_config_value(config, option.path, saved_value)
+          if option.on_apply then
+            option.on_apply(saved_value)
+          end
         end
       end
     end
@@ -595,7 +741,6 @@ local function merge_settings()
   table.sort(settings.plugin_sections)
   for _, section in ipairs(settings.plugin_sections) do
     local plugins = settings.plugins[section]
-
     for plugin_name, options in pairs(plugins) do
       for _, option in pairs(options) do
         if type(option.path) == "string" then
@@ -603,6 +748,9 @@ local function merge_settings()
           local saved_value = get_config_value(settings.config, path)
           if type(saved_value) ~= "nil" then
             set_config_value(config, path, saved_value)
+            if option.on_apply then
+              option.on_apply(saved_value)
+            end
           end
         end
       end
@@ -768,7 +916,11 @@ local function add_control(pane, option, plugin_name)
         value = option.set_value(value)
       end
       set_config_value(config, path, value)
+      set_config_value(settings.config, path, value)
       save_settings()
+      if option.on_apply then
+        option.on_apply(value)
+      end
     end
   end
 
