@@ -486,108 +486,6 @@ settings.add("Development",
   }
 )
 
----Helper for prettify_lua_table
----@param char string
----@param level integer
----@param indent_width integer
-local function indent(char, level, indent_width)
-  return string.rep(" ", level * indent_width) .. char
-end
-
----Format the lua table returned by common.serialize
----@param text string
----@param indent_width? integer
-local function prettify_lua_table(text, indent_width)
-  if type(text) ~= "string" then
-    return ""
-  end
-
-  local out = ""
-  indent_width = indent_width or 2
-
-  local indent_level = 0
-  local reading_literal = false
-  local previous_was_escape = false
-  local inside_string = false
-  local in_value = false
-  local last_was_bracket = false
-  local inside_square = false
-  local string_char = ""
-  local last_char = ""
-
-  for char in text:gmatch(".") do
-    if char == "{" and not inside_string then
-      if not in_value or last_was_bracket then
-        out = out .. indent(char, indent_level, indent_width) .. "\n"
-      else
-        out = out .. char .. "\n"
-      end
-      last_was_bracket = true
-      in_value = false
-      indent_level = indent_level + 1
-    elseif (char == '"' or char == "'") and not inside_string then
-      inside_string = true
-      string_char = char
-      if not in_value and not inside_square then
-        out = out .. indent(char, indent_level, indent_width)
-      else
-        out = out .. char
-      end
-    elseif inside_string then
-      local pe_set = false
-      if char == "\\" and previous_was_escape then
-        previous_was_escape = false
-      elseif char == "\\" then
-        previous_was_escape = true
-        pe_set = true
-      end
-      out = out .. char
-      if char == string_char and not previous_was_escape then
-        inside_string = false
-      elseif previous_was_escape and not pe_set then
-        previous_was_escape = false
-      end
-    elseif char == "[" then
-      out = out .. indent(char, indent_level, indent_width)
-      inside_square = true
-    elseif char == "]" then
-      out = out .. char
-      inside_square = false
-    elseif char == "=" then
-      in_value = true
-      last_was_bracket = false
-      out = out .. " " .. char .. " "
-    elseif char == "," then
-      in_value = false
-      reading_literal = false
-      out = out .. char .. "\n"
-    elseif char == "}" then
-      indent_level = indent_level - 1
-      if char == "}" and last_char == "{" then
-        out = out:gsub("%s*\n$", "") .. char
-      else
-        out = out .. "\n" .. indent(char, indent_level, indent_width)
-      end
-    elseif not char:match("%s") and not reading_literal then
-      reading_literal = true
-      if not inside_square and (not in_value or last_was_bracket) then
-        out = out .. indent(char, indent_level, indent_width)
-        last_was_bracket = false
-      else
-        out = out .. char
-      end
-    elseif not char:match("%s") then
-      out = out .. char
-    end
-
-    if not char:match("%s") then
-      last_char = char
-    end
-  end
-
-  return out
-end
-
 ---Retrieve from given config the associated value using the given path.
 ---@param conf table
 ---@param path string
@@ -710,9 +608,12 @@ end
 local function save_settings()
   local fp = io.open(USERDIR .. "/user_settings.lua", "w")
   if fp then
-    local output = prettify_lua_table(
-      "{ [\"config\"]=" .. common.serialize(settings.config) .. "}\n"
-    )
+    local output = "{\n  [\"config\"] = "
+      .. common.serialize(
+        settings.config,
+        { pretty = true, escape = true, sort = true, initial_indent = 1 }
+      ):gsub("^%s+", "")
+      .. "\n}\n"
     fp:write("return ", output)
     fp:close()
   end
