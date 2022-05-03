@@ -916,6 +916,87 @@ function Settings:load_core_settings()
   end
 end
 
+---Unload a plugin settings from plugins section.
+---@param plugin string
+function Settings:disable_plugin(plugin)
+  for _, section in ipairs(settings.plugin_sections) do
+    local plugins = settings.plugins[section]
+
+    for plugin_name, options in pairs(plugins) do
+      if plugin_name == plugin then
+        self.plugin_sections:delete_pane(section)
+      end
+    end
+  end
+
+  if
+    type(settings.config.enabled_plugins) == "table"
+    and
+    settings.config.enabled_plugins[plugin]
+  then
+    settings.config.enabled_plugins[plugin] = nil
+  end
+  if type(settings.config.disabled_plugins) ~= "table" then
+    settings.config.disabled_plugins = {}
+  end
+
+  settings.config.disabled_plugins[plugin] = true
+  save_settings()
+end
+
+---Load plugin and append its settings to the plugins section.
+---@param plugin string
+function Settings:enable_plugin(plugin)
+  local loaded = false
+  local config_type = type(config.plugins[plugin])
+  if config_type == "boolean" or config_type == "nil" then
+    config.plugins[plugin] = {}
+    loaded = true
+  end
+
+  require("plugins." .. plugin)
+
+  for _, section in ipairs(settings.plugin_sections) do
+    local plugins = settings.plugins[section]
+
+    for plugin_name, options in pairs(plugins) do
+      if plugin_name == plugin then
+        ---@type widget
+        local pane = self.plugin_sections:get_pane(section)
+        if not pane then
+          pane = self.plugin_sections:add_pane(section, section)
+        else
+          pane = pane.container
+        end
+
+        for _, opt in ipairs(options) do
+          ---@type settings.option
+          local option = opt
+          add_control(pane, option, plugin_name)
+        end
+      end
+    end
+  end
+
+  if
+    type(settings.config.disabled_plugins) == "table"
+    and
+    settings.config.disabled_plugins[plugin]
+  then
+    settings.config.disabled_plugins[plugin] = nil
+  end
+  if type(settings.config.enabled_plugins) ~= "table" then
+    settings.config.enabled_plugins = {}
+  end
+
+  settings.config.enabled_plugins[plugin] = true
+  save_settings()
+
+  if loaded then
+    core.log("Loaded '%s' plugin", plugin)
+  end
+end
+
 ---Generate all the widgets for plugin settings.
 ---TODO: still not fully implemented
 function Settings:load_plugin_settings()
@@ -931,34 +1012,42 @@ function Settings:load_plugin_settings()
   -- something like 0000-settings.lua or aaaa-settings.lua
   Label(
     pane,
-    "Notice: disabling plugins will not take effect until next "
-      .. "restart (not implemented)"
+    "Notice: disabling plugins will not take effect until next restart"
   )
 
   Line(pane, 2, 10)
 
   local plugins = get_installed_plugins()
   for _, plugin in ipairs(plugins) do
-    local enabled = false
+    if plugin ~= "settings" then
+      local enabled = false
 
-    if
-      type(config.plugins[plugin]) ~= "nil"
-      and
-      config.plugins[plugin] ~= false
-    then
-      enabled = true
-    end
+      if
+        (
+          type(config.plugins[plugin]) ~= "nil"
+          and
+          config.plugins[plugin] ~= false
+        )
+        or
+        (
+          settings.config.enabled_plugins
+          and
+          settings.config.enabled_plugins[plugin]
+        )
+      then
+        enabled = true
+      end
 
-    ---@type widget.toggle
-    local toggle = Toggle(pane, prettify_name(plugin), enabled)
-    function toggle:on_change(value)
-      if value then
-        local config_type = type(config.plugins[plugin])
-        if config_type == "boolean" or config_type == "nil" then
-          config.plugins[plugin] = {}
+      local this = self
+
+      ---@type widget.toggle
+      local toggle = Toggle(pane, prettify_name(plugin), enabled)
+      function toggle:on_change(value)
+        if value then
+          this:enable_plugin(plugin)
+        else
+          this:disable_plugin(plugin)
         end
-        require("plugins." .. plugin)
-        core.log("Loaded '%s' plugin", plugin)
       end
     end
   end
@@ -1150,11 +1239,46 @@ end
 local core_run = core.run
 function core.run()
   store_default_keybindings()
-  load_settings()
+
+  -- merge custom settings into config
   merge_settings()
+
+  ---@type settings.ui
   settings.ui = Settings()
+
+  -- load plugins disabled by default and enabled by user
+  if settings.config.enabled_plugins then
+    for name, _ in pairs(settings.config.enabled_plugins) do
+      if
+        type(config.plugins[name]) == "boolean"
+        and
+        not config.plugins[name]
+      then
+        settings.ui:enable_plugin(name)
+      end
+    end
+  end
+
   core_run()
+
+  -- save on a normal exit
   save_settings()
+end
+
+--------------------------------------------------------------------------------
+-- Disable plugins at startup, only works if this file is the first
+-- required plugin by core.load_plugins()
+--------------------------------------------------------------------------------
+-- load custom user settings that include list of disabled plugins
+load_settings()
+
+-- only disable non already loaded plugins
+if settings.config.disabled_plugins then
+  for name, _ in pairs(settings.config.disabled_plugins) do
+    if type(rawget(config.plugins, name)) == "nil" then
+      config.plugins[name] = false
+    end
+  end
 end
 
 --------------------------------------------------------------------------------
