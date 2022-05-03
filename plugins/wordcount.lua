@@ -44,7 +44,6 @@ function Doc:raw_insert(line, col, text, undo_stack, time)
       if not s then break end
       total_lines = total_lines + 1
     end
-    print(line, line+total_lines)
     words[self] = words[self] + compute_words(self, line, line + total_lines) - old_count
   else
     old_raw_insert(self, line, col, text, undo_stack, time)
