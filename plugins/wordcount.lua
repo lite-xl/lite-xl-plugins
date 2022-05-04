@@ -8,7 +8,7 @@ local Doc = require "core.doc"
 local keymap = require "core.keymap"
 
 
-local words = {}
+local words = setmetatable({}, { __mode = "k" })
 
 
 local function compute_line_words(line)
