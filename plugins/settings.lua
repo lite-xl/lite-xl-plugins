@@ -582,6 +582,63 @@ local function get_installed_plugins()
   return ordered
 end
 
+---Get a list of system and user installed colors.
+---@return table<integer, table>
+local function get_installed_colors()
+  local files, ordered = {}, {}
+
+  for _, root_dir in ipairs {DATADIR, USERDIR} do
+    local dir = root_dir .. "/colors"
+    for _, filename in ipairs(system.list_dir(dir) or {}) do
+      local file_info = system.get_file_info(dir .. "/" .. filename)
+      if
+        file_info.type == "file"
+        and
+        filename:match("%.lua$")
+      then
+        -- read colors
+        local contents = io.open(dir .. "/" .. filename):read("*a")
+        local colors = {}
+        for r, g, b in contents:gmatch("#(%x%x)(%x%x)(%x%x)") do
+          r = tonumber(r, 16)
+          g = tonumber(g, 16)
+          b = tonumber(b, 16)
+          table.insert(colors, { r, g, b, 0xff })
+        end
+        -- remove duplicated colors
+        local prev = {}
+        for i = #colors, 1, -1 do
+          if
+            colors[i][1] == prev[1]
+            and
+            colors[i][2] == prev[2]
+            and
+            colors[i][3] == prev[3]
+          then
+            table.remove(colors, i)
+          else
+            prev = colors[i]
+          end
+        end
+        -- sort colors from darker to lighter
+        table.sort(colors, function(a, b)
+          return a[1] + a[2] + a[3] < b[1] + b[2] + b[3]
+        end)
+        -- insert color to ordered table if not duplicate
+        filename = filename:gsub("%.lua$", "")
+        if not files[filename] then
+          table.insert(ordered, {name = filename, colors = colors})
+        end
+        files[filename] = true
+      end
+    end
+  end
+
+  table.sort(ordered, function(a, b) return a.name < b.name end)
+
+  return ordered
+end
+
 ---Capitalize first letter of every word.
 ---Taken from core.command.
 ---@param words string
@@ -752,10 +809,12 @@ function Settings:new()
   self.notebook.border.width = 0
 
   self.core = self.notebook:add_pane("core", "Core")
+  self.colors = self.notebook:add_pane("colors", "Colors")
   self.plugins = self.notebook:add_pane("plugins", "Plugins")
   self.keybinds = self.notebook:add_pane("keybindings", "Keybindings")
 
   self.notebook:set_pane_icon("core", "P")
+  self.notebook:set_pane_icon("colors", "W")
   self.notebook:set_pane_icon("plugins", "B")
   self.notebook:set_pane_icon("keybindings", "M")
 
@@ -768,6 +827,7 @@ function Settings:new()
   self.plugin_sections.scrollable = false
 
   self:load_core_settings()
+  self:load_color_settings()
   self:load_plugin_settings()
   self:load_keymap_settings()
 end
@@ -913,6 +973,42 @@ function Settings:load_core_settings()
       local option = opt
       add_control(pane, option)
     end
+  end
+end
+
+---Generate the list of all available colors with preview
+function Settings:load_color_settings()
+  self.colors.scrollable = false
+
+  local colors = get_installed_colors()
+
+  ---@type widget.listbox
+  local listbox = ListBox(self.colors)
+
+  listbox.border.width = 0
+  listbox:enable_expand(true)
+
+  listbox:add_column("Theme")
+  listbox:add_column("Colors")
+
+  for idx, details in ipairs(colors) do
+    local name = details.name
+    if settings.config.theme and settings.config.theme == name then
+      listbox:set_selected(idx)
+    end
+    local palette = {}
+    for _, color in ipairs(details.colors) do
+      table.insert(palette, color)
+      table.insert(palette, "█")
+    end
+    listbox:add_row({
+      style.text, name, ListBox.COLEND, style.code_font, table.unpack(palette)
+    }, name)
+  end
+
+  function listbox:on_row_click(idx, data)
+    core.reload_module("colors." .. data)
+    settings.config.theme = data
   end
 end
 
@@ -1257,6 +1353,11 @@ function core.run()
         settings.ui:enable_plugin(name)
       end
     end
+  end
+
+  -- apply user chosen color theme
+  if settings.config.theme then
+    core.reload_module("colors." .. settings.config.theme)
   end
 
   core_run()
