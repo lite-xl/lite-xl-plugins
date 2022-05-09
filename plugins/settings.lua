@@ -605,21 +605,6 @@ local function get_installed_colors()
           b = tonumber(b, 16)
           table.insert(colors, { r, g, b, 0xff })
         end
-        -- remove duplicated colors
-        local prev = {}
-        for i = #colors, 1, -1 do
-          if
-            colors[i][1] == prev[1]
-            and
-            colors[i][2] == prev[2]
-            and
-            colors[i][3] == prev[3]
-          then
-            table.remove(colors, i)
-          else
-            prev = colors[i]
-          end
-        end
         -- sort colors from darker to lighter
         table.sort(colors, function(a, b)
           return a[1] + a[2] + a[3] < b[1] + b[2] + b[3]
