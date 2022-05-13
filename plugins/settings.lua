@@ -1217,19 +1217,18 @@ function Settings:load_keymap_settings()
   listbox:add_column("Bindings")
 
   for _, name in ipairs(ordered) do
-    local keys = keymap.get_binding(name)
-    local cmdtype = type(keys or true)
+    local keys = { keymap.get_binding(name) }
     local binding = ""
-    if cmdtype == "string" then
-      binding = keys
-    elseif cmdtype == "table" and #keys > 0 then
+    if #keys == 1 then
+      binding = keys[1]
+    elseif #keys > 1 then
       binding = keys[1]
       for idx, key in ipairs(keys) do
         if idx ~= 1 then
           binding = binding .. "\n" .. key
         end
       end
-    else
+    elseif #keys < 1 then
       binding = "none"
     end
     listbox:add_row({
