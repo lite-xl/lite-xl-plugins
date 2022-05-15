@@ -59,9 +59,7 @@ local minimap = MiniMap()
 
 local function show_minimap()
 	return config.plugins.minimap.enabled
-		and getmetatable(core.active_view) == DocView
-		and core.active_view ~= core.command_view
-		and core.active_view.doc
+		and core.active_view:is(DocView)
 end
 
 -- Overloaded since the default implementation adds a extra x3 size of hotspot for the mouse to hit the scrollbar.
