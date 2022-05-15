@@ -64,7 +64,7 @@ local function indent_size(doc, line)
   return e - s
 end
 
-command.add("core.docview", {
+command.add("core.docview!", {
   ["autoinsert:newline"] = function()
     command.perform("doc:newline")
 
@@ -97,7 +97,7 @@ command.add("core.docview", {
 })
 
 keymap.add {
-  ["return"] = { "command:submit", "autoinsert:newline" }
+  ["return"] = { "autoinsert:newline" }
 }
 
 return {
