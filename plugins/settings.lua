@@ -663,37 +663,44 @@ end
 
 ---Apply a keybinding and optionally save it.
 ---@param cmd string
----@param binding string
+---@param bindings table<integer, string>
 ---@param skip_save? boolean
 ---@return table | nil
-local function apply_keybinding(cmd, binding, skip_save)
+local function apply_keybinding(cmd, bindings, skip_save)
   local row_value = nil
   local changed = false
 
-  if not binding:match("%+$") and binding ~= "" and binding ~= "none" then
-    local current_key = keymap.get_binding(cmd)
+  local original_bindings = { keymap.get_binding(cmd) }
+  for _, binding in ipairs(original_bindings) do
+    keymap.unbind(binding, cmd)
+  end
 
-    if current_key ~= binding and type(current_key) == "string" then
-      keymap.unbind(current_key, cmd)
-    end
-
-    if type(current_key) ~= "table" then
-      keymap.add({[binding] = cmd}, true)
-      row_value = {
-        style.text, cmd, ListBox.COLEND, style.dim, binding
-      }
-      if not skip_save then
-        if not settings.config.custom_keybindings then
-          settings.config.custom_keybindings = {}
+  if #bindings > 0 then
+    local shortcuts = ""
+    for _, binding in ipairs(bindings) do
+      if not binding:match("%+$") and binding ~= "" and binding ~= "none" then
+        keymap.add({[binding] = cmd})
+        shortcuts = shortcuts .. binding .. "\n"
+        if not skip_save then
+          if not settings.config.custom_keybindings then
+            settings.config.custom_keybindings = {}
+            settings.config.custom_keybindings[cmd] = {}
+          elseif not settings.config.custom_keybindings[cmd] then
+            settings.config.custom_keybindings[cmd] = {}
+          end
+          table.insert(settings.config.custom_keybindings[cmd], binding)
+          changed = true
         end
-        settings.config.custom_keybindings[cmd] = binding
-        changed = true
       end
+    end
+    if shortcuts ~= "" then
+      local bindings_list = shortcuts:gsub("\n$", "")
+      row_value = {
+        style.text, cmd, ListBox.COLEND, style.dim, bindings_list
+      }
     end
   elseif
     not skip_save
-    and
-    binding == "none"
     and
     settings.config.custom_keybindings
     and
@@ -705,6 +712,12 @@ local function apply_keybinding(cmd, binding, skip_save)
 
   if changed then
     save_settings()
+  end
+
+  if not row_value then
+    row_value = {
+      style.text, cmd, ListBox.COLEND, style.dim, "none"
+    }
   end
 
   return row_value
@@ -752,8 +765,8 @@ local function merge_settings()
 
   -- apply custom keybindings
   if settings.config.custom_keybindings then
-    for cmd, binding in pairs(settings.config.custom_keybindings) do
-      apply_keybinding(cmd, binding, true)
+    for cmd, bindings in pairs(settings.config.custom_keybindings) do
+      apply_keybinding(cmd, bindings, true)
     end
   end
 end
@@ -761,8 +774,8 @@ end
 ---Called at core first run to store the default keybindings.
 local function store_default_keybindings()
   for name, _ in pairs(command.map) do
-    local keys = keymap.get_binding(name)
-    if keys then
+    local keys = { keymap.get_binding(name) }
+    if #keys > 0 then
       settings.default_keybindings[name] = keys
     end
   end
@@ -1159,30 +1172,40 @@ end
 ---@type widget.keybinddialog
 local keymap_dialog = KeybindingDialog()
 
-function keymap_dialog:on_save(binding)
-  local row_value = apply_keybinding(self.command, binding)
+function keymap_dialog:on_save(bindings)
+  local row_value = apply_keybinding(self.command, bindings)
   if row_value then
     self.listbox:set_row(self.row_id, row_value)
   end
 end
 
 function keymap_dialog:on_reset()
-  local default_key = settings.default_keybindings[self.command]
-  local current_key = keymap.get_binding(self.command)
-  if default_key then
-    if type(default_key) == "string" then
-      if current_key ~= default_key and type(current_key) == "string" then
-        keymap.unbind(current_key, self.command)
-        keymap.add({[default_key] = self.command}, true)
-        self.listbox:set_row(self.row_id, {
-          style.text, self.command, ListBox.COLEND, style.dim, default_key
-        })
-      end
+  local default_keys = settings.default_keybindings[self.command]
+  local current_keys = { keymap.get_binding(self.command) }
+
+  for _, binding in ipairs(current_keys) do
+    keymap.unbind(binding, self.command)
+  end
+
+  if default_keys and #default_keys > 0 then
+    local cmd = self.command
+    if not settings.config.custom_keybindings then
+      settings.config.custom_keybindings = {}
+      settings.config.custom_keybindings[cmd] = {}
+    elseif not settings.config.custom_keybindings[cmd] then
+      settings.config.custom_keybindings[cmd] = {}
     end
+    local shortcuts = ""
+    for _, binding in ipairs(default_keys) do
+      keymap.add({[binding] = cmd})
+      shortcuts = shortcuts .. binding .. "\n"
+      table.insert(settings.config.custom_keybindings[cmd], binding)
+    end
+    local bindings_list = shortcuts:gsub("\n$", "")
+    self.listbox:set_row(self.row_id, {
+      style.text, cmd, ListBox.COLEND, style.dim, bindings_list
+    })
   else
-    if current_key and type(current_key) == "string" then
-      keymap.unbind(current_key, self.command)
-    end
     self.listbox:set_row(self.row_id, {
       style.text, self.command, ListBox.COLEND, style.dim, "none"
     })
@@ -1238,8 +1261,8 @@ function Settings:load_keymap_settings()
 
   function listbox:on_row_click(idx, data)
     if not keymap_dialog:is_visible() then
-      local binding = keymap.get_binding(data) or "none"
-      keymap_dialog.binding:set_label(binding)
+      local bindings = { keymap.get_binding(data) }
+      keymap_dialog:set_bindings(bindings)
       keymap_dialog.row_id = idx
       keymap_dialog.command = data
       keymap_dialog.listbox = self
