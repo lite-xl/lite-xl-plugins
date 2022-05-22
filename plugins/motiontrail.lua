@@ -15,7 +15,7 @@ end
 
 local function get_caret_rect(dv)
   local line, col = dv.doc:get_selection()
-  local x, y = dv:get_line_screen_position(line)
+  local x, y = dv:get_line_screen_position(line, col)
   x = x + dv:get_col_x_offset(line, col)
   return x, y, style.caret_width, dv:get_line_height()
 end

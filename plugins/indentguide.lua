@@ -119,5 +119,5 @@ function DocView:draw_line_text(idx, x, y)
     local sw = space_sz * i
     renderer.draw_rect(math.ceil(x + sw), y, w, h, color)
   end
-  draw_line_text(self, idx, x, y)
+  return draw_line_text(self, idx, x, y)
 end

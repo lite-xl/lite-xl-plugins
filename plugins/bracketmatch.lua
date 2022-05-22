@@ -96,16 +96,18 @@ end
 
 local draw_line_text = DocView.draw_line_text
 
-function DocView:draw_line_text(idx, x, y)
-  draw_line_text(self, idx, x, y)
+function DocView:draw_line_text(line, x, y)
+  local lh = draw_line_text(self, line, x, y)
 
-  if self.doc == state.doc and idx == state.line2 then
+  if self.doc == state.doc and line == state.line2 then
     local color = style.bracketmatch_color or style.syntax["function"]
-    local x1 = x + self:get_col_x_offset(idx, state.col2)
-    local x2 = x + self:get_col_x_offset(idx, state.col2 + 1)
+    local x1 = x + self:get_col_x_offset(line, state.col2)
+    local x2 = x + self:get_col_x_offset(line, state.col2 + 1)
     local h = math.ceil(1 * SCALE)
     renderer.draw_rect(x1, y + self:get_line_height() - h, x2 - x1, h, color)
   end
+
+  return lh
 end
 
 

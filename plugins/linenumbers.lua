@@ -10,26 +10,27 @@ config.plugins.linenumbers = common.merge({
   relative = false
 }, config.plugins.linenumbers)
 
-local draw = DocView.draw_line_gutter
+local draw_line_gutter = DocView.draw_line_gutter
 local get_width = DocView.get_gutter_width
 
-function DocView:draw_line_gutter(idx, x, y, width)
+function DocView:draw_line_gutter(line, x, y, width)
+  local lh = self:get_line_height()
   if
     not config.plugins.linenumbers.show
     and
     not config.plugins.linenumbers.relative
   then
-    return
+    return lh
   end
 
   if config.plugins.linenumbers.relative then
 
     local color = style.line_number
-    local local_idx = idx
+    local local_idx = line
     local align = "right"
 
     local l1 = self.doc:get_selection(false)
-    if idx == l1 then
+    if line == l1 then
       color = style.line_number2
       if config.line_numbers then
         align = "center"
@@ -37,7 +38,7 @@ function DocView:draw_line_gutter(idx, x, y, width)
         local_idx = 0
       end
     else
-      local_idx = math.abs(idx - l1)
+      local_idx = math.abs(line - l1)
     end
 
     -- Fix for old version (<=1.16)
@@ -52,11 +53,12 @@ function DocView:draw_line_gutter(idx, x, y, width)
       color, local_idx, align,
       x + style.padding.x,
       y + self:get_line_text_y_offset(),
-      width,  self:get_line_height()
+      width,  lh
     )
   else
-    draw(self, idx, x, y, width)
+    draw_line_gutter(self, line, x, y, width)
   end
+  return lh
 end
 
 function DocView:get_gutter_width(...)

@@ -52,12 +52,12 @@ end
 
 local draw_line_gutter = DocView.draw_line_gutter
 
-function DocView:draw_line_gutter(idx, x, y, width)
-  if cache[self.doc] and cache[self.doc][idx] then
+function DocView:draw_line_gutter(line, x, y, width)
+  if cache[self.doc] and cache[self.doc][line] then
     local h = self:get_line_height()
     renderer.draw_rect(x, y, style.padding.x * 0.4, h, style.selection)
   end
-  draw_line_gutter(self, idx, x, y, width)
+  return draw_line_gutter(self, line, x, y, width)
 end
 
 

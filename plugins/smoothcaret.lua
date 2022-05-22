@@ -22,7 +22,7 @@ function DocView:update()
 
   local idx, v_idx = 1, 1
   for _, line, col in self.doc:get_selections() do
-    local x, y = self:get_line_screen_position(line)
+    local x, y = self:get_line_screen_position(line, col)
     -- Keep the position relative to the whole View
     -- This way scrolling won't animate the caret
     x = x + self:get_col_x_offset(line, col) + self.scroll.x
@@ -57,7 +57,7 @@ function DocView:update()
 
   -- Remove unused carets to avoid animating new ones when they are added
   for i = idx, #self.carets do
-    self.carets[idx] = nil
+    self.carets[i] = nil
   end
 
   if self.mouse_selecting ~= self.last_mouse_selecting then
