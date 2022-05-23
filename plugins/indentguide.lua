@@ -13,15 +13,15 @@ local function get_indent_info(doc)
 end
 
 
-local function get_line_spaces(doc, idx, dir)
+local function get_line_spaces(doc, line, dir)
   local _, indent_size = get_indent_info(doc)
-  local text = doc.lines[idx]
+  local text = doc.lines[line]
   if not text or #text == 1 then
     return -1
   end
   local s, e = text:find("^%s*")
   if e == #text then
-    return get_line_spaces(doc, idx + dir, dir)
+    return get_line_spaces(doc, line + dir, dir)
   end
   local n = 0
   for _,b in pairs({text:byte(s, e)}) do
@@ -31,25 +31,25 @@ local function get_line_spaces(doc, idx, dir)
 end
 
 
-local function get_line_indent_guide_spaces(doc, idx)
-  if doc.lines[idx]:find("^%s*\n") then
+local function get_line_indent_guide_spaces(doc, line)
+  if doc.lines[line]:find("^%s*\n") then
     return math.max(
-      get_line_spaces(doc, idx - 1, -1),
-      get_line_spaces(doc, idx + 1,  1))
+      get_line_spaces(doc, line - 1, -1),
+      get_line_spaces(doc, line + 1,  1))
   end
-  return get_line_spaces(doc, idx)
+  return get_line_spaces(doc, line)
 end
 
 local docview_update = DocView.update
 function DocView:update()
   docview_update(self)
 
-  local function get_indent(idx)
-    if idx < 1 or idx > #self.doc.lines then return -1 end
-    if not self.indentguide_indents[idx] then
-      self.indentguide_indents[idx] = get_line_indent_guide_spaces(self.doc, idx)
+  local function get_indent(line)
+    if line < 1 or line > #self.doc.lines then return -1 end
+    if not self.indentguide_indents[line] then
+      self.indentguide_indents[line] = get_line_indent_guide_spaces(self.doc, line)
     end
-    return self.indentguide_indents[idx]
+    return self.indentguide_indents[line]
   end
 
   self.indentguide_indents = {}
@@ -103,8 +103,8 @@ end
 
 
 local draw_line_text = DocView.draw_line_text
-function DocView:draw_line_text(idx, x, y)
-  local spaces = self.indentguide_indents[idx] or -1
+function DocView:draw_line_text(line, x, y)
+  local spaces = self.indentguide_indents[line] or -1
   local _, indent_size = get_indent_info(self.doc)
   local w = math.max(1, SCALE)
   local h = self:get_line_height()
@@ -112,12 +112,12 @@ function DocView:draw_line_text(idx, x, y)
   local space_sz = font:get_width(" ")
   for i = 0, spaces - 1, indent_size do
     local color = style.guide or style.selection
-    local active_lvl = self.indentguide_indent_active[idx] or -1
+    local active_lvl = self.indentguide_indent_active[line] or -1
     if i < active_lvl and i + indent_size >= active_lvl then
       color = style.guide_highlight or style.accent
     end
     local sw = space_sz * i
     renderer.draw_rect(math.ceil(x + sw), y, w, h, color)
   end
-  return draw_line_text(self, idx, x, y)
+  return draw_line_text(self, line, x, y)
 end
