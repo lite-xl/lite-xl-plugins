@@ -36,9 +36,8 @@ settings.type = {
   NUMBER = 2,
   TOGGLE = 3,
   SELECTION = 4,
-  LIST_NUMBERS = 5,
-  LIST_STRINGS = 6,
-  BUTTON = 7
+  LIST_STRINGS = 5,
+  BUTTON = 6
 }
 
 ---@alias settings.types
@@ -46,7 +45,6 @@ settings.type = {
 ---| 'settings.type.NUMBER'
 ---| 'settings.type.TOGGLE'
 ---| 'settings.type.SELECTION'
----| 'settings.type.LIST_NUMBERS'
 ---| 'settings.type.LIST_STRINGS'
 ---| 'settings.type.BUTTON'
 
@@ -984,6 +982,7 @@ function Settings:load_core_settings()
   end
 end
 
+---Function in charge of rendering the colors column of the color pane.
 ---@param self widget.listbox
 ---@oaram row integer
 ---@param x integer
@@ -991,6 +990,8 @@ end
 ---@param font renderer.font
 ---@param color renderer.color
 ---@param only_calc boolean
+---@return number width
+---@return number height
 local function on_color_draw(self, row, x, y, font, color, only_calc)
   local w = self:get_width() - (x - self.position.x) - style.padding.x
   local h = font:get_height()
@@ -1120,7 +1121,6 @@ function Settings:enable_plugin(plugin)
 end
 
 ---Generate all the widgets for plugin settings.
----TODO: still not fully implemented
 function Settings:load_plugin_settings()
   ---@type widget
   local pane = self.plugin_sections:get_pane("enable_disable")
@@ -1130,8 +1130,7 @@ function Settings:load_plugin_settings()
     pane = pane.container
   end
 
-  -- requires earlier access to startup process by renaming the plugin to
-  -- something like 0000-settings.lua or aaaa-settings.lua
+  -- requires earlier access to startup process
   Label(
     pane,
     "Notice: disabling plugins will not take effect until next restart"
@@ -1403,7 +1402,7 @@ end
 
 --------------------------------------------------------------------------------
 -- Disable plugins at startup, only works if this file is the first
--- required plugin by core.load_plugins()
+-- required on user module, or priority tag is obeyed by lite-xl.
 --------------------------------------------------------------------------------
 -- load custom user settings that include list of disabled plugins
 load_settings()
