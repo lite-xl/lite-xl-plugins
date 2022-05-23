@@ -25,7 +25,7 @@ function DocView:update()
     local x, y = self:get_line_screen_position(line, col)
     -- Keep the position relative to the whole View
     -- This way scrolling won't animate the caret
-    x = x + self:get_col_x_offset(line, col) + self.scroll.x
+    x = x + self.scroll.x
     y = y + self.scroll.y
 
     if not self.carets[idx] then
