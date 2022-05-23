@@ -779,6 +779,19 @@ local function merge_settings()
   end
 end
 
+---Scan all plugins to check if they define a config_spec and load it.
+local function scan_plugins_spec()
+  for plugin, conf in pairs(config.plugins) do
+    if type(conf) == "table" and conf.config_spec then
+      settings.add(
+        conf.config_spec.name,
+        conf.config_spec,
+        plugin
+      )
+    end
+  end
+end
+
 ---Called at core first run to store the default keybindings.
 local function store_default_keybindings()
   for name, _ in pairs(command.map) do
@@ -857,6 +870,10 @@ local function add_control(pane, option, plugin_name)
 
   ---@type widget
   local widget = nil
+
+  if type(option.type) == "string" then
+    option.type = settings.type[option.type:upper()]
+  end
 
   if option.type == settings.type.NUMBER then
     ---@type widget.label
@@ -1372,6 +1389,9 @@ function core.run()
 
   -- merge custom settings into config
   merge_settings()
+
+  -- append all settings defined in the plugins spec
+  scan_plugins_spec()
 
   ---@type settings.ui
   settings.ui = Settings()
