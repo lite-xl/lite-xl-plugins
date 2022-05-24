@@ -1395,7 +1395,7 @@ function Settings:update()
 end
 
 --------------------------------------------------------------------------------
--- overwrite core run to inject previously saved settings and save at exit
+-- overwrite core run to inject previously saved settings
 --------------------------------------------------------------------------------
 local core_run = core.run
 function core.run()
@@ -1429,9 +1429,6 @@ function core.run()
   end
 
   core_run()
-
-  -- save on a normal exit
-  save_settings()
 end
 
 --------------------------------------------------------------------------------
