@@ -6,15 +6,37 @@ local style = require "core.style"
 local StatusView = require "core.statusview"
 local TreeView = require "plugins.treeview"
 
+config.plugins.gitstatus = common.merge({
+  recurse_submodules = true,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Git Status",
+    {
+      label = "Recurse Submodules",
+      description = "Also retrieve git stats from submodules.",
+      path = "recurse_submodules",
+      type = "toggle",
+      default = true
+    }
+  }
+}, config.plugins.gitstatus)
+
+style.gitstatus_addition = {common.color "#587c0c"}
+style.gitstatus_modification = {common.color "#0c7d9d"}
+style.gitstatus_deletion = {common.color "#94151b"}
+
 local scan_rate = config.project_scan_rate or 5
 local cached_color_for_item = {}
 
 
--- Override TreeView's color_for_item, but first
--- stash the old one (using [] in case it is not there at all)
-local old_color_for_item = TreeView["color_for_item"]
-function TreeView:color_for_item(abs_path)
-  return cached_color_for_item[abs_path] or old_color_for_item(abs_path)
+-- Override TreeView's get_item_text to add modification color
+local treeview_get_item_text = TreeView.get_item_text
+function TreeView:get_item_text(item, active, hovered)
+  local text, font, color = treeview_get_item_text(self, item, active, hovered)
+  if cached_color_for_item[item.abs_filename] then
+    color = cached_color_for_item[item.abs_filename]
+  end
+  return text, font, color
 end
 
 
@@ -23,15 +45,6 @@ local git = {
   inserts = 0,
   deletes = 0,
 }
-
-
-config.gitstatus = {
-  recurse_submodules = true
-}
-style.gitstatus_addition = {common.color "#587c0c"}
-style.gitstatus_modification = {common.color "#0c7d9d"}
-style.gitstatus_deletion = {common.color "#94151b"}
-
 
 local function exec(cmd)
   local proc = process.start(cmd)
@@ -57,7 +70,11 @@ core.add_thread(function()
 
       -- get diff
       local diff = exec({"git", "diff", "--numstat"})
-      if config.gitstatus.recurse_submodules and system.get_file_info(".gitmodules") then
+      if
+        config.plugins.gitstatus.recurse_submodules
+        and
+        system.get_file_info(".gitmodules")
+      then
         local diff2 = exec({"git", "submodule", "foreach", "git diff --numstat"})
         diff = diff .. diff2
       end

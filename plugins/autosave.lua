@@ -9,8 +9,24 @@ local last_keypress = os.time()
 -- this exists so that we don't end up with multiple copies of the loop running at once
 local looping = false
 local on_text_change = Doc.on_text_change
--- the approximate amount of time, in seconds, that it takes to trigger an autosave
-config.plugins.autosave = common.merge({ timeout = 1 }, config.plugins.autosave)
+
+config.plugins.autosave = common.merge({
+  -- the approximate amount of time, in seconds, that it takes to trigger an autosave
+  timeout = 1,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Auto Save",
+    {
+      label = "Timeout",
+      description = "Approximate amount of time in seconds it takes to trigger an autosave.",
+      path = "timeout",
+      type = "number",
+      default = 1,
+      min = 1,
+      max = 30
+    }
+  }
+}, config.plugins.autosave)
 
 
 local function loop_for_save()

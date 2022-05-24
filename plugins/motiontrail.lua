@@ -5,7 +5,30 @@ local common = require "core.common"
 local style = require "core.style"
 local DocView = require "core.docview"
 
-config.plugins.motiontrail = common.merge({ steps = 50 }, config.plugins.motiontrail)
+config.plugins.motiontrail = common.merge({
+  enabled = true,
+  steps = 50,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Motion Trail",
+    {
+      label = "Enabled",
+      description = "Disable or enable the caret motion trail effect.",
+      path = "enabled",
+      type = "toggle",
+      default = true
+    },
+    {
+      label = "Steps",
+      description = "Amount of trail steps to generate on caret movement.",
+      path = "steps",
+      type = "number",
+      default = 50,
+      min = 10,
+      max = 100
+    },
+  }
+}, config.plugins.motiontrail)
 
 
 local function lerp(a, b, t)
@@ -16,7 +39,6 @@ end
 local function get_caret_rect(dv)
   local line, col = dv.doc:get_selection()
   local x, y = dv:get_line_screen_position(line, col)
-  x = x + dv:get_col_x_offset(line, col)
   return x, y, style.caret_width, dv:get_line_height()
 end
 
@@ -27,7 +49,9 @@ local draw = DocView.draw
 
 function DocView:draw(...)
   draw(self, ...)
-  if self ~= core.active_view then return end
+  if not config.plugins.motiontrail.enabled or self ~= core.active_view then
+    return
+  end
 
   local x, y, w, h = get_caret_rect(self)
 

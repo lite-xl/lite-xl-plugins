@@ -13,7 +13,40 @@ local Node = require "core.node"
 config.plugins.nonicons = common.merge({
   use_default_dir_icons = false,
   use_default_chevrons = false,
-  draw_tab_icons = true
+  draw_treeview_icons = true,
+  draw_tab_icons = true,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Nonicons",
+    {
+      label = "Use Default Directory Icons",
+      description = "When enabled does not use nonicon directory icons.",
+      path = "use_default_dir_icons",
+      type = "toggle",
+      default = false
+    },
+    {
+      label = "Use Default Chevrons",
+      description = "When enabled does not use nonicon expand/collapse arrow icons.",
+      path = "use_default_chevrons",
+      type = "toggle",
+      default = false
+    },
+    {
+      label = "Draw Treeview Icons",
+      description = "Enables file related icons on the treeview.",
+      path = "draw_treeview_icons",
+      type = "toggle",
+      default = true
+    },
+    {
+      label = "Draw Tab Icons",
+      description = "Adds file related icons to tabs.",
+      path = "draw_tab_icons",
+      type = "toggle",
+      default = true
+    }
+  }
 }, config.plugins.nonicons)
 
 local icon_font = renderer.font.load(USERDIR.."/fonts/nonicons.ttf", 15 * SCALE)
@@ -79,39 +112,39 @@ for k, v in pairs(known_names_icons) do
   v[1] = { common.color(v[1]) }
 end
 
--- Override function to define dir and file custom icons if setting is disabled
-if not config.plugins.nonicons.use_default_dir_icons then
-  function TreeView:get_item_icon(item, active, hovered)
-    local icon = "" -- unicode 61766
-    if item.type == "dir" then
-      icon = item.expanded and "" or "" -- unicode 61771 and 61772
-    end
-    return icon, icon_font, style.text
-  end
-end
-
--- Override function to change default icons for special extensions and names
+-- Override function to change default icons for dirs, special extensions and names
 local TreeView_get_item_icon = TreeView.get_item_icon
 function TreeView:get_item_icon(item, active, hovered)
   local icon, font, color = TreeView_get_item_icon(self, item, active, hovered)
-  local custom_icon = known_names_icons[item.name:lower()]
-  if custom_icon == nil then
-    custom_icon = extension_icons[item.name:match("^.+(%..+)$")]
-  end
-  if custom_icon ~= nil then
-    color = custom_icon[1]
-    icon = custom_icon[2]
+  if not config.plugins.nonicons.use_default_dir_icons then
+    icon = "" -- unicode 61766
     font = icon_font
+    color = style.text
+    if item.type == "dir" then
+      icon = item.expanded and "" or "" -- unicode 61771 and 61772
+    end
   end
-  if active or hovered then
-    color = style.accent
+  if config.plugins.nonicons.draw_treeview_icons then
+    local custom_icon = known_names_icons[item.name:lower()]
+    if custom_icon == nil then
+      custom_icon = extension_icons[item.name:match("^.+(%..+)$")]
+    end
+    if custom_icon ~= nil then
+      color = custom_icon[1]
+      icon = custom_icon[2]
+      font = icon_font
+    end
+    if active or hovered then
+      color = style.accent
+    end
   end
   return icon, font, color
 end
 
 -- Override function to draw chevrons if setting is disabled
-if not config.plugins.nonicons.use_default_chevrons then
-  function TreeView:draw_item_chevron(item, active, hovered, x, y, w, h)
+local TreeView_draw_item_chevron = TreeView.draw_item_chevron
+function TreeView:draw_item_chevron(item, active, hovered, x, y, w, h)
+  if not config.plugins.nonicons.use_default_chevrons then
     if item.type == "dir" then
       local chevron_icon = item.expanded and "" or ""
       local chevron_color = hovered and style.accent or style.text
@@ -119,12 +152,13 @@ if not config.plugins.nonicons.use_default_chevrons then
     end
     return chevron_width + style.padding.x/4
   end
+  return TreeView_draw_item_chevron(self, item, active, hovered, x, y, w, h)
 end
 
 -- Override function to draw icons in tabs titles if setting is enabled
-if config.plugins.nonicons.draw_tab_icons then
-  local Node_draw_tab_title = Node.draw_tab_title
-  function Node:draw_tab_title(view, font, is_active, is_hovered, x, y, w, h)
+local Node_draw_tab_title = Node.draw_tab_title
+function Node:draw_tab_title(view, font, is_active, is_hovered, x, y, w, h)
+  if config.plugins.nonicons.draw_tab_icons then
     local padx = chevron_width + style.padding.x/2
     local tx = x + padx -- Space for icon
     w = w - padx
@@ -132,5 +166,7 @@ if config.plugins.nonicons.draw_tab_icons then
     if (view == nil) or (view.doc == nil) then return end
     local item = { type = "file", name = view.doc:get_name() }
     TreeView:draw_item_icon(item, false, is_hovered, x, y, w, h)
+  else
+    Node_draw_tab_title(self, view, font, is_active, is_hovered, x, y, w, h)
   end
 end

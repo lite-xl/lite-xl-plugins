@@ -7,16 +7,29 @@ local config = require "core.config"
 local contextmenu = require "plugins.contextmenu"
 
 
-config.plugins.openselected = {}
-if not config.plugins.openselected.filemanager then
-  if PLATFORM == "Windows" then
-    config.plugins.openselected.filemanager = "start"
-  elseif PLATFORM == "Mac OS X" then
-    config.plugins.openselected.filemanager = "open"
-  else
-    config.plugins.openselected.filemanager = "xdg-open"
-  end
+local platform_filelauncher
+if PLATFORM == "Windows" then
+  platform_filelauncher = "start"
+elseif PLATFORM == "Mac OS X" then
+  platform_filelauncher = "open"
+else
+  platform_filelauncher = "xdg-open"
 end
+
+config.plugins.openselected = common.merge({
+  filelauncher = platform_filelauncher,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Open Selected Text",
+    {
+      label = "File Launcher",
+      description = "Command used to open the selected path or link externally.",
+      path = "filelauncher",
+      type = "string",
+      default = platform_filelauncher
+    }
+  }
+}, config.plugins.openselected)
 
 command.add("core.docview", {
   ["open-selected:open-selected"] = function()
@@ -38,7 +51,7 @@ command.add("core.docview", {
 
     core.log("Opening %s...", text)
 
-    system.exec(config.plugins.openselected.filemanager .. " " .. text)
+    system.exec(config.plugins.openselected.filelauncher .. " " .. text)
   end,
 })
 

@@ -11,15 +11,24 @@ config.plugins.rainbowparen = common.merge({
   enable = true
 }, config.plugins.rainbowparen)
 
+style.syntax.paren_unbalanced = style.syntax.paren_unbalanced or { common.color "#DC0408" }
+style.syntax.paren1  =  style.syntax.paren1 or { common.color "#FC6F71"}
+style.syntax.paren2  =  style.syntax.paren2 or { common.color "#fcb053"}
+style.syntax.paren3  =  style.syntax.paren3 or { common.color "#fcd476"}
+style.syntax.paren4  =  style.syntax.paren4 or { common.color "#52dab2"}
+style.syntax.paren5  =  style.syntax.paren5 or { common.color "#5a98cf"}
+
 local tokenize = tokenizer.tokenize
 local closers = {
   ["("] = ")",
   ["["] = "]",
   ["{"] = "}"
 }
+
 local function parenstyle(parenstack)
   return "paren" .. ((#parenstack % 5) + 1)
 end
+
 function tokenizer.tokenize(syntax, text, state)
   if not config.plugins.rainbowparen.enable then
     return tokenize(syntax, text, state)
@@ -62,20 +71,31 @@ function tokenizer.tokenize(syntax, text, state)
   return newres, { parenstack = parenstack, istate = istate }
 end
 
-style.syntax.paren_unbalanced = style.syntax.paren_unbalanced or { common.color "#DC0408" }
-style.syntax.paren1  =  style.syntax.paren1 or { common.color "#FC6F71"}
-style.syntax.paren2  =  style.syntax.paren2 or { common.color "#fcb053"}
-style.syntax.paren3  =  style.syntax.paren3 or { common.color "#fcd476"}
-style.syntax.paren4  =  style.syntax.paren4 or { common.color "#52dab2"}
-style.syntax.paren5  =  style.syntax.paren5 or { common.color "#5a98cf"}
+local function toggle_rainbowparen(enabled)
+  config.plugins.rainbowparen.enable = enabled
+  for _, doc in ipairs(core.docs) do
+    doc.highlighter = Highlighter(doc)
+    doc:reset_syntax()
+  end
+end
 
+-- The config specification used by the settings gui
+config.plugins.rainbowparen.config_spec = {
+  name = "Rainbow Parentheses",
+  {
+    label = "Enable",
+    description = "Activates rainbow parenthesis coloring by default.",
+    path = "enable",
+    type = "toggle",
+    default = true,
+    on_apply = function(enabled)
+      toggle_rainbowparen(enabled)
+    end
+  }
+}
 
 command.add(nil, {
   ["rainbow-parentheses:toggle"] = function()
-    config.plugins.rainbowparen.enable = not config.plugins.rainbowparen.enable
-    for _, doc in ipairs(core.docs) do
-      doc.highlighter = Highlighter(doc)
-      doc:reset_syntax()
-    end
+    toggle_rainbowparen(not config.plugins.rainbowparen.enable)
   end
 })

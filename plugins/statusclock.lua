@@ -6,8 +6,43 @@ local common = require "core.common"
 local StatusView = require "core.statusview"
 
 config.plugins.statusclock = common.merge({
+  enabled = true,
   time_format = "%H:%M:%S",
-  date_format = "%A, %d %B %Y"
+  date_format = "%A, %d %B %Y",
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Status Clock",
+    {
+      label = "Enabled",
+      description = "Show or hide the clock from the status bar.",
+      path = "enabled",
+      type = "toggle",
+      default = true,
+      on_apply = function(enabled)
+        core.add_thread(function()
+          if enabled then
+            core.status_view:get_item("status:clock"):show()
+          else
+            core.status_view:get_item("status:clock"):hide()
+          end
+        end)
+      end
+    },
+    {
+      label = "Time Format",
+      description = "Time specification defined with Lua date/time place holders.",
+      path = "time_format",
+      type = "string",
+      default = "%H:%M:%S"
+    },
+    {
+      label = "Date Format",
+      description = "Date specification defined with Lua date/time place holders.",
+      path = "date_format",
+      type = "string",
+      default = "%A, %d %B %Y",
+    }
+  }
 }, config.plugins.statusclock)
 
 local time_data = {

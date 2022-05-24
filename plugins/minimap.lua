@@ -7,6 +7,19 @@ local style = require "core.style"
 local DocView = require "core.docview"
 local Object = require "core.object"
 
+-- Sample configurations:
+-- full width:
+-- config.plugins.minimap.highlight_width = 100
+-- config.plugins.minimap.gutter_width = 0
+-- left side:
+-- config.plugins.minimap.highlight_align = 'left'
+-- config.plugins.minimap.highlight_width = 3
+-- config.plugins.minimap.gutter_width = 4
+-- right side:
+-- config.plugins.minimap.highlight_align = 'right'
+-- config.plugins.minimap.highlight_width = 5
+-- config.plugins.minimap.gutter_width = 0
+
 -- General plugin settings
 config.plugins.minimap = common.merge({
 	enabled = true,
@@ -17,28 +30,127 @@ config.plugins.minimap = common.merge({
 	-- how many spaces one tab is equivalent to
 	tab_width = 4,
 	draw_background = true,
-
 	-- you can override these colors
 	selection_color = nil,
 	caret_color = nil,
-
 	-- If other plugins provide per-line highlights,
 	-- this controls the placement. (e.g. gitdiff_highlight)
 	highlight_align = 'left',
 	highlight_width = 3,
 	gutter_width = 5,
-	-- try these values:
-	-- full width:
-	-- config.plugins.minimap.highlight_width = 100
-	-- config.plugins.minimap.gutter_width = 0
-	-- left side:
-	-- config.plugins.minimap.highlight_align = 'left'
-	-- config.plugins.minimap.highlight_width = 3
-	-- config.plugins.minimap.gutter_width = 4
-	-- right side:
-	-- config.plugins.minimap.highlight_align = 'right'
-	-- config.plugins.minimap.highlight_width = 5
-	-- config.plugins.minimap.gutter_width = 0
+	-- The config specification used by the settings gui
+  config_spec = {
+    name = "Mini Map",
+    {
+      label = "Enabled",
+      description = "Activate the minimap by default.",
+      path = "enabled",
+      type = "toggle",
+      default = true
+    },
+    {
+      label = "Width",
+      description = "Width of the minimap in pixels.",
+      path = "width",
+      type = "number",
+      default = 100,
+      min = 50,
+      max = 1000
+    },
+    {
+      label = "Instant Scroll",
+      description = "When enabled disables the scrolling animation.",
+      path = "instant_scroll",
+      type = "toggle",
+      default = false
+    },
+    {
+      label = "Syntax Highlighting",
+      description = "Disable to improve performance.",
+      path = "syntax_highlight",
+      type = "toggle",
+      default = true
+    },
+    {
+      label = "Scale",
+      description = "Size of the minimap using a scaling factor.",
+      path = "scale",
+      type = "number",
+      default = 1,
+      min = 0.5,
+      max = 10,
+      step = 0.1
+    },
+    {
+      label = "Tabs Width",
+      description = "The amount of spaces that represent a tab.",
+      path = "tab_width",
+      type = "number",
+      default = 4,
+      min = 1,
+      max = 8
+    },
+    {
+      label = "Draw Background",
+      description = "When disabled makes the minimap transparent.",
+      path = "draw_background",
+      type = "toggle",
+      default = true
+    },
+    {
+      label = "Selection Color",
+      description = "Background color of selected text in html notation eg: #FFFFFF. Leave empty to use default.",
+      path = "selection_color_html",
+      type = "string",
+      on_apply = function(value)
+        if value and value:match("#%x%x%x%x%x%x") then
+          config.plugins.minimap.selection_color = { common.color(value) }
+        else
+          config.plugins.minimap.selection_color = nil
+        end
+      end
+    },
+    {
+      label = "Caret Color",
+      description = "Background color of active line in html notation eg: #FFFFFF. Leave empty to use default.",
+      path = "caret_color_html",
+      type = "string",
+      on_apply = function(value)
+        if value and value:match("#%x%x%x%x%x%x") then
+          config.plugins.minimap.caret_color = { common.color(value) }
+        else
+          config.plugins.minimap.caret_color = nil
+        end
+      end
+    },
+    {
+      label = "Highlight Alignment",
+      path = "highlight_align",
+      type = "selection",
+      default = "left",
+      values = {
+        {"Left", "left"},
+        {"Right", "right"}
+      }
+    },
+    {
+      label = "Highlight Width",
+      path = "highlight_width",
+      type = "number",
+      default = 3,
+      min = 0,
+      max = 50
+    },
+    {
+      label = "Gutter Width",
+      description = "Left padding of the minimap.",
+      path = "gutter_width",
+      type = "number",
+      default = 5,
+      min = 0,
+      max = 50
+    },
+  }
 }, config.plugins.minimap)
 
 -- Configure size for rendering each char in the minimap

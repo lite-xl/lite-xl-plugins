@@ -5,7 +5,19 @@ local config = require "core.config"
 local command = require "core.command"
 
 config.plugins.indent_convert = common.merge({
-  update_indent_type = true -- set to false to avoid updating the document indent type
+  -- set to false to avoid updating the document indent type
+  update_indent_type = true,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Indent Convert",
+    {
+      label = "Update Indent Type",
+      description = "Disable to avoid updating the document indent type.",
+      path = "update_indent_type",
+      type = "toggle",
+      default = true
+    }
+  }
 }, config.plugins.indent_convert)
 
 local zero_pattern = _VERSION == "Lua 5.1" and "%z" or "\0"

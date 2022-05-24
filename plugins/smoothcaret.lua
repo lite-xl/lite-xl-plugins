@@ -5,11 +5,37 @@ local style = require "core.style"
 local common = require "core.common"
 local DocView = require "core.docview"
 
-config.plugins.smoothcaret = common.merge({ rate = 0.65 }, config.plugins.smoothcaret)
+config.plugins.smoothcaret = common.merge({
+  enabled = true,
+  rate = 0.65,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Smooth Caret",
+    {
+      label = "Enabled",
+      description = "Disable or enable the smooth caret animation.",
+      path = "enabled",
+      type = "toggle",
+      default = true
+    },
+    {
+      label = "Rate",
+      description = "Speed of the animation.",
+      path = "rate",
+      type = "number",
+      default = 0.65,
+      min = 0.2,
+      max = 1.0,
+      step = 0.05
+    },
+  }
+}, config.plugins.smoothcaret)
 
 local docview_update = DocView.update
 function DocView:update()
   docview_update(self)
+
+  if not config.plugins.smoothcaret.enabled then return end
 
   local minline, maxline = self:get_visible_line_range()
 
@@ -73,7 +99,13 @@ function DocView:update()
   self.caret_idx = 1
 end
 
+local docview_draw_caret = DocView.draw_caret
 function DocView:draw_caret(x, y)
+  if not config.plugins.smoothcaret.enabled then
+    docview_draw_caret(self, x, y)
+    return
+  end
+
   local c = self.visible_carets[self.caret_idx] or { current = { x = x, y = y } }
   local lh = self:get_line_height()
 

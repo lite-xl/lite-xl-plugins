@@ -9,4 +9,3 @@ command.add("core.docview", {
     end)
   end,
 })
-

@@ -10,7 +10,35 @@ local View = require "core.view"
 config.plugins.bigclock = common.merge({
   time_format = "%H:%M:%S",
   date_format = "%A, %d %B %Y",
-  scale = 1
+  scale = 1,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Big Clock",
+    {
+      label = "Time Format",
+      description = "Time specification defined with Lua date/time place holders.",
+      path = "time_format",
+      type = "string",
+      default = "%H:%M:%S"
+    },
+    {
+      label = "Date Format",
+      description = "Date specification defined with Lua date/time place holders.",
+      path = "date_format",
+      type = "string",
+      default = "%A, %d %B %Y",
+    },
+    {
+      label = "Scale",
+      description = "Size of the clock relative to screen.",
+      path = "scale",
+      type = "number",
+      default = 1,
+      min = 0.5,
+      max = 3.0,
+      step = 0.1
+    }
+  }
 }, config.plugins.bigclock)
 
 

@@ -7,7 +7,25 @@ local DocView = require "core.docview"
 
 config.plugins.autowrap = common.merge({
   enable = false,
-  files = { "%.md$", "%.txt$" }
+  files = { "%.md$", "%.txt$" },
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Auto Wrap",
+    {
+      label = "Enable",
+      description = "Activates text auto wrapping by default.",
+      path = "enable",
+      type = "toggle",
+      default = false
+    },
+    {
+      label = "Files",
+      description = "List of Lua patterns matching files to auto wrap.",
+      path = "files",
+      type = "list_strings",
+      default = { "%.md$", "%.txt$" },
+    }
+  }
 }, config.plugins.autowrap)
 
 

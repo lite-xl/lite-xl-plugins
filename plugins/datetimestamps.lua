@@ -29,7 +29,32 @@ from https://www.lua.org/pil/22.1.html
 config.plugins.datetimestamps = common.merge({
   format_datestamp = "%Y%m%d",
   format_datetimestamp = "%Y%m%d_%H%M%S",
-  format_timestamp = "%H%M%S"
+  format_timestamp = "%H%M%S",
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Date and Time Stamps",
+    {
+      label = "Date",
+      description = "Date specification defined with Lua date/time place holders.",
+      path = "format_datestamp",
+      type = "string",
+      default = "%Y%m%d"
+    },
+    {
+      label = "Time",
+      description = "Time specification defined with Lua date/time place holders.",
+      path = "format_timestamp",
+      type = "string",
+      default = "%H%M%S"
+    },
+    {
+      label = "Date and Time",
+      description = "Date and time specification defined with Lua date/time place holders.",
+      path = "format_datetimestamp",
+      type = "string",
+      default = "%Y%m%d_%H%M%S"
+    }
+  }
 }, config.plugins.datetimestamps)
 
 local function datestamp()
