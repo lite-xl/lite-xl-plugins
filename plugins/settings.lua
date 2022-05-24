@@ -893,7 +893,7 @@ local function add_control(pane, option, plugin_name)
     ---@type widget.label
     Label(pane, option.label .. ":")
     ---@type widget.textbox
-    local string = TextBox(pane, option_value)
+    local string = TextBox(pane, option_value or "")
     widget = string
     found = true
 
@@ -966,14 +966,18 @@ local function add_control(pane, option, plugin_name)
     end
   end
 
-  if option.description and found then
+  if (option.description or option.default) and found then
+    local text = option.description or ""
     local default = ""
     local default_type = type(option.default)
     if default_type ~= "table" and default_type ~= "nil" then
-      default = string.format(" (default: %s)", option.default)
+      if text ~= "" then
+        text = text .. " "
+      end
+      default = string.format("(default: %s)", option.default)
     end
      ---@type widget.label
-    local description = Label(pane, option.description .. default)
+    local description = Label(pane, text .. default)
     description.desc = true
   end
 end
