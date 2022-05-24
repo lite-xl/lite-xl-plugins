@@ -99,12 +99,17 @@ settings.option = {
 ---@param section string
 ---@param options settings.option[]
 ---@param plugin_name? string Optional name of plugin
-function settings.add(section, options, plugin_name)
+---@param overwrite? boolean Overwrite previous section options
+function settings.add(section, options, plugin_name, overwrite)
   local category = ""
   if plugin_name ~= nil then
     category = "plugins"
   else
     category = "core"
+  end
+
+  if overwrite and settings[category][section] then
+    settings[category][section] = {}
   end
 
   if not settings[category][section] then
@@ -1099,6 +1104,11 @@ function Settings:enable_plugin(plugin)
   end
 
   require("plugins." .. plugin)
+
+  if config.plugins[plugin] and config.plugins[plugin].config_spec then
+    local conf = config.plugins[plugin].config_spec
+    settings.add(conf.name, conf, plugin, true)
+  end
 
   for _, section in ipairs(settings.plugin_sections) do
     local plugins = settings.plugins[section]
