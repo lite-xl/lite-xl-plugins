@@ -1387,11 +1387,11 @@ local core_run = core.run
 function core.run()
   store_default_keybindings()
 
-  -- merge custom settings into config
-  merge_settings()
-
   -- append all settings defined in the plugins spec
   scan_plugins_spec()
+
+  -- merge custom settings into config
+  merge_settings()
 
   ---@type settings.ui
   settings.ui = Settings()
