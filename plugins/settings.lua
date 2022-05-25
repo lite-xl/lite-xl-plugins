@@ -689,6 +689,15 @@ local function apply_keybinding(cmd, bindings, skip_save)
   end
 
   if #bindings > 0 then
+    if
+      not skip_save
+      and
+      settings.config.custom_keybindings
+      and
+      settings.config.custom_keybindings[cmd]
+    then
+      settings.config.custom_keybindings[cmd] = {}
+    end
     local shortcuts = ""
     for _, binding in ipairs(bindings) do
       if not binding:match("%+$") and binding ~= "" and binding ~= "none" then
