@@ -8,7 +8,7 @@ local tokenizer = require "core.tokenizer"
 local Highlighter = require "core.doc.highlighter"
 
 config.plugins.rainbowparen = common.merge({
-  enable = true
+  enabled = true
 }, config.plugins.rainbowparen)
 
 style.syntax.paren_unbalanced = style.syntax.paren_unbalanced or { common.color "#DC0408" }
@@ -30,7 +30,7 @@ local function parenstyle(parenstack)
 end
 
 function tokenizer.tokenize(syntax, text, state)
-  if not config.plugins.rainbowparen.enable then
+  if not config.plugins.rainbowparen.enabled then
     return tokenize(syntax, text, state)
   end
   state = state or {}
@@ -72,7 +72,7 @@ function tokenizer.tokenize(syntax, text, state)
 end
 
 local function toggle_rainbowparen(enabled)
-  config.plugins.rainbowparen.enable = enabled
+  config.plugins.rainbowparen.enabled = enabled
   for _, doc in ipairs(core.docs) do
     doc.highlighter = Highlighter(doc)
     doc:reset_syntax()
@@ -85,7 +85,7 @@ config.plugins.rainbowparen.config_spec = {
   {
     label = "Enable",
     description = "Activates rainbow parenthesis coloring by default.",
-    path = "enable",
+    path = "enabled",
     type = "toggle",
     default = true,
     on_apply = function(enabled)
@@ -96,6 +96,6 @@ config.plugins.rainbowparen.config_spec = {
 
 command.add(nil, {
   ["rainbow-parentheses:toggle"] = function()
-    toggle_rainbowparen(not config.plugins.rainbowparen.enable)
+    toggle_rainbowparen(not config.plugins.rainbowparen.enabled)
   end
 })

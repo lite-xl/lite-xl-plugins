@@ -8,7 +8,7 @@ local treeview = require "plugins.treeview"
 local DocView = require "core.docview"
 
 config.plugins.centerdoc = common.merge({
-  enable = true,
+  enabled = true,
   zen_mode = false
 }, config.plugins.centerdoc)
 
@@ -18,7 +18,7 @@ local get_gutter_width = DocView.get_gutter_width
 
 function DocView:draw_line_gutter(line, x, y, width)
   local lh
-  if not config.plugins.centerdoc.enable then
+  if not config.plugins.centerdoc.enabled then
     lh = draw_line_gutter(self, line, x, y, width)
   else
     local real_gutter_width = get_gutter_width(self)
@@ -30,7 +30,7 @@ end
 
 
 function DocView:get_gutter_width()
-  if not config.plugins.centerdoc.enable then
+  if not config.plugins.centerdoc.enabled then
     return get_gutter_width(self)
   else
     local real_gutter_width = get_gutter_width(self)
@@ -52,12 +52,12 @@ local function toggle_zen_mode(enabled)
     previous_treeview_status = treeview.visible
     previous_statusbar_status = core.status_view.visible
 
-    config.plugins.centerdoc.enable = true
+    config.plugins.centerdoc.enabled = true
     system.set_window_mode("fullscreen")
     treeview.visible = false
     command.perform "status-bar:hide"
   else
-    config.plugins.centerdoc.enable = false
+    config.plugins.centerdoc.enabled = false
     system.set_window_mode(previous_win_status)
     treeview.visible = previous_treeview_status
     core.status_view.visible = previous_statusbar_status
@@ -72,7 +72,7 @@ config.plugins.centerdoc.config_spec = {
   {
     label = "Enable",
     description = "Activates document centering by default.",
-    path = "enable",
+    path = "enabled",
     type = "toggle",
     default = true
   },
@@ -98,7 +98,7 @@ config.plugins.centerdoc.config_spec = {
 
 command.add(nil, {
   ["center-doc:toggle"] = function()
-    config.plugins.centerdoc.enable = not config.plugins.centerdoc.enable
+    config.plugins.centerdoc.enabled = not config.plugins.centerdoc.enabled
   end,
   ["center-doc:zen-mode-toggle"] = function()
     toggle_zen_mode(not config.plugins.centerdoc.zen_mode)

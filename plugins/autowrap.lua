@@ -6,7 +6,7 @@ local common = require "core.common"
 local DocView = require "core.docview"
 
 config.plugins.autowrap = common.merge({
-  enable = false,
+  enabled = false,
   files = { "%.md$", "%.txt$" },
   -- The config specification used by the settings gui
   config_spec = {
@@ -14,7 +14,7 @@ config.plugins.autowrap = common.merge({
     {
       label = "Enable",
       description = "Activates text auto wrapping by default.",
-      path = "enable",
+      path = "enabled",
       type = "toggle",
       default = false
     },
@@ -34,7 +34,7 @@ local on_text_input = DocView.on_text_input
 DocView.on_text_input = function(self, ...)
   on_text_input(self, ...)
 
-  if not config.plugins.autowrap.enable then return end
+  if not config.plugins.autowrap.enabled then return end
 
   -- early-exit if the filename does not match a file type pattern
   local filename = self.doc.filename or ""
@@ -61,8 +61,8 @@ end
 
 command.add(nil, {
   ["auto-wrap:toggle"] = function()
-    config.plugins.autowrap.enable = not config.plugins.autowrap.enable
-    if config.plugins.autowrap.enable then
+    config.plugins.autowrap.enabled = not config.plugins.autowrap.enabled
+    if config.plugins.autowrap.enabled then
       core.log("Auto wrap: on")
     else
       core.log("Auto wrap: off")
