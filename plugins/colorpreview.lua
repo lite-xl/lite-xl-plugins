@@ -5,7 +5,7 @@ local DocView = require "core.docview"
 
 
 config.plugins.colorpreview = common.merge({
-  enabled = false,
+  enabled = true,
   -- The config specification used by the settings gui
   config_spec = {
     name = "Color Preview",
@@ -14,7 +14,7 @@ config.plugins.colorpreview = common.merge({
       description = "Enable or disable the color preview feature.",
       path = "enabled",
       type = "toggle",
-      default = false
+      default = true
     }
   }
 }, config.plugins.colorpreview)
