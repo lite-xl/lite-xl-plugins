@@ -11,11 +11,19 @@ local looping = false
 local on_text_change = Doc.on_text_change
 
 config.plugins.autosave = common.merge({
+  enabled = false,
   -- the approximate amount of time, in seconds, that it takes to trigger an autosave
   timeout = 1,
   -- The config specification used by the settings gui
   config_spec = {
     name = "Auto Save",
+    {
+      label = "Enable",
+      description = "Enable or disable the auto save feature.",
+      path = "enabled",
+      type = "toggle",
+      default = false
+    },
     {
       label = "Timeout",
       description = "Approximate amount of time in seconds it takes to trigger an autosave.",
@@ -55,7 +63,7 @@ end
 
 function Doc:on_text_change(type)
   -- check if file is saved
-  if self.filename then
+  if config.plugins.autosave.enabled and self.filename then
     updatepress()
   end
   return on_text_change(self, type)
