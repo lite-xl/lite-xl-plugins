@@ -1,7 +1,23 @@
 -- mod-version:3 --lite-xl 2.1
+local config = require "core.config"
 local common = require "core.common"
 local DocView = require "core.docview"
 
+
+config.plugins.colorpreview = common.merge({
+  enabled = false,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Color Preview",
+    {
+      label = "Enable",
+      description = "Enable or disable the color preview feature.",
+      path = "enabled",
+      type = "toggle",
+      default = false
+    }
+  }
+}, config.plugins.colorpreview)
 
 local white = { common.color "#ffffff" }
 local black = { common.color "#000000" }
@@ -56,8 +72,17 @@ local draw_line_text = DocView.draw_line_text
 
 function DocView:draw_line_text(line, x, y)
   local lh = draw_line_text(self, line, x, y)
-  draw_color_previews(self, line, x, y, "#(%x%x)(%x%x)(%x%x)(%x?%x?)%f[%W]",        16)
-  draw_color_previews(self, line, x, y, "#(%x)(%x)(%x)%f[%W]",              16, true) -- support #fff css format
-  draw_color_previews(self, line, x, y, "rgba?%((%d+)%D+(%d+)%D+(%d+)[%s,]-([%.%d]-)%s-%)", nil)
+  if config.plugins.colorpreview.enabled then
+    draw_color_previews(self, line, x, y,
+      "#(%x%x)(%x%x)(%x%x)(%x?%x?)%f[%W]",
+      16
+    )
+    -- support #fff css format
+    draw_color_previews(self, line, x, y, "#(%x)(%x)(%x)%f[%W]", 16, true)
+    draw_color_previews(self, line, x, y,
+      "rgba?%((%d+)%D+(%d+)%D+(%d+)[%s,]-([%.%d]-)%s-%)",
+      nil
+    )
+  end
   return lh
 end
