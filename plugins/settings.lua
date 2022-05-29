@@ -1071,6 +1071,7 @@ function Settings:load_color_settings()
   function listbox:on_row_click(idx, data)
     core.reload_module("colors." .. data.name)
     settings.config.theme = data.name
+    save_settings()
   end
 end
 
