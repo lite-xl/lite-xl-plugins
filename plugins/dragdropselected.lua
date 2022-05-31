@@ -1,4 +1,4 @@
--- mod-version:3 --lite-xl 2.1
+-- mod-version:3
 --[[
     dragdropselected.lua
     provides basic drag and drop of selected text (in same document)

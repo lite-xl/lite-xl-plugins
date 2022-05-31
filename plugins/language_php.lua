@@ -1,4 +1,4 @@
--- mod-version:3 --lite-xl 2.1
+-- mod-version:3
 --[[
   language_php.lua
   provides php syntax support allowing mixed html, css and js

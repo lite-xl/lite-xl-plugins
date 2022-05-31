@@ -1,4 +1,4 @@
--- mod-version:3 --lite-xl 2.1
+-- mod-version:3
 -- original implementation by AqilCont
 local core = require "core"
 local config = require "core.config"

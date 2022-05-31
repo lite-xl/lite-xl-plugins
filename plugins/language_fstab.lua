@@ -1,4 +1,4 @@
--- mod-version:3 --lite-xl 2.1
+-- mod-version:3
 
 local syntax = require "core.syntax"
 
@@ -7,7 +7,7 @@ syntax.add {
   files = { "fstab" },
   comment = '#',
   patterns = {
-    -- Only lines that start with a # are comments; you can have #'s in fuse 
+    -- Only lines that start with a # are comments; you can have #'s in fuse
     -- filesystem strings that aren't comments, so shouldn't be highlighted as such.
     { regex   = "^#.*$",                    type = "comment" },
     { pattern = "[=/:.,]+",                 type = "operator" },
@@ -45,7 +45,7 @@ syntax.add {
 
     ["LABEL"] = "keyword",
     ["UUID"] = "keyword",
-    
+
     -- filesystems
     ["aufs"] = "keyword2",
     ["autofs"] = "keyword2",
