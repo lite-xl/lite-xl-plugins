@@ -1411,15 +1411,6 @@ local core_run = core.run
 function core.run()
   store_default_keybindings()
 
-  -- append all settings defined in the plugins spec
-  scan_plugins_spec()
-
-  -- merge custom settings into config
-  merge_settings()
-
-  ---@type settings.ui
-  settings.ui = Settings()
-
   -- load plugins disabled by default and enabled by user
   if settings.config.enabled_plugins then
     for name, _ in pairs(settings.config.enabled_plugins) do
@@ -1428,10 +1419,19 @@ function core.run()
         and
         not config.plugins[name]
       then
-        settings.ui:enable_plugin(name)
+        require("plugins." .. name)
       end
     end
   end
+
+  -- append all settings defined in the plugins spec
+  scan_plugins_spec()
+
+  -- merge custom settings into config
+  merge_settings()
+
+  ---@type settings.ui
+  settings.ui = Settings()
 
   -- apply user chosen color theme
   if settings.config.theme then
