@@ -230,16 +230,17 @@ end
 
 local draw_line_text = DocView.draw_line_text
 
-function DocView:draw_line_text(idx, x, y)
-  draw_line_text(self, idx, x, y)
+function DocView:draw_line_text(line, x, y)
+  local lh = draw_line_text(self, line, x, y)
   if self.doc == state.doc and state.line2 then
-    if idx == state.line2 then
-      draw_decoration(self, x, y, idx, state.col2)
+    if line == state.line2 then
+      draw_decoration(self, x, y, line, state.col2)
     end
-    if idx == state.line and config.plugins.bracketmatch.highlight_both then
-      draw_decoration(self, x, y, idx, state.col + select_adj - 1)
+    if line == state.line and config.plugins.bracketmatch.highlight_both then
+      draw_decoration(self, x, y, line, state.col + select_adj - 1)
     end
   end
+  return lh
 end
 
 
