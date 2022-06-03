@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 
 local style = require "core.style"
 local common = require "core.common"

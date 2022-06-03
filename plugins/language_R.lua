@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local syntax = require "core.syntax"
 
 syntax.add{
@@ -15,7 +15,7 @@ syntax.add{
         {pattern = "0x[%da-fA-F]+", type = "number"},
         {pattern = "-?%d+[%d%.eE]*", type = "number"},
         {pattern = "-?%.?%d+", type = "number"},
-    
+
     },
     symbols = {
         ["TRUE"] = "literal",

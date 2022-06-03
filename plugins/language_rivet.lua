@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 
 -- Syntax highlighting for the Rivet programming language.
 -- by StunxFS :)

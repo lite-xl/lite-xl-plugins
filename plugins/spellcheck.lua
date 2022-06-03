@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local core = require "core"
 local style = require "core.style"
 local config = require "core.config"
@@ -7,33 +7,42 @@ local common = require "core.common"
 local DocView = require "core.docview"
 local Doc = require "core.doc"
 
-config.plugins.spellcheck = {}
-config.plugins.spellcheck.files = { "%.txt$", "%.md$", "%.markdown$" }
+local platform_dictionary_file
 if PLATFORM == "Windows" then
-  config.plugins.spellcheck.dictionary_file = EXEDIR .. "/words.txt"
+  platform_dictionary_file = EXEDIR .. "/words.txt"
 else
-  config.plugins.spellcheck.dictionary_file = "/usr/share/dict/words"
+  platform_dictionary_file = "/usr/share/dict/words"
 end
 
+config.plugins.spellcheck = common.merge({
+  enabled = true,
+  files = { "%.txt$", "%.md$", "%.markdown$" },
+  dictionary_file = platform_dictionary_file
+}, config.plugins.spellcheck)
 
 local last_input_time = 0
 local word_pattern = "%a+"
 local words
 
-core.add_thread(function()
-  local t = {}
-  local i = 0
-  for line in io.lines(config.plugins.spellcheck.dictionary_file) do
-    for word in line:gmatch(word_pattern) do
-      t[word:lower()] = true
+local function load_dictionary()
+  core.add_thread(function()
+    local t = {}
+    local i = 0
+    for line in io.lines(config.plugins.spellcheck.dictionary_file) do
+      for word in line:gmatch(word_pattern) do
+        t[word:lower()] = true
+      end
+      i = i + 1
+      if i % 1000 == 0 then coroutine.yield() end
     end
-    i = i + 1
-    if i % 1000 == 0 then coroutine.yield() end
-  end
-  words = t
-  core.redraw = true
-  core.log_quiet("Finished loading dictionary file: \"%s\"", config.plugins.spellcheck.dictionary_file)
-end)
+    words = t
+    core.redraw = true
+    core.log_quiet(
+      "Finished loading dictionary file: \"%s\"",
+      config.plugins.spellcheck.dictionary_file
+    )
+  end)
+end
 
 
 local function matches_any(filename, ptns)
@@ -62,11 +71,16 @@ end
 local draw_line_text = DocView.draw_line_text
 
 function DocView:draw_line_text(idx, x, y)
-  draw_line_text(self, idx, x, y)
+  local lh = draw_line_text(self, idx, x, y)
 
-  if not words
-  or not matches_any(self.doc.filename or "", config.plugins.spellcheck.files) then
-    return
+  if
+    not config.plugins.spellcheck.enabled
+    or
+    not words
+    or
+    not matches_any(self.doc.filename or "", config.plugins.spellcheck.files)
+  then
+    return lh
   end
 
   local s, e = 0, 0
@@ -78,12 +92,13 @@ function DocView:draw_line_text(idx, x, y)
     local word = text:sub(s, e):lower()
     if not words[word] and not active_word(self.doc, idx, e + 1) then
       local color = style.spellcheck_error or style.syntax.keyword2
-      local x1 = x + self:get_col_x_offset(idx, s)
-      local x2 = x + self:get_col_x_offset(idx, e + 1)
+      local x1, y1 = self:get_line_screen_position(idx, s)
+      local x2, y2 = self:get_line_screen_position(idx, e + 1)
       local h = math.ceil(1 * SCALE)
-      renderer.draw_rect(x1, y + self:get_line_height() - h, x2 - x1, h, color)
+      renderer.draw_rect(x1, y1 + self:get_line_height() - h, x2 - x1, h, color)
     end
   end
+  return lh
 end
 
 
@@ -112,7 +127,42 @@ local function compare_words(word1, word2)
 end
 
 
+-- The config specification used by the settings gui
+config.plugins.spellcheck.config_spec = {
+  name = "Spell Check",
+  {
+    label = "Enabled",
+    description = "Disable or enable spell checking.",
+    path = "enabled",
+    type = "toggle",
+    default = true
+  },
+  {
+    label = "Files",
+    description = "List of Lua patterns matching files to spell check.",
+    path = "files",
+    type = "list_strings",
+    default = { "%.txt$", "%.md$", "%.markdown$" }
+  },
+  {
+    label = "Dictionary File",
+    description = "Path to a text file that contains a list of dictionary words.",
+    path = "dictionary_file",
+    type = "string",
+    default = platform_dictionary_file,
+    on_apply = function()
+      load_dictionary()
+    end
+  }
+}
+
+load_dictionary()
+
 command.add("core.docview", {
+
+  ["spell-check:toggle"] = function()
+    config.plugins.spellcheck.enabled = not config.plugins.spellcheck.enabled
+  end,
 
   ["spell-check:add-to-dictionary"] = function()
     local word = get_word_at_caret()
@@ -178,4 +228,11 @@ command.add("core.docview", {
     end)
   end,
 
+})
+
+local contextmenu = require "plugins.contextmenu"
+contextmenu:register("core.docview", {
+  contextmenu.DIVIDER,
+  { text = "View Suggestions",  command = "spell-check:replace" },
+  { text = "Add to Dictionary", command = "spell-check:add-to-dictionary" }
 })

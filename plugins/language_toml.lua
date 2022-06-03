@@ -1,4 +1,4 @@
--- mod-version:2
+-- mod-version:3
 
 local syntax = require "core.syntax"
 

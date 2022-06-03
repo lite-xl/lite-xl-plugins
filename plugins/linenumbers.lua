@@ -1,26 +1,50 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local config = require "core.config"
 local style = require "core.style"
 local DocView = require "core.docview"
 local common = require "core.common"
 local command = require "core.command"
 
-local draw = DocView.draw_line_gutter
+config.plugins.linenumbers = common.merge({
+  show = true,
+  relative = false,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Line Numbers",
+    {
+      label = "Show Numbers",
+      description = "Display or hide the line numbers.",
+      path = "show",
+      type = "toggle",
+      default = true
+    },
+    {
+      label = "Relative Line Numbers",
+      description = "Display relative line numbers starting from active line.",
+      path = "relative",
+      type = "toggle",
+      default = false
+    }
+  }
+}, config.plugins.linenumbers)
+
+local draw_line_gutter = DocView.draw_line_gutter
 local get_width = DocView.get_gutter_width
 
-function DocView:draw_line_gutter(idx, x, y, width)
-  if not config.line_numbers and not config.relative_line_numbers then
-    return
+function DocView:draw_line_gutter(line, x, y, width)
+  local lh = self:get_line_height()
+  if not config.plugins.linenumbers.show then
+    return lh
   end
 
-  if config.relative_line_numbers then
+  if config.plugins.linenumbers.relative then
 
     local color = style.line_number
-    local local_idx = idx
+    local local_idx = line
     local align = "right"
 
     local l1 = self.doc:get_selection(false)
-    if idx == l1 then
+    if line == l1 then
       color = style.line_number2
       if config.line_numbers then
         align = "center"
@@ -28,7 +52,7 @@ function DocView:draw_line_gutter(idx, x, y, width)
         local_idx = 0
       end
     else
-      local_idx = math.abs(idx - l1)
+      local_idx = math.abs(line - l1)
     end
 
     -- Fix for old version (<=1.16)
@@ -43,15 +67,20 @@ function DocView:draw_line_gutter(idx, x, y, width)
       color, local_idx, align,
       x + style.padding.x,
       y + self:get_line_text_y_offset(),
-      width,  self:get_line_height()
+      width,  lh
     )
   else
-    draw(self, idx, x, y, width)
+    draw_line_gutter(self, line, x, y, width)
   end
+  return lh
 end
 
 function DocView:get_gutter_width(...)
-  if not config.line_numbers and not config.relative_line_numbers then
+  if
+    not config.plugins.linenumbers.show
+    and
+    not config.plugins.linenumbers.relative
+  then
     return style.padding.x
   else
     return get_width(self, ...)
@@ -60,26 +89,26 @@ end
 
 command.add(nil, {
   ["line-numbers:toggle"]  = function()
-    config.line_numbers = not config.line_numbers
+    config.plugins.linenumbers.show = not config.plugins.linenumbers.show
   end,
 
   ["line-numbers:disable"] = function()
-    config.line_numbers = false
+    config.plugins.linenumbers.show = false
   end,
 
   ["line-numbers:enable"]  = function()
-    config.line_numbers = true
+    config.plugins.linenumbers.show = true
   end,
 
   ["relative-line-numbers:toggle"]  = function()
-    config.relative_line_numbers = not config.relative_line_numbers
+    config.plugins.linenumbers.relative = not config.plugins.linenumbers.relative
   end,
 
   ["relative-line-numbers:enable"]  = function()
-    config.relative_line_numbers = true
+    config.plugins.linenumbers.relative = true
   end,
 
   ["relative-line-numbers:disable"]  = function()
-    config.relative_line_numbers = false
+    config.plugins.linenumbers.relative = false
   end
 })

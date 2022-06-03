@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local syntax = require "core.syntax"
 
 syntax.add {
@@ -46,7 +46,7 @@ syntax.add {
     ["string"] = "keyword2",
     ["any"] = "keyword2",
     ["void"] = "keyword2",
-  
+
     ["is"] = "keyword",
     ["typeof"] = "keyword",
     ["var"] = "keyword",
@@ -59,7 +59,7 @@ syntax.add {
 
     ["not"] = "operator",
     ["and"] = "operator",
-    ["or"] = "operator", 
+    ["or"] = "operator",
 
     ["nil"] = "literal",
   },

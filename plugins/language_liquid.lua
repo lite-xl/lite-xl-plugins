@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local syntax = require "core.syntax"
 
 local liquid_syntax = {
@@ -92,7 +92,7 @@ local liquid_syntax = {
     ["upcase"] = "keyword2",
     ["when"] = "keyword",
     ["where"] = "keyword2"
-    
+
   },
 }
 
@@ -102,27 +102,27 @@ syntax.add {
   patterns = {
     { pattern = { "{%%", "%%}" }, syntax = liquid_syntax, type = "function" },
     { pattern = { "{{", "}}" }, syntax = liquid_syntax, type = "function" },
-    { 
-      pattern = { 
+    {
+      pattern = {
         "<%s*[sS][cC][rR][iI][pP][tT]%s+[tT][yY][pP][eE]%s*=%s*" ..
           "['\"]%a+/[jJ][aA][vV][aA][sS][cC][rR][iI][pP][tT]['\"]%s*>",
-        "<%s*/[sS][cC][rR][iI][pP][tT]>" 
-      },
-      syntax = ".js", 
-      type = "function" 
-    },
-    { 
-      pattern = { 
-        "<%s*[sS][cC][rR][iI][pP][tT]%s*>",
-        "<%s*/%s*[sS][cC][rR][iI][pP][tT]>" 
+        "<%s*/[sS][cC][rR][iI][pP][tT]>"
       },
       syntax = ".js",
       type = "function"
     },
-    { 
-      pattern = { 
-        "<%s*[sS][tT][yY][lL][eE][^>]*>", 
-        "<%s*/%s*[sS][tT][yY][lL][eE]%s*>" 
+    {
+      pattern = {
+        "<%s*[sS][cC][rR][iI][pP][tT]%s*>",
+        "<%s*/%s*[sS][cC][rR][iI][pP][tT]>"
+      },
+      syntax = ".js",
+      type = "function"
+    },
+    {
+      pattern = {
+        "<%s*[sS][tT][yY][lL][eE][^>]*>",
+        "<%s*/%s*[sS][tT][yY][lL][eE]%s*>"
       },
       syntax = ".css",
       type = "function"

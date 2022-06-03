@@ -1,14 +1,41 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local core = require "core"
 local config = require "core.config"
 local style = require "core.style"
+local common = require "core.common"
 local DocView = require "core.docview"
 
-config.plugins.smoothcaret = { rate = 0.65 }
+config.plugins.smoothcaret = common.merge({
+  enabled = true,
+  rate = 0.65,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Smooth Caret",
+    {
+      label = "Enabled",
+      description = "Disable or enable the smooth caret animation.",
+      path = "enabled",
+      type = "toggle",
+      default = true
+    },
+    {
+      label = "Rate",
+      description = "Speed of the animation.",
+      path = "rate",
+      type = "number",
+      default = 0.65,
+      min = 0.2,
+      max = 1.0,
+      step = 0.05
+    },
+  }
+}, config.plugins.smoothcaret)
 
 local docview_update = DocView.update
 function DocView:update()
   docview_update(self)
+
+  if not config.plugins.smoothcaret.enabled then return end
 
   local minline, maxline = self:get_visible_line_range()
 
@@ -21,10 +48,10 @@ function DocView:update()
 
   local idx, v_idx = 1, 1
   for _, line, col in self.doc:get_selections() do
-    local x, y = self:get_line_screen_position(line)
+    local x, y = self:get_line_screen_position(line, col)
     -- Keep the position relative to the whole View
     -- This way scrolling won't animate the caret
-    x = x + self:get_col_x_offset(line, col) + self.scroll.x
+    x = x + self.scroll.x
     y = y + self.scroll.y
 
     if not self.carets[idx] then
@@ -56,7 +83,7 @@ function DocView:update()
 
   -- Remove unused carets to avoid animating new ones when they are added
   for i = idx, #self.carets do
-    self.carets[idx] = nil
+    self.carets[i] = nil
   end
 
   if self.mouse_selecting ~= self.last_mouse_selecting then
@@ -72,7 +99,13 @@ function DocView:update()
   self.caret_idx = 1
 end
 
+local docview_draw_caret = DocView.draw_caret
 function DocView:draw_caret(x, y)
+  if not config.plugins.smoothcaret.enabled then
+    docview_draw_caret(self, x, y)
+    return
+  end
+
   local c = self.visible_carets[self.caret_idx] or { current = { x = x, y = y } }
   local lh = self:get_line_height()
 

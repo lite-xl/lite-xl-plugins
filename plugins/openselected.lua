@@ -1,19 +1,35 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local core = require "core"
 local command = require "core.command"
 local keymap = require "core.keymap"
+local common = require "core.common"
 local config = require "core.config"
+local contextmenu = require "plugins.contextmenu"
 
 
-config.plugins.openselected = {}
+local platform_filelauncher
 if PLATFORM == "Windows" then
-  config.plugins.openselected.filemanager = "start"
+  platform_filelauncher = "start"
 elseif PLATFORM == "Mac OS X" then
-  config.plugins.openselected.filemanager = "open"
+  platform_filelauncher = "open"
 else
-  config.plugins.openselected.filemanager = "xdg-open"
+  platform_filelauncher = "xdg-open"
 end
 
+config.plugins.openselected = common.merge({
+  filelauncher = platform_filelauncher,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Open Selected Text",
+    {
+      label = "File Launcher",
+      description = "Command used to open the selected path or link externally.",
+      path = "filelauncher",
+      type = "string",
+      default = platform_filelauncher
+    }
+  }
+}, config.plugins.openselected)
 
 command.add("core.docview", {
   ["open-selected:open-selected"] = function()
@@ -35,10 +51,16 @@ command.add("core.docview", {
 
     core.log("Opening %s...", text)
 
-    system.exec(config.plugins.openselected.filemanager .. " " .. text)
+    system.exec(config.plugins.openselected.filelauncher .. " " .. text)
   end,
 })
 
 
-keymap.add { ["ctrl+shift+o"] = "open-selected:open-selected" }
+contextmenu:register("core.docview", {
+  contextmenu.DIVIDER,
+  { text = "Open Selection",  command = "open-selected:open-selected" }
+})
+
+
+keymap.add { ["ctrl+alt+o"] = "open-selected:open-selected" }
 

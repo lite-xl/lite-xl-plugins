@@ -1,11 +1,11 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local core = require "core"
 local command = require "core.command"
 local common = require "core.common"
 local config = require "core.config"
 local keymap = require "core.keymap"
 
-config.plugins.lfautoinsert = { map = {
+config.plugins.lfautoinsert = common.merge({ map = {
   ["{%s*\n"] = "}",
   ["%(%s*\n"] = ")",
   ["%f[[]%[%s*\n"] = "]",
@@ -37,7 +37,7 @@ config.plugins.lfautoinsert = { map = {
       ["%[%[%s*\n"] = "]]"
     }
   },
-} }
+} }, config.plugins.lfautoinsert)
 
 local function get_autoinsert_map(filename)
   local map = {}
@@ -64,7 +64,7 @@ local function indent_size(doc, line)
   return e - s
 end
 
-command.add("core.docview", {
+command.add("core.docview!", {
   ["autoinsert:newline"] = function()
     command.perform("doc:newline")
 
@@ -97,7 +97,7 @@ command.add("core.docview", {
 })
 
 keymap.add {
-  ["return"] = { "command:submit", "autoinsert:newline" }
+  ["return"] = { "autoinsert:newline" }
 }
 
 return {

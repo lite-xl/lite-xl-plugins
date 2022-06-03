@@ -1,18 +1,32 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local core = require "core"
+local common = require "core.common"
 local command = require "core.command"
 local config = require "core.config"
 
-
-config.plugins.openfilelocation = {}
+local platform_filemanager
 if PLATFORM == "Windows" then
-  config.plugins.openfilelocation.filemanager = "explorer"
+  platform_filemanager = "explorer"
 elseif PLATFORM == "Mac OS X" then
-  config.plugins.openfilelocation.filemanager = "open"
+  platform_filemanager = "open"
 else
-  config.plugins.openfilelocation.filemanager = "xdg-open"
+  platform_filemanager = "xdg-open"
 end
 
+config.plugins.openfilelocation = common.merge({
+  filemanager = platform_filemanager,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Open File Location",
+    {
+      label = "File Manager",
+      description = "Command of the file browser.",
+      path = "filemanager",
+      type = "string",
+      default = platform_filemanager
+    }
+  }
+}, config.plugins.openfilelocation)
 
 command.add("core.docview", {
   ["open-file-location:open-file-location"] = function()
