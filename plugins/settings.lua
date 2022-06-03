@@ -432,13 +432,6 @@ settings.add("Editor",
       step = 0.1
     },
     {
-      label = "Show Spaces",
-      description = "Draw another character in place of invisble spaces.",
-      path = "draw_whitespace",
-      type = settings.type.TOGGLE,
-      default = false
-    },
-    {
       label = "Symbol Pattern",
       description = "A lua pattern used to match symbols in the document.",
       path = "symbol_pattern",
