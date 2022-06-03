@@ -1338,60 +1338,37 @@ function Settings:update()
 
   self.notebook:set_size(self.size.x, self.size.y)
 
-  self.core:set_size(
-    self.size.x,
-    self.size.y - self.notebook.active_pane.tab:get_height() - 8
-  )
-
-  self.plugins:set_size(
-    self.size.x,
-    self.size.y - self.notebook.active_pane.tab:get_height() - 8
-  )
-
-  self.core_sections:set_size(
-    self.core.size.x - (style.padding.x),
-    self.core_sections:get_real_height()
-  )
-
-  self.plugin_sections:set_size(
-    self.plugins.size.x - (style.padding.x),
-    self.plugin_sections:get_real_height()
-  )
-
-  self.core_sections:set_position(
-    style.padding.x / 2,
-    0
-  )
-
-  self.plugin_sections:set_position(
-    style.padding.x / 2,
-    0
-  )
-
   for _, section in ipairs({self.core_sections, self.plugin_sections}) do
-    for _, pane in ipairs(section.panes) do
-      local prev_child = nil
-      for pos=#pane.container.childs, 1, -1 do
-        local child = pane.container.childs[pos]
-        local x, y = 10, 10
-        if prev_child then
-          if
-            (prev_child:is(Label) and not prev_child.desc)
-            or
-            (child:is(Label) and child.desc)
-          then
-            y = prev_child:get_bottom() + 10
-          else
-            y = prev_child:get_bottom() + 40
+    if section.parent:is_visible() then
+      section:set_size(
+        section.parent.size.x - (style.padding.x),
+        section:get_real_height()
+      )
+      section:set_position(style.padding.x / 2, 0)
+      for _, pane in ipairs(section.panes) do
+        local prev_child = nil
+        for pos=#pane.container.childs, 1, -1 do
+          local child = pane.container.childs[pos]
+          local x, y = 10, 10
+          if prev_child then
+            if
+              (prev_child:is(Label) and not prev_child.desc)
+              or
+              (child:is(Label) and child.desc)
+            then
+              y = prev_child:get_bottom() + 10
+            else
+              y = prev_child:get_bottom() + 40
+            end
           end
+          if child:is(Line) then
+            x = 0
+          elseif child:is(ItemsList) then
+            child:set_size(pane.container:get_width() - 20, child.size.y)
+          end
+          child:set_position(x, y)
+          prev_child = child
         end
-        if child:is(Line) then
-          x = 0
-        elseif child:is(ItemsList) then
-          child:set_size(pane.container:get_width() - 20, child.size.y)
-        end
-        child:set_position(x, y)
-        prev_child = child
       end
     end
   end
@@ -1427,7 +1404,7 @@ function core.run()
   settings.ui = Settings()
 
   -- apply user chosen color theme
-  if settings.config.theme then
+  if settings.config.theme and settings.config.theme ~= "default" then
     core.reload_module("colors." .. settings.config.theme)
   end
 
@@ -1448,6 +1425,13 @@ if settings.config.disabled_plugins then
       config.plugins[name] = false
     end
   end
+end
+
+-- properly apply skip_plugins_version before other plugins are loaded
+if settings.config.skip_plugins_version then
+  config.skip_plugins_version = true
+else
+  config.skip_plugins_version = false
 end
 
 --------------------------------------------------------------------------------
