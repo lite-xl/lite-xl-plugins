@@ -412,6 +412,8 @@ DocView.draw_scrollbar = function(self)
 		end
 	end
 
+	local endidx = minimap_start_line + max_minmap_lines
+	endidx = math.min(endidx, line_count)
 	-- render lines with syntax highlighting
 	if config.plugins.minimap.syntax_highlight then
 
@@ -419,8 +421,6 @@ DocView.draw_scrollbar = function(self)
 		batch_syntax_type = nil
 
 		-- per line
-		local endidx = minimap_start_line + max_minmap_lines
-		endidx = math.min(endidx, line_count)
 		for idx = minimap_start_line, endidx do
 			batch_syntax_type = nil
 			batch_start = x + gutter_width
@@ -456,7 +456,7 @@ DocView.draw_scrollbar = function(self)
 		end
 
 	else -- render lines without syntax highlighting
-		for idx = 1, line_count - 1 do
+		for idx = minimap_start_line, endidx do
 			batch_start = x + gutter_width
 			batch_width = 0
 
@@ -466,6 +466,9 @@ DocView.draw_scrollbar = function(self)
 				if char == " " or char == "\n" then
 					flush_batch()
 					batch_start = batch_start + char_spacing
+				elseif char == "	" then
+					flush_batch()
+					batch_start = batch_start + (char_spacing * config.plugins.minimap.tab_width)
 				elseif batch_start + batch_width > minimap_cutoff_x then
 					flush_batch()
 				else
