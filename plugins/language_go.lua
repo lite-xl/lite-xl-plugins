@@ -12,11 +12,11 @@ syntax.add {
     { pattern = { '"', '"', '\\' },     type = "string"   },
     { pattern = { "`", "`", '\\' },     type = "string"   },
     { pattern = { "'", "'", '\\' },     type = "string"   },
-    { pattern = "0[oO_][0-7]+",         type = "number"   },
-    { pattern = "-?0x[%x_]+",           type = "number"   },
-    { pattern = "-?%d+_%d",             type = "number"   },
-    { pattern = "-?%d+[%d%.eE]*f?",     type = "number"   },
-    { pattern = "-?%.?%d+f?",           type = "number"   },
+    { pattern = "0[oO_][0-7]+i?",       type = "number"   },
+    { pattern = "-?0x[%x_]+i?",         type = "number"   },
+    { pattern = "-?%d+_%di?",           type = "number"   },
+    { pattern = "-?%d+[%d%.eE]*f?i?",   type = "number"   },
+    { pattern = "-?%.?%d+f?i?",         type = "number"   },
     -- goto label
     { pattern = "^%s+()[%a_][%w%_]*()%s*:%s$", -- this is to fix `default:`
       type = { "normal", "function", "normal" }
@@ -32,13 +32,14 @@ syntax.add {
     { pattern = "%[%]()[%a_][%w%_]*",
       type = { "operator", "keyword2" }
     },
-    -- empty interface or struct
-    { pattern = "[%a_][%w%_]*()%s*{%s*}",
-      type = { "keyword2", "normal" }
+    -- type coerce
+    {
+      pattern = "%.%(()[%a_][%w_]*()%)",
+      type = { "normal", "keyword2", "normal" }
     },
-    -- return interface
-    { pattern = "return()%s+()[%a_][%w%_]*()%s*{",
-      type = { "keyword", "normal", "keyword2", "normal" }
+    -- struct literal
+    { pattern = "[%a_][%w%_]*()%s*{%s*",
+      type = { "keyword2", "normal" }
     },
     -- operators
     { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
@@ -123,6 +124,11 @@ syntax.add {
     { pattern = "[%a_][%w_]*()%s+()%[%]()[%a_][%w%_]*",
       type = { "literal", "normal", "normal", "keyword2" }
     },
+    -- single return type
+    {
+      pattern = "%)%s+%(?()[%a_][%w%_]*()%)?%s+%{",
+      type = { "normal", "keyword2", "normal" }
+    },
     -- sub fields
     { pattern = "%.()[%a_][%w_]*",
       type = { "normal", "literal" }
@@ -156,6 +162,7 @@ syntax.add {
     ["go"]          = "keyword",
     ["fallthrough"] = "keyword",
     ["goto"]        = "keyword",
+    ["iota"]        = "keyword2",
     ["int"]         = "keyword2",
     ["int64"]       = "keyword2",
     ["int32"]       = "keyword2",
