@@ -2,13 +2,59 @@
 --[[
   language_php.lua
   provides php syntax support allowing mixed html, css and js
-  version: 20210902_1
+  version: 20220606_1
 --]]
 local syntax = require "core.syntax"
 
 -- load syntax dependencies to add additional rules
 require "plugins.language_css"
 require "plugins.language_js"
+
+-- Patterns to match some of the string inline variables
+local inline_variables = {
+  { pattern = "%s+",           type = "string" },
+  { pattern = "\\%$",          type = "string" },
+  { pattern = "%{[%$%s]*%}",   type = "string" },
+  -- matches {$varname[index]}
+  { pattern = "{"
+      .. "()%$[%a_][%w_]*"
+      .. "()%["
+      .. "()[%w%s_%-\"\'%(%)|;:,%.#@%%!%^&%*%+=%[%]<>~`%?\\/]*"
+      .. "()%]"
+      .. "}",
+    type = {
+      "keyword", "keyword2", "keyword", "string", "keyword"
+    }
+  },
+  { pattern = "{"
+      .. "()%$[%a_][%w_]*"
+      .. "()%->"
+      .. "()[%a_][%w_]*"
+      .. "()}",
+    type = {
+      "keyword", "keyword2", "keyword", "symbol", "keyword"
+    }
+  },
+  { pattern = "{()%$[%a_][%w_]*()}",
+    type = { "keyword", "keyword2", "keyword" }
+  },
+  { pattern = "%$[%a_][%w_]*()%[()%w*()%]",
+    type = { "keyword2", "keyword", "string", "keyword" }
+  },
+  { pattern = "%$[%a_][%w_]*()%->()%w+",
+    type = { "keyword2", "keyword", "symbol" }
+  },
+  { pattern = "%$[%a_][%w_]*", type = "keyword2" },
+  { pattern = "%w+",           type = "string" },
+}
+
+local function combine_patterns(t1, t2)
+  local temp = { table.unpack(t1) }
+  for _, t in ipairs(t2) do
+    table.insert(temp, t)
+  end
+  return temp
+end
 
 -- define the core php syntax coloring
 syntax.add {
@@ -24,9 +70,36 @@ syntax.add {
     { pattern = "//.-\n",                    type = "comment"  },
     { pattern = "#.-\n",                     type = "comment"  },
     { pattern = { "/%*", "%*/" },            type = "comment"  },
-    -- The '\\' is for escaping to work on " or '
-    { pattern = { '"', '"', '\\' },          type = "string"   },
+    -- Single quote string
     { pattern = { "'", "'", '\\' },          type = "string"   },
+    { pattern = { "<<<'%a%w*'\n", "^%s*%a%w*%f[;]", '\\' },
+      type = "string"
+    },
+    -- Strings with support for some inline variables syntax
+    { pattern = { "<<<%a%w*\n", "^%s*%a%w*%f[;]", '\\' },
+      syntax = {
+        patterns = combine_patterns(inline_variables, {
+          -- prevent matching outside of the parent string
+          { pattern = "^%s*%a%w*();$",
+            type = { "string", "normal" }
+          },
+          { pattern = "%p", type = "string" },
+        }),
+        symbols = {}
+      },
+      type = "string"
+    },
+    { pattern = { '"', '"', '\\' },
+      syntax = {
+        patterns = combine_patterns(inline_variables, {
+          -- prevent matching outside of the parent string
+          { pattern = "%p+%f[\"]",     type = "string" },
+          { pattern = "%p",            type = "string" },
+        }),
+        symbols = {}
+      },
+      type = "string"
+    },
     { pattern = "0[bB][%d]+",                type = "number"   },
     { pattern = "0[xX][%da-fA-F]+",          type = "number"   },
     { pattern = "-?%d[%d_%.eE]*",            type = "number"   },
