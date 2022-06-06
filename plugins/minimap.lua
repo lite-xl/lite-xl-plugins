@@ -27,6 +27,8 @@ config.plugins.minimap = common.merge({
 	instant_scroll = false,
 	syntax_highlight = true,
 	scale = 1,
+	-- hide on small docs (can be true, false or min number of lines)
+	avoid_small_docs = false,
 	-- how many spaces one tab is equivalent to
 	tab_width = 4,
 	draw_background = true,
@@ -80,6 +82,28 @@ config.plugins.minimap = common.merge({
 			min = 0.5,
 			max = 10,
 			step = 0.1
+		},
+		{
+			label = "Hide for small Docs",
+			description = "Hide the minimap when a Doc is small enough.",
+			path = "avoid_small_docs",
+			type = "toggle",
+			default = false
+		},
+		{
+			label = "Small Docs definition",
+			description = "Size of a Doc to be considered small. Use 0 to automatically decide.",
+			path = "avoid_small_docs_len",
+			type = "number",
+			default = 0,
+			min = 0,
+			on_apply = function(value)
+				if value == 0 then
+					config.plugins.minimap.avoid_small_docs = true
+				else
+					config.plugins.minimap.avoid_small_docs = value
+				end
+			end
 		},
 		{
 			label = "Tabs Width",
@@ -178,6 +202,16 @@ local function show_minimap(docview)
 		or per_docview[docview] == false
 	then
 		return false
+	end
+	if config.plugins.minimap.avoid_small_docs then
+		local last_line = #docview.doc.lines
+		if type(config.plugins.minimap.avoid_small_docs) == "number" then
+			return last_line > config.plugins.minimap.avoid_small_docs
+		else
+			local _, y = docview:get_line_screen_position(last_line, docview.doc.lines[last_line])
+			y = y + docview.scroll.y - docview.position.y + docview:get_line_height()
+			return y > docview.size.y
+		end
 	end
 	return true
 end
