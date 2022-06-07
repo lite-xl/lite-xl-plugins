@@ -27,6 +27,8 @@ config.plugins.minimap = common.merge({
 	instant_scroll = false,
 	syntax_highlight = true,
 	scale = 1,
+	-- hide on small docs (can be true, false or min number of lines)
+	avoid_small_docs = false,
 	-- how many spaces one tab is equivalent to
 	tab_width = 4,
 	draw_background = true,
@@ -39,118 +41,140 @@ config.plugins.minimap = common.merge({
 	highlight_width = 3,
 	gutter_width = 5,
 	-- The config specification used by the settings gui
-  config_spec = {
-    name = "Mini Map",
-    {
-      label = "Enabled",
-      description = "Activate the minimap by default.",
-      path = "enabled",
-      type = "toggle",
-      default = true
-    },
-    {
-      label = "Width",
-      description = "Width of the minimap in pixels.",
-      path = "width",
-      type = "number",
-      default = 100,
-      min = 50,
-      max = 1000
-    },
-    {
-      label = "Instant Scroll",
-      description = "When enabled disables the scrolling animation.",
-      path = "instant_scroll",
-      type = "toggle",
-      default = false
-    },
-    {
-      label = "Syntax Highlighting",
-      description = "Disable to improve performance.",
-      path = "syntax_highlight",
-      type = "toggle",
-      default = true
-    },
-    {
-      label = "Scale",
-      description = "Size of the minimap using a scaling factor.",
-      path = "scale",
-      type = "number",
-      default = 1,
-      min = 0.5,
-      max = 10,
-      step = 0.1
-    },
-    {
-      label = "Tabs Width",
-      description = "The amount of spaces that represent a tab.",
-      path = "tab_width",
-      type = "number",
-      default = 4,
-      min = 1,
-      max = 8
-    },
-    {
-      label = "Draw Background",
-      description = "When disabled makes the minimap transparent.",
-      path = "draw_background",
-      type = "toggle",
-      default = true
-    },
-    {
-      label = "Selection Color",
-      description = "Background color of selected text in html notation eg: #FFFFFF. Leave empty to use default.",
-      path = "selection_color_html",
-      type = "string",
-      on_apply = function(value)
-        if value and value:match("#%x%x%x%x%x%x") then
-          config.plugins.minimap.selection_color = { common.color(value) }
-        else
-          config.plugins.minimap.selection_color = nil
-        end
-      end
-    },
-    {
-      label = "Caret Color",
-      description = "Background color of active line in html notation eg: #FFFFFF. Leave empty to use default.",
-      path = "caret_color_html",
-      type = "string",
-      on_apply = function(value)
-        if value and value:match("#%x%x%x%x%x%x") then
-          config.plugins.minimap.caret_color = { common.color(value) }
-        else
-          config.plugins.minimap.caret_color = nil
-        end
-      end
-    },
-    {
-      label = "Highlight Alignment",
-      path = "highlight_align",
-      type = "selection",
-      default = "left",
-      values = {
-        {"Left", "left"},
-        {"Right", "right"}
-      }
-    },
-    {
-      label = "Highlight Width",
-      path = "highlight_width",
-      type = "number",
-      default = 3,
-      min = 0,
-      max = 50
-    },
-    {
-      label = "Gutter Width",
-      description = "Left padding of the minimap.",
-      path = "gutter_width",
-      type = "number",
-      default = 5,
-      min = 0,
-      max = 50
-    },
-  }
+	config_spec = {
+		name = "Mini Map",
+		{
+			label = "Enabled",
+			description = "Activate the minimap by default.",
+			path = "enabled",
+			type = "toggle",
+			default = true
+		},
+		{
+			label = "Width",
+			description = "Width of the minimap in pixels.",
+			path = "width",
+			type = "number",
+			default = 100,
+			min = 50,
+			max = 1000
+		},
+		{
+			label = "Instant Scroll",
+			description = "When enabled disables the scrolling animation.",
+			path = "instant_scroll",
+			type = "toggle",
+			default = false
+		},
+		{
+			label = "Syntax Highlighting",
+			description = "Disable to improve performance.",
+			path = "syntax_highlight",
+			type = "toggle",
+			default = true
+		},
+		{
+			label = "Scale",
+			description = "Size of the minimap using a scaling factor.",
+			path = "scale",
+			type = "number",
+			default = 1,
+			min = 0.5,
+			max = 10,
+			step = 0.1
+		},
+		{
+			label = "Hide for small Docs",
+			description = "Hide the minimap when a Doc is small enough.",
+			path = "avoid_small_docs",
+			type = "toggle",
+			default = false
+		},
+		{
+			label = "Small Docs definition",
+			description = "Size of a Doc to be considered small. Use 0 to automatically decide.",
+			path = "avoid_small_docs_len",
+			type = "number",
+			default = 0,
+			min = 0,
+			on_apply = function(value)
+				if value == 0 then
+					config.plugins.minimap.avoid_small_docs = true
+				else
+					config.plugins.minimap.avoid_small_docs = value
+				end
+			end
+		},
+		{
+			label = "Tabs Width",
+			description = "The amount of spaces that represent a tab.",
+			path = "tab_width",
+			type = "number",
+			default = 4,
+			min = 1,
+			max = 8
+		},
+		{
+			label = "Draw Background",
+			description = "When disabled makes the minimap transparent.",
+			path = "draw_background",
+			type = "toggle",
+			default = true
+		},
+		{
+			label = "Selection Color",
+			description = "Background color of selected text in html notation eg: #FFFFFF. Leave empty to use default.",
+			path = "selection_color_html",
+			type = "string",
+			on_apply = function(value)
+				if value and value:match("#%x%x%x%x%x%x") then
+					config.plugins.minimap.selection_color = { common.color(value) }
+				else
+					config.plugins.minimap.selection_color = nil
+				end
+			end
+		},
+		{
+			label = "Caret Color",
+			description = "Background color of active line in html notation eg: #FFFFFF. Leave empty to use default.",
+			path = "caret_color_html",
+			type = "string",
+			on_apply = function(value)
+				if value and value:match("#%x%x%x%x%x%x") then
+					config.plugins.minimap.caret_color = { common.color(value) }
+				else
+					config.plugins.minimap.caret_color = nil
+				end
+			end
+		},
+		{
+			label = "Highlight Alignment",
+			path = "highlight_align",
+			type = "selection",
+			default = "left",
+			values = {
+				{"Left", "left"},
+				{"Right", "right"}
+			}
+		},
+		{
+			label = "Highlight Width",
+			path = "highlight_width",
+			type = "number",
+			default = 3,
+			min = 0,
+			max = 50
+		},
+		{
+			label = "Gutter Width",
+			description = "Left padding of the minimap.",
+			path = "gutter_width",
+			type = "number",
+			default = 5,
+			min = 0,
+			max = 50
+		},
+	}
 }, config.plugins.minimap)
 
 -- Configure size for rendering each char in the minimap
@@ -168,16 +192,34 @@ function MiniMap:line_highlight_color(line_index)
 end
 
 local minimap = MiniMap()
+local per_docview = setmetatable({}, { __mode = "k" })
 
-local function show_minimap()
-	return config.plugins.minimap.enabled
-		and core.active_view:is(DocView)
+local function show_minimap(docview)
+	if not docview:is(DocView) then return false end
+	if
+		not config.plugins.minimap.enabled
+		or not docview:is(DocView)
+		or per_docview[docview] == false
+	then
+		return false
+	end
+	if config.plugins.minimap.avoid_small_docs then
+		local last_line = #docview.doc.lines
+		if type(config.plugins.minimap.avoid_small_docs) == "number" then
+			return last_line > config.plugins.minimap.avoid_small_docs
+		else
+			local _, y = docview:get_line_screen_position(last_line, docview.doc.lines[last_line])
+			y = y + docview.scroll.y - docview.position.y + docview:get_line_height()
+			return y > docview.size.y
+		end
+	end
+	return true
 end
 
 -- Overloaded since the default implementation adds a extra x3 size of hotspot for the mouse to hit the scrollbar.
 local prev_scrollbar_overlaps_point = DocView.scrollbar_overlaps_point
 DocView.scrollbar_overlaps_point = function(self, x, y)
-	if not show_minimap() then
+	if not show_minimap(self) then
 		return prev_scrollbar_overlaps_point(self, x, y)
 	end
 
@@ -198,7 +240,7 @@ end
 -- Overloaded with an extra check if the user clicked inside the minimap to automatically scroll to that line.
 local prev_on_mouse_pressed = DocView.on_mouse_pressed
 DocView.on_mouse_pressed = function(self, button, x, y, clicks)
-	if not show_minimap() then
+	if not show_minimap(self) then
 		return prev_on_mouse_pressed(self, button, x, y, clicks)
 	end
 
@@ -265,7 +307,7 @@ end
 -- since the "scrollbar" essentially represents the lines visible in the content view.
 local prev_on_mouse_moved = DocView.on_mouse_moved
 DocView.on_mouse_moved = function(self, x, y, dx, dy)
-	if not show_minimap() then
+	if not show_minimap(self) then
 		return prev_on_mouse_moved(self, x, y, dx, dy)
 	end
 
@@ -294,7 +336,7 @@ end
 -- not juse the scrollbar.
 local prev_get_scrollbar_rect = DocView.get_scrollbar_rect
 DocView.get_scrollbar_rect = function(self)
-	if not show_minimap() then return prev_get_scrollbar_rect(self) end
+	if not show_minimap(self) then return prev_get_scrollbar_rect(self) end
 
 	return self.position.x + self.size.x - config.plugins.minimap.width * SCALE,
 	       self.position.y, config.plugins.minimap.width * SCALE, self.size.y
@@ -302,7 +344,7 @@ end
 
 local prev_get_scrollbar_track_rect = DocView.get_scrollbar_track_rect
 DocView.get_scrollbar_track_rect = function(self)
-	if not show_minimap() then return prev_get_scrollbar_track_rect(self) end
+	if not show_minimap(self) then return prev_get_scrollbar_track_rect(self) end
 
 	return self.position.x + self.size.x - config.plugins.minimap.width * SCALE,
 	       self.position.y, config.plugins.minimap.width * SCALE, self.size.y
@@ -311,7 +353,7 @@ end
 -- Overloaded so we can render the minimap in the "scrollbar area".
 local prev_draw_scrollbar = DocView.draw_scrollbar
 DocView.draw_scrollbar = function(self)
-	if not show_minimap() then return prev_draw_scrollbar(self) end
+	if not show_minimap(self) then return prev_draw_scrollbar(self) end
 
 	local x, y, w, h = self:get_scrollbar_rect()
 
@@ -412,6 +454,8 @@ DocView.draw_scrollbar = function(self)
 		end
 	end
 
+	local endidx = minimap_start_line + max_minmap_lines
+	endidx = math.min(endidx, line_count)
 	-- render lines with syntax highlighting
 	if config.plugins.minimap.syntax_highlight then
 
@@ -419,8 +463,6 @@ DocView.draw_scrollbar = function(self)
 		batch_syntax_type = nil
 
 		-- per line
-		local endidx = minimap_start_line + max_minmap_lines
-		endidx = math.min(endidx, line_count)
 		for idx = minimap_start_line, endidx do
 			batch_syntax_type = nil
 			batch_start = x + gutter_width
@@ -456,7 +498,7 @@ DocView.draw_scrollbar = function(self)
 		end
 
 	else -- render lines without syntax highlighting
-		for idx = 1, line_count - 1 do
+		for idx = minimap_start_line, endidx do
 			batch_start = x + gutter_width
 			batch_width = 0
 
@@ -466,6 +508,9 @@ DocView.draw_scrollbar = function(self)
 				if char == " " or char == "\n" then
 					flush_batch()
 					batch_start = batch_start + char_spacing
+				elseif char == "	" then
+					flush_batch()
+					batch_start = batch_start + (char_spacing * config.plugins.minimap.tab_width)
 				elseif batch_start + batch_width > minimap_cutoff_x then
 					flush_batch()
 				else
@@ -482,7 +527,7 @@ end
 
 local prev_update = DocView.update
 DocView.update = function (self)
-	if not show_minimap() then return prev_update(self) end
+	if not show_minimap(self) then return prev_update(self) end
 	self.size.x = self.size.x - config.plugins.minimap.width * SCALE
 	return prev_update(self)
 end
@@ -496,5 +541,10 @@ command.add(nil, {
 	end
 })
 
-return minimap
+command.add("core.docview!", {
+	["minimap:toggle-visibility-for-current-view"] = function()
+		per_docview[core.active_view] = per_docview[core.active_view] == false
+	end
+})
 
+return minimap
