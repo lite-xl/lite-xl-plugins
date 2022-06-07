@@ -23,7 +23,6 @@ syntax.add {
   },
   symbols = {
     ["nil"]  = "literal",
-    ["end"]  = "literal",
     ["true"]  = "literal",
     ["false"]  = "literal",
     ["private"]  = "keyword",
@@ -63,7 +62,6 @@ syntax.add {
     ["self"] = "keyword",
     ["super"] = "keyword",
     ["then"] = "keyword",
-    ["true"] = "keyword",
     ["undef"] = "keyword",
     ["unless"] = "keyword",
     ["until"] = "keyword",

@@ -65,10 +65,10 @@ local function make_color_module_name(name)
 end
 
 function Settings:change_color(name)
-    if self:is_change_color(name) then
-      core.reload_module(make_color_module_name(name))
-      self.color_scheme = name
-    end
+  if self:is_change_color(name) then
+    core.reload_module(make_color_module_name(name))
+    self.color_scheme = name
+  end
 end
 
 function Settings:save_settings()
@@ -121,10 +121,10 @@ local color_scheme_suggest = function(text)
 end
 
 command.add(nil, {
-    ["ui:color scheme"] = function()
-      core.command_view:enter("Select color scheme", color_scheme_submit, color_scheme_suggest)
-    end,
-  })
+  ["ui:color scheme"] = function()
+    core.command_view:enter("Select color scheme", color_scheme_submit, color_scheme_suggest)
+  end,
+})
 -- ----------------------------------------------------------------
 
 Settings:init()
