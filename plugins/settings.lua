@@ -290,15 +290,6 @@ settings.add("User Interface",
       end
     },
     {
-      label = "Messages Timeout",
-      description = "The amount in seconds before a notification dissapears.",
-      path = "message_timeout",
-      type = settings.type.NUMBER,
-      default = 5,
-      min = 1,
-      max = 30
-    },
-    {
       label = "Always Show Tabs",
       description = "Shows tabs even if a single document is opened.",
       path = "always_show_tabs",
@@ -464,6 +455,13 @@ settings.add("Editor",
 settings.add("Development",
   {
     {
+      label = "Core Log",
+      description = "Open the list of logged messages.",
+      type = settings.type.BUTTON,
+      icon = "f",
+      on_click = "core:open-log"
+    },
+    {
       label = "Log Items",
       description = "The maximum amount of entries to keep on the log UI.",
       path = "max_log_items",
@@ -478,6 +476,44 @@ settings.add("Development",
       path = "skip_plugins_version",
       type = settings.type.TOGGLE,
       default = false
+    }
+  }
+)
+
+settings.add("Status Bar",
+  {
+    {
+      label = "Enabled",
+      description = "Toggle the default visibility of the status bar.",
+      path = "statusbar.enabled",
+      type = settings.type.TOGGLE,
+      default = true,
+      on_apply = function(enabled)
+        if enabled then
+          core.status_view:show()
+        else
+          core.status_view:hide()
+        end
+      end
+    },
+    {
+      label = "Show Notifications",
+      description = "Toggle the visibility of status messages.",
+      path = "statusbar.messages",
+      type = settings.type.TOGGLE,
+      default = true,
+      on_apply = function(enabled)
+        core.status_view:display_messages(enabled)
+      end
+    },
+    {
+      label = "Messages Timeout",
+      description = "The amount in seconds before a notification dissapears.",
+      path = "message_timeout",
+      type = settings.type.NUMBER,
+      default = 5,
+      min = 1,
+      max = 30
     }
   }
 )
@@ -812,8 +848,10 @@ end
 ---@class settings.ui : widget
 ---@field private notebook widget.notebook
 ---@field private core widget
+---@field private colors widget
 ---@field private plugins widget
 ---@field private keybinds widget
+---@field private about widget
 ---@field private core_sections widget.foldingbook
 ---@field private plugin_sections widget.foldingbook
 local Settings = Widget:extend()
@@ -838,11 +876,13 @@ function Settings:new()
   self.colors = self.notebook:add_pane("colors", "Colors")
   self.plugins = self.notebook:add_pane("plugins", "Plugins")
   self.keybinds = self.notebook:add_pane("keybindings", "Keybindings")
+  self.about = self.notebook:add_pane("about", "About")
 
   self.notebook:set_pane_icon("core", "P")
   self.notebook:set_pane_icon("colors", "W")
   self.notebook:set_pane_icon("plugins", "B")
   self.notebook:set_pane_icon("keybindings", "M")
+  self.notebook:set_pane_icon("about", "i")
 
   self.core_sections = FoldingBook(self.core)
   self.core_sections.border.width = 0
@@ -856,6 +896,8 @@ function Settings:new()
   self:load_color_settings()
   self:load_plugin_settings()
   self:load_keymap_settings()
+
+  self:setup_about()
 end
 
 ---Helper function to add control for both core and plugin settings.
@@ -1329,6 +1371,126 @@ function Settings:load_keymap_settings()
       keymap_dialog.listbox = self
       keymap_dialog:show()
     end
+  end
+end
+
+function Settings:setup_about()
+  ---@type widget.label
+  local title = Label(self.about, "Lite XL")
+  ---@type widget.label
+  local version = Label(self.about, "version " .. VERSION)
+  ---@type widget.label
+  local description = Label(
+    self.about,
+    "A lightweight text editor written in Lua, adapted from lite."
+  )
+
+  local function open_link(link)
+    local platform_filelauncher
+    if PLATFORM == "Windows" then
+      platform_filelauncher = "start"
+    elseif PLATFORM == "Mac OS X" then
+      platform_filelauncher = "open"
+    else
+      platform_filelauncher = "xdg-open"
+    end
+    system.exec(platform_filelauncher .. " " .. link)
+  end
+
+  ---@type widget.button
+  local button = Button(self.about, "Visit Website")
+  function button:on_click() open_link("https://lite-xl.com/") end
+
+  ---@type widget.listbox
+  local contributors = ListBox(self.about)
+  contributors.scrollable = true
+  contributors:add_column("Contributors")
+  contributors:add_column("")
+  contributors:add_column("Website")
+  function contributors:on_row_click(_, data) open_link(data) end
+
+local contributors_list = {
+  { "Rxi", "Lite Founder", "https://github.com/rxi" },
+  { "Francesco Abbate", "Lite XL Founder", "https://github.com/franko" },
+  { "Adam Harrison", "Core", "https://github.com/adamharrison" },
+  { "Andrea Zanellato", "CI", "https://github.com/redtide" },
+  { "Björn Buckwalter", "MacOS Support", "https://github.com/bjornbm" },
+  { "boppyt", "Contributor", "https://github.com/boppyt" },
+  { "Cukmekerb", "Contributor", "https://github.com/vincens2005" },
+  { "Daniel Rocha", "Contributor", "https://github.com/dannRocha" },
+  { "daubaris", "Contributor", "https://github.com/daubaris" },
+  { "Dheisom Gomes", "Contributor", "https://github.com/dheisom" },
+  { "Evgeny Petrovskiy", "Contributor", "https://github.com/eugenpt" },
+  { "Ferdinand Prantl", "Contributor", "https://github.com/prantlf" },
+  { "Jan", "Build System", "https://github.com/Jan200101" },
+  { "Janis-Leuenberger", "MacOS Support", "https://github.com/Janis-Leuenberger" },
+  { "Jefferson", "Contributor", "https://github.com/jgmdev" },
+  { "Jipok", "Contributor", "https://github.com/Jipok" },
+  { "Joshua Minor", "Contributor", "https://github.com/jminor" },
+  { "George Linkovsky", "Contributor", "https://github.com/Timofffee" },
+  { "Guldoman", "Core", "https://github.com/Guldoman" },
+  { "liquidev", "Contributor", "https://github.com/liquidev" },
+  { "Mat Mariani", "MacOS Support", "https://github.com/mathewmariani" },
+  { "Nightwing", "Contributor", "https://github.com/Nightwing13" },
+  { "Nils Kvist", "Contributor", "https://github.com/budRich" },
+  { "Not-a-web-Developer", "Contributor", "https://github.com/Not-a-web-Developer" },
+  { "Robert Štojs", "CI", "https://github.com/netrobert" },
+  { "sammyette", "Plugins", "https://github.com/TorchedSammy" },
+  { "Takase", "Core", "https://github.com/takase1121" },
+  { "xwii", "Contributor", "https://github.com/xcb-xwii" }
+}
+
+  for _, c in ipairs(contributors_list) do
+    contributors:add_row({
+      c[1], ListBox.COLEND, c[2], ListBox.COLEND, c[3]
+    }, c[3])
+  end
+
+  ---@param self widget
+  local function update_positions(self)
+    local center = self:get_width() / 2
+
+    title.font = style.big_font
+    title:set_label("Lite XL")
+    title:set_position(
+      center - (title:get_width() / 2),
+      style.padding.y
+    )
+
+    version:set_position(
+      center - (version:get_width() / 2),
+      title:get_bottom() + (style.padding.y / 2)
+    )
+
+    description:set_position(
+      center - (description:get_width() / 2),
+      version:get_bottom() + (style.padding.y / 2)
+    )
+
+    button:set_position(
+      center - (button:get_width() / 2),
+      description:get_bottom() + style.padding.y
+    )
+
+    contributors:set_position(
+      style.padding.x,
+      button:get_bottom() + style.padding.y
+    )
+
+    contributors:set_size(
+      self:get_width() - (style.padding.x * 2),
+      self:get_height() - (button:get_bottom() + (style.padding.y * 2))
+    )
+
+    contributors:set_visible_rows()
+  end
+
+  update_positions(self.about)
+
+  local update_about = self.about.update
+  function self.about:update()
+    update_about(self)
+    update_positions(self)
   end
 end
 
