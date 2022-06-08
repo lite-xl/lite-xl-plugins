@@ -198,8 +198,12 @@ local function show_minimap(docview)
   if not docview:is(DocView) then return false end
   if
     not config.plugins.minimap.enabled
-    or not docview:is(DocView)
-    or per_docview[docview] == false
+    and per_docview[docview] ~= true
+  then
+    return false
+  elseif
+    config.plugins.minimap.enabled
+    and per_docview[docview] == false
   then
     return false
   end
@@ -535,6 +539,7 @@ end
 command.add(nil, {
   ["minimap:toggle-visibility"] = function()
     config.plugins.minimap.enabled = not config.plugins.minimap.enabled
+    setmetatable({}, { __mode = "k" })
   end,
   ["minimap:toggle-syntax-highlighting"] = function()
     config.plugins.minimap.syntax_highlight = not config.plugins.minimap.syntax_highlight
@@ -543,7 +548,11 @@ command.add(nil, {
 
 command.add("core.docview!", {
   ["minimap:toggle-visibility-for-current-view"] = function()
-    per_docview[core.active_view] = per_docview[core.active_view] == false
+    if config.plugins.minimap.enabled then
+      per_docview[core.active_view] = per_docview[core.active_view] == false
+    else
+      per_docview[core.active_view] = not per_docview[core.active_view]
+    end
   end
 })
 
