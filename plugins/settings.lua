@@ -1399,6 +1399,7 @@ function Settings:setup_about()
 
   ---@type widget.button
   local button = Button(self.about, "Visit Website")
+  button:set_tooltip("Open https://lite-xl.com/")
   function button:on_click() open_link("https://lite-xl.com/") end
 
   ---@type widget.listbox
@@ -1413,7 +1414,7 @@ local contributors_list = {
   { "Rxi", "Lite Founder", "https://github.com/rxi" },
   { "Francesco Abbate", "Lite XL Founder", "https://github.com/franko" },
   { "Adam Harrison", "Core", "https://github.com/adamharrison" },
-  { "Andrea Zanellato", "CI", "https://github.com/redtide" },
+  { "Andrea Zanellato", "CI, Website", "https://github.com/redtide" },
   { "Björn Buckwalter", "MacOS Support", "https://github.com/bjornbm" },
   { "boppyt", "Contributor", "https://github.com/boppyt" },
   { "Cukmekerb", "Contributor", "https://github.com/vincens2005" },
