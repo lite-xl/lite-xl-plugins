@@ -5,7 +5,22 @@ local common = require "core.common"
 local config = require "core.config"
 local style = require "core.style"
 local DocView = require "core.docview"
+local Highlighter = require "core.doc.highlighter"
 local Object = require "core.object"
+
+-- cache for the location of the rects for each Doc
+local highlighter_cache
+local function reset_cache()
+  highlighter_cache = setmetatable({}, { __mode = "k" })
+end
+reset_cache()
+
+-- minimap status per DocView
+local per_docview
+local function reset_per_docview()
+  per_docview = setmetatable({}, { __mode = "k" })
+end
+reset_per_docview()
 
 -- Sample configurations:
 -- full width:
@@ -27,6 +42,8 @@ config.plugins.minimap = common.merge({
   instant_scroll = false,
   syntax_highlight = true,
   scale = 1,
+  -- number of spaces needed to split a token
+  spaces_to_split = 2,
   -- hide on small docs (can be true, false or min number of lines)
   avoid_small_docs = false,
   -- how many spaces one tab is equivalent to
@@ -71,7 +88,11 @@ config.plugins.minimap = common.merge({
       description = "Disable to improve performance.",
       path = "syntax_highlight",
       type = "toggle",
-      default = true
+      default = true,
+      on_apply = function(value)
+        config.plugins.minimap.syntax_highlight = value
+        reset_cache()
+      end
     },
     {
       label = "Scale",
@@ -82,6 +103,18 @@ config.plugins.minimap = common.merge({
       min = 0.5,
       max = 10,
       step = 0.1
+    },
+    {
+      label = "Spaces to split",
+      description = "Number of spaces needed to split a token.",
+      path = "spaces_to_split",
+      type = "number",
+      default = 2,
+      min = 1,
+      on_apply = function(value)
+        config.plugins.minimap.spaces_to_split = value
+        reset_cache()
+      end
     },
     {
       label = "Hide for small Docs",
@@ -182,6 +215,35 @@ local char_height = 1 * SCALE * config.plugins.minimap.scale
 local char_spacing = 0.8 * SCALE * config.plugins.minimap.scale
 local line_spacing = 2 * SCALE * config.plugins.minimap.scale
 
+-- Remove changed lines from the cache
+local prev_tokenize_line = Highlighter.tokenize_line
+function Highlighter:tokenize_line(idx, state, ...)
+  local res = prev_tokenize_line(self, idx, state, ...)
+  if not highlighter_cache[self] then
+    highlighter_cache[self] = {}
+  end
+  highlighter_cache[self][idx] = nil
+  return res
+end
+
+-- Ask the Highlighter to retokenize the lines we have in cache
+local prev_invalidate = Highlighter.invalidate
+function Highlighter:invalidate(idx, ...)
+  local cache = highlighter_cache[self]
+  if cache then
+    self.max_wanted_line = math.max(self.max_wanted_line, #cache)
+  end
+  return prev_invalidate(self, idx, ...)
+end
+
+-- Remove cache on Highlighter reset (for example on syntax change)
+local prev_soft_reset = Highlighter.soft_reset
+function Highlighter:soft_reset(...)
+  prev_soft_reset(self, ...)
+  highlighter_cache[self] = {}
+end
+
+
 local MiniMap = Object:extend()
 
 function MiniMap:new()
@@ -192,7 +254,6 @@ function MiniMap:line_highlight_color(line_index)
 end
 
 local minimap = MiniMap()
-local per_docview = setmetatable({}, { __mode = "k" })
 
 local function show_minimap(docview)
   if not docview:is(DocView) then return false end
@@ -426,22 +487,46 @@ DocView.draw_scrollbar = function(self)
   -- we try to "batch" characters so that they can be rendered as just one rectangle instead of one for each.
   local batch_width = 0
   local batch_start = x
+  local last_batch_end = -1
   local minimap_cutoff_x = x + config.plugins.minimap.width * SCALE
   local batch_syntax_type = nil
-  local function flush_batch(type)
-    local old_color = color
-    color = style.syntax[batch_syntax_type]
-    if config.plugins.minimap.syntax_highlight and color ~= nil then
-      -- fetch and dim colors
-      color = {color[1], color[2], color[3], color[4] * 0.5}
-    else
-      color = old_color
-    end
+  local function flush_batch(type, cache)
     if batch_width > 0 then
-      renderer.draw_rect(batch_start, line_y, batch_width, char_height, color)
+      local lastidx = #cache
+      local old_color = color
+      color = style.syntax[type]
+      if config.plugins.minimap.syntax_highlight and color ~= nil then
+        -- fetch and dim colors
+        color = {color[1], color[2], color[3], color[4] * 0.5}
+      else
+        color = old_color
+      end
+      if #cache >= 3 then
+        local last_color = cache[lastidx]
+        if
+          last_batch_end == batch_start -- no space skipped
+          and (
+                batch_syntax_type == type -- and same syntax
+                or (                      -- or same color
+                      last_color[1] == color[1]
+                      and last_color[2] == color[2]
+                      and last_color[3] == color[3]
+                      and last_color[4] == color[4]
+                   )
+              )
+        then
+          batch_start = cache[lastidx - 2]
+          batch_width = cache[lastidx - 1] + batch_width
+          lastidx = lastidx - 3
+        end
+      end
+      cache[lastidx + 1] = batch_start
+      cache[lastidx + 2] = batch_width
+      cache[lastidx + 3] = color
     end
     batch_syntax_type = type
     batch_start = batch_start + batch_width
+    last_batch_end = batch_start
     batch_width = 0
   end
 
@@ -460,73 +545,75 @@ DocView.draw_scrollbar = function(self)
 
   local endidx = minimap_start_line + max_minmap_lines
   endidx = math.min(endidx, line_count)
-  -- render lines with syntax highlighting
-  if config.plugins.minimap.syntax_highlight then
 
-    -- keep track of the highlight type, since this needs to break batches as well
-    batch_syntax_type = nil
-
-    -- per line
-    for idx = minimap_start_line, endidx do
-      batch_syntax_type = nil
-      batch_start = x + gutter_width
-      batch_width = 0
-
-      render_highlight(idx, line_y)
-
-      -- per token
-      for _, type, text in self.doc.highlighter:each_token(idx) do
-        -- flush prev batch
-        if not batch_syntax_type then batch_syntax_type = type end
-        if batch_syntax_type ~= type then flush_batch(type) end
-
-        -- per character
-        for char in common.utf8_chars(text) do
-          if char == " " or char == "\n" then
-            flush_batch(type)
-            batch_start = batch_start + char_spacing
-          elseif char == "	" then
-            flush_batch(type)
-            batch_start = batch_start + (char_spacing * config.plugins.minimap.tab_width)
-          elseif batch_start + batch_width > minimap_cutoff_x then
-            flush_batch(type)
-            break
-          else
-            batch_width = batch_width + char_spacing
-          end
-
-        end
-      end
-      flush_batch(nil)
-      line_y = line_y + line_spacing
-    end
-
-  else -- render lines without syntax highlighting
-    for idx = minimap_start_line, endidx do
-      batch_start = x + gutter_width
-      batch_width = 0
-
-      render_highlight(idx, line_y)
-
-      for char in common.utf8_chars(self.doc.lines[idx]) do
-        if char == " " or char == "\n" then
-          flush_batch()
-          batch_start = batch_start + char_spacing
-        elseif char == "	" then
-          flush_batch()
-          batch_start = batch_start + (char_spacing * config.plugins.minimap.tab_width)
-        elseif batch_start + batch_width > minimap_cutoff_x then
-          flush_batch()
-        else
-          batch_width = batch_width + char_spacing
-        end
-      end
-      flush_batch()
-      line_y = line_y + line_spacing
-    end
-
+  if not highlighter_cache[self.doc.highlighter] then
+    highlighter_cache[self.doc.highlighter] = {}
   end
 
+  -- per line
+  for idx = minimap_start_line, endidx do
+    batch_syntax_type = nil
+    batch_start = 0
+    batch_width = 0
+    last_batch_end = -1
+
+    render_highlight(idx, line_y)
+    local cache = highlighter_cache[self.doc.highlighter][idx]
+    if not highlighter_cache[self.doc.highlighter][idx] then -- need to cache
+      highlighter_cache[self.doc.highlighter][idx] = {}
+      cache = highlighter_cache[self.doc.highlighter][idx]
+      -- per token
+      for _, type, text in self.doc.highlighter:each_token(idx) do
+        if not config.plugins.minimap.syntax_highlight then
+          type = nil
+        end
+        local start = 1
+        while true do
+          -- find text followed spaces followed by newline
+          local s, e, w, eol = string.ufind(text, "[^%s]*()[ \t]*()\n?", start)
+          if not s then break end
+          local nchars = w - s
+          start = e + 1
+          batch_width = batch_width + char_spacing * nchars
+
+          local nspaces = 0
+          for i=w,e do
+            local whitespace = string.sub(text, i, i)
+            if whitespace == "\t" then
+              nspaces = nspaces + config.plugins.minimap.tab_width
+            elseif whitespace == " " then
+              nspaces = nspaces + 1
+            end
+          end
+          -- not enough spaces; consider them part of the batch
+          if nspaces < config.plugins.minimap.spaces_to_split then
+            batch_width = batch_width + nspaces * char_spacing
+          end
+          -- line has ended or no more space in the minimap;
+          -- we can go to the next line
+          if eol <= w or batch_start + batch_width > minimap_cutoff_x then
+            if batch_width > 0 then
+              flush_batch(type, cache)
+            end
+            break
+          end
+          -- enough spaces to split the batch
+          if nspaces >= config.plugins.minimap.spaces_to_split then
+            flush_batch(type, cache)
+            batch_start = batch_start + nspaces * char_spacing
+          end
+        end
+      end
+    end
+    -- draw from cache
+    for i=1,#cache,3 do
+      local batch_start = cache[i    ] + x + gutter_width
+      local batch_width = cache[i + 1]
+      local color       = cache[i + 2]
+      renderer.draw_rect(batch_start, line_y, batch_width, char_height, color)
+    end
+    line_y = line_y + line_spacing
+  end
 end
 
 local prev_update = DocView.update
@@ -539,10 +626,11 @@ end
 command.add(nil, {
   ["minimap:toggle-visibility"] = function()
     config.plugins.minimap.enabled = not config.plugins.minimap.enabled
-    setmetatable({}, { __mode = "k" })
+    reset_per_docview()
   end,
   ["minimap:toggle-syntax-highlighting"] = function()
     config.plugins.minimap.syntax_highlight = not config.plugins.minimap.syntax_highlight
+    reset_cache()
   end
 })
 
