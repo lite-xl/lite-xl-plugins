@@ -24,6 +24,87 @@ syntax.add {
     { pattern = "//.-\n",                    type = "comment"  },
     { pattern = "#.-\n",                     type = "comment"  },
     { pattern = { "/%*", "%*/" },            type = "comment"  },
+    -- SQL strings
+    {
+        pattern = { '"[cC][rR][eE][aA][tT][eE]%s+', '"', '\\' },
+        syntax  = '.sql',
+        type    = "keyword"
+    },
+    {
+        pattern = { '\'[cC][rR][eE][aA][tT][eE]%s+', '\'', '\\' },
+        syntax  = '.sql',
+        type    = "keyword"
+    },
+    {
+        pattern = { '"[sS][eE][lL][eE][cC][tT]%s+', '"', '\\' },
+        syntax  = '.sql',
+        type    = "keyword"
+    },
+    {
+        pattern = { '\'[sS][eE][lL][eE][cC][tT]%s+', '\'', '\\' },
+        syntax  = '.sql',
+        type    = "keyword"
+    },
+    {
+        pattern = { '"[iI][nN][sS][eE][rR][tT]%s+', '"', '\\' },
+        syntax  = '.sql',
+        type    = "keyword"
+    },
+    {
+        pattern = { '\'[iI][nN][sS][eE][rR][tT]%s+', '\'', '\\' },
+        syntax  = '.sql',
+        type    = "keyword"
+    },
+    {
+        pattern = { '"[uU][pP][dD][aA][tT][eE]%s+', '"', '\\' },
+        syntax  = '.sql',
+        type    = "keyword"
+    },
+    {
+        pattern = { '\'[uU][pP][dD][aA][tT][eE]%s+', '\'', '\\' },
+        syntax  = '.sql',
+        type    = "keyword"
+    },
+    {
+        pattern = { '"[rR][eE][pP][lL][aA][cC][eE]%s+', '"', '\\' },
+        syntax  = '.sql',
+        type    = "keyword"
+    },
+    {
+        pattern = { '\'[rR][eE][pP][lL][aA][cC][eE]%s+', '\'', '\\' },
+        syntax  = '.sql',
+        type    = "keyword"
+    },
+    {
+        pattern = { '"[dD][eE][lL][eE][tT][eE]%s+', '"', '\\' },
+        syntax  = '.sql',
+        type    = "keyword"
+    },
+    {
+        pattern = { '\'[dD][eE][lL][eE][tT][eE]%s+', '\'', '\\' },
+        syntax  = '.sql',
+        type    = "keyword"
+    },
+    {
+        pattern = { '"[dD][rR][oO][pP]%s+', '"', '\\' },
+        syntax  = '.sql',
+        type    = "keyword"
+    },
+    {
+        pattern = { '\'[dD][rR][oO][pP]%s+', '\'', '\\' },
+        syntax  = '.sql',
+        type    = "keyword"
+    },
+    {
+        pattern = { '"[aA][lL][tT][eE][rR]%s+', '"', '\\' },
+        syntax  = '.sql',
+        type    = "keyword"
+    },
+    {
+        pattern = { '\'[aA][lL][tT][eE][rR]%s+', '\'', '\\' },
+        syntax  = '.sql',
+        type    = "keyword"
+    },
     -- The '\\' is for escaping to work on " or '
     { pattern = { '"', '"', '\\' },          type = "string"   },
     { pattern = { "'", "'", '\\' },          type = "string"   },
