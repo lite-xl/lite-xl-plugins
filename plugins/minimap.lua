@@ -215,6 +215,41 @@ local char_height = 1 * SCALE * config.plugins.minimap.scale
 local char_spacing = 0.8 * SCALE * config.plugins.minimap.scale
 local line_spacing = 2 * SCALE * config.plugins.minimap.scale
 
+
+-- Move cache to make space for new lines
+local prev_insert_notify = Highlighter.insert_notify
+function Highlighter:insert_notify(line, n, ...)
+  prev_insert_notify(self, line, n, ...)
+  local blanks = { }
+  if not highlighter_cache[self] then
+    highlighter_cache[self] = {}
+  else
+    local to = math.min(line + n, #self.doc.lines)
+    for i=#self.doc.lines+n,to,-1 do
+      highlighter_cache[self][i] = highlighter_cache[self][i - n]
+    end
+    for i=line,to do
+      highlighter_cache[self][i] = nil
+    end
+  end
+end
+
+
+-- Close the cache gap created by removed lines
+local prev_remove_notify = Highlighter.remove_notify
+function Highlighter:remove_notify(line, n, ...)
+  prev_remove_notify(self, line, n, ...)
+  if not highlighter_cache[self] then
+    highlighter_cache[self] = {}
+  else
+    local to = math.max(line + n, #self.doc.lines)
+    for i=line,to do
+      highlighter_cache[self][i] = highlighter_cache[self][i + n]
+    end
+  end
+end
+
+
 -- Remove changed lines from the cache
 local prev_tokenize_line = Highlighter.tokenize_line
 function Highlighter:tokenize_line(idx, state, ...)
