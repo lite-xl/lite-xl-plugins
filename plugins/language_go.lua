@@ -18,7 +18,8 @@ syntax.add {
     { pattern = "-?%.?%d+f?",           type = "number"   },
     { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
     { pattern = ":=",                   type = "operator" },
-    { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
+    { pattern = "[%a_][%w_]*%f[(]",                  type = "function" }, -- function call
+    { pattern = "func()[%s].*[%a_][%w_]*()%f[%[(]",  type = {"keyword", "function", "normal"} }, -- function statement
     { pattern = "[%a_][%w_]*",          type = "symbol"   },
   },
   symbols = {
@@ -35,8 +36,8 @@ syntax.add {
     ["const"]       = "keyword",
     ["package"]     = "keyword",
     ["import"]      = "keyword",
-    ["func"]        = "keyword",
     ["var"]         = "keyword",
+    ["func"]        = "keyword",
     ["type"]        = "keyword",
     ["interface"]   = "keyword",
     ["select"]      = "keyword",
