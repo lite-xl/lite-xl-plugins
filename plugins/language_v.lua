@@ -12,6 +12,8 @@ syntax.add {
     { pattern = { '"', '"', '\\' },         type = "string"   },
     { pattern = { "'", "'", '\\' },         type = "string"   },
     { pattern = { "`", "`", '\\' },         type = "string"   },
+    { pattern = { "r'", "'" },              type = "string"   }, -- raw string single quotes
+    { pattern = { 'r"', '"' },              type = "string"   }, -- raw string double quotes
     { pattern = "0x[%da-fA-F_]+",           type = "number"   },
     { pattern = "0b[01_]+",                 type = "number"   },
     { pattern = "00[01234567_]+",           type = "number"   },
