@@ -10,6 +10,15 @@ local syntax = require "core.syntax"
 require "plugins.language_css"
 require "plugins.language_js"
 
+-- generate SQL string marker regex
+local sql_markers = { 'create', 'select', 'insert', 'update', 'replace', 'delete', 'drop', 'alter' }
+local sql_regex   = {}
+for _,marker in ipairs(sql_markers) do
+    table.insert(sql_regex, marker)
+    table.insert(sql_regex, string.upper(marker))
+end
+sql_regex = table.concat(sql_regex, '|')
+
 -- define the core php syntax coloring
 syntax.add {
   name = "PHP Source",
@@ -24,6 +33,17 @@ syntax.add {
     { pattern = "//.-\n",                    type = "comment"  },
     { pattern = "#.-\n",                     type = "comment"  },
     { pattern = { "/%*", "%*/" },            type = "comment"  },
+    -- SQL strings
+    {
+        regex  = { '"(?=(?:'..sql_regex..')\\s+)', '"', '\\' },
+        syntax = '.sql',
+        type   = "string"
+    },
+    {
+        regex  = { '\'(?=(?:'..sql_regex..')\\s+)', '\'', '\\' },
+        syntax = '.sql',
+        type   = "string"
+    },
     -- The '\\' is for escaping to work on " or '
     { pattern = { '"', '"', '\\' },          type = "string"   },
     { pattern = { "'", "'", '\\' },          type = "string"   },
