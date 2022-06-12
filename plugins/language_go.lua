@@ -45,6 +45,9 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
     { pattern = ":=",                   type = "operator" },
     -- function calls
+    { pattern = "func()%s*[%a_][%w_]*()%f[%[(]", -- function statement
+      type = {"keyword", "function", "normal"}
+    },
     { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
     { pattern = "%.()[%a_][%w_]*%f[(]",
       type = { "normal", "function" }
