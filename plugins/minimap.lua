@@ -523,7 +523,7 @@ DocView.draw_scrollbar = function(self)
   local batch_width = 0
   local batch_start = x
   local last_batch_end = -1
-  local minimap_cutoff_x = x + config.plugins.minimap.width * SCALE
+  local minimap_cutoff_x = config.plugins.minimap.width * SCALE
   local batch_syntax_type = nil
   local function flush_batch(type, cache)
     if batch_width > 0 then
