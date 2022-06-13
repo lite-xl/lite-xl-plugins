@@ -8,20 +8,6 @@ local DocView = require "core.docview"
 local Highlighter = require "core.doc.highlighter"
 local Object = require "core.object"
 
--- cache for the location of the rects for each Doc
-local highlighter_cache
-local function reset_cache()
-  highlighter_cache = setmetatable({}, { __mode = "k" })
-end
-reset_cache()
-
--- minimap status per DocView
-local per_docview
-local function reset_per_docview()
-  per_docview = setmetatable({}, { __mode = "k" })
-end
-reset_per_docview()
-
 -- Sample configurations:
 -- full width:
 -- config.plugins.minimap.highlight_width = 100
@@ -88,11 +74,7 @@ config.plugins.minimap = common.merge({
       description = "Disable to improve performance.",
       path = "syntax_highlight",
       type = "toggle",
-      default = true,
-      on_apply = function(value)
-        config.plugins.minimap.syntax_highlight = value
-        reset_cache()
-      end
+      default = true
     },
     {
       label = "Scale",
@@ -110,11 +92,7 @@ config.plugins.minimap = common.merge({
       path = "spaces_to_split",
       type = "number",
       default = 2,
-      min = 1,
-      on_apply = function(value)
-        config.plugins.minimap.spaces_to_split = value
-        reset_cache()
-      end
+      min = 1
     },
     {
       label = "Hide for small Docs",
@@ -210,10 +188,58 @@ config.plugins.minimap = common.merge({
   }
 }, config.plugins.minimap)
 
+
+-- contains the settings values that require a cache reset if changed
+local cached_settings = {
+  color_scheme_canary = nil,
+  syntax_highlight = nil,
+  spaces_to_split = nil,
+  scale = nil,
+  width = nil,
+}
+
 -- Configure size for rendering each char in the minimap
-local char_height = 1 * SCALE * config.plugins.minimap.scale
-local char_spacing = 0.8 * SCALE * config.plugins.minimap.scale
-local line_spacing = 2 * SCALE * config.plugins.minimap.scale
+local char_height
+local char_spacing
+local line_spacing
+
+-- cache for the location of the rects for each Doc
+local highlighter_cache
+local function reset_cache()
+  highlighter_cache = setmetatable({}, { __mode = "k" })
+  cached_settings = {
+    color_scheme_canary = style.syntax["normal"],
+    syntax_highlight = config.plugins.minimap.syntax_highlight,
+    spaces_to_split = config.plugins.minimap.spaces_to_split,
+    scale = config.plugins.minimap.scale,
+    width = config.plugins.minimap.width,
+  }
+  char_height = 1 * SCALE * config.plugins.minimap.scale
+  char_spacing = 0.8 * SCALE * config.plugins.minimap.scale
+  line_spacing = 2 * SCALE * config.plugins.minimap.scale
+end
+reset_cache()
+
+
+local function reset_cache_if_needed()
+  if
+    cached_settings.color_scheme_canary ~= style.syntax["normal"]
+    or cached_settings.syntax_highlight ~= config.plugins.minimap.syntax_highlight
+    or cached_settings.spaces_to_split  ~= config.plugins.minimap.spaces_to_split
+    or cached_settings.scale            ~= config.plugins.minimap.scale
+    or cached_settings.width            ~= config.plugins.minimap.width
+  then
+    reset_cache()
+  end
+end
+
+
+-- minimap status per DocView
+local per_docview
+local function reset_per_docview()
+  per_docview = setmetatable({}, { __mode = "k" })
+end
+reset_per_docview()
 
 
 -- Move cache to make space for new lines
@@ -270,6 +296,7 @@ function Highlighter:invalidate(idx, ...)
   end
   return prev_invalidate(self, idx, ...)
 end
+
 
 -- Remove cache on Highlighter reset (for example on syntax change)
 local prev_soft_reset = Highlighter.soft_reset
@@ -581,6 +608,8 @@ DocView.draw_scrollbar = function(self)
   local endidx = minimap_start_line + max_minmap_lines
   endidx = math.min(endidx, line_count)
 
+  reset_cache_if_needed()
+
   if not highlighter_cache[self.doc.highlighter] then
     highlighter_cache[self.doc.highlighter] = {}
   end
@@ -665,7 +694,6 @@ command.add(nil, {
   end,
   ["minimap:toggle-syntax-highlighting"] = function()
     config.plugins.minimap.syntax_highlight = not config.plugins.minimap.syntax_highlight
-    reset_cache()
   end
 })
 
