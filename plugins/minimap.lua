@@ -532,7 +532,7 @@ DocView.draw_scrollbar = function(self)
       color = style.syntax[type]
       if config.plugins.minimap.syntax_highlight and color ~= nil then
         -- fetch and dim colors
-        color = {color[1], color[2], color[3], color[4] * 0.5}
+        color = {color[1], color[2], color[3], (color[4] or 255) * 0.5}
       else
         color = old_color
       end
