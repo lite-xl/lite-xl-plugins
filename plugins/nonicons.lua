@@ -121,7 +121,7 @@ function TreeView:get_item_icon(item, active, hovered)
     font = icon_font
     color = style.text
     if item.type == "dir" then
-      icon = item.expanded and "" or "" -- unicode 61771 and 61772
+      icon = item.expanded and "" or "" -- unicode U+F23C and U+F23B
     end
   end
   if config.plugins.nonicons.draw_treeview_icons then
