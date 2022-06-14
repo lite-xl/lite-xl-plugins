@@ -95,7 +95,7 @@ function TreeView:draw()
     x = x + item.depth * style.padding.x + style.padding.x
     if item.type == "dir" then
       local icon1 = item.expanded and "" or "" -- unicode 61726 and 61728
-      local icon2 = item.expanded and "" or "" -- unicode 61771 and 61772
+      local icon2 = item.expanded and "" or "" -- unicode U+F23C and U+F23B
       x = x - spacing
       common.draw_text(icon_font, color, icon1, nil, x, y, 0, h)
       x = x + style.padding.x + spacing
