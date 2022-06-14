@@ -2,13 +2,54 @@
 --[[
   language_php.lua
   provides php syntax support allowing mixed html, css and js
-  version: 20220606_1
+  version: 20220614_1
 --]]
 local syntax = require "core.syntax"
+local common = require "core.common"
+local config = require "core.config"
 
 -- load syntax dependencies to add additional rules
 require "plugins.language_css"
 require "plugins.language_js"
+
+local psql_found = pcall(require, "plugins.language_psql")
+local sql_strings = {}
+
+config.plugins.language_php = common.merge({
+  sql_strings = true,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Language PHP",
+    {
+      label = "SQL Strings",
+      description = "Highlight as SQL, strings starting with sql statements, "
+        .. "depends on language_psql.",
+      path = "sql_strings",
+      type = "toggle",
+      default = true,
+      on_apply = function(enabled)
+        local syntax_php = syntax.get("file.phps")
+        if enabled and psql_found then
+          if
+            not syntax_php.patterns[6].syntax
+            or
+            syntax_php.patterns[6].syntax ~= '.sql'
+          then
+            table.insert(syntax_php.patterns, 5, sql_strings[1])
+            table.insert(syntax_php.patterns, 6, sql_strings[2])
+          end
+        elseif
+          syntax_php.patterns[6].syntax
+          and
+          syntax_php.patterns[6].syntax == '.sql'
+        then
+          table.remove(syntax_php.patterns, 5)
+          table.remove(syntax_php.patterns, 5)
+        end
+      end
+    }
+  }
+}, config.plugins.language_php)
 
 -- Patterns to match some of the string inline variables
 local inline_variables = {
@@ -54,6 +95,56 @@ local function combine_patterns(t1, t2)
     table.insert(temp, t)
   end
   return temp
+end
+
+local function clone(tbl)
+  local t = {}
+  if tbl then
+    for k, v in pairs(tbl) do
+      if type(v) == "table" then
+        t[k] = clone(v)
+      else
+        t[k] = v
+      end
+    end
+  end
+  return t
+end
+
+-- optionally allow sql syntax on strings
+if psql_found then
+  -- generate SQL string marker regex
+  local sql_markers = { 'create', 'select', 'insert', 'update', 'replace', 'delete', 'drop', 'alter' }
+  local sql_regex   = {}
+  for _, marker in ipairs(sql_markers) do
+      table.insert(sql_regex, marker)
+      table.insert(sql_regex, string.upper(marker))
+  end
+  sql_regex = table.concat(sql_regex, '|')
+
+  -- inject inline variable rules to cloned psql syntax
+  local syntax_phpsql = clone(syntax.get("file.sql"))
+  syntax_phpsql.name = "PHP SQL"
+  syntax_phpsql.files = "%.phpsql$"
+  table.insert(syntax_phpsql.patterns, 2, { pattern = "\\%$", type = "symbol" })
+  table.insert(syntax_phpsql.patterns, 3, { pattern = "%{[%$%s]*%}", type = "symbol" })
+  for i=4, 9 do
+    table.insert(syntax_phpsql.patterns, i, inline_variables[i])
+  end
+
+  -- SQL strings
+  sql_strings = {
+    {
+        regex  = { '"(?=(?:'..sql_regex..')\\s+)', '"', '\\' },
+        syntax = syntax_phpsql,
+        type   = "string"
+    },
+    {
+        regex  = { '\'(?=(?:'..sql_regex..')\\s+)', '\'', '\\' },
+        syntax = '.sql',
+        type   = "string"
+    },
+  }
 end
 
 -- define the core php syntax coloring
@@ -223,6 +314,13 @@ syntax.add {
     ["exit"] = "function",
   },
 }
+
+-- insert sql string rules after the "/%*", "%*/" pattern
+if psql_found and config.plugins.language_php.sql_strings then
+  local syntax_php = syntax.get("file.phps")
+  table.insert(syntax_php.patterns, 5, sql_strings[1])
+  table.insert(syntax_php.patterns, 6, sql_strings[2])
+end
 
 -- allows html, css and js coloring on php files
 syntax.add {
