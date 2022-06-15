@@ -199,8 +199,8 @@ local cached_settings = {
 }
 
 -- Configure size for rendering each char in the minimap
-local char_height
 local char_spacing
+local char_height
 local line_spacing
 
 -- cache for the location of the rects for each Doc
@@ -214,9 +214,10 @@ local function reset_cache()
     scale = config.plugins.minimap.scale,
     width = config.plugins.minimap.width,
   }
-  char_height = 1 * SCALE * config.plugins.minimap.scale
   char_spacing = 0.8 * SCALE * config.plugins.minimap.scale
-  line_spacing = 2 * SCALE * config.plugins.minimap.scale
+  -- keep y aligned to pixels
+  char_height = math.max(1, math.floor(1 * SCALE * config.plugins.minimap.scale + 0.5))
+  line_spacing = math.max(1, math.floor(2 * SCALE * config.plugins.minimap.scale + 0.5))
 end
 reset_cache()
 
