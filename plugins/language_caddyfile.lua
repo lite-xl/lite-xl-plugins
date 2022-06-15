@@ -12,11 +12,17 @@ syntax.add {
     -- Snippet
     { pattern = "%(%g+%)",             type = "operator" },
     -- Properties
-    { pattern = "^%s*()[%a_]+()%s+%f[%g]",
+    { pattern = "^[%a_][%w_]*()%s+%f[%g]",
+      type = { "function", "normal" }
+    },
+    { pattern = "^[%a_][%w_]*()%s+$",
+      type = { "function", "normal" }
+    },
+    { pattern = "^%s*()[%a_][%w_]*()%s+$",
       type = { "normal", "function", "normal" }
     },
-    { pattern = "^[%a_]+()%s+%f[%g]",
-      type = { "function", "normal" }
+    { pattern = "^%s*()[%a_][%w_]*()%s+%f[%g]",
+      type = { "normal", "function", "normal" }
     },
     -- Environment variables
     { pattern = "{()%$[%w_]+():()[%w_]+()}",
