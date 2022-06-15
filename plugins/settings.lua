@@ -1448,7 +1448,7 @@ local contributors_list = {
   end
 
   ---@param self widget
-  local function update_positions(self)
+  function self.about:update_positions()
     local center = self:get_width() / 2
 
     title.font = style.big_font
@@ -1484,14 +1484,6 @@ local contributors_list = {
     )
 
     contributors:set_visible_rows()
-  end
-
-  update_positions(self.about)
-
-  local update_about = self.about.update
-  function self.about:update()
-    update_about(self)
-    update_positions(self)
   end
 end
 
@@ -1534,6 +1526,10 @@ function Settings:update()
         end
       end
     end
+  end
+
+  if self.about:is_visible() then
+    self.about:update_positions()
   end
 end
 
