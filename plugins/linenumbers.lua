@@ -29,7 +29,7 @@ config.plugins.linenumbers = common.merge({
 }, config.plugins.linenumbers)
 
 local draw_line_gutter = DocView.draw_line_gutter
-local get_width = DocView.get_gutter_width
+local get_gutter_width = DocView.get_gutter_width
 
 function DocView:draw_line_gutter(line, x, y, width)
   local lh = self:get_line_height()
@@ -38,39 +38,33 @@ function DocView:draw_line_gutter(line, x, y, width)
   end
 
   if config.plugins.linenumbers.relative then
-
     local color = style.line_number
     local local_idx = line
-    local align = "right"
+
+    for _, line1, _, line2 in self.doc:get_selections(true) do
+      if line >= line1 and line <= line2 then
+        color = style.line_number2
+        break
+      end
+    end
 
     local l1 = self.doc:get_selection(false)
     if line == l1 then
       color = style.line_number2
-      if config.line_numbers then
-        align = "center"
-      else
-        local_idx = 0
-      end
+      local_idx = 0
     else
       local_idx = math.abs(line - l1)
     end
 
-    -- Fix for old version (<=1.16)
-    if width == nil then
-      local gpad = style.padding.x * 2
-      local gw = self:get_font():get_width(#self.doc.lines) + gpad
-      width = gpad and gw - gpad or gw
-    end
-
     common.draw_text(
       self:get_font(),
-      color, local_idx, align,
+      color, local_idx, "right",
       x + style.padding.x,
-      y + self:get_line_text_y_offset(),
-      width,  lh
+      y,
+      width, lh
     )
   else
-    draw_line_gutter(self, line, x, y, width)
+    return draw_line_gutter(self, line, x, y, width)
   end
   return lh
 end
@@ -78,12 +72,20 @@ end
 function DocView:get_gutter_width(...)
   if
     not config.plugins.linenumbers.show
-    and
-    not config.plugins.linenumbers.relative
   then
-    return style.padding.x
+    local width = get_gutter_width(self, ...)
+
+    local correct_width = self:get_font():get_width(#self.doc.lines)
+      + (style.padding.x * 2)
+
+    -- compatibility with center doc
+    if width <= correct_width then
+      width = style.padding.x
+    end
+
+    return width, 0
   else
-    return get_width(self, ...)
+    return get_gutter_width(self, ...)
   end
 end
 
