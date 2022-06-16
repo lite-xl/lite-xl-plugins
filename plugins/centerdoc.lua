@@ -21,7 +21,7 @@ function DocView:draw_line_gutter(line, x, y, width)
   if not config.plugins.centerdoc.enabled then
     lh = draw_line_gutter(self, line, x, y, width)
   else
-    local real_gutter_width = get_gutter_width(self)
+    local real_gutter_width = self:get_font():get_width(#self.doc.lines)
     local offset = self:get_gutter_width() - real_gutter_width * 2
     lh = draw_line_gutter(self, line, x + offset, y, real_gutter_width)
   end
@@ -33,9 +33,9 @@ function DocView:get_gutter_width()
   if not config.plugins.centerdoc.enabled then
     return get_gutter_width(self)
   else
-    local real_gutter_width = get_gutter_width(self)
+    local real_gutter_width, gutter_padding = get_gutter_width(self)
     local width = real_gutter_width + self:get_font():get_width("n") * config.line_limit
-    return math.max((self.size.x - width) / 2, real_gutter_width)
+    return math.max((self.size.x - width) / 2, real_gutter_width), gutter_padding
   end
 end
 
