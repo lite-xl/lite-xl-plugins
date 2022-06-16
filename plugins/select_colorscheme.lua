@@ -122,7 +122,9 @@ end
 
 command.add(nil, {
   ["ui:color scheme"] = function()
-    core.command_view:enter("Select color scheme", color_scheme_submit, color_scheme_suggest)
+    core.command_view:enter("Select color scheme", {
+      submit = color_scheme_submit, suggest = color_scheme_suggest
+    })
   end,
 })
 -- ----------------------------------------------------------------

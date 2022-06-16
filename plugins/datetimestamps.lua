@@ -77,9 +77,11 @@ command.add("core.docview", {
   ["datetimestamps:insert-timestamp"] = timestamp,
   ["datetimestamps:insert-datetimestamp"] = datetimestamp,
   ["datetimestamps:insert-custom"] = function()
-    core.command_view:enter("Date format eg: %H:%M:%S", function(cmd)
-      core.active_view.doc:text_input(os.date(cmd) or "")
-    end)
+    core.command_view:enter("Date format eg: %H:%M:%S", {
+      submit = function(cmd)
+        core.active_view.doc:text_input(os.date(cmd) or "")
+      end
+    })
   end,
 })
 

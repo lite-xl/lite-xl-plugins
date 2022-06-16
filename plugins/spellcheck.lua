@@ -214,18 +214,21 @@ command.add("core.docview", {
     -- select word and init replacement selector
     local label = string.format("Replace \"%s\" With", word)
     doc:set_selection(line, e + 1, line, s)
-    core.command_view:enter(label, function(text, item)
-      text = item and item.text or text
-      doc:replace(function() return text end)
-    end, function(text)
-      local t = {}
-      for _, w in ipairs(suggestions) do
-        if w:lower():find(text:lower(), 1, true) then
-          table.insert(t, w)
+    core.command_view:enter(label, {
+      submit = function(text, item)
+        text = item and item.text or text
+        doc:replace(function() return text end)
+      end,
+      suggest = function(text)
+        local t = {}
+        for _, w in ipairs(suggestions) do
+          if w:lower():find(text:lower(), 1, true) then
+            table.insert(t, w)
+          end
         end
+        return t
       end
-      return t
-    end)
+    })
   end,
 
 })

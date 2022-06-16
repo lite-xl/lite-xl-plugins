@@ -95,12 +95,11 @@ command.add("core.docview", {
     local doc = view.doc
     local original_selection = { doc:get_selection(true) }
     local selection = doc:has_selection() and { doc:get_selection(true) } or {}
-    core.command_view:enter(
-      "Regex Replace (enter pattern as /old/new/)",
-      function(pattern)
+    core.command_view:enter("Regex Replace (enter pattern as /old/new/)", {
+      submit = function(pattern)
         regex_replace_file(view, pattern, {}, false, selection[1], selection[3])
       end,
-      function(pattern)
+      suggest = function(pattern)
         local incremental, has_replacement = regex_replace_file(
           view, pattern, old_lines, true, selection[1], selection[3]
         )
@@ -111,7 +110,7 @@ command.add("core.docview", {
           doc:set_selection(table.unpack(original_selection))
         end
       end,
-      function(pattern)
+      cancel = function(pattern)
         for k,v in pairs(old_lines) do
           if v then
             if k == #doc.lines then
@@ -124,7 +123,7 @@ command.add("core.docview", {
         end
         doc:set_selection(table.unpack(original_selection))
       end
-    )
+    })
   end
 })
 
