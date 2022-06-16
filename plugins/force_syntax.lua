@@ -103,23 +103,20 @@ end
 command.add("core.docview", {
   ["force-syntax:select-file-syntax"] =
     function()
-      core.command_view:enter(
-        "Set syntax for this file",
-        function(text, item) -- submit
+      core.command_view:enter("Set syntax for this file", {
+        submit = function(text, item)
           local list, _ = get_syntax_list()
           doc().force_syntax = list[item.text]
           doc():reset_syntax()
         end,
-        function(text) -- suggest
+        suggest = function(text)
           local _, keylist = get_syntax_list()
           local res = common.fuzzy_match(keylist, text)
           -- Force Current and Auto detect syntax to the bottom
           -- if the text is empty
           table.sort(res, #text == 0 and bias_sorter or sorter)
           return res
-        end,
-        nil, -- cancel
-        nil -- validate
-      )
+        end
+      })
     end
 })
