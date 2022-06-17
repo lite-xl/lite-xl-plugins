@@ -1564,7 +1564,9 @@ function core.run()
 
   -- apply user chosen color theme
   if settings.config.theme and settings.config.theme ~= "default" then
-    core.reload_module("colors." .. settings.config.theme)
+    core.try(function()
+      core.reload_module("colors." .. settings.config.theme)
+    end)
   end
 
   core_run()
