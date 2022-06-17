@@ -48,7 +48,7 @@ syntax.add {
     { pattern = "-?%.?%d+",                   type = "number"   },
     { pattern = "[%.%+%-=/%*%^%%<>!~|&%?:@]", type = "operator" },
      -- Variables
-    { pattern = "%$[%w_]+",                   type = "symbol" },
+    { pattern = "%$[%w_]+",                   type = "keyword2" },
     -- Respect control structures, treat as keyword not function
     { pattern = "if[%s]*%f[(]",               type = "keyword"  },
     { pattern = "else[%s]*%f[(]",             type = "keyword"  },
