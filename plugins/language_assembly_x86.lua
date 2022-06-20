@@ -2187,6 +2187,7 @@ syntax.add {
     ["strict"] = "keyword2", ["STRICT"] = "keyword2",
     ["use16"] = "keyword2", ["USE16"] = "keyword2",
     ["use32"] = "keyword2", ["USE32"] = "keyword2",
+    ["use64"] = "keyword2", ["USE64"] = "keyword2",
     ["wrt"] = "keyword2",
     ["..got"] = "keyword2",
     ["..plt"] = "keyword2",
