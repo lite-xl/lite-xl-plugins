@@ -6,7 +6,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
-  files = { "%.asm$", "%.S$", "%.s$" },
+  files = { "%.asm$", "%.[sS]$" },
   comment = ";",
   patterns = {
     { pattern = ";.-\n", type = "comment" },
