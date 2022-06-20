@@ -16,6 +16,7 @@ local NumberBox = require "widget.numberbox"
 local Toggle = require "widget.toggle"
 local ListBox = require "widget.listbox"
 local FoldingBook = require "widget.foldingbook"
+local FontsList = require "widget.fontslist"
 local ItemsList = require "widget.itemslist"
 local ToolbarView = require "plugins.toolbarview"
 local KeybindingDialog = require "widget.keybinddialog"
@@ -37,7 +38,8 @@ settings.type = {
   TOGGLE = 3,
   SELECTION = 4,
   LIST_STRINGS = 5,
-  BUTTON = 6
+  BUTTON = 6,
+  FONT = 7
 }
 
 ---@alias settings.types
@@ -47,6 +49,7 @@ settings.type = {
 ---| 'settings.type.SELECTION'
 ---| 'settings.type.LIST_STRINGS'
 ---| 'settings.type.BUTTON'
+---| 'settings.type.FONT'
 
 ---Represents a setting to render on a settings pane.
 ---@class settings.option
@@ -59,6 +62,7 @@ settings.type = {
 ---@field public max number
 ---@field public step number
 ---@field public values table
+---@field public fonts_list table<string, renderer.font>
 ---@field public get_value nil | fun(value:any):any
 ---@field public set_value nil | fun(value:any):any
 ---@field public icon string
@@ -83,6 +87,8 @@ settings.option = {
   step = 0,
   ---Used in a SELECTION to provide the list of valid options
   values = {},
+  ---Optionally used for FONT to store the generated font group.
+  fonts_list = {},
   ---Optional function that is used to manipulate the current value on retrieval.
   get_value = nil,
   ---Optional function that is used to manipulate the saved value on save.
@@ -280,6 +286,26 @@ settings.add("Graphics",
 settings.add("User Interface",
   {
     {
+      label = "Font",
+      description = "The font and fallbacks used on non code text.",
+      path = "font",
+      type = settings.type.FONT,
+      fonts_list = style,
+      default = {
+        fonts = {
+          {
+            name = "Fira Sans Regular",
+            path = DATADIR .. "/fonts/FiraSans-Regular.ttf"
+          }
+        },
+        options = {
+          size = 15,
+          antialiasing = "subpixel",
+          hinting = "slight"
+        }
+      }
+    },
+    {
       label = "Borderless",
       description = "Use built-in window decorations.",
       path = "borderless",
@@ -349,6 +375,26 @@ settings.add("User Interface",
 
 settings.add("Editor",
   {
+    {
+      label = "Code Font",
+      description = "The font and fallbacks used on the code editor.",
+      path = "code_font",
+      type = settings.type.FONT,
+      fonts_list = style,
+      default = {
+        fonts = {
+          {
+            name = "JetBrains Mono Regular",
+            path = DATADIR .. "/fonts/JetBrainsMono-Regular.ttf"
+          }
+        },
+        options = {
+          size = 15,
+          antialiasing = "subpixel",
+          hinting = "slight"
+        }
+      }
+    },
     {
       label = "Indentation Type",
       description = "The character inserted when pressing the tab key.",
@@ -994,6 +1040,39 @@ local function add_control(pane, option, plugin_name)
     end
     widget = list
     found = true
+
+  elseif option.type == settings.type.FONT then
+     ---@type widget.label
+    Label(pane, option.label .. ":")
+    ---@type widget.fontslist
+    local fonts = FontsList(pane)
+    if type(option_value) == "table" then
+      for _, font in ipairs(option_value.fonts) do
+        fonts:add_font(font)
+      end
+
+      local font_options = option_value.options or {
+        size = 15,
+        antialiasing = "supixel",
+        hinting = "slight"
+      }
+      font_options.size = font_options.size or 15
+      font_options.antialiasing = font_options.antialiasing or "subpixel"
+      font_options.hinting = font_options.hinting or "slight"
+      fonts:set_options(font_options)
+
+      if option.fonts_list then
+        local fontsl = {}
+        for _, font in ipairs(option_value.fonts) do
+          table.insert(fontsl, renderer.font.load(
+            font.path, font_options.size * SCALE, font_options
+          ))
+        end
+        set_config_value(option.fonts_list, path, renderer.font.group(fontsl))
+      end
+    end
+    widget = fonts
+    found = true
   end
 
   if widget and type(path) ~= "nil" then
@@ -1002,6 +1081,20 @@ local function add_control(pane, option, plugin_name)
         value = self:get_selected_data()
       elseif self:is(ItemsList) then
         value = self:get_items()
+      elseif self:is(FontsList) then
+        value = {
+          fonts = self:get_fonts(),
+          options = self:get_options()
+        }
+        if option.fonts_list then
+          local fonts = {}
+          for _, font in ipairs(value.fonts) do
+            table.insert(fonts, renderer.font.load(
+              font.path, value.options.size * SCALE, value.options
+            ))
+          end
+          set_config_value(option.fonts_list, path, renderer.font.group(fonts))
+        end
       end
       if option.set_value then
         value = option.set_value(value)
