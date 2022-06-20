@@ -22,7 +22,7 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&%$]", type = "operator" },
     { pattern = "[%a_][%w_]*:%W", type = "function" },
     { pattern = "[%a_][%w_]*", type = "symbol" },
-
+    { pattern = "%.%.%a+", type = "normal" }
   },
   symbols = {
     -- Registers
@@ -2188,6 +2188,9 @@ syntax.add {
     ["use16"] = "keyword2", ["USE16"] = "keyword2",
     ["use32"] = "keyword2", ["USE32"] = "keyword2",
     ["use64"] = "keyword2", ["USE64"] = "keyword2",
+    ["..got"] = "keyword2",
+    ["..plt"] = "keyword2",
+    ["..sym"] = "keyword2",
     ["wrt"] = "keyword2",
     ["struc"] = "keyword2",
     ["endstruc"] = "keyword2",
