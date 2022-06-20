@@ -9,23 +9,23 @@ syntax.add {
   files = { "%.asm$", "%.S$", "%.s$" },
   comment = ";",
   patterns = {
-    { pattern = ";.-\n",                type = "comment" },
-    { pattern = { '"', '"', '\\' },      type = "string"  },
-    { pattern = { "'", "'", '\\' },      type = "string"  },
-    { pattern = "0[bB][0-1]+%W",            type = "number"  },
-    { pattern = "[0-1]+[bB]%W",            type = "number"  },
-    { pattern = "0[xX]%x+",                 type = "number"  },
-    { pattern = "%x+[hH]%W",                 type = "number"  },
-    { pattern = "%d+[%d%.eE]*f?",        type = "number"  },
-    { pattern = "%.?%d+f?",              type = "number"  },
-    { pattern = "%%+[%a_][%w_]*",          type = "keyword" },
-    { pattern = "[%+%-=/%*%^%%<>!~|&|%$]",  type = "operator" },
-    { pattern = "[%a_][%w_]*:%W",      type = "function" },
-    { pattern = "[%a_][%w_]*",           type = "symbol" },
+    { pattern = ";.-\n", type = "comment" },
+    { pattern = { '"', '"', '\\' }, type = "string" },
+    { pattern = { "'", "'", '\\' }, type = "string" },
+    { pattern = "0[bB][0-1]+%W", type = "number" },
+    { pattern = "[0-1]+[bB]%W", type = "number" },
+    { pattern = "0[xX]%x+", type = "number" },
+    { pattern = "%x+[hH]%W", type = "number" },
+    { pattern = "%d+[%d%.eE]*f?", type = "number" },
+    { pattern = "%.?%d+f?", type = "number" },
+    { pattern = "%%+[%a_][%w_]*", type = "keyword" },
+    { pattern = "[%+%-=/%*%^%%<>!~|&|%$]", type = "operator" },
+    { pattern = "[%a_][%w_]*:%W", type = "function" },
+    { pattern = "[%a_][%w_]*", type = "symbol" },
 
   },
   symbols = {
-    -- Registers 
+    -- Registers
     ["rax"] = "literal",
     ["eax"] = "literal",
     ["ax"] = "literal",
@@ -227,7 +227,7 @@ syntax.add {
     ["r15d"] = "literal",
     ["r15w"] = "literal",
     ["r15b"] = "literal",
-    
+
     -- Instructions
     ["aaa"] = "keyword",
     ["aad"] = "keyword",
@@ -1804,7 +1804,7 @@ syntax.add {
     ["vpermi2ps"] = "keyword",
     ["vpermi2q"] = "keyword",
     ["vpermi2w"] = "keyword",
-    ["vpermilpd"] = "keyword",      
+    ["vpermilpd"] = "keyword",
     ["vpermilps"] = "keyword",
     ["vpermpd"] = "keyword",
     ["vpermps"] = "keyword",
@@ -2142,7 +2142,7 @@ syntax.add {
     ["xsha256"] = "keyword",
     ["xstore"] = "keyword",
     ["xtest"] = "keyword",
-    
+
     -- Data
     ["times"] = "keyword2",
     ["equ"] = "keyword2",
@@ -2173,7 +2173,7 @@ syntax.add {
     ["yword"] = "keyword2",
     ["zword"] = "keyword2",
     ["oword"] = "keyword2",
-      
+
     -- NASM directives
     ["absolute"] = "keyword2", ["ABSOLUTE"] = "keyword2",
     ["bits"] = "keyword2", ["BITS"] = "keyword2",
