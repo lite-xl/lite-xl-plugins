@@ -1469,6 +1469,7 @@ end
 function Settings:setup_about()
   ---@type widget.label
   local title = Label(self.about, "Lite XL")
+  title.font = "big_font"
   ---@type widget.label
   local version = Label(self.about, "version " .. VERSION)
   ---@type widget.label
@@ -1543,7 +1544,6 @@ local contributors_list = {
   function self.about:update_positions()
     local center = self:get_width() / 2
 
-    title.font = style.big_font
     title:set_label("Lite XL")
     title:set_position(
       center - (title:get_width() / 2),
