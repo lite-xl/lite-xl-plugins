@@ -819,6 +819,34 @@ local function apply_keybinding(cmd, bindings, skip_save)
   return row_value
 end
 
+---Load the saved fonts into the config path or fonts_list table.
+---@param option settings.option
+---@param path string
+---@param saved_value any
+local function merge_font_settings(option, path, saved_value)
+  local font_options = saved_value.options or {
+    size = 15,
+    antialiasing = "supixel",
+    hinting = "slight"
+  }
+  font_options.size = font_options.size or 15
+  font_options.antialiasing = font_options.antialiasing or "subpixel"
+  font_options.hinting = font_options.hinting or "slight"
+
+  local fonts = {}
+  for _, font in ipairs(saved_value.fonts) do
+    table.insert(fonts, renderer.font.load(
+      font.path, font_options.size * SCALE, font_options
+    ))
+  end
+
+  if option.fonts_list then
+    set_config_value(option.fonts_list, option.path, renderer.font.group(fonts))
+  else
+    set_config_value(config, path, renderer.font.group(fonts))
+  end
+end
+
 ---Merge previously saved settings without destroying the config table.
 local function merge_settings()
   if type(settings.config) ~= "table" then return end
@@ -830,7 +858,11 @@ local function merge_settings()
       if type(option.path) == "string" then
         local saved_value = get_config_value(settings.config, option.path)
         if type(saved_value) ~= "nil" then
-          set_config_value(config, option.path, saved_value)
+          if option.type == settings.type.FONT or option.type == "font" then
+            merge_font_settings(option, option.path, saved_value)
+          else
+            set_config_value(config, option.path, saved_value)
+          end
           if option.on_apply then
             option.on_apply(saved_value)
           end
@@ -849,7 +881,11 @@ local function merge_settings()
           local path = "plugins." .. plugin_name .. "." .. option.path
           local saved_value = get_config_value(settings.config, path)
           if type(saved_value) ~= "nil" then
-            set_config_value(config, path, saved_value)
+            if option.type == settings.type.FONT or option.type == "font" then
+              merge_font_settings(option, path, saved_value)
+            else
+              set_config_value(config, path, saved_value)
+            end
             if option.on_apply then
               option.on_apply(saved_value)
             end
@@ -1028,7 +1064,7 @@ local function add_control(pane, option, plugin_name)
     found = true
 
   elseif option.type == settings.type.LIST_STRINGS then
-     ---@type widget.label
+    ---@type widget.label
     Label(pane, option.label .. ":")
     ---@type widget.itemslist
     local list = ItemsList(pane)
@@ -1041,6 +1077,10 @@ local function add_control(pane, option, plugin_name)
     found = true
 
   elseif option.type == settings.type.FONT then
+    --get fonts without conversion to renderer.font
+    if type(path) ~= "nil" then
+      option_value = get_config_value(settings.config, path, option.default)
+    end
      ---@type widget.label
     Label(pane, option.label .. ":")
     ---@type widget.fontslist
@@ -1059,16 +1099,6 @@ local function add_control(pane, option, plugin_name)
       font_options.antialiasing = font_options.antialiasing or "subpixel"
       font_options.hinting = font_options.hinting or "slight"
       fonts:set_options(font_options)
-
-      if option.fonts_list then
-        local fontsl = {}
-        for _, font in ipairs(option_value.fonts) do
-          table.insert(fontsl, renderer.font.load(
-            font.path, font_options.size * SCALE, font_options
-          ))
-        end
-        set_config_value(option.fonts_list, path, renderer.font.group(fontsl))
-      end
     end
     widget = fonts
     found = true
@@ -1085,20 +1115,28 @@ local function add_control(pane, option, plugin_name)
           fonts = self:get_fonts(),
           options = self:get_options()
         }
-        if option.fonts_list then
-          local fonts = {}
-          for _, font in ipairs(value.fonts) do
-            table.insert(fonts, renderer.font.load(
-              font.path, value.options.size * SCALE, value.options
-            ))
-          end
-          set_config_value(option.fonts_list, path, renderer.font.group(fonts))
-        end
       end
+
       if option.set_value then
         value = option.set_value(value)
       end
-      set_config_value(config, path, value)
+
+      if self:is(FontsList) then
+        local fonts = {}
+        for _, font in ipairs(value.fonts) do
+          table.insert(fonts, renderer.font.load(
+            font.path, value.options.size * SCALE, value.options
+          ))
+        end
+        if option.fonts_list then
+          set_config_value(option.fonts_list, path, renderer.font.group(fonts))
+        else
+          set_config_value(config, path, renderer.font.group(fonts))
+        end
+      else
+        set_config_value(config, path, value)
+      end
+
       set_config_value(settings.config, path, value)
       save_settings()
       if option.on_apply then
