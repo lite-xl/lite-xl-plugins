@@ -5,7 +5,14 @@ local common = require "core.common"
 local command = require "core.command"
 local keymap = require "core.keymap"
 local style = require "core.style"
-local Widget = require "widget"
+
+-- check if widget is installed before proceeding
+local widget_found, Widget = pcall(require, "widget")
+if not widget_found then
+  core.error("Widget library not found: https://github.com/lite-xl/lite-xl-widgets")
+  return
+end
+
 local Label = require "widget.label"
 local Line = require "widget.line"
 local NoteBook = require "widget.notebook"
