@@ -13,7 +13,7 @@ syntax.add {
     patterns = {
         {pattern = "//.-\n", type = "comment"},
         {pattern = {"/%*", "%*/"}, type = "comment"},
-        {pattern = {'[rb]?"', '"', "\\"}, type = "string"},
+        {pattern = {'[cbr]?"', '"', "\\"}, type = "string"},
         {pattern = {"[b]?'", "'", '\\' }, type = "string"},
         {pattern = "0b[01_]+", type = "number"},
         {pattern = "0o[0-7_]+", type = "number"},
@@ -24,7 +24,11 @@ syntax.add {
         {pattern = "-?%.?%d+", type = "number"},
         {pattern = "[%+%-=/%*%^%%<>!~|&%.%?]", type = "operator"},
         {pattern = "[%a_][%w_]*::", type = "keyword2"},
-        {pattern = "[A-Z][%w_]*", type = "keyword2"}, -- types and constants
+        { -- Uppercase constants of at least 2 chars in len
+            pattern = "_?%u[%u_][%u%d_]*%f[%s%+%*%-%.%)%]}%?%^%%=/<>~|&;:,!]",
+            type = "number"
+        },
+        {pattern = "[A-Z][%w_]*", type = "keyword2"}, -- types
         {pattern = "[%a_][%w_]*%f[(]", type = "function"},
         {pattern = "[%a_][%w_]*!%f[(]", type = "keyword2"},
         {pattern = "[%a_][%w_]*", type = "symbol"},
@@ -34,7 +38,7 @@ syntax.add {
     },
     symbols = {
         ["extern"] = "keyword",
-        ["use"] = "keyword",
+        ["using"] = "keyword",
 
         ["pub"] = "keyword",
         ["as"] = "keyword",
@@ -77,15 +81,14 @@ syntax.add {
         ["goto"] = "keyword",
         ["orelse"] = "keyword",
         ["catch"] = "keyword",
-        ["cast"] = "keyword",
         ["or"] = "keyword",
         ["and"] = "keyword",
         ["is"] = "keyword",
         ["in"] = "keyword",
 
         -- types
-        ["c_void"] = "keyword2",
         ["void"] = "keyword2",
+        ["no_return"] = "keyword2",
         ["bool"] = "keyword2",
         ["i8"] = "keyword2",
         ["i16"] = "keyword2",
@@ -104,7 +107,7 @@ syntax.add {
         ["Self"] = "keyword2",
 
         -- literals
-        ["base"] = "literal",
+        ["super"] = "literal",
         ["self"] = "literal",
         ["true"] = "literal",
         ["false"] = "literal",
