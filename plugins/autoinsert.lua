@@ -88,7 +88,6 @@ command.add(predicate, {
   ["autoinsert:backspace"] = function()
     local doc = core.active_view.doc
     local l, c = doc:get_selection()
-    local chr = doc:get_char(l, c)
     if c > 1 then
       local chr = doc:get_char(l, c)
       local mapped = config.plugins.autoinsert.map[doc:get_char(l, c - 1)]
