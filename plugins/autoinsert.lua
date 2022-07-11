@@ -89,8 +89,12 @@ command.add(predicate, {
     local doc = core.active_view.doc
     local l, c = doc:get_selection()
     local chr = doc:get_char(l, c)
-    if config.plugins.autoinsert.map[doc:get_char(l, c - 1)] and is_closer(chr) then
-      doc:delete_to(1)
+    if c > 1 then
+      local chr = doc:get_char(l, c)
+      local mapped = config.plugins.autoinsert.map[doc:get_char(l, c - 1)]
+      if mapped and mapped == chr then
+        doc:delete_to(1)
+      end
     end
     command.perform "doc:backspace"
   end,
