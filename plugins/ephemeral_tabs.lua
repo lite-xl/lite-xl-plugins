@@ -6,17 +6,36 @@ local DocView = require "core.docview"
 local Doc = require "core.doc"
 local TreeView = require "plugins.treeview"
 
+local function is_called_by(module)
+  local i = 0
+  repeat
+    i = i + 1
+    local info = debug.getinfo(i, "S")
+    if info and info.source:match(module .. "%.lua$") then
+      return true
+    end
+  until info == nil
+  return false
+end
+
+-- Only make tab ephemeral if it is opened from treeview or searchview
+local DocView_new = DocView.new
+function DocView:new(doc)
+  DocView_new(self, doc)
+  self.ephemeral = is_called_by("/plugins/treeview")
+                or is_called_by("/plugins/projectsearch")
+end
+
+-- When opening a new ephemeral tab, close all the old ones
 local RootView_open_doc = RootView.open_doc
 function RootView:open_doc(doc)
   local docview = RootView_open_doc(self, doc)
-  -- The absence of the ephemeral flag means that before this moment in this
-  -- node this document was not exists
-  if docview.ephemeral == nil then
+  if docview.ephemeral then
     local node = self:get_active_node_default()
     -- We assume that ephemeral tab is always the last one
     -- But user can drag and drop tabs so full check is needed
     for i, v in ipairs(node.views) do
-      if v.ephemeral then
+      if v.ephemeral and v ~= docview then
         node:close_view(self.root_node, v)
       end
     end
@@ -25,6 +44,7 @@ function RootView:open_doc(doc)
   return docview
 end
 
+-- Make  ~ tab_name ~
 local Doc_get_name = DocView.get_name
 function DocView:get_name()
   return self.doc and self.ephemeral and ("~ " .. Doc_get_name(self) .. " ~")
@@ -34,7 +54,9 @@ end
 -- Any change to the document makes the tab normal
 local Doc_on_text_change = Doc.on_text_change
 function Doc:on_text_change(type)
-  core.active_view.ephemeral = false
+  if self == core.active_view.doc then
+    core.active_view.ephemeral = false
+  end
   Doc_on_text_change(self, type)
 end
 
