@@ -116,11 +116,10 @@ core.add_thread(function()
 end)
 
 
-core.status_view:add_item(
-  nil,
-  "status:git",
-  StatusView.Item.RIGHT,
-  function()
+core.status_view:add_item({
+  name = "status:git",
+  alignment = StatusView.Item.RIGHT,
+  get_item = function()
     if not git.branch then
       return {}
     end
@@ -133,7 +132,7 @@ core.status_view:add_item(
       git.deletes ~= 0 and style.accent or style.text, "-", git.deletes,
     }
   end,
-  nil,
-  -1,
-  "branch and changes"
-).separator = core.status_view.separator2
+  position = -1,
+  tooltip = "branch and changes",
+  separator = core.status_view.separator2
+})

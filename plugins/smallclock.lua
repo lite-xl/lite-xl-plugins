@@ -54,14 +54,13 @@ local function update_time()
   end
 end
 
-core.status_view:add_item(
-  nil,
-  "status:small-clock",
-  StatusView.Item.RIGHT,
-  function()
+core.status_view:add_item({
+  name = "status:small-clock",
+  alignment = StatusView.Item.RIGHT,
+  get_item = function()
     update_time()
     return {style.accent, time}
   end,
-  nil,
-  -1
-).separator = core.status_view.separator2
+  position = -1,
+  separator = core.status_view.separator2
+})

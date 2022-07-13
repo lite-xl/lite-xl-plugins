@@ -30,11 +30,10 @@ config.plugins.memoryusage = common.merge({
   }
 }, config.plugins.memoryusage)
 
-core.status_view:add_item(
-  nil,
-  "status:memory-usage",
-  StatusView.Item.RIGHT,
-  function()
+core.status_view:add_item({
+  name = "status:memory-usage",
+  alignment = StatusView.Item.RIGHT,
+  get_item = function()
     return {
       style.text,
       string.format(
@@ -43,8 +42,8 @@ core.status_view:add_item(
       )
     }
   end,
-  nil,
-  1,
-  "lua memory usage"
-).separator = core.status_view.separator2
+  potition = 1,
+  tooltip = "lua memory usage",
+  separator = core.status_view.separator2
+})
 
