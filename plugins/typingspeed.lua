@@ -82,19 +82,19 @@ function DocView:on_text_input(text, idx)
 	on_text_input(self, text, idx)
 end
 
-core.status_view:add_item(
-  function()
+core.status_view:add_item({
+  predicate = function()
     return core.active_view and getmetatable(core.active_view) == DocView
   end,
-  "typing-speed:stats",
-  core.status_view.Item.RIGHT,
-  function()
+  name = "typing-speed:stats",
+  alignment = core.status_view.Item.RIGHT,
+  get_item = function()
     return {
       style.text,
       string.format("%.0f CPM / %.0f WPM", cpm, wpm)
     }
   end,
-  nil,
-  1,
-  "characters / words per minute"
-).separator = core.status_view.separator2
+  position = 1,
+  tooltip = "characters / words per minute",
+  separator = core.status_view.separator2
+})

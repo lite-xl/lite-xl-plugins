@@ -39,23 +39,24 @@ local function get_syntax_name(s)
   return name or "Undefined"
 end
 
-core.status_view:add_item(
-  function()
+core.status_view:add_item({
+  predicate = function()
     return core.active_view and getmetatable(core.active_view) == DocView
   end,
-  "doc:syntax",
-  StatusView.Item.RIGHT,
-  function()
+  name = "doc:syntax",
+  alignment = StatusView.Item.RIGHT,
+  get_item = function()
     local syntax_name = get_syntax_name(doc().syntax)
     return {
       style.text,
       syntax_name
     }
   end,
-  "force-syntax:select-file-syntax",
-  -1,
-  "file syntax"
-).separator = core.status_view.separator2
+  command = "force-syntax:select-file-syntax",
+  position = -1,
+  tooltip = "file syntax",
+  separator = core.status_view.separator2
+})
 
 local function get_syntax_list()
   local pt_name = plain_text_syntax.name

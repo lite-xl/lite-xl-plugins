@@ -71,11 +71,11 @@ end
 
 local cached_word_length, cached_word_count
 
-core.status_view:add_item(
-  function() return core.active_view:is(DocView) and not core.active_view:is(CommandView) and words[core.active_view.doc] end,
-  "status:word-count",
-  StatusView.Item.RIGHT,
-  function()
+core.status_view:add_item({
+  predicate = function() return core.active_view:is(DocView) and not core.active_view:is(CommandView) and words[core.active_view.doc] end,
+  name = "status:word-count",
+  alignment = StatusView.Item.RIGHT,
+  get_item = function()
     local selection_text = core.active_view.doc:get_selection_text()
     if #selection_text ~= cached_word_length then
       cached_word_count = compute_line_words(selection_text)
@@ -87,4 +87,4 @@ core.status_view:add_item(
       return { style.text, words[core.active_view.doc] .. " words" }
     end
   end
-)
+})

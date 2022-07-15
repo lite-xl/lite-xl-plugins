@@ -36,20 +36,19 @@ config.plugins.scalestatus = common.merge({
   }
 }, config.plugins.scalestatus)
 
-core.status_view:add_item(
-  nil,
-  "status:scale",
-  StatusView.Item.RIGHT,
-  function()
+core.status_view:add_item({
+  name = "status:scale",
+  alignment = StatusView.Item.RIGHT,
+  get_item = function()
     return {string.format(
       config.plugins.scalestatus.format,
       scale.get() * 100
     )}
   end,
-  nil,
-  1,
-  "scale"
-).separator = core.status_view.separator2
+  position = 1,
+  "scale",
+  separator = core.status_view.separator2
+})
 
 return true
 
