@@ -46,7 +46,7 @@ core.status_view:add_item({
     )}
   end,
   position = 1,
-  "scale",
+  tooltip = "scale",
   separator = core.status_view.separator2
 })
 

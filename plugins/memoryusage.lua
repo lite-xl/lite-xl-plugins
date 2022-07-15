@@ -42,7 +42,7 @@ core.status_view:add_item({
       )
     }
   end,
-  potition = 1,
+  position = 1,
   tooltip = "lua memory usage",
   separator = core.status_view.separator2
 })
