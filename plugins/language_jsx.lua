@@ -38,6 +38,7 @@ syntax.add {
     ["extends"]    = "keyword",
     ["finally"]    = "keyword",
     ["for"]        = "keyword",
+    ["from"]       = "keyword",
     ["function"]   = "keyword",
     ["get"]        = "keyword",
     ["if"]         = "keyword",
