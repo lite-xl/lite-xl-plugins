@@ -8,7 +8,8 @@ local tokenizer = require "core.tokenizer"
 local Highlighter = require "core.doc.highlighter"
 
 config.plugins.rainbowparen = common.merge({
-  enabled = true
+  enabled = true,
+  parens = 5
 }, config.plugins.rainbowparen)
 
 style.syntax.paren_unbalanced = style.syntax.paren_unbalanced or { common.color "#DC0408" }
@@ -26,7 +27,7 @@ local closers = {
 }
 
 local function parenstyle(parenstack)
-  return "paren" .. ((#parenstack % 5) + 1)
+  return "paren" .. ((#parenstack % config.plugins.rainbowparen.parens) + 1)
 end
 
 function tokenizer.tokenize(syntax, text, state)
