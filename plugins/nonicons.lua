@@ -44,6 +44,7 @@ local extension_icons = {
   -- Following without special icon:
   [".awk"] = { "#4d5a5e", "" },
   [".nim"] = { "#F88A02", "" },
+  [".zig"] = { "#cbcb41", "" },
 
 }
 local known_names_icons = {
@@ -56,6 +57,7 @@ local known_names_icons = {
   ["readme.md"] = { "#72b886", "" }, ["readme"] = { "#72b886", "" },
   ["init.lua"] = { "#2d6496", "" },
   ["setup.py"] = { "#559dd9", "" },
+  ["build.zig"] = { "#6d8086", "" },
 }
 
 -- Preparing colors
@@ -129,4 +131,3 @@ function TreeView:draw()
     core.root_view:defer_draw(self.draw_tooltip, self)
   end
 end
-
