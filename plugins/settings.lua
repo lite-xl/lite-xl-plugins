@@ -841,16 +841,28 @@ local function merge_font_settings(option, path, saved_value)
   font_options.hinting = font_options.hinting or "slight"
 
   local fonts = {}
+  local font_loaded = true
   for _, font in ipairs(saved_value.fonts) do
-    table.insert(fonts, renderer.font.load(
-      font.path, font_options.size * SCALE, font_options
-    ))
+    local font_data = nil
+    font_loaded = core.try(function()
+      font_data = renderer.font.load(
+        font.path, font_options.size * SCALE, font_options
+      )
+    end)
+    if font_loaded then
+      table.insert(fonts, font_data)
+    else
+      core.error("Settings: could not load %s\n'%s - %s'", path, font.name, font.path)
+      break
+    end
   end
 
-  if option.fonts_list then
-    set_config_value(option.fonts_list, option.path, renderer.font.group(fonts))
-  else
-    set_config_value(config, path, renderer.font.group(fonts))
+  if font_loaded then
+    if option.fonts_list then
+      set_config_value(option.fonts_list, option.path, renderer.font.group(fonts))
+    else
+      set_config_value(config, path, renderer.font.group(fonts))
+    end
   end
 end
 
