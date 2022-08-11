@@ -69,6 +69,7 @@ settings.type = {
 ---@field public step number
 ---@field public values table
 ---@field public fonts_list table<string, renderer.font>
+---@field public font_error boolean
 ---@field public get_value nil | fun(value:any):any
 ---@field public set_value nil | fun(value:any):any
 ---@field public icon string
@@ -95,6 +96,8 @@ settings.option = {
   values = {},
   ---Optionally used for FONT to store the generated font group.
   fonts_list = {},
+  ---Flag set to true when loading user defined fonts fail
+  font_error = false,
   ---Optional function that is used to manipulate the current value on retrieval.
   get_value = nil,
   ---Optional function that is used to manipulate the saved value on save.
@@ -852,6 +855,7 @@ local function merge_font_settings(option, path, saved_value)
     if font_loaded then
       table.insert(fonts, font_data)
     else
+      option.font_error = true
       core.error("Settings: could not load %s\n'%s - %s'", path, font.name, font.path)
       break
     end
@@ -1098,7 +1102,12 @@ local function add_control(pane, option, plugin_name)
   elseif option.type == settings.type.FONT then
     --get fonts without conversion to renderer.font
     if type(path) ~= "nil" then
-      option_value = get_config_value(settings.config, path, option.default)
+      if not option.font_error then
+        option_value = get_config_value(settings.config, path, option.default)
+      else
+        --fallback to default fonts if error loading user defined ones
+        option_value = option.default
+      end
     end
      ---@type widget.label
     Label(pane, option.label .. ":")
