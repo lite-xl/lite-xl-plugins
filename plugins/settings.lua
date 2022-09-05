@@ -26,6 +26,7 @@ local FoldingBook = require "widget.foldingbook"
 local FontsList = require "widget.fontslist"
 local ItemsList = require "widget.itemslist"
 local KeybindingDialog = require "widget.keybinddialog"
+local Fonts = require "widget.fonts"
 
 local settings = {}
 
@@ -164,6 +165,15 @@ settings.add("General",
       on_click = "core:open-user-module"
     },
     {
+      label = "Clear Fonts Cache",
+      description = "Delete current font cache and regenerate a fresh one.",
+      type = settings.type.BUTTON,
+      icon = "C",
+      on_click = function()
+        Fonts.clean_cache()
+      end
+    },
+    {
       label = "Maximum Project Files",
       description = "The maximum amount of project files to register.",
       path = "max_project_files",
@@ -171,8 +181,10 @@ settings.add("General",
       default = 2000,
       min = 1,
       max = 100000,
-      on_apply = function()
-        core.rescan_project_directories()
+      on_apply = function(button, x, y)
+        if button == "left" then
+          core.rescan_project_directories()
+        end
       end
     },
     {
@@ -1726,6 +1738,10 @@ function core.run()
       core.reload_module("colors." .. settings.config.theme)
     end)
   end
+
+  -- re-apply user settings
+  core.load_user_directory()
+  core.load_project_module()
 
   core_run()
 end
