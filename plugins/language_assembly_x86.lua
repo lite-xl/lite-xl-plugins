@@ -6,6 +6,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
+  name = "x86 Assembly",
   files = { "%.asm$", "%.[sS]$" },
   comment = ";",
   patterns = {
