@@ -1,299 +1,405 @@
 -- mod-version:3 --lite-xl 2.1
 
--- Plugin manager for Lite XL.
--- Determines dependencies by looking at the `require` statements in the root file of your plugin (either `plugin_name.lua`, or `plugin_name/init.lua`).
--- Currently there is no versioning.
-
 local core = require "core"
 local style = require "core.style"
 local common = require "core.common"
 local config = require "core.config"
 local command = require "core.command"
-local curl = require "plugins.support_curl"
 local json = require "plugins.support_json"
-local base64 = require "plugins.support_base64"
+local View = require "core.view"
+local keymap = require "core.keymap"
+local ContextMenu = require "core.contextmenu"
+local RootView = require "core.rootview"
 
-local PluginManager = common.merge({
-  -- Path to a JSON file that holds the full listing of all remote plugins.
-  cache = USERDIR  .. PATHSEP .. "plugin_manager.json",
+
+local PluginManager = {
+  last_refresh = nil,
+  requires_restart = false
+}
+config.plugins.plugin_manager = common.merge({
+  lpm_binary_name = "lpm." .. ARCH .. (PLATFORM == "Windows" and ".exe" or ""),
+  lpm_binary_path = nil,
+  -- Restarts the plugin manager on changes.
+  restart_on_change = true,
+  -- Path to a local copy of all repositories.
+  cachdir = USERDIR  .. PATHSEP .. "lpm",
   -- Path to the folder that holds user-specified plugins.
-  user_plugin_directory = USERDIR .. PATHSEP .. "plugins",
-  -- Path to the directory that holds lite-xl core plugins.
-  system_plugin_directory = DATADIR .. PATHSEP .. "plugins",
-  -- How long we go by default before transparently refreshing the listing.
-  retrieval_tolerance = 10*60,
-  -- Where we get the plugin listing.
-  repositories = { { type = "github", name = "lite-xl/lite-xl-plugins", branch = "master" } },
-  -- The branch we get it on.
-  branch = "master",
-  
-  remote_plugins = nil,
-  local_plugins = nil,
-  requires_restart = false,
-  last_retrieval = nil
+  userdir = USERDIR,
+  -- Path to ssl certificate directory.
+  ssl_certs = nil
 }, config.plugins.plugin_manager)
 
-
-local function parse_plugin_listing(list)
-  local plugins = {}
-  for i,v in ipairs(list) do
-    local path = v["path"]:gsub("%.lua", "")
-    local old_plugin = PluginManager.plugins and PluginManager.plugins[path]
-    v.retrieved = old_plugin and old_plugin["sha"] == v["sha"] and old_plugin["retrieved"] or os.time()
-    v.remote = true
-    v.version = nil
-    v.package = path
-    v.type = "user"
-    v.composite = v["type"] == "tree"
-    v.url = v["url"]
-    v.data = nil
-    plugins[path] = v
+if not config.plugins.plugin_manager.lpm_binary_path then
+  local paths = { 
+    DATADIR .. PATHSEP .. "plugins" .. PATHSEP .. "plugin_manager" .. PATHSEP .. config.plugins.plugin_manager.lpm_binary_name,
+    DATADIR .. PATHSEP .. "plugins" .. PATHSEP .. "plugin_manager" .. PATHSEP .. config.plugins.plugin_manager.lpm_binary_name,
+    USERDIR .. PATHSEP .. "plugins" .. PATHSEP .. "plugin_manager" .. PATHSEP .. "lpm",
+    USERDIR .. PATHSEP .. "plugins" .. PATHSEP .. "plugin_manager" .. PATHSEP .. "lpm",
+  }
+  local path, s = os.getenv("PATH"), 1
+  while true do
+    local _, e = path:find(":", s)
+    table.insert(paths, path:sub(s, e and (e-1) or #path) .. PATHSEP .. "lpm")
+    if not e then break end
+    s = e + 1
   end
-  return plugins
-end
-
-
-local function convert_to_path(type, plugin_name, file)
-  return PluginManager[type .. "_plugin_directory"] .. PATHSEP .. plugin_name:gsub("^plugin%.", ""):gsub("%.", PATHSEP) .. (file and ".lua" or "")
-end
-
-
-local function convert_to_package(path)
-  return path:gsub(PluginManager.user_plugin_directory, ""):gsub(PluginManager.system_plugin_directory, ""):gsub("%.lua", ""):gsub(PATHSEP, ".")
-end
-
-
-local function copy_github_remote_tree_to_disk(url, path, parent_plugin, done)
-  local got_body = function(data)
-    if data.tree then
-      if not system.get_file_info(path) then common.mkdirp(path) end
-      local count = 0
-      local success = function() 
-        count = count + 1
-        if count == #data.tree then done() end
-      end
-      for i, v in data.tree do
-        copy_github_remote_tree_to_disk(v.url, path .. PATHSEP .. v.path, success)
-      end
-    else
-      io.open(path, "wb"):write(base64.decode(data.content))
-      done()
+  for i, path in ipairs(paths) do
+    if system.get_file_info(path) then 
+      config.plugins.plugin_manager.lpm_binary_path = path 
+      break 
     end
   end
-  if parent_plugin and parent_plugin.url == url and parent_plugin.details.data then
-    got_body(parent_plugin.details.data)
-  else
-    curl.request({ url = url }, function(body) local data = json.decode(body) got_body(data) end)
-  end
 end
+if not config.plugins.plugin_manager.lpm_binary_path then error("can't find lpm binary, please supply one with config.plugins.plugin_manager.lpm_binary_path") end
 
+local Promise = { }
+function Promise:__index(idx) return rawget(self, idx) or Promise[idx] end
+function Promise.new(result) return setmetatable({ result = result, success = nil, _done = { }, _fail = { } }, Promise) end
+function Promise:done(done) if self.success == true then done(self.result) else table.insert(self._done, done) end return self end
+function Promise:fail(fail) if self.success == false then fail(self.result) else table.insert(self._fail, fail) end return self end
+function Promise:resolve(result) self.result = result self.success = true for i,v in ipairs(self._done) do v(result) end return self end
+function Promise:reject(result) self.result = result self.success = false for i,v in ipairs(self._fail) do v(result) end return self end
+function Promise:forward(promise) self:done(function(data) promise:resolve(data) end) self:fail(function(data) promise:reject(data) end) return self end
 
-local function compute_properties(content)
-  local s, _, package = 0
-  local dependencies = {}
-  while true do
-    s, _, package = content:find("plugins%.([%w_%.]+)", s + 1)
-    if not package then break end
-    table.insert(dependencies, { package = package, version = nil })
-  end
-  return { dependencies = dependencies }
-end
+local running_processes = {}
 
-
-function PluginManager:get_details(plugin_metadata, done)
-  if plugin_metadata.details then
-    done(plugin_metadata.details)
-  elseif plugin_metadata.remote then
-     curl.request({ url = plugin_metadata.url }, function(body)
-      local data = json.decode(body)
-      if data.content then
-        local content = base64.decode(data.content)
-        plugin_metadata.details = common.merge({ data = data, content = content }, compute_properties(content))
-        done(plugin_metadata.details)
-      elseif data.tree then
-        local target
-        for i, v in ipairs(data.tree) do if v.path == "init.lua" then target = v break end end
-        if target then
-          curl.request({ url = target.url }, function(body)
-            local data = json.decode(body)
-            local content = base64.decode(data.content)
-            plugin_metadata.details = common.merge({ data = data, content = content }, compute_properties(content))
-            done(plugin_metadata.details)
-          end)
-        else  
-          error("Can't find plugin's init.lua.");
+local function run(cmd)
+  local t = { config.plugins.plugin_manager.lpm, table.unpack(cmd), "--json", "--mod-version", MOD_VERSION }
+  if config.plugins.plugin_manager.ssl_certs then table.insert(t, "--ssl_certs") table.insert(t, config.plugins.plugin_manager.ssl_certs) end 
+  table.insert(cmd, 1, config.plugins.plugin_manager.lpm_binary_path)
+  table.insert(cmd, "--json")
+  table.insert(cmd, "--mod-version=" .. MOD_VERSION)
+  table.insert(cmd, "--quiet")
+  table.insert(cmd, "--userdir=" .. USERDIR)
+  -- print(table.unpack(cmd))
+  local proc = process.start(cmd)
+  local promise = Promise.new()
+  table.insert(running_processes, { proc, promise, "" })
+  if #running_processes == 1 then
+    core.add_thread(function()
+      while #running_processes > 0 do 
+        local still_running_processes = {}
+        local has_chunk = false
+        local i = 1
+        while i < #running_processes + 1 do
+          local v = running_processes[i]
+          local still_running = true
+          while true do
+            local chunk = v[1]:read_stdout(2048)
+            if chunk and #chunk == 0 then break end
+            if chunk ~= nil then 
+              v[3] = v[3] .. chunk 
+              has_chunk = true
+            else
+              still_running = false
+              if v[1]:returncode() == 0 then
+                v[2]:resolve(v[3])
+              else
+                local err = v[1]:read_stderr(2048)
+                core.error("error running lpm: " .. err)
+                v[2]:reject(v[3])
+              end
+              break
+            end
+          end
+          if still_running then
+            table.insert(still_running_processes, v)
+          end
+          i = i + 1
         end
-      else
-        error("Unknown type of plugin.")
+        running_processes = still_running_processes
+        coroutine.yield(has_chunk and 0.001 or 0.1)
       end
     end)
-  else
-    local path = convert_to_path(plugin_metadata.type, plugin_metadata.package)
-    path = plugin_metadata.composite and path .. ".lua" or path .. "/init.lua"
-    local content = io.open(path, "rb"):read("*all")
-    plugin_metadata.details = common.merge({ content = content }, compute_properties(content))
-    done(plugin_metadata.details)
   end
+  return promise
 end
 
 
-function PluginManager:refresh_local_plugins()
-  self.local_plugins = {}
-  for type, dir in pairs({ user = self.user_plugin_directory, system = self.system_plugin_directory }) do
-    for i, v in ipairs(system.list_dir(dir)) do
-      local package = convert_to_package(v)
-      self.local_plugins[package] = {
-        retrieved = system.get_file_info(dir .. PATHSEP .. v).modified,
-        dependencies = {},
-        version = nil,
-        remote = false,
-        type = type,
-        package = package
-      }
-    end
-  end
-end
-
-
-function PluginManager:refresh(done, log)
-  local repository = self.repositories[1]
-  self:refresh_local_plugins()
-  if log then log("Retrieving plugin listing from repository " .. repository.name .. ".") end
-  curl.request({ url = "https://api.github.com/repos/" .. repository.name .. "/git/trees" .. "/" .. repository.branch }, function(body) 
-    local master_listing = json.decode(body)
-    for i,folder in ipairs(master_listing["tree"]) do
-      if folder["path"] == "plugins" then
-        curl.request({ url = folder["url"] }, function(body)
-          self.remote_plugins = parse_plugin_listing(json.decode(body)["tree"])
-          io.open(self.cache, "wb"):write(json.encode(self.remote_plugins))
-          if done then done(self.remote_plugins) end
-        end)
+function PluginManager:refresh()
+  return run({ "plugin", "list" }):done(function(plugins)
+    self.plugins = json.decode(plugins)["plugins"]
+    table.sort(self.plugins, function(a,b) return a.name < b.name end)
+    self.valid_plugins = {}
+    for i, plugin in ipairs(self.plugins) do
+      if plugin.status ~= "incompatible" then
+        table.insert(self.valid_plugins, plugin)
       end
     end
+    self.last_refresh = os.time()
   end)
 end
 
 
-local info = system.get_file_info(PluginManager.cache)
-PluginManager.last_retrieval = info and info.modified
-if info then
-  local success, list = core.try(function() return json.decode(io.open(PluginManager.cache, "rb"):read("*a")) end)
-  PluginManager.remote_plugins = success and list
-  PluginManager:refresh_local_plugins()
-else
-  PluginManager:refresh()
+function PluginManager:install(plugin)
+  local promise = Promise.new()
+  run({ "plugin", "install", plugin.name .. (plugin.version and (":" .. plugin.version) or "") }):done(function(result)
+    if config.plugins.plugin_manager.restart_on_change then
+      command.perform("core:restart")
+    else
+      self:refresh():forward(promise)
+    end
+  end)
+  return promise
 end
 
 
-function PluginManager:get_list(done)
-  if self.last_retrieval == nil or self.last_retrieval + self.retrieval_tolerance < os.time() then
-    self:refresh(done)
-  else
-    done(self.remote_plugins)
+function PluginManager:uninstall(plugin)
+  local promise = Promise.new()
+  run({ "plugin", "uninstall", plugin.name }):done(function(result)
+    if config.plugins.plugin_manager.restart_on_change then
+      command.perform("core:restart")
+    else
+      self:refresh():forward(promise)
+    end
+  end)
+  return promise
+end
+
+
+local function get_suggestions(text)
+  local items = {}
+  if not PluginManager.plugins then return end
+  for i, plugin in ipairs(PluginManager.plugins) do
+    if not plugin.mod_version or tostring(plugin.mod_version) == tostring(MOD_VERSION) then
+      table.insert(items, plugin.name .. ":" .. plugin.version)
+    end
+  end
+  return common.fuzzy_match(items, text)
+end
+
+
+
+local PluginView = View:extend()
+
+
+local function join(joiner, t)
+  local s = ""
+  for i,v in ipairs(t) do if i > 1 then s = s .. joiner end s = s .. v end
+  return s
+end
+
+
+local plugin_view = nil
+PluginView.menu = ContextMenu()
+
+PluginView.menu:register(nil, {
+  { text = "Install", command = "plugin-manager:install-hovered" },
+  { text = "Uninstall", command = "plugin-manager:uninstall-hovered" }
+})
+
+function PluginView:new()
+  PluginView.super.new(self)
+  self.scrollable = true
+  self.show_incompatible_plugins = false
+  self.plugin_table_columns = { "Name", "Version", "Modversion", "Status", "Tags", "Description" }
+  self:refresh()
+  self.hovered_plugin = nil
+  self.hovered_plugin_idx = nil
+  self.selected_plugin = nil
+  self.selected_plugin_idx = nil
+  plugin_view = self
+end
+
+local function get_plugin_text(plugin)
+  return plugin.name, plugin.version, plugin.mod_version, plugin.status, join(", ", plugin.tags), plugin.description-- (plugin.description or ""):gsub("%[[^]+%]%([^)]+%)", "")
+end
+
+
+function PluginView:get_name()
+  return "Plugin Manager"
+end
+
+
+local root_view_update = RootView.update
+function RootView:update(...)
+  root_view_update(self, ...)
+  PluginView.menu:update()
+end
+
+
+local root_view_draw = RootView.draw
+function RootView:draw(...)
+  root_view_draw(self, ...)
+  PluginView.menu:draw()
+end
+
+
+local root_view_on_mouse_moved = RootView.on_mouse_moved
+function RootView:on_mouse_moved(...)
+  if PluginView.menu:on_mouse_moved(...) then return end
+  return root_view_on_mouse_moved(self, ...)
+end
+
+
+local on_view_mouse_pressed = RootView.on_view_mouse_pressed
+function RootView.on_view_mouse_pressed(button, x, y, clicks)
+  local handled = PluginView.menu:on_mouse_pressed(button, x, y, clicks)
+  return handled or on_view_mouse_pressed(button, x, y, clicks)
+end
+
+
+function PluginView:on_mouse_moved(x, y, dx, dy)
+  PluginView.super.on_mouse_moved(self, x, y, dx, dy)
+  local th = style.font:get_height()
+  local lh = th + style.padding.y
+  local offset = math.floor((y - self.position.y + self.scroll.y) / lh)
+  self.hovered_plugin = offset > 0 and self:get_plugins()[offset]
+  self.hovered_plugin_idx = offset > 0 and offset
+end
+
+
+function PluginView:refresh()
+  self.widths = {}
+  for i,v in ipairs(self.plugin_table_columns) do
+    table.insert(self.widths, style.font:get_width(v))
+  end
+  for i, plugin in ipairs(self:get_plugins()) do
+    local t = { get_plugin_text(plugin) }
+    for j = 1, #self.widths do  
+      self.widths[j] = math.max(style.font:get_width(t[j] or ""), self.widths[j])
+    end
   end
 end
 
 
-function PluginManager:install(remote_plugin_metadata, done, log)
-  self:get_details(remote_plugin_metadata, function(details)
-    if log then log("Got details of " .. remote_plugin_metadata.package .. ".") end
-    local copy_plugin = function()
-      copy_github_remote_tree_to_disk(remote_plugin_metadata.url, convert_to_path(remote_plugin_metadata.type, remote_plugin_metadata.package, remote_plugin_metadata.path:find("%.lua")), remote_plugin_metadata, function()
-        self.requires_restart = true
-        local local_plugin = {
-          retrieved = os.time(),
-          dependencies = {},
-          version = nil,
-          remote = false,
-          type = "user",
-          package = remote_plugin_metadata.package
-        }
-        self.local_plugins[remote_plugin_metadata.package] = local_plugin
-        if done then done(local_plugin) end
-      end)
-    end
+function PluginView:get_plugins()
+  if self.show_incompatible_plugins then return PluginManager.plugins end
+  return PluginManager.valid_plugins
+end
+
+
+function PluginView:get_scrollable_size()
+  local th = style.font:get_height() + style.padding.y
+  return th * #self:get_plugins()
+end
+
+
+local function mul(color1, color2)
+  return { color1[1] * color2[1] / 255, color1[2] * color2[2] / 255, color1[3] * color2[3] / 255, color1[4] * color2[4] / 255 }
+end
+
+
+function PluginView:draw()
+  self:draw_background(style.background)
   
-    local fulfilled_dependencies = 0    
-    for i,v in ipairs(details.dependencies) do
-      if not self.local_plugins[v.package] then
-        if log then log("Can't find " .. v.package .. " locally. Attempting to fetch remotely.") end
-        self:install_name(v.package, v.version, function() 
-          fulfilled_dependencies = fulfilled_dependencies + 1 
-          if fulfilled_dependencies == #details.dependencies then copy_plugin() end
-        end, log)
-      else
-        fulfilled_dependencies = fulfilled_dependencies + 1
+  local th = style.font:get_height()
+  local lh = th + style.padding.y
+
+  local ox, oy = self:get_content_offset()
+  core.push_clip_rect(self.position.x, self.position.y, self.size.x, self.size.y)
+  local x, y = ox + style.padding.x, oy
+  for i, v in ipairs(self.plugin_table_columns) do
+    common.draw_text(style.font, style.accent, v, "left", x, y, self.widths[i], lh)
+    x = x + self.widths[i] + style.padding.x
+  end
+  oy = oy + lh
+  for i, plugin in ipairs(self:get_plugins()) do
+    local x, y = ox, oy
+    if y + lh >= self.position.y and y <= self.position.y + self.size.y then
+      if plugin == self.selected_plugin then 
+        renderer.draw_rect(x, y, self.size.x, lh, style.dim)
+      elseif plugin == self.hovered_plugin then
+        renderer.draw_rect(x, y, self.size.x, lh, style.line_highlight)
+      end
+      x = x + style.padding.x
+      for j, v in ipairs({ get_plugin_text(plugin) }) do
+        local color = plugin.status == "installed" and style.good or style.text
+        if self.loading then color = mul(color, style.dim) end
+        common.draw_text(style.font, color, v, "left", x, y, self.widths[j], lh)
+        x = x + self.widths[j] + style.padding.x
       end
     end
-    if fulfilled_dependencies == #details.dependencies then copy_plugin() end
-  end)
-end
-
-
-function PluginManager:remove(local_plugin_metadata)
-  local path = convert_to_path(local_plugin_metadata.type, local_plugin_metadata.package, not local_plugin_metadata.composite)
-  local success, err = common.rm(path, true)
-  if not success then error("error removing " .. path .. ": " .. err) else self.requires_restart = true end
-  self.remote_plugins[local_plugin_metadata.package] = nil
-  return success
-end
-
-
-function PluginManager:get_remote_plugin(package, version, done)
-  self:get_list(function(plugins) 
-    if plugins[package] then 
-      done(plugins[package]) 
-    else 
-      error("Can't find remote plugin " .. package .. ".") 
-    end
-  end)
-end
-
-
-function PluginManager:get_local_plugin(package, version, done)
-  if self.local_plugins[package] then done(self.local_plugins[package]) else error("Can't find local plugin " .. package .. ".") end
-end
-
-
-function PluginManager:remove_name(plugin_name, version) self:get_local_plugin(plugin_name, version, function(plugin) self:remove(plugin) end) end
-function PluginManager:install_name(plugin_name, version, done, log) self:get_remote_plugin(plugin_name, version, function(plugin) self:install(plugin, done, log) end) end
-
-
-local function get_suggestions(plugin_list, text)
-  if plugin_list then
-    local items = {}
-    for name, plugin in pairs(plugin_list) do
-      if plugin.type == "user" then table.insert(items, name) end
-    end
-    return common.fuzzy_match(items, text)
+    oy = oy + lh
   end
+  core.pop_clip_rect()
+  PluginView.super.draw_scrollbar(self)
 end
 
+function PluginView:install(plugin)
+  self.loading = true
+  PluginManager:install(plugin):done(function()
+    self.loading = false
+    self.selected_plugin, plugin_view.selected_plugin_idx = nil, nil
+  end)
+end
+
+function PluginView:uninstall(plugin)
+  self.loading = true
+  PluginManager:uninstall(plugin):done(function()
+    self.loading = false
+    self.selected_plugin, plugin_view.selected_plugin_idx = nil, nil
+  end)
+end
+
+PluginManager.view = PluginView
+PluginManager:refresh():done(function()
+  command.perform("plugin-manager:show")
+end)
+
+command.add(PluginView, {
+  ["plugin-manager:select"] = function(x, y) 
+    plugin_view.selected_plugin, plugin_view.selected_plugin_idx = plugin_view.hovered_plugin, plugin_view.hovered_plugin_idx 
+  end,
+})
+command.add(function()
+  return core.active_view and core.active_view:is(PluginView) and plugin_view.selected_plugin and plugin_view.selected_plugin.status == "available"
+end, {
+  ["plugin-manager:install-selected"] = function() plugin_view:install(plugin_view.selected_plugin) end
+})
+command.add(function()
+  return core.active_view and core.active_view:is(PluginView) and plugin_view.hovered_plugin and plugin_view.hovered_plugin.status == "available"
+end, {
+  ["plugin-manager:install-hovered"] = function() plugin_view:install(plugin_view.hovered_plugin) end
+})
+command.add(function()
+  return core.active_view and core.active_view:is(PluginView) and plugin_view.selected_plugin and plugin_view.selected_plugin.status == "installed"
+end, {
+  ["plugin-manager:uninstall-selected"] = function() plugin_view:uninstall(plugin_view.selected_plugin) end
+})
+command.add(function()
+  return core.active_view and core.active_view:is(PluginView) and plugin_view.hovered_plugin and plugin_view.hovered_plugin.status == "installed"
+end, {
+  ["plugin-manager:uninstall-hovered"] = function() plugin_view:uninstall(plugin_view.hovered_plugin) end
+})
 
 command.add(nil, {
+  ["plugin-manager:show"] = function()
+    local node = core.root_view:get_active_node_default()
+    node:add_view(PluginView())
+  end,
   ["plugin-manager:install"] = function() 
     core.command_view:enter("Enter plugin name", 
       function(name)  
         core.log("Attempting to install plugin " .. name .. "...")
-        PluginManager:install_name(name, nil, function(local_plugin_medata) 
+        PluginManager:install(name, nil):done(function()
           core.log("Successfully installed plugin " .. name .. ".")
-        end, core.log) 
+        end) 
       end, 
-      function(text) return get_suggestions(PluginManager.remote_plugins, text) end
+      function(text) return get_suggestions(text) end
     )
   end,
   ["plugin-manager:remove"] = function() 
     core.command_view:enter("Enter plugin name",
       function(name)  
         core.log("Attempting to remove plugin " .. name .. "...")
-        PluginManager:remove_name(name) 
-        core.log("Successfully removed plugin " .. name .. ".")
+        PluginManager:uninstall(name):done(function()
+          core.log("Successfully removed plugin " .. name .. ".")
+        end)
       end, 
       function(text)  return get_suggestions(PluginManager.local_plugins, text) end
     )
   end,
-  ["plugin-manager:refresh"] = function() PluginManager:refresh(function() core.log("Successfully refreshed plugin listing.") end, core.log) end
+  ["plugin-manager:refresh"] = function() PluginManager:refresh():done(function() core.log("Successfully refreshed plugin listing.") end) end,
 })
 
+
+
+keymap.add {
+  ["up"]          = "plugin-manager:select-prev",
+  ["down"]        = "plugin-manager:select-next",
+  ["lclick"]      = "plugin-manager:select",
+  ["2lclick"]     = { "plugin-manager:install-selected", "plugin-manager:uninstall-selected" }
+}
 
 return PluginManager
