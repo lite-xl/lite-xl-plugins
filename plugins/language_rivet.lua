@@ -13,7 +13,7 @@ syntax.add {
   patterns = {
     {pattern = "//.-\n", type = "comment"},
     {pattern = {"/%*", "%*/"}, type = "comment"},
-    {pattern = {'[cbr]?"', '"', "\\"}, type = "string"},
+    {pattern = {'[bcr]?"', '"', "\\"}, type = "string"},
     {pattern = {"[b]?'", "'", '\\' }, type = "string"},
     {pattern = "0b[01_]+", type = "number"},
     {pattern = "0o[0-7_]+", type = "number"},
@@ -23,8 +23,8 @@ syntax.add {
     {pattern = "%d[%d_]*", type = "number"},
     {pattern = "-?%.?%d+", type = "number"},
     {pattern = "[%+%-=/%*%^%%<>!~|&%.%?]", type = "operator"},
-    {pattern = "[%a_][%w_]*::", type = "keyword2"},
-    { -- Uppercase constants of at least 2 chars in len
+    -- Uppercase constants of at least 2 chars in length
+    {
       pattern = "_?%u[%u_][%u%d_]*%f[%s%+%*%-%.%)%]}%?%^%%=/<>~|&;:,!]",
       type = "number"
     },
@@ -34,39 +34,33 @@ syntax.add {
     {pattern = "[%a_][%w_]*", type = "symbol"},
     {pattern = {"#%[", "%]"}, type = "keyword"},
     {pattern = "%$%s?[%a_][%w_]*", type = "keyword2"},
-    {pattern = "%@%s?[%a_][%w_]*", type = "keyword2"},
   },
   symbols = {
+    ["pub"] = "keyword",
+
     ["extern"] = "keyword",
     ["using"] = "keyword",
-
-    ["pub"] = "keyword",
-    ["as"] = "keyword",
-
     ["pkg"] = "keyword",
     ["mod"] = "keyword",
     ["const"] = "keyword",
-    ["static"] = "keyword",
     ["trait"] = "keyword",
-    ["struct"] = "keyword",
     ["union"] = "keyword",
-    ["type"] = "keyword",
-    ["errtype"] = "keyword",
+    ["class"] = "keyword",
+    ["struct"] = "keyword",
     ["enum"] = "keyword",
-    ["fn"] = "keyword",
-    ["test"] = "keyword",
+    ["errtype"] = "keyword",
+    ["type"] = "keyword",
     ["extend"] = "keyword",
+    ["test"] = "keyword",
+    ["fn"] = "keyword",
 
-    -- comptime `if` and `match` expr
+    -- comptime `if` stmt/expr
     ["$if"] = "keyword",
-    ["$elif"] = "keyword",
     ["$else"] = "keyword",
-    ["$match"] = "keyword",
 
     ["if"] = "keyword",
-    ["elif"] = "keyword",
     ["else"] = "keyword",
-    ["match"] = "keyword",
+    ["switch"] = "keyword",
     ["while"] = "keyword",
     ["for"] = "keyword",
 
@@ -75,19 +69,19 @@ syntax.add {
     ["return"] = "keyword",
     ["raise"] = "keyword",
 
-    ["let"] = "keyword",
-    ["mut"] = "keyword",
     ["unsafe"] = "keyword",
-    ["goto"] = "keyword",
+    ["defer"] = "keyword",
+    ["var"] = "keyword",
+    ["mut"] = "keyword",
+    ["and"] = "keyword",
+    ["or"] = "keyword",
     ["orelse"] = "keyword",
     ["catch"] = "keyword",
-    ["or"] = "keyword",
-    ["and"] = "keyword",
     ["is"] = "keyword",
     ["in"] = "keyword",
+    ["as"] = "keyword",
 
     -- types
-    ["void"] = "keyword2",
     ["no_return"] = "keyword2",
     ["bool"] = "keyword2",
     ["i8"] = "keyword2",
@@ -98,12 +92,12 @@ syntax.add {
     ["u16"] = "keyword2",
     ["u32"] = "keyword2",
     ["u64"] = "keyword2",
+    ["isize"] = "keyword2",
+    ["usize"] = "keyword2",
     ["f32"] = "keyword2",
     ["f64"] = "keyword2",
     ["rune"] = "keyword2",
-    ["isize"] = "keyword2",
-    ["usize"] = "keyword2",
-    ["str"] = "keyword2",
+    ["string"] = "keyword2",
     ["Self"] = "keyword2",
 
     -- literals
