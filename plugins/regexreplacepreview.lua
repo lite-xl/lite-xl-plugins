@@ -89,13 +89,13 @@ end
 
 command.add("core.docview", {
   ["regex-replace-preview:find-replace-regex"] = function()
-    core.command_view:set_text("/")
     local old_lines = {}
     local view = core.active_view
     local doc = view.doc
     local original_selection = { doc:get_selection(true) }
     local selection = doc:has_selection() and { doc:get_selection(true) } or {}
     core.command_view:enter("Regex Replace (enter pattern as /old/new/)", {
+      text = "/",
       submit = function(pattern)
         regex_replace_file(view, pattern, {}, false, selection[1], selection[3])
       end,
