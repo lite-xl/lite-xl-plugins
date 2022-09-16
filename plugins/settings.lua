@@ -27,6 +27,7 @@ local FontsList = require "widget.fontslist"
 local ItemsList = require "widget.itemslist"
 local KeybindingDialog = require "widget.keybinddialog"
 local Fonts = require "widget.fonts"
+local FilePicker = require "widget.filepicker"
 
 local settings = {}
 
@@ -46,25 +47,28 @@ settings.type = {
   SELECTION = 4,
   LIST_STRINGS = 5,
   BUTTON = 6,
-  FONT = 7
+  FONT = 7,
+  FILE = 8,
+  DIRECTORY = 9
 }
 
 ---@alias settings.types
----|>'settings.type.STRING'
----| 'settings.type.NUMBER'
----| 'settings.type.TOGGLE'
----| 'settings.type.SELECTION'
----| 'settings.type.LIST_STRINGS'
----| 'settings.type.BUTTON'
----| 'settings.type.FONT'
+---| `settings.type.STRING`
+---| `settings.type.NUMBER`
+---| `settings.type.TOGGLE`
+---| `settings.type.SELECTION`
+---| `settings.type.LIST_STRINGS`
+---| `settings.type.BUTTON`
+---| `settings.type.FONT`
+---| `settings.type.FILE`
 
 ---Represents a setting to render on a settings pane.
 ---@class settings.option
 ---@field public label string
 ---@field public description string
 ---@field public path string
----@field public type settings.types
----@field public default string | number | table<integer, string> | table<integer, integer>
+---@field public type settings.types | integer
+---@field public default string | number | boolean | table<integer, string> | table<integer, integer>
 ---@field public min number
 ---@field public max number
 ---@field public step number
@@ -76,6 +80,8 @@ settings.type = {
 ---@field public icon string
 ---@field public on_click nil | string | fun(button:string, x:integer, y:integer)
 ---@field public on_apply nil | fun(value:any)
+---@field public exists boolean
+---@field public filters table<integer,string>
 settings.option = {
   ---Title displayed to the user eg: "My Option"
   label = "",
@@ -108,7 +114,12 @@ settings.option = {
   ---Command or function executed when a BUTTON is clicked
   on_click = nil,
   ---Optional function executed when the option value is applied.
-  on_apply = nil
+  on_apply = nil,
+  ---When FILE or DIRECTORY this flag tells the path should exist.
+  exists = false,
+  ---Lua patterns used on FILE or DIRECTORY to filter browser results and
+  ---also force the selection to match one of the filters.
+  filters = {}
 }
 
 ---Add a new settings section to the settings UI
@@ -655,18 +666,20 @@ local function get_installed_plugins()
     for _, filename in ipairs(system.list_dir(plugin_dir) or {}) do
       local valid = false
       local file_info = system.get_file_info(plugin_dir .. "/" .. filename)
-      if
-        file_info.type == "file"
-        and
-        filename:match("%.lua$")
-        and
-        not filename:match("^language_")
-      then
-        valid = true
-        filename = filename:gsub("%.lua$", "")
-      elseif file_info.type == "dir" then
-        if system.get_file_info(plugin_dir .. "/" .. filename .. "/init.lua") then
+      if file_info then
+        if
+          file_info.type == "file"
+          and
+          filename:match("%.lua$")
+          and
+          not filename:match("^language_")
+        then
           valid = true
+          filename = filename:gsub("%.lua$", "")
+        elseif file_info.type == "dir" then
+          if system.get_file_info(plugin_dir .. "/" .. filename .. "/init.lua") then
+            valid = true
+          end
         end
       end
       if valid then
@@ -691,7 +704,7 @@ local function get_installed_colors()
     for _, filename in ipairs(system.list_dir(dir) or {}) do
       local file_info = system.get_file_info(dir .. "/" .. filename)
       if
-        file_info.type == "file"
+        file_info and file_info.type == "file"
         and
         filename:match("%.lua$")
       then
@@ -745,7 +758,8 @@ end
 ---@param name string
 ---@return string
 local function prettify_name(name)
-  return name:gsub("[%-_]", " "):gsub("%S+", capitalize_first)
+  name = name:gsub("[%-_]", " "):gsub("%S+", capitalize_first)
+  return name
 end
 
 ---Load config options from the USERDIR user_settings.lua and store them on
@@ -974,7 +988,7 @@ local Settings = Widget:extend()
 
 ---Constructor
 function Settings:new()
-  Settings.super.new(self, false)
+  Settings.super.new(self, nil, false)
 
   self.name = "Settings"
   self.defer_draw = false
@@ -1142,6 +1156,34 @@ local function add_control(pane, option, plugin_name)
     end
     widget = fonts
     found = true
+
+  elseif option.type == settings.type.FILE then
+    ---@type widget.label
+    Label(pane, option.label .. ":")
+    ---@type widget.filepicker
+    local file = FilePicker(pane, option_value or "")
+    if option.exists then
+      file:set_mode(FilePicker.mode.FILE_EXISTS)
+    else
+      file:set_mode(FilePicker.mode.FILE)
+    end
+    file.filters = option.filters or {}
+    widget = file
+    found = true
+
+  elseif option.type == settings.type.DIRECTORY then
+    ---@type widget.label
+    Label(pane, option.label .. ":")
+    ---@type widget.filepicker
+    local file = FilePicker(pane, option_value or "")
+    if option.exists then
+      file:set_mode(FilePicker.mode.DIRECTORY_EXISTS)
+    else
+      file:set_mode(FilePicker.mode.DIRECTORY)
+    end
+    file.filters = option.filters or {}
+    widget = file
+    found = true
   end
 
   if widget and type(path) ~= "nil" then
@@ -1206,7 +1248,7 @@ function Settings:load_core_settings()
   for _, section in ipairs(settings.sections) do
     local options = settings.core[section]
 
-    ---@type widget
+    ---@type widget|widget.foldingbook.pane
     local pane = self.core_sections:get_pane(section)
     if not pane then
       pane = self.core_sections:add_pane(section, section)
@@ -1674,21 +1716,21 @@ function Settings:update()
         local prev_child = nil
         for pos=#pane.container.childs, 1, -1 do
           local child = pane.container.childs[pos]
-          local x, y = 10, 10
+          local x, y = 10, (10 * SCALE)
           if prev_child then
             if
               (prev_child:is(Label) and not prev_child.desc)
               or
               (child:is(Label) and child.desc)
             then
-              y = prev_child:get_bottom() + 10
+              y = prev_child:get_bottom() + (10 * SCALE)
             else
-              y = prev_child:get_bottom() + 40
+              y = prev_child:get_bottom() + (30 * SCALE)
             end
           end
           if child:is(Line) then
             x = 0
-          elseif child:is(ItemsList) then
+          elseif child:is(ItemsList) or child:is(FilePicker) or child:is(TextBox) then
             child:set_size(pane.container:get_width() - 20, child.size.y)
           end
           child:set_position(x, y)
