@@ -51,6 +51,7 @@ config.plugins.nonicons = common.merge({
 
 local icon_font = renderer.font.load(USERDIR.."/fonts/nonicons.ttf", 15 * SCALE)
 local chevron_width = icon_font:get_width("")
+local previous_scale = SCALE
 local extension_icons = {
   [".lua"] = { "#51a0cf", "" },
   [".md"]  = { "#519aba", "" }, -- Markdown
@@ -117,6 +118,13 @@ end
 local TreeView_get_item_icon = TreeView.get_item_icon
 function TreeView:get_item_icon(item, active, hovered)
   local icon, font, color = TreeView_get_item_icon(self, item, active, hovered)
+  if previous_scale ~= SCALE then
+    icon_font:set_size(
+      icon_font:get_size() * (SCALE / previous_scale)
+    )
+    chevron_width = icon_font:get_width("")
+    previous_scale = SCALE
+  end
   if not config.plugins.nonicons.use_default_dir_icons then
     icon = "" -- unicode 61766
     font = icon_font
