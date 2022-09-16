@@ -148,7 +148,8 @@ config.plugins.spellcheck.config_spec = {
     label = "Dictionary File",
     description = "Path to a text file that contains a list of dictionary words.",
     path = "dictionary_file",
-    type = "string",
+    type = "file",
+    exists = true,
     default = platform_dictionary_file,
     on_apply = function()
       load_dictionary()
