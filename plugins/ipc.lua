@@ -7,7 +7,9 @@
 local core = require "core"
 local config = require "core.config"
 local common = require "core.common"
+local command = require "core.command"
 local Object = require "core.object"
+local RootView = require "core.rootview"
 local settings_found, settings = pcall(require, "plugins.settings")
 
 ---The maximum amount of seconds a message will be broadcasted.
@@ -561,10 +563,10 @@ function IPC:read_replies()
         end
       end
       if not found then
-        table.remove(message.destinations, d)
+        table.remove(message.destinations, d-destinations_removed)
         destinations_removed = destinations_removed + 1
         if #message.destinations == 0 then
-          table.remove(self.messages, m)
+          table.remove(self.messages, m-messages_removed)
           messages_removed = messages_removed + 1
           message_removed = true
         end
@@ -579,7 +581,7 @@ function IPC:read_replies()
         message.timestamp + MESSAGE_EXPIRATION < os.time()
       )
     then
-      table.remove(self.messages, m)
+      table.remove(self.messages, m-messages_removed)
       messages_removed = messages_removed + 1
     end
   end
@@ -679,6 +681,8 @@ function IPC:send_message(name, options, message_type)
 
   table.insert(self.messages, message)
 
+  update_file(self)
+
   return message.id
 end
 
@@ -759,7 +763,7 @@ end
 function IPC:signal(destinations, name, ...)
   self:send_message(name, {
     destinations = destinations,
-    data = table.pack(...)
+    data = table.pack(self.id, ...)
   }, "signal")
 end
 
@@ -945,6 +949,78 @@ ipc:register_method("core.open_directory", function(directory)
     core.add_project_directory(directory)
   end
 end, {{name = "directory", type = "string"}})
+
+--------------------------------------------------------------------------------
+-- Register file dragging signals from instance to instance
+--------------------------------------------------------------------------------
+ipc:register_signal("core.tab_drag_start", {{name = "file", type = "string"}})
+ipc:register_signal("core.tab_drag_stop")
+ipc:register_signal("core.tab_drag_received", {{name = "file", type = "string"}})
+
+local rootview_tab_dragging = false
+local rootview_dragged_node = nil
+local rootview_waiting_drop_file = ""
+local rootview_waiting_drop_instance = ""
+
+local rootview_on_mouse_moved = RootView.on_mouse_moved
+function RootView:on_mouse_moved(x, y, dx, dy)
+  rootview_on_mouse_moved(self, x, y, dx, dy)
+  if
+    self.dragged_node and self.dragged_node.dragging
+    and
+    not rootview_tab_dragging
+  then
+    ---@type core.doc
+    local doc = core.active_view.doc
+    if doc and doc.abs_filename then
+      rootview_tab_dragging = true
+      ipc:signal(nil, "core.tab_drag_start", doc.abs_filename)
+      rootview_dragged_node = self.dragged_node
+    end
+  elseif rootview_dragged_node then
+    local w, h, wx, wy = system.get_window_size()
+    if x < 0 or x > w or y < 0 or y > h then
+      self.dragged_node = nil
+      self:set_show_overlay(self.drag_overlay, false)
+    elseif not self.dragged_node then
+      self.dragged_node = rootview_dragged_node
+      self:set_show_overlay(self.drag_overlay, true)
+    end
+    core.request_cursor("hand")
+  elseif rootview_waiting_drop_file ~= "" then
+    ipc:signal(
+      rootview_waiting_drop_instance,
+      "core.tab_drag_received",
+      rootview_waiting_drop_file
+    )
+    core.root_view:open_doc(core.open_doc(rootview_waiting_drop_file))
+    rootview_waiting_drop_file = ""
+  end
+end
+
+local rootview_on_mouse_released = RootView.on_mouse_released
+function RootView:on_mouse_released(button, x, y, ...)
+  rootview_on_mouse_released(self, button, x, y, ...)
+  if rootview_tab_dragging then
+    rootview_tab_dragging = false
+    rootview_dragged_node = nil
+    ipc:signal(nil, "core.tab_drag_stop")
+  end
+end
+
+ipc:listen_signal("core.tab_drag_start", function(instance, file)
+  rootview_waiting_drop_instance = instance
+  rootview_waiting_drop_file = file
+end)
+
+ipc:listen_signal("core.tab_drag_stop", function()
+  rootview_waiting_drop_instance = ""
+  rootview_waiting_drop_file = ""
+end)
+
+ipc:listen_signal("core.tab_drag_received", function()
+  command.perform("root:close")
+end)
 
 
 return IPC
