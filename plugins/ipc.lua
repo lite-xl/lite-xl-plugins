@@ -18,10 +18,10 @@ local MESSAGE_EXPIRATION=3
 
 ---@class config.plugins.ipc
 ---@field single_instance boolean
----@field dirs_instance boolean
+---@field dirs_instance string
 config.plugins.ipc = common.merge({
   single_instance = true,
-  dirs_instance = true,
+  dirs_instance = "new",
   -- The config specification used by the settings gui
   config_spec = {
     name = "Inter-process communication",
@@ -34,10 +34,15 @@ config.plugins.ipc = common.merge({
     },
     {
       label = "Directories Instance",
-      description = "Open a new instance for directories.",
+      description = "Control how to open directories in single instance mode.",
       path = "dirs_instance",
-      type = "toggle",
-      default = true
+      type = "selection",
+      default = "new",
+      values = {
+        {"Create a New Instance", "new"},
+        {"Add to Current Instance", "add"},
+        {"Change Current Instance Project Directory", "change"}
+      }
     }
   }
 }, config.plugins.ipc)
@@ -908,8 +913,10 @@ system.get_time = function()
             if path_info.type == "file" then
               ipc:call_async(primary_instance, "core.open_file", nil, path)
             else
-              if not config.plugins.ipc.dirs_instance then
+              if config.plugins.ipc.dirs_instance == "add" then
                 ipc:call_async(primary_instance, "core.open_directory", nil, path)
+              elseif config.plugins.ipc.dirs_instance == "change" then
+                ipc:call_async(primary_instance, "core.change_directory", nil, path)
               else
                 if #ARGS > 2 then
                   system.exec(string.format("%q %q", EXEFILE, path))
@@ -947,6 +954,16 @@ ipc:register_method("core.open_directory", function(directory)
   if system.get_file_info(directory) then
     if system.raise_window then system.raise_window() end
     core.add_project_directory(directory)
+  end
+end, {{name = "directory", type = "string"}})
+
+ipc:register_method("core.change_directory", function(directory)
+  if system.get_file_info(directory) then
+    if system.raise_window then system.raise_window() end
+    if directory == core.project_dir then return end
+    core.confirm_close_docs(core.docs, function(dirpath)
+      core.open_folder_project(dirpath)
+    end, directory)
   end
 end, {{name = "directory", type = "string"}})
 
