@@ -3,7 +3,7 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "html-eruby",
-  files = { "%.htm%.erb$", "%.html%.erb$", "%.erb$" },
+  files = { "%.html?%.erb$", "%.erb$" },
   block_comment = { "<!--", "-->" },
   patterns = {
     {
