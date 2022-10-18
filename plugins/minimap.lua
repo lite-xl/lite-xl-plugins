@@ -342,26 +342,20 @@ function MiniMap:get_minimap_dimensions()
   local minimap_lines_count = math.floor(h / line_spacing)
   local line_count = #self.dv.doc.lines
   
-  -- check if file is too large to fit inside the minimap area
-  if line_count > 1 and line_count > minimap_lines_count then
+  local is_file_too_large = line_count > 1 and line_count > minimap_lines_count
+  if is_file_too_large then
     local scroll_pos = (visible_lines_start - 1) /
        (line_count - visible_lines_count - 1)
     scroll_pos = math.min(1.0, scroll_pos) -- 0..1, procent of visual area scrolled
 
     local thumb_height = visible_lines_count * line_spacing
     local scroll_pos_pixels = scroll_pos * (h - thumb_height)
-    local visible_y = self.dv.position.y + scroll_pos_pixels
-
-    -- offset visible area if user is scrolling past end
-    local t = (line_count - visible_lines_start) / visible_lines_count
-    if t <= 1 then visible_y = visible_y + thumb_height * (1.0 - t) end
 
     minimap_lines_start = visible_lines_start -
         math.floor(scroll_pos_pixels / line_spacing)
-    minimap_lines_start = math.max(1, math.min(minimap_lines_start,
-        line_count - minimap_lines_count))
+    minimap_lines_start = math.max(1, minimap_lines_start)
   end
-  return visible_lines_start, visible_lines_count, minimap_lines_start, minimap_lines_count
+  return visible_lines_start, visible_lines_count, minimap_lines_start, minimap_lines_count, is_file_too_large
 end
 
 
@@ -376,18 +370,34 @@ function MiniMap:get_active_margin() if self:is_minimap_enabled() then return 0 
 
 function MiniMap:_get_thumb_rect_normal()
   if not self:is_minimap_enabled() then return MiniMap.super._get_thumb_rect_normal(self) end
-  local visible_lines_start, visible_lines_count = self:get_minimap_dimensions()
+  local visible_lines_start, visible_lines_count, minimap_lines_start, minimap_lines_count, is_file_too_large = self:get_minimap_dimensions()
   local visible_y = self.dv.position.y + (visible_lines_start - 1) * line_spacing
+  if is_file_too_large then
+    local line_count = #self.dv.doc.lines
+    local scroll_pos = (visible_lines_start - 1) /
+       (line_count - visible_lines_count - 1)
+    scroll_pos = math.min(1.0, scroll_pos) -- 0..1, procent of visual area scrolled
+
+    local thumb_height = visible_lines_count * line_spacing
+    local scroll_pos_pixels = scroll_pos * (self.dv.size.y - thumb_height)
+    visible_y = self.dv.position.y + scroll_pos_pixels
+  end
   return self.dv.size.x - config.plugins.minimap.width, visible_y, config.plugins.minimap.width, visible_lines_count * line_spacing
 end
 
 
 function MiniMap:convert_percentage(percent)
   if type(percent) ~= "number" then return percent end
-  -- local visible_lines_start, visible_lines_count, minimap_lines_start, minimap_lines_count = MiniMap:get_minimap_dimensions()
+  local line_count = #self.dv.doc.lines
+  local visible_lines_start, visible_lines_count, minimap_lines_start,
+    minimap_lines_count, is_file_too_large = self:get_minimap_dimensions()
   local x, y, w, h = self:get_track_rect()
   local _, _, _, th = self:get_thumb_rect()
-  return percent * (self.dv.size.y / (h + th))
+  if is_file_too_large then
+    return percent * (self.dv.size.y / h)
+  else
+    return percent * (self.dv.size.y / (h + th))
+  end
 end
 
 
@@ -582,9 +592,25 @@ function DocView:new(doc)
   self.v_scrollbar = MiniMap(self) 
 end
 
+local function get_all_docviews(node, t)
+  t = t or {}
+  if not node then return end
+  if node.type == "leaf" then 
+    for i,v in ipairs(node.views) do 
+      if v:is(DocView) then 
+        table.insert(t, v) 
+      end
+    end
+  end
+  get_all_docviews(node.a, t)
+  get_all_docviews(node.b, t)
+  return t
+end
+
 command.add(nil, {
   ["minimap:toggle-visibility"] = function()
     config.plugins.minimap.enabled = not config.plugins.minimap.enabled
+    for i,v in ipairs(get_all_docviews(core.root_view.root_node)) do v.v_scrollbar.enabled = nil end
   end,
   ["minimap:toggle-syntax-highlighting"] = function()
     config.plugins.minimap.syntax_highlight = not config.plugins.minimap.syntax_highlight
