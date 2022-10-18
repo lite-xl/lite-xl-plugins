@@ -304,15 +304,18 @@ end
 
 local MiniMap = Scrollbar:extend()
 
+
 function MiniMap:new(dv)
   MiniMap.super.new(self, "v", "e")
   self.dv = dv
   self.enabled = nil
 end
 
+
 function MiniMap:line_highlight_color(line_index)
   -- other plugins can override this, and return a color
 end
+
 
 function MiniMap:is_minimap_enabled()
   if self.enabled ~= nil then return self.enabled end
@@ -361,7 +364,7 @@ end
 
 function MiniMap:_get_track_rect_normal()
   if not self:is_minimap_enabled() then return MiniMap.super._get_track_rect_normal(self) end
-  return self.dv.size.x - config.plugins.minimap.width, self.dv.position.y, config.plugins.minimap.width, math.min(#self.dv.doc.lines * line_spacing, self.dv.size.y)
+  return self.dv.size.x + self.dv.position.x - config.plugins.minimap.width, self.dv.position.y, config.plugins.minimap.width, math.min(#self.dv.doc.lines * line_spacing, self.dv.size.y)
 end
 
 
@@ -382,22 +385,16 @@ function MiniMap:_get_thumb_rect_normal()
     local scroll_pos_pixels = scroll_pos * (self.dv.size.y - thumb_height)
     visible_y = self.dv.position.y + scroll_pos_pixels
   end
-  return self.dv.size.x - config.plugins.minimap.width, visible_y, config.plugins.minimap.width, visible_lines_count * line_spacing
+  return self.dv.size.x + self.dv.position.x - config.plugins.minimap.width, visible_y, config.plugins.minimap.width, visible_lines_count * line_spacing
 end
 
 
 function MiniMap:convert_percentage(percent)
   if type(percent) ~= "number" then return percent end
-  local line_count = #self.dv.doc.lines
-  local visible_lines_start, visible_lines_count, minimap_lines_start,
-    minimap_lines_count, is_file_too_large = self:get_minimap_dimensions()
+  local _, _, _, _, is_file_too_large = self:get_minimap_dimensions()
   local x, y, w, h = self:get_track_rect()
   local _, _, _, th = self:get_thumb_rect()
-  if is_file_too_large then
-    return percent * (self.dv.size.y / h)
-  else
-    return percent * (self.dv.size.y / (h + th))
-  end
+  return percent * (self.dv.size.y / (h + (not is_file_too_large and th or 0)))
 end
 
 
@@ -586,11 +583,13 @@ function MiniMap:draw()
   end
 end
 
+
 local old_docview_new = DocView.new
 function DocView:new(doc) 
   old_docview_new(self, doc) 
   self.v_scrollbar = MiniMap(self) 
 end
+
 
 local function get_all_docviews(node, t)
   t = t or {}
@@ -607,10 +606,13 @@ local function get_all_docviews(node, t)
   return t
 end
 
+
 command.add(nil, {
   ["minimap:toggle-visibility"] = function()
     config.plugins.minimap.enabled = not config.plugins.minimap.enabled
-    for i,v in ipairs(get_all_docviews(core.root_view.root_node)) do v.v_scrollbar.enabled = nil end
+    for i,v in ipairs(get_all_docviews(core.root_view.root_node)) do 
+      v.v_scrollbar.enabled = nil 
+    end
   end,
   ["minimap:toggle-syntax-highlighting"] = function()
     config.plugins.minimap.syntax_highlight = not config.plugins.minimap.syntax_highlight
@@ -619,10 +621,11 @@ command.add(nil, {
 
 command.add("core.docview!", {
   ["minimap:toggle-visibility-for-current-view"] = function()
-    if core.active_view.v_scrollbar.enabled ~= nil then
-      core.active_view.v_scrollbar.enabled = not core.active_view.v_scrollbar.enabled
+    local sb = core.active_view.v_scrollbar
+    if sb.enabled ~= nil then
+      sb.enabled = not sb.enabled
     else
-      core.active_view.v_scrollbar.enabled = not config.plugins.minimap.enabled
+      sb.enabled = not config.plugins.minimap.enabled
     end
   end
 })
