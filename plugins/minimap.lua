@@ -586,8 +586,8 @@ end
 
 local old_docview_new = DocView.new
 function DocView:new(doc) 
-  old_docview_new(self, doc) 
-  self.v_scrollbar = MiniMap(self) 
+  old_docview_new(self, doc)
+  if self:is(DocView) then self.v_scrollbar = MiniMap(self) end
 end
 
 
