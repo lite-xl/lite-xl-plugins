@@ -364,7 +364,7 @@ end
 
 function MiniMap:_get_track_rect_normal()
   if not self:is_minimap_enabled() then return MiniMap.super._get_track_rect_normal(self) end
-  return self.dv.size.x + self.dv.position.x - config.plugins.minimap.width, self.dv.position.y, config.plugins.minimap.width, math.min(#self.dv.doc.lines * line_spacing, self.dv.size.y)
+  return self.dv.size.x + self.dv.position.x - config.plugins.minimap.width, self.dv.position.y, config.plugins.minimap.width, self.dv.size.y
 end
 
 
@@ -403,14 +403,12 @@ end
 function MiniMap:on_mouse_moved(x, y, dx, dy)
   local percent = MiniMap.super.on_mouse_moved(self, x, y, dx, dy)
   if not self:is_minimap_enabled() or type(percent) ~= "number" then return percent end
-  local _, _, _, _, is_file_too_large = self:get_minimap_dimensions()
+  local _, visible_lines_count, minimap_lines_start, minimap_lines_count, is_file_too_large = self:get_minimap_dimensions()
+  local lh = self.dv:get_line_height()
   local _, _, w, h = self:get_track_rect()
   local _, _, _, th = self:get_thumb_rect()
-  if is_file_too_large then
-    return percent * (self.dv.size.y / h)
-  else
-    return percent * (self.dv.size.y / (h + th))
-  end
+  percent = math.max(0.0, math.min((y - self.dv.position.y) / h, 1.0))
+  return (((percent * minimap_lines_count) + minimap_lines_start) * lh / self.dv:get_scrollable_size()) - (visible_lines_count / #self.dv.doc.lines / 2) 
 end
 
 
@@ -592,6 +590,16 @@ local old_docview_new = DocView.new
 function DocView:new(doc) 
   old_docview_new(self, doc)
   if self:is(DocView) then self.v_scrollbar = MiniMap(self) end
+end
+
+local old_docview_scroll_to_make_visible = DocView.scroll_to_make_visible
+function DocView:scroll_to_make_visible(line, col, ...)
+  if not self:is(DocView) and self.v_scrollbar:is_minimap_enabled() then return old_docview_scroll_to_make_visible(self, line, col, ...) end
+  local old_size = self.size.x
+  self.size.x = math.max(0, self.size.x - config.plugins.minimap.width)
+  local result = old_docview_scroll_to_make_visible(self, line, col, ...)
+  self.size.x = old_size
+  return result
 end
 
 
