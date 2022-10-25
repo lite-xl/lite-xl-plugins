@@ -27,18 +27,18 @@ end
 
 
 command.add("core.docview", {
-  ["exec:insert"] = function()
+  ["exec:insert"] = function(dv)
     core.command_view:enter("Insert Result Of Command", {
       submit = function(cmd)
-        core.active_view.doc:text_input(exec(cmd))
+        dv.doc:text_input(exec(cmd))
       end
     })
   end,
 
-  ["exec:replace"] = function()
+  ["exec:replace"] = function(dv)
     core.command_view:enter("Replace With Result Of Command", {
       submit = function(cmd)
-        core.active_view.doc:replace(function(str)
+        dv.doc:replace(function(str)
           return exec(
             "printf %b " .. printfb_quote(str:gsub("%\n$", "") .. "\n") .. " | eval '' " .. shell_quote(cmd),
             str:find("%\n$")

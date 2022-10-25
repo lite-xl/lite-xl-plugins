@@ -181,7 +181,7 @@ command.add("core.docview", {
   end,
 
 
-  ["spell-check:replace"] = function()
+  ["spell-check:replace"] = function(dv)
     local word, s, e = get_word_at_caret()
 
     -- find suggestions
@@ -202,7 +202,7 @@ command.add("core.docview", {
 
     -- sort suggestions table and convert to properly-capitalized text
     table.sort(suggestions, function(a, b) return a.diff < b.diff end)
-    local doc = core.active_view.doc
+    local doc = dv.doc
     local line = doc:get_selection()
     local has_upper = doc.lines[line]:sub(s, s):match("[A-Z]")
     for k, v in pairs(suggestions) do

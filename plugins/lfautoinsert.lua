@@ -65,10 +65,10 @@ local function indent_size(doc, line)
 end
 
 command.add("core.docview!", {
-  ["autoinsert:newline"] = function()
+  ["autoinsert:newline"] = function(dv)
     command.perform("doc:newline")
 
-    local doc = core.active_view.doc
+    local doc = dv.doc
     local line, col = doc:get_selection()
     local text = doc.lines[line - 1]
 

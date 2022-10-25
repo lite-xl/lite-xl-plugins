@@ -21,8 +21,8 @@ end
 
 
 command.add("core.docview", {
-  ["toggle-snake-camel:toggle"] = function()
-    core.active_view.doc:replace(function(text)
+  ["toggle-snake-camel:toggle"] = function(dv)
+    dv.doc:replace(function(text)
       return text:gsub("[%w][%w%d_]*", toggle)
     end)
   end,

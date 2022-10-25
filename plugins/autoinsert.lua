@@ -81,13 +81,12 @@ end
 
 
 local function predicate()
-  return getmetatable(core.active_view) == DocView
-     and not core.active_view.doc:has_selection()
+  return core.active_view:is(DocView)
+     and not core.active_view.doc:has_selection(), core.active_view.doc
 end
 
 command.add(predicate, {
-  ["autoinsert:backspace"] = function()
-    local doc = core.active_view.doc
+  ["autoinsert:backspace"] = function(doc)
     local l, c = doc:get_selection()
     if c > 1 then
       local chr = doc:get_char(l, c)
@@ -99,8 +98,7 @@ command.add(predicate, {
     command.perform "doc:backspace"
   end,
 
-  ["autoinsert:delete-to-previous-word-start"] = function()
-    local doc = core.active_view.doc
+  ["autoinsert:delete-to-previous-word-start"] = function(doc)
     local le, ce = translate.previous_word_start(doc, doc:get_selection())
     while true do
       local l, c = doc:get_selection()

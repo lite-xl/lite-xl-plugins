@@ -34,11 +34,11 @@ local keymap = require "core.keymap"
 -- Note that in the example we have used "^ " for spaces that appear in the path.
 -- It is required on Windows for path or file names that contains space characters.
 
-command.add("core.docview", {
-  ["texcompile:tex-compile"] = function()
+command.add("core.docview!", {
+  ["texcompile:tex-compile"] = function(dv)
     -- The current (La)TeX file and path
-    local texname = core.active_view:get_name()
-    local texpath = common.dirname(core.active_view:get_filename())
+    local texname = dv:get_name()
+    local texpath = common.dirname(dv:get_filename())
     local pdfname = texname:gsub("%.tex$", ".pdf")
 
     -- LaTeX compiler as configured in config.texcompile

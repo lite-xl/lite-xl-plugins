@@ -31,18 +31,17 @@ local function has_selections()
   if not check_doc() then return false end
   local selections, has_multilines = doc_get_selection_status(core.active_view.doc)
   -- we want this to be true if there are only single lines selections
-  return selections and not has_multilines
+  return selections and not has_multilines, core.active_view.doc
 end
 
 
 local function has_no_selections()
   if not check_doc() then return false end
-  return not doc_get_selection_status(core.active_view.doc)
+  return not doc_get_selection_status(core.active_view.doc), core.active_view.doc
 end
 
 
-local function align(right)
-  local doc = core.active_view.doc
+local function align(doc, right)
   local max_col = 0
   local done = { }
 
@@ -76,5 +75,5 @@ command.add(has_no_selections, {
 
 command.add(has_selections, {
   ["doc:left-align-selections"] = align,
-  ["doc:right-align-selections"] = function() align(true) end,
+  ["doc:right-align-selections"] = function(doc) align(doc, true) end,
 })
