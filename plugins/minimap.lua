@@ -398,6 +398,7 @@ function MiniMap:on_mouse_pressed(button, x, y, clicks)
   if y >= ty and y < ty + th then self.drag_start_offset = (y - ty) - th / 2 return self.percent end
   self.drag_start_offset = 0
   self.hovering.thumb = x >= tx and x < tx + tw and y >= ty and y < ty + th
+  self.dragging = self.hovering.thumb
   local lh = self.dv:get_line_height()
   percent = math.max(0.0, math.min((y - self.dv.position.y) / h, 1.0))
   return (((percent * minimap_lines_count) + minimap_lines_start) * lh / self.dv:get_scrollable_size()) - (visible_lines_count / #self.dv.doc.lines / 2)
@@ -411,10 +412,7 @@ function MiniMap:on_mouse_moved(x, y, dx, dy)
   local lh = self.dv:get_line_height()
   local _, _, w, h = self:get_track_rect()
   local tx, ty, tw, th = self:get_thumb_rect()
-  if x >= tx and x < tx + tw and y >= ty and y < ty + th and not self.hovering.thumb then 
-    self.hovering.thumb = true 
-    self.drag_start_offset = (y - ty) - th / 2 
-  end
+  if x >= tx and x < tx + tw and y >= ty and y < ty + th then self.hovering.thumb = true end
   if not self.hovering.thumb then return self.percent end
   y = y - self.drag_start_offset
   percent = math.max(0.0, math.min((y - self.dv.position.y) / h, 1.0))
