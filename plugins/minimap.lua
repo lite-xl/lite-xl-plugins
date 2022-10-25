@@ -325,6 +325,7 @@ function MiniMap:is_minimap_enabled()
     if type(config.plugins.minimap.avoid_small_docs) == "number" then
       return last_line > config.plugins.minimap.avoid_small_docs
     else
+      local docview = self.dv
       local _, y = docview:get_line_screen_position(last_line, docview.doc.lines[last_line])
       y = y + docview.scroll.y - docview.position.y + docview:get_line_height()
       return y > docview.size.y
@@ -338,13 +339,13 @@ function MiniMap:get_minimap_dimensions()
   local x, y, w, h = self:get_track_rect()
   local _, cy, _, cy2 = self.dv:get_content_bounds()
   local lh = self.dv:get_line_height()
-  
+
   local visible_lines_start = math.max(1, math.floor(cy / lh))
   local visible_lines_count = math.max(1, (cy2 - cy) / lh)
   local minimap_lines_start = 1
   local minimap_lines_count = math.floor(h / line_spacing)
   local line_count = #self.dv.doc.lines
-  
+
   local is_file_too_large = line_count > 1 and line_count > minimap_lines_count
   if is_file_too_large then
     local scroll_pos = (visible_lines_start - 1) /
@@ -416,7 +417,7 @@ function MiniMap:on_mouse_moved(x, y, dx, dy)
   if not self.hovering.thumb then return self.percent end
   y = y - self.drag_start_offset
   percent = math.max(0.0, math.min((y - self.dv.position.y) / h, 1.0))
-  return (((percent * minimap_lines_count) + minimap_lines_start) * lh / self.dv:get_scrollable_size()) - (visible_lines_count / #self.dv.doc.lines / 2) 
+  return (((percent * minimap_lines_count) + minimap_lines_start) * lh / self.dv:get_scrollable_size()) - (visible_lines_count / #self.dv.doc.lines / 2)
 end
 
 function MiniMap:draw_thumb()
@@ -429,13 +430,13 @@ function MiniMap:draw()
   if not self:is_minimap_enabled() then return MiniMap.super.draw(self) end
   local dv = self.dv
   local x, y, w, h = self:get_track_rect()
-  
+
   local highlight = dv.hovered_scrollbar or dv.dragging_scrollbar
   local visual_color = highlight and style.scrollbar2 or style.scrollbar
 
-  local visible_lines_start, visible_lines_count, 
+  local visible_lines_start, visible_lines_count,
     minimap_lines_start, minimap_lines_count = self:get_minimap_dimensions()
-    
+
   if config.plugins.minimap.draw_background then
     renderer.draw_rect(x, y, w, h, style.minimap_background or style.background)
   end
@@ -525,7 +526,7 @@ function MiniMap:draw()
   end
 
   local endidx = math.min(minimap_lines_start + minimap_lines_count, #self.dv.doc.lines)
-  
+
   reset_cache_if_needed()
 
   if not highlighter_cache[dv.doc.highlighter] then
@@ -600,7 +601,7 @@ end
 
 
 local old_docview_new = DocView.new
-function DocView:new(doc) 
+function DocView:new(doc)
   old_docview_new(self, doc)
   if self:is(DocView) then self.v_scrollbar = MiniMap(self) end
 end
@@ -619,10 +620,10 @@ end
 local function get_all_docviews(node, t)
   t = t or {}
   if not node then return end
-  if node.type == "leaf" then 
-    for i,v in ipairs(node.views) do 
-      if v:is(DocView) then 
-        table.insert(t, v) 
+  if node.type == "leaf" then
+    for i,v in ipairs(node.views) do
+      if v:is(DocView) then
+        table.insert(t, v)
       end
     end
   end
@@ -635,8 +636,8 @@ end
 command.add(nil, {
   ["minimap:toggle-visibility"] = function()
     config.plugins.minimap.enabled = not config.plugins.minimap.enabled
-    for i,v in ipairs(get_all_docviews(core.root_view.root_node)) do 
-      v.v_scrollbar.enabled = nil 
+    for i,v in ipairs(get_all_docviews(core.root_view.root_node)) do
+      v.v_scrollbar.enabled = nil
     end
   end,
   ["minimap:toggle-syntax-highlighting"] = function()
