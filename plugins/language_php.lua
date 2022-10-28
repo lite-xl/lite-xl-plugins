@@ -87,6 +87,7 @@ local inline_variables = {
   },
   { pattern = "%$[%a_][%w_]*", type = "keyword2" },
   { pattern = "%w+",           type = "string" },
+  { pattern = "[^\"]",         type = "string" },
 }
 
 local function combine_patterns(t1, t2)
