@@ -306,7 +306,7 @@ local MiniMap = Scrollbar:extend()
 
 
 function MiniMap:new(dv)
-  MiniMap.super.new(self, "v", "e")
+  MiniMap.super.new(self, { direction = "v", alignment = "e" })
   self.dv = dv
   self.enabled = nil
 end
