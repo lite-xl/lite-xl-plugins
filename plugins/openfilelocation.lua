@@ -28,9 +28,9 @@ config.plugins.openfilelocation = common.merge({
   }
 }, config.plugins.openfilelocation)
 
-command.add("core.docview", {
-  ["open-file-location:open-file-location"] = function()
-    local doc = core.active_view.doc
+command.add("core.docview!", {
+  ["open-file-location:open-file-location"] = function(dv)
+    local doc = dv.doc
     if not doc.filename then
       core.error "Cannot open location of unsaved doc"
       return

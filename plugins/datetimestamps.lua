@@ -57,29 +57,29 @@ config.plugins.datetimestamps = common.merge({
   }
 }, config.plugins.datetimestamps)
 
-local function datestamp()
+local function datestamp(dv)
   local sOut = os.date(config.plugins.datetimestamps.format_datestamp)
-  core.active_view.doc:text_input(sOut)
+  dv.doc:text_input(sOut)
 end
 
-local function datetimestamp()
+local function datetimestamp(dv)
   local sOut = os.date(config.plugins.datetimestamps.format_datetimestamp)
-  core.active_view.doc:text_input(sOut)
+  dv.doc:text_input(sOut)
 end
 
-local function timestamp()
+local function timestamp(dv)
   local sOut = os.date(config.plugins.datetimestamps.format_timestamp)
-  core.active_view.doc:text_input(sOut)
+  dv.doc:text_input(sOut)
 end
 
 command.add("core.docview", {
   ["datetimestamps:insert-datestamp"] = datestamp,
   ["datetimestamps:insert-timestamp"] = timestamp,
   ["datetimestamps:insert-datetimestamp"] = datetimestamp,
-  ["datetimestamps:insert-custom"] = function()
+  ["datetimestamps:insert-custom"] = function(dv)
     core.command_view:enter("Date format eg: %H:%M:%S", {
       submit = function(cmd)
-        core.active_view.doc:text_input(os.date(cmd) or "")
+        dv.doc:text_input(os.date(cmd) or "")
       end
     })
   end,

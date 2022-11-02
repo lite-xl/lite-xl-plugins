@@ -102,8 +102,8 @@ local function get_indent_size(doc)
   return indent_size
 end
 
-local function tabs_to_spaces()
-  local doc = core.active_view.doc
+local function tabs_to_spaces(dv)
+  local doc = dv.doc
   local indent_size = get_indent_size(doc)
   local selections = doc.selections
   doc:replace(replacer(doc, tabs_replacer, indent_size))
@@ -118,8 +118,8 @@ local function tabs_to_spaces()
   end
 end
 
-local function spaces_to_tabs()
-  local doc = core.active_view.doc
+local function spaces_to_tabs(dv)
+  local doc = dv.doc
   local indent_size = get_indent_size(doc)
   local selections = doc.selections
   doc:replace(replacer(doc, spaces_replacer, indent_size))
@@ -134,7 +134,7 @@ local function spaces_to_tabs()
   end
 end
 
-command.add("core.docview", {
+command.add("core.docview!", {
     ["indent-convert:tabs-to-spaces"] = tabs_to_spaces,
     ["indent-convert:spaces-to-tabs"] = spaces_to_tabs
   }

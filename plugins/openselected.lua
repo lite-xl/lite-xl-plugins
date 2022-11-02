@@ -31,9 +31,9 @@ config.plugins.openselected = common.merge({
   }
 }, config.plugins.openselected)
 
-command.add("core.docview", {
-  ["open-selected:open-selected"] = function()
-    local doc = core.active_view.doc
+command.add("core.docview!", {
+  ["open-selected:open-selected"] = function(dv)
+    local doc = dv.doc
     if not doc:has_selection() then
       core.error("No text selected")
       return

@@ -154,7 +154,7 @@ end
 
 
 command.add("core.docview", {
-  ["primary-selection:paste"] = function(x, y, clicks, ...)
+  ["primary-selection:paste"] = function(dv, x, y, clicks, ...)
     if not config.plugins.primary_selection.command_out
      or #config.plugins.primary_selection.command_out == 0 then
       core.warn("No primary selection paste command set")
@@ -176,7 +176,7 @@ command.add("core.docview", {
       table.insert(text, buffer or "")
     until not buffer
     if #text > 0 then
-      core.active_view.doc:text_input(table.concat(text))
+      dv.doc:text_input(table.concat(text))
     end
   end
 })

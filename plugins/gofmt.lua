@@ -29,17 +29,17 @@ local function update_doc(cmd, doc)
   doc:set_selection(table.unpack(sel))
 end
 
-command.add("core.docview", {
-  ["gofmt:gofmt"] = function()
-    update_doc("gofmt", core.active_view.doc)
+command.add("core.docview!", {
+  ["gofmt:gofmt"] = function(dv)
+    update_doc("gofmt", dv.doc)
   end,
 
-  ["gofmt:goimports"] = function()
-    update_doc("goimports", core.active_view.doc)
+  ["gofmt:goimports"] = function(dv)
+    update_doc("goimports", dv.doc)
   end,
 
-  ["gofmt:goreturns"] = function()
-    update_doc("goreturns", core.active_view.doc)
+  ["gofmt:goreturns"] = function(dv)
+    update_doc("goreturns", dv.doc)
   end,
 })
 

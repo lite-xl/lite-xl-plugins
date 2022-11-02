@@ -8,9 +8,9 @@ local style = require "core.style"
 local StatusView = require "core.statusview"
 local DocView = require "core.docview"
 
-local function doc()
-  if core.active_view and getmetatable(core.active_view) == DocView then return core.active_view.doc end
-  if core.last_active_view and getmetatable(core.last_active_view) == DocView then return core.last_active_view.doc end
+local function get_doc()
+  if core.active_view then return core.active_view:is(DocView), core.active_view.doc end
+  if core.last_active_view then return core.last_active_view:is(DocView), core.last_active_view.doc end
 end
 
 -- Force plaintext syntax to have a name
@@ -40,13 +40,12 @@ local function get_syntax_name(s)
 end
 
 core.status_view:add_item({
-  predicate = function()
-    return core.active_view and getmetatable(core.active_view) == DocView
-  end,
+  predicate = get_doc,
   name = "doc:syntax",
   alignment = StatusView.Item.RIGHT,
   get_item = function()
-    local syntax_name = get_syntax_name(doc().syntax)
+    local _, doc = get_doc()
+    local syntax_name = get_syntax_name(doc.syntax)
     return {
       style.text,
       syntax_name
@@ -58,9 +57,9 @@ core.status_view:add_item({
   separator = core.status_view.separator2
 })
 
-local function get_syntax_list()
+local function get_syntax_list(doc)
   local pt_name = plain_text_syntax.name
-  if doc().syntax == plain_text_syntax then
+  if doc.syntax == plain_text_syntax then
     pt_name = "Current: "..pt_name
   end
   local list = { ["Auto detect"] = false,
@@ -75,7 +74,7 @@ local function get_syntax_list()
       i = i + 1
       fullname = name.." ("..i..")"
     end
-    if doc().syntax == s then
+    if doc.syntax == s then
       fullname = "Current: "..fullname
     end
     list[fullname] = s
@@ -101,17 +100,17 @@ local function bias_sorter(a, b)
   return sorter(a, b)
 end
 
-command.add("core.docview", {
+command.add(get_doc, {
   ["force-syntax:select-file-syntax"] =
-    function()
+    function(doc)
       core.command_view:enter("Set syntax for this file", {
         submit = function(text, item)
-          local list, _ = get_syntax_list()
-          doc().force_syntax = list[item.text]
-          doc():reset_syntax()
+          local list, _ = get_syntax_list(doc)
+          doc.force_syntax = list[item.text]
+          doc:reset_syntax()
         end,
         suggest = function(text)
-          local _, keylist = get_syntax_list()
+          local _, keylist = get_syntax_list(doc)
           local res = common.fuzzy_match(keylist, text)
           -- Force Current and Auto detect syntax to the bottom
           -- if the text is empty

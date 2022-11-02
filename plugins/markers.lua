@@ -61,9 +61,9 @@ function DocView:draw_line_gutter(line, x, y, width)
 end
 
 
-command.add("core.docview", {
-  ["markers:toggle-marker"] = function()
-    local doc = core.active_view.doc
+command.add("core.docview!", {
+  ["markers:toggle-marker"] = function(dv)
+    local doc = dv.doc
     local line = doc:get_selection()
     local markers = cache[doc]
 
@@ -74,8 +74,8 @@ command.add("core.docview", {
     end
   end,
 
-  ["markers:go-to-next-marker"] = function()
-    local doc = core.active_view.doc
+  ["markers:go-to-next-marker"] = function(dv)
+    local doc = dv.doc
     local line = doc:get_selection()
     local markers = cache[doc]
 

@@ -652,8 +652,8 @@ command.add(nil, {
 })
 
 command.add("core.docview!", {
-  ["minimap:toggle-visibility-for-current-view"] = function()
-    local sb = core.active_view.v_scrollbar
+  ["minimap:toggle-visibility-for-current-view"] = function(dv)
+    local sb = dv.v_scrollbar
     if sb.enabled ~= nil then
       sb.enabled = not sb.enabled
     else

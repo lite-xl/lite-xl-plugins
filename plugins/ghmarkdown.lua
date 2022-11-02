@@ -40,10 +40,8 @@ local html = [[
 ]]
 
 
-command.add("core.docview", {
-  ["ghmarkdown:show-preview"] = function()
-    local dv = core.active_view
-
+command.add("core.docview!", {
+  ["ghmarkdown:show-preview"] = function(dv)
     local content = dv.doc:get_text(1, 1, math.huge, math.huge)
     local esc = { ['"'] = '\\"', ["\n"] = '\\n' }
     local text = html:gsub("${(.-)}", {

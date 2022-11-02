@@ -87,10 +87,9 @@ local function regex_replace_file(view, pattern, old_lines, raw, start_line, end
   return old_lines, line_scroll ~= nil
 end
 
-command.add("core.docview", {
-  ["regex-replace-preview:find-replace-regex"] = function()
+command.add("core.docview!", {
+  ["regex-replace-preview:find-replace-regex"] = function(view)
     local old_lines = {}
-    local view = core.active_view
     local doc = view.doc
     local original_selection = { doc:get_selection(true) }
     local selection = doc:has_selection() and { doc:get_selection(true) } or {}

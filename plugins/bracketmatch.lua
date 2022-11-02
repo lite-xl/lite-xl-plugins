@@ -245,16 +245,16 @@ end
 
 
 command.add("core.docview", {
-  ["bracket-match:move-to-matching"] = function()
+  ["bracket-match:move-to-matching"] = function(dv)
     update_state()
     if state.line2 then
-      core.active_view.doc:set_selection(state.line2, state.col2)
+      dv.doc:set_selection(state.line2, state.col2)
     end
   end,
-  ["bracket-match:select-to-matching"] = function()
+  ["bracket-match:select-to-matching"] = function(dv)
     update_state()
     if state.line2 then
-        core.active_view.doc:set_selection(state.line, state.col, state.line2, state.col2 + select_adj)
+        dv.doc:set_selection(state.line, state.col, state.line2, state.col2 + select_adj)
     end
   end,
 })

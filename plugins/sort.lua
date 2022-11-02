@@ -11,9 +11,9 @@ local function split_lines(text)
   return res
 end
 
-command.add("core.docview", {
-  ["sort:sort"] = function()
-    local doc = core.active_view.doc
+command.add("core.docview!", {
+  ["sort:sort"] = function(dv)
+    local doc = dv.doc
 
     local l1, c1, l2, c2, swap = doc:get_selection(true)
     l1, c1 = translate.start_of_line(doc, l1, c1)
