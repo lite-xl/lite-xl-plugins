@@ -24,6 +24,18 @@ local black = { common.color "#000000" }
 local tmp = {}
 
 
+-- Workaround for bug in Lite XL 2.1
+-- Remove this when b029f5993edb7dee5ccd2ba55faac1ec22e24609 is in a release
+local function get_selection(doc, sort)
+  local line1, col1, line2, col2 = doc:get_selection_idx(doc.last_selection)
+  if line1 then
+    return doc:get_selection_idx(doc.last_selection, sort)
+  else
+    return doc:get_selection_idx(1, sort)
+  end
+end
+
+
 local function draw_color_previews(self, line, x, y, ptn, base, nibbles)
   local text = self.doc.lines[line]
   local s, e = 0, 0
@@ -58,7 +70,7 @@ local function draw_color_previews(self, line, x, y, ptn, base, nibbles)
     local text_color = math.max(r, g, b) < 128 and white or black
     tmp[1], tmp[2], tmp[3], tmp[4] = r, g, b, a
 
-    local l1, _, l2, _ = self.doc:get_selection(true)
+    local l1, _, l2, _ = get_selection(self.doc, true)
 
     if not (self.doc:has_selection() and line >= l1 and line <= l2) then
       renderer.draw_rect(x1, y, x2 - x1, self:get_line_height(), tmp)
