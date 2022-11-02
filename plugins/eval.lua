@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local core = require "core"
 local command = require "core.command"
 
@@ -13,12 +13,20 @@ end
 
 command.add("core.docview", {
   ["eval:insert"] = function()
-    core.command_view:enter("Evaluate And Insert Result", function(cmd)
-      core.active_view.doc:text_input(eval(cmd))
-    end)
+    core.command_view:enter("Evaluate And Insert Result", {
+      submit = function(cmd)
+        core.active_view.doc:text_input(eval(cmd))
+      end
+    })
   end,
 
   ["eval:replace"] = function()
-    core.active_view.doc:replace(eval)
+    core.command_view:enter("Evaluate And Replace With Result", {
+      submit = function(cmd)
+        core.active_view.doc:replace(function(str)
+          return eval(cmd)
+        end)
+      end
+    })
   end,
 })

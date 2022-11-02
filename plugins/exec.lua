@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local core = require "core"
 local command = require "core.command"
 
@@ -28,19 +28,23 @@ end
 
 command.add("core.docview", {
   ["exec:insert"] = function()
-    core.command_view:enter("Insert Result Of Command", function(cmd)
-      core.active_view.doc:text_input(exec(cmd))
-    end)
+    core.command_view:enter("Insert Result Of Command", {
+      submit = function(cmd)
+        core.active_view.doc:text_input(exec(cmd))
+      end
+    })
   end,
 
   ["exec:replace"] = function()
-    core.command_view:enter("Replace With Result Of Command", function(cmd)
-      core.active_view.doc:replace(function(str)
-        return exec(
-          "printf %b " .. printfb_quote(str:gsub("%\n$", "") .. "\n") .. " | eval '' " .. shell_quote(cmd),
-          str:find("%\n$")
-        )
-      end)
-    end)
+    core.command_view:enter("Replace With Result Of Command", {
+      submit = function(cmd)
+        core.active_view.doc:replace(function(str)
+          return exec(
+            "printf %b " .. printfb_quote(str:gsub("%\n$", "") .. "\n") .. " | eval '' " .. shell_quote(cmd),
+            str:find("%\n$")
+          )
+        end)
+      end
+    })
   end,
 })

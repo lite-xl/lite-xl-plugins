@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 
 -- Syntax highlighting for the Rivet programming language.
 -- by StunxFS :)
@@ -24,7 +24,7 @@ syntax.add {
     {pattern = "-?%.?%d+", type = "number"},
     {pattern = "[%+%-=/%*%^%%<>!~|&%.%?]", type = "operator"},
     -- Uppercase constants of at least 2 chars in length
-    { 
+    {
       pattern = "_?%u[%u_][%u%d_]*%f[%s%+%*%-%.%)%]}%?%^%%=/<>~|&;:,!]",
       type = "number"
     },
@@ -80,7 +80,7 @@ syntax.add {
     ["is"] = "keyword",
     ["in"] = "keyword",
     ["as"] = "keyword",
-    
+
     -- types
     ["no_return"] = "keyword2",
     ["bool"] = "keyword2",

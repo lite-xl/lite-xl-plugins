@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local syntax = require "core.syntax"
 
 syntax.add {
@@ -23,7 +23,6 @@ syntax.add {
   },
   symbols = {
     ["nil"]  = "literal",
-    ["end"]  = "literal",
     ["true"]  = "literal",
     ["false"]  = "literal",
     ["private"]  = "keyword",
@@ -63,7 +62,6 @@ syntax.add {
     ["self"] = "keyword",
     ["super"] = "keyword",
     ["then"] = "keyword",
-    ["true"] = "keyword",
     ["undef"] = "keyword",
     ["unless"] = "keyword",
     ["until"] = "keyword",

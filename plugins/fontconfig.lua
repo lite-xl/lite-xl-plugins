@@ -1,11 +1,12 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local subprocess = require "process"
 
 local core = require "core"
 local style = require "core.style"
 local config = require "core.config"
+local common = require "core.common"
 
-config.plugins.fontconfig = { prefix = "" }
+config.plugins.fontconfig = common.merge({ prefix = "" }, config.plugins.fontconfig)
 
 --[[
   Example config (put it in user module):

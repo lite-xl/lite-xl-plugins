@@ -1,10 +1,11 @@
--- mod-version:2 -- lite-xl 2.0
+--- mod-version:3
 local core = require "core"
 local style = require "core.style"
 local command = require "core.command"
 local keymap = require "core.keymap"
 local DocView = require "core.docview"
 local config = require "core.config"
+local common = require "core.common"
 
 -- Colors can be configured as follows:
 --   underline color  = `style.bracketmatch_color`
@@ -12,12 +13,62 @@ local config = require "core.config"
 --   background color = `style.bracketmatch_block_color`
 --   frame color      = `style.bracketmatch_frame_color`
 
-config.plugins.bracketmatch = {
-  highligh_both = true, -- highlight the current bracket too
-  style = "underline",  -- can be "underline", "block", "frame", "none"
-  color_char = false,   -- color the bracket
-  line_size = math.ceil(1 * SCALE), -- the size of the lines used in "underline" and "frame"
-}
+config.plugins.bracketmatch = common.merge({
+  -- highlight the current bracket too
+  highlight_both = true,
+  -- can be "underline", "block", "frame", "none"
+  style = "underline",
+   -- color the bracket
+  color_char = false,
+  -- the size of the lines used in "underline" and "frame"
+  line_size = math.ceil(1 * SCALE),
+   -- The config specification used by the settings gui
+  config_spec = {
+    name = "Bracket Match",
+    {
+      label = "Highlight Both",
+      description = "Highlight the current bracket too.",
+      path = "highlight_both",
+      type = "toggle",
+      default = true
+    },
+    {
+      label = "Style",
+      description = "The visual indicator for pair brackets.",
+      path = "style",
+      type = "selection",
+      default = "underline",
+      values = {
+        {"Underline", "underline"},
+        {"Block", "block"},
+        {"Frame", "frame"},
+        {"None", "none"}
+      }
+    },
+    {
+      label = "Colorize Bracket",
+      description = "Change the color of the matching brackets.",
+      path = "color_char",
+      type = "toggle",
+      default = false
+    },
+    {
+      label = "Line Size",
+      description = "Height of the underline on matching brackets.",
+      path = "line_size",
+      type = "number",
+      default = 1,
+      min = 1,
+      step = 1,
+      get_value = function(value)
+        return math.floor(value / SCALE)
+      end,
+      set_value = function(value)
+        return math.ceil(value * SCALE)
+      end
+    }
+  }
+}, config.plugins.bracketmatch)
 
 
 local bracket_maps = {
@@ -179,16 +230,17 @@ end
 
 local draw_line_text = DocView.draw_line_text
 
-function DocView:draw_line_text(idx, x, y)
-  draw_line_text(self, idx, x, y)
+function DocView:draw_line_text(line, x, y)
+  local lh = draw_line_text(self, line, x, y)
   if self.doc == state.doc and state.line2 then
-    if idx == state.line2 then
-      draw_decoration(self, x, y, idx, state.col2)
+    if line == state.line2 then
+      draw_decoration(self, x, y, line, state.col2)
     end
-    if idx == state.line and config.plugins.bracketmatch.highligh_both then
-      draw_decoration(self, x, y, idx, state.col + select_adj - 1)
+    if line == state.line and config.plugins.bracketmatch.highlight_both then
+      draw_decoration(self, x, y, line, state.col + select_adj - 1)
     end
   end
+  return lh
 end
 
 

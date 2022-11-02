@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local syntax = require "core.syntax"
 
 syntax.add {
@@ -22,19 +22,15 @@ syntax.add {
     ["class"]     = "keyword",
     ["construct"] = "keyword",
     ["else"]      = "keyword",
-    ["false"]     = "keyword",
     ["for"]       = "keyword",
     ["foreign"]   = "keyword",
     ["if"]        = "keyword",
     ["import"]    = "keyword",
     ["in"]        = "keyword",
     ["is"]        = "keyword",
-    ["null"]      = "keyword",
     ["return"]    = "keyword",
     ["static"]    = "keyword",
     ["super"]     = "keyword",
-    ["this"]      = "keyword",
-    ["true"]      = "keyword",
     ["var"]       = "keyword",
     ["while"]     = "keyword",
     ["this"]      = "keyword2",

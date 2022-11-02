@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local core = require "core"
 local Doc = require "core.doc"
 local syntax = require "core.syntax"
@@ -39,30 +39,24 @@ local function get_syntax_name(s)
   return name or "Undefined"
 end
 
-local statusview_get_items = StatusView.get_items
-function StatusView:get_items()
-  local left, right = statusview_get_items(self)
-
-  local is_dv = core.active_view and getmetatable(core.active_view) == DocView
-  if not is_dv then return left, right end
-
-  local syntax_name = get_syntax_name(doc().syntax)
-
-  local ins = {
-    style.dim, 
-    self.separator2,
-    style.text,
-    syntax_name
-  }
-
-  if syntax_name then
-    for _,item in pairs(ins) do
-      table.insert(right, item)
-    end
-  end
-
-  return left, right
-end
+core.status_view:add_item({
+  predicate = function()
+    return core.active_view and getmetatable(core.active_view) == DocView
+  end,
+  name = "doc:syntax",
+  alignment = StatusView.Item.RIGHT,
+  get_item = function()
+    local syntax_name = get_syntax_name(doc().syntax)
+    return {
+      style.text,
+      syntax_name
+    }
+  end,
+  command = "force-syntax:select-file-syntax",
+  position = -1,
+  tooltip = "file syntax",
+  separator = core.status_view.separator2
+})
 
 local function get_syntax_list()
   local pt_name = plain_text_syntax.name
@@ -110,23 +104,20 @@ end
 command.add("core.docview", {
   ["force-syntax:select-file-syntax"] =
     function()
-      core.command_view:enter(
-        "Set syntax for this file",
-        function(text, item) -- submit
+      core.command_view:enter("Set syntax for this file", {
+        submit = function(text, item)
           local list, _ = get_syntax_list()
           doc().force_syntax = list[item.text]
           doc():reset_syntax()
         end,
-        function(text) -- suggest
+        suggest = function(text)
           local _, keylist = get_syntax_list()
           local res = common.fuzzy_match(keylist, text)
           -- Force Current and Auto detect syntax to the bottom
           -- if the text is empty
           table.sort(res, #text == 0 and bias_sorter or sorter)
           return res
-        end,
-        nil, -- cancel
-        nil -- validate
-      )
+        end
+      })
     end
 })

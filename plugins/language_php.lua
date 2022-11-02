@@ -1,23 +1,152 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 --[[
   language_php.lua
   provides php syntax support allowing mixed html, css and js
-  version: 20210902_1
+  version: 20220614_1
 --]]
 local syntax = require "core.syntax"
+local common = require "core.common"
+local config = require "core.config"
 
 -- load syntax dependencies to add additional rules
 require "plugins.language_css"
 require "plugins.language_js"
 
--- generate SQL string marker regex
-local sql_markers = { 'create', 'select', 'insert', 'update', 'replace', 'delete', 'drop', 'alter' }
-local sql_regex   = {}
-for _,marker in ipairs(sql_markers) do
-    table.insert(sql_regex, marker)
-    table.insert(sql_regex, string.upper(marker))
+local psql_found = pcall(require, "plugins.language_psql")
+local sql_strings = {}
+
+config.plugins.language_php = common.merge({
+  sql_strings = true,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Language PHP",
+    {
+      label = "SQL Strings",
+      description = "Highlight as SQL, strings starting with sql statements, "
+        .. "depends on language_psql.",
+      path = "sql_strings",
+      type = "toggle",
+      default = true,
+      on_apply = function(enabled)
+        local syntax_php = syntax.get("file.phps")
+        if enabled and psql_found then
+          if
+            not syntax_php.patterns[6].syntax
+            or
+            syntax_php.patterns[6].syntax ~= '.sql'
+          then
+            table.insert(syntax_php.patterns, 5, sql_strings[1])
+            table.insert(syntax_php.patterns, 6, sql_strings[2])
+          end
+        elseif
+          syntax_php.patterns[6].syntax
+          and
+          syntax_php.patterns[6].syntax == '.sql'
+        then
+          table.remove(syntax_php.patterns, 5)
+          table.remove(syntax_php.patterns, 5)
+        end
+      end
+    }
+  }
+}, config.plugins.language_php)
+
+-- Patterns to match some of the string inline variables
+local inline_variables = {
+  { pattern = "%s+",           type = "string" },
+  { pattern = "\\%$",          type = "string" },
+  { pattern = "%{[%$%s]*%}",   type = "string" },
+  -- matches {$varname[index]}
+  { pattern = "{"
+      .. "()%$[%a_][%w_]*"
+      .. "()%["
+      .. "()[%w%s_%-\"\'%(%)|;:,%.#@%%!%^&%*%+=%[%]<>~`%?\\/]*"
+      .. "()%]"
+      .. "}",
+    type = {
+      "keyword", "keyword2", "keyword", "string", "keyword"
+    }
+  },
+  { pattern = "{"
+      .. "()%$[%a_][%w_]*"
+      .. "()%->"
+      .. "()[%a_][%w_]*"
+      .. "()}",
+    type = {
+      "keyword", "keyword2", "keyword", "symbol", "keyword"
+    }
+  },
+  { pattern = "{()%$[%a_][%w_]*()}",
+    type = { "keyword", "keyword2", "keyword" }
+  },
+  { pattern = "%$[%a_][%w_]*()%[()%w*()%]",
+    type = { "keyword2", "keyword", "string", "keyword" }
+  },
+  { pattern = "%$[%a_][%w_]*()%->()%w+",
+    type = { "keyword2", "keyword", "symbol" }
+  },
+  { pattern = "%$[%a_][%w_]*", type = "keyword2" },
+  { pattern = "%w+",           type = "string" },
+  { pattern = "[^\"]",         type = "string" },
+}
+
+local function combine_patterns(t1, t2)
+  local temp = { table.unpack(t1) }
+  for _, t in ipairs(t2) do
+    table.insert(temp, t)
+  end
+  return temp
 end
-sql_regex = table.concat(sql_regex, '|')
+
+local function clone(tbl)
+  local t = {}
+  if tbl then
+    for k, v in pairs(tbl) do
+      if type(v) == "table" then
+        t[k] = clone(v)
+      else
+        t[k] = v
+      end
+    end
+  end
+  return t
+end
+
+-- optionally allow sql syntax on strings
+if psql_found then
+  -- generate SQL string marker regex
+  local sql_markers = { 'create', 'select', 'insert', 'update', 'replace', 'delete', 'drop', 'alter' }
+  local sql_regex   = {}
+  for _, marker in ipairs(sql_markers) do
+      table.insert(sql_regex, marker)
+      table.insert(sql_regex, string.upper(marker))
+  end
+  sql_regex = table.concat(sql_regex, '|')
+
+  -- inject inline variable rules to cloned psql syntax
+  local syntax_phpsql = clone(syntax.get("file.sql"))
+  syntax_phpsql.name = "PHP SQL"
+  syntax_phpsql.files = "%.phpsql$"
+  table.insert(syntax_phpsql.patterns, 2, { pattern = "\\%$", type = "symbol" })
+  table.insert(syntax_phpsql.patterns, 3, { pattern = "%{[%$%s]*%}", type = "symbol" })
+  for i=4, 9 do
+    table.insert(syntax_phpsql.patterns, i, inline_variables[i])
+  end
+
+  -- SQL strings
+  sql_strings = {
+    {
+        regex  = { '"(?=(?:'..sql_regex..')\\s+)', '"', '\\' },
+        syntax = syntax_phpsql,
+        type   = "string"
+    },
+    {
+        regex  = { '\'(?=(?:'..sql_regex..')\\s+)', '\'', '\\' },
+        syntax = '.sql',
+        type   = "string"
+    },
+  }
+end
 
 -- define the core php syntax coloring
 syntax.add {
@@ -33,20 +162,36 @@ syntax.add {
     { pattern = "//.-\n",                    type = "comment"  },
     { pattern = "#.-\n",                     type = "comment"  },
     { pattern = { "/%*", "%*/" },            type = "comment"  },
-    -- SQL strings
-    {
-        regex  = { '"(?=(?:'..sql_regex..')\\s+)', '"', '\\' },
-        syntax = '.sql',
-        type   = "string"
-    },
-    {
-        regex  = { '\'(?=(?:'..sql_regex..')\\s+)', '\'', '\\' },
-        syntax = '.sql',
-        type   = "string"
-    },
-    -- The '\\' is for escaping to work on " or '
-    { pattern = { '"', '"', '\\' },          type = "string"   },
+    -- Single quote string
     { pattern = { "'", "'", '\\' },          type = "string"   },
+    { pattern = { "<<<'%a%w*'\n", "^%s*%a%w*%f[;]", '\\' },
+      type = "string"
+    },
+    -- Strings with support for some inline variables syntax
+    { pattern = { "<<<%a%w*\n", "^%s*%a%w*%f[;]", '\\' },
+      syntax = {
+        patterns = combine_patterns(inline_variables, {
+          -- prevent matching outside of the parent string
+          { pattern = "^%s*%a%w*();$",
+            type = { "string", "normal" }
+          },
+          { pattern = "%p", type = "string" },
+        }),
+        symbols = {}
+      },
+      type = "string"
+    },
+    { pattern = { '"', '"', '\\' },
+      syntax = {
+        patterns = combine_patterns(inline_variables, {
+          -- prevent matching outside of the parent string
+          { pattern = "%p+%f[\"]",     type = "string" },
+          { pattern = "%p",            type = "string" },
+        }),
+        symbols = {}
+      },
+      type = "string"
+    },
     { pattern = "0[bB][%d]+",                type = "number"   },
     { pattern = "0[xX][%da-fA-F]+",          type = "number"   },
     { pattern = "-?%d[%d_%.eE]*",            type = "number"   },
@@ -170,6 +315,13 @@ syntax.add {
     ["exit"] = "function",
   },
 }
+
+-- insert sql string rules after the "/%*", "%*/" pattern
+if psql_found and config.plugins.language_php.sql_strings then
+  local syntax_php = syntax.get("file.phps")
+  table.insert(syntax_php.patterns, 5, sql_strings[1])
+  table.insert(syntax_php.patterns, 6, sql_strings[2])
+end
 
 -- allows html, css and js coloring on php files
 syntax.add {

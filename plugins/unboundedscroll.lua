@@ -1,6 +1,18 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
+local command = require "core.command"
 local DocView = require "core.docview"
 
-function DocView.clamp_scroll_position()
-  -- do nothing
-end
+local doc_view_clamp_scroll_position = DocView.clamp_scroll_position
+local function clamp_scroll_noop() end
+
+DocView.clamp_scroll_position = clamp_scroll_noop
+
+command.add(nil, {
+  ["unbounded-scroll:toggle"] = function()
+    if DocView.clamp_scroll_position == clamp_scroll_noop then
+      DocView.clamp_scroll_position = doc_view_clamp_scroll_position
+    else
+      DocView.clamp_scroll_position = clamp_scroll_noop
+    end
+  end,
+})

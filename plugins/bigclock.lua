@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local core = require "core"
 local style = require "core.style"
 local command = require "core.command"
@@ -7,11 +7,39 @@ local config = require "core.config"
 local View = require "core.view"
 
 
-config.plugins.bigclock = {
+config.plugins.bigclock = common.merge({
   time_format = "%H:%M:%S",
   date_format = "%A, %d %B %Y",
-  scale = 1
-}
+  scale = 1,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Big Clock",
+    {
+      label = "Time Format",
+      description = "Time specification defined with Lua date/time place holders.",
+      path = "time_format",
+      type = "string",
+      default = "%H:%M:%S"
+    },
+    {
+      label = "Date Format",
+      description = "Date specification defined with Lua date/time place holders.",
+      path = "date_format",
+      type = "string",
+      default = "%A, %d %B %Y",
+    },
+    {
+      label = "Scale",
+      description = "Size of the clock relative to screen.",
+      path = "scale",
+      type = "number",
+      default = 1,
+      min = 0.5,
+      max = 3.0,
+      step = 0.1
+    }
+  }
+}, config.plugins.bigclock)
 
 
 local ClockView = View:extend()
@@ -21,6 +49,7 @@ function ClockView:new()
   ClockView.super.new(self)
   self.time_text = ""
   self.date_text = ""
+  self.last_scale = 0
 end
 
 
@@ -30,14 +59,18 @@ end
 
 
 function ClockView:update_fonts()
+  if self.last_scale ~= config.plugins.bigclock.scale then
+    self.last_scale = config.plugins.bigclock.scale
+  else
+    return
+  end
   local size = math.floor(self.size.x * 0.15 / 15) * 15 * config.plugins.bigclock.scale
   if self.font_size ~= size then
-    self.time_font = renderer.font.load(DATADIR .. "/fonts/font.ttf", size)
-    self.date_font = renderer.font.load(DATADIR .. "/fonts/font.ttf", size * 0.3)
+    self.time_font = renderer.font.copy(style["font"], size)
+    self.date_font = renderer.font.copy(style["font"], size * 0.3)
     self.font_size = size
     collectgarbage()
   end
-  return self.font
 end
 
 
