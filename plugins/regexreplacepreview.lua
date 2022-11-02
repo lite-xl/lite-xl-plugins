@@ -3,6 +3,18 @@ local core = require "core"
 local keymap = require "core.keymap"
 local command = require "core.command"
 
+-- Workaround for bug in Lite XL 2.1
+-- Remove this when b029f5993edb7dee5ccd2ba55faac1ec22e24609 is in a release
+local function get_selection(doc, sort)
+  local line1, col1, line2, col2 = doc:get_selection_idx(doc.last_selection)
+  if line1 then
+    return doc:get_selection_idx(doc.last_selection, sort)
+  else
+    return doc:get_selection_idx(1, sort)
+  end
+end
+
+
 -- Takes the following pattern: /pattern/replace/
 -- Capture groupings can be replaced using \1 through \9
 local function regex_replace_file(view, pattern, old_lines, raw, start_line, end_line)
@@ -91,8 +103,8 @@ command.add("core.docview!", {
   ["regex-replace-preview:find-replace-regex"] = function(view)
     local old_lines = {}
     local doc = view.doc
-    local original_selection = { doc:get_selection(true) }
-    local selection = doc:has_selection() and { doc:get_selection(true) } or {}
+    local original_selection = { get_selection(doc, true) }
+    local selection = doc:has_selection() and { get_selection(doc, true) } or {}
     core.command_view:enter("Regex Replace (enter pattern as /old/new/)", {
       text = "/",
       submit = function(pattern)
