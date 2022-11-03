@@ -9,11 +9,11 @@ local function remap_key(k)
           :gsub("option",  "alt")
 end
 
-function keymap.on_key_pressed(k)
-  return on_key_pressed(remap_key(k))
+function keymap.on_key_pressed(k, ...)
+  return on_key_pressed(remap_key(k), ...)
 end
 
-function keymap.on_key_released(k)
-  return on_key_released(remap_key(k))
+function keymap.on_key_released(k, ...)
+  return on_key_released(remap_key(k), ...)
 end
 
