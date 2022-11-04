@@ -23,6 +23,21 @@ function HexView:new(doc)
   HexView.super.new(self, doc)
 end
 
+local hex_characters = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F" }
+local function convert_to_hex(integer, min_amount)
+  min_amount = min_amount or integer
+  if min_amount <= 255 then return hex_characters[((integer >> 4) & 0xF) + 1] .. hex_characters[((integer & 0xF)) + 1] end
+  if min_amount <= 65535 then return hex_characters[((integer >> 12) & 0xF) + 1] .. hex_characters[((integer >> 8) & 0xF) + 1] .. hex_characters[((integer >> 4) & 0xF) + 1] .. hex_characters[((integer & 0xF)) + 1] end
+  return 
+    hex_characters[((integer >> 28) & 0xF) + 1] .. hex_characters[((integer >> 24) & 0xF) + 1] .. hex_characters[((integer >> 20) & 0xF) + 1] .. hex_characters[((integer >> 16) & 0xF) + 1] ..
+    hex_characters[((integer >> 12) & 0xF) + 1] .. hex_characters[((integer >> 8) & 0xF) + 1] .. hex_characters[((integer >> 4) & 0xF) + 1] .. hex_characters[((integer & 0xF)) + 1]
+end
+
+
+function HexView:get_gutter_width()
+  local padding = style.padding.x * 2
+  return self:get_font():get_width("0xFFFFFF"), padding
+end
 
 
 function HexView:get_scrollable_size()
@@ -32,7 +47,6 @@ function HexView:get_scrollable_size()
   return self:get_line_height() * (#self.doc.lines - 1) + self.size.y
 end
 
-local hex_characters = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F" }
 
 function HexView:draw_line(x, y, hex, chars)
   local font = self:get_font()
@@ -42,11 +56,12 @@ end
 
 
 function HexView:draw_line_highlight(x, y, col1, col2)
+  local gw, gpad = self:get_gutter_width()
   local lh = self:get_line_height()
   local character_width = self:get_font():get_width(" ")
   local hex_byte_width = character_width * 3
-  renderer.draw_rect(x + hex_byte_width * (col1 - 1), y, (col2 - col1) * hex_byte_width - character_width, lh, style.selection)
-  renderer.draw_rect(x + self.hex_area_width + character_width * (col1 - 1), y, (col2 - col1) * character_width, lh, style.selection)
+  renderer.draw_rect(x + gw + gpad + hex_byte_width * (col1 - 1), y, (col2 - col1) * hex_byte_width - character_width, lh, style.selection)
+  renderer.draw_rect(x + self.hex_area_width + gw + gpad + character_width * (col1 - 1), y, (col2 - col1) * character_width, lh, style.selection)
 end
 
 
@@ -72,6 +87,7 @@ end
 
 
 function HexView:resolve_screen_position(x, y)
+  local gw, gpad = self:get_gutter_width()
   local character_width = self:get_font():get_width(" ")
   local hex_byte_width = character_width * 3
   local total_bytes_per_line = math.floor((self.hex_area_width - style.padding.x) / hex_byte_width)
@@ -79,15 +95,26 @@ function HexView:resolve_screen_position(x, y)
 
   local ox, oy = self:get_line_screen_position(1)
   local line = math.floor((y - oy) / self:get_line_height()) + 1
-  local col = common.round((x - ox) / hex_byte_width) + 1
+  local col = common.round((x - ox - gw) / hex_byte_width) + 1
   
   return self:get_line_byte_position((line - 1) * total_bytes_per_line + col)
 end
 
+function HexView:draw_line_gutter(line, x, y, width)
+  local character_width = self:get_font():get_width(" ")
+  local hex_byte_width = character_width * 3
+  local total_bytes_per_line = math.floor((self.hex_area_width - style.padding.x) / hex_byte_width)
+  local color = style.line_number
+  x = x + style.padding.x
+  local lh = self:get_line_height()
+  common.draw_text(self:get_font(), color, "0x" .. convert_to_hex((line - 1) * total_bytes_per_line, 16667216), "right", x, y, width, lh)
+  return lh
+end
 
 function HexView:draw()
   self:draw_background(style.background)
-  self.hex_area_width = (self.size.x * 3 / 4) - style.padding.x
+  local gw, gpad = self:get_gutter_width()
+  self.hex_area_width = (self.size.x * 3 / 4) - style.padding.x - gw - gpad
 
   local character_width = self:get_font():get_width(" ")
   local hex_byte_width = character_width * 3
@@ -105,16 +132,12 @@ function HexView:draw()
   local selection_end_offset = self:resolve_byte_position(line2, col2)
 
   core.push_clip_rect(self.position.x, self.position.y, self.size.x, self.size.y)
-  renderer.draw_rect(self.position.x + self.hex_area_width, self.position.y, 1, self.size.y, style.dim)
+  renderer.draw_rect(self.position.x + self.hex_area_width + gw + gpad, self.position.y, 1, self.size.y, style.dim)
   local byte_lines = 1
   for line = 1, #self.doc.lines do
-
-    
     for offset = 1, #self.doc.lines[line] do
       local value = self.doc.lines[line]:byte(offset)
-      local upper = math.floor(value / 16) + 1
-      local lower = (value % 16) + 1
-      hex = hex .. hex_characters[upper] .. hex_characters[lower] .. " "
+      hex = hex .. convert_to_hex(value) .. " "
       chars = chars .. (value >= visible_lower and value <= visible_upper and string.char(value) or ".")
       if #hex >= total_bytes_per_line * 3 then
         if selection_start_offset and (byte_lines * total_bytes_per_line) >= selection_start_offset and ((byte_lines - 1) * total_bytes_per_line) <= selection_end_offset then
@@ -122,7 +145,8 @@ function HexView:draw()
           local byte_end = math.min(selection_end_offset - ((byte_lines-1) * total_bytes_per_line), total_bytes_per_line) + 1
           self:draw_line_highlight(x, y, byte_start, byte_end) 
         end
-        self:draw_line(x, y, hex, chars)
+        self:draw_line_gutter(byte_lines, x, y, gw)
+        self:draw_line(x + gw + gpad, y, hex, chars)
         y = y + lh
         hex, chars = "", ""
         byte_lines = byte_lines + 1
@@ -134,7 +158,8 @@ function HexView:draw()
     local byte_end = math.min(selection_end_offset - ((byte_lines-1) * total_bytes_per_line), total_bytes_per_line) + 1
     self:draw_line_highlight(x, y, byte_start, byte_end) 
   end
-  self:draw_line(x, y, hex, chars)
+  self:draw_line_gutter(byte_lines, x, y, gw)
+  self:draw_line(x + gw + gpad, y, hex, chars)
   self:draw_scrollbar()
   core.pop_clip_rect()
 end
