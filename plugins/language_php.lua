@@ -116,12 +116,7 @@ end
 if psql_found then
   -- generate SQL string marker regex
   local sql_markers = { 'create', 'select', 'insert', 'update', 'replace', 'delete', 'drop', 'alter' }
-  local sql_regex   = {}
-  for _, marker in ipairs(sql_markers) do
-      table.insert(sql_regex, marker)
-      table.insert(sql_regex, string.upper(marker))
-  end
-  sql_regex = table.concat(sql_regex, '|')
+  local sql_regex = table.concat(sql_markers, '|')
 
   -- inject inline variable rules to cloned psql syntax
   local syntax_phpsql = clone(syntax.get("file.sql"))
@@ -136,12 +131,12 @@ if psql_found then
   -- SQL strings
   sql_strings = {
     {
-        regex  = { '"(?=(?:'..sql_regex..')\\s+)', '"', '\\' },
+        regex  = { '"(?=[\\s(]*(?i:'..sql_regex..')\\s+)', '"', '\\' },
         syntax = syntax_phpsql,
         type   = "string"
     },
     {
-        regex  = { '\'(?=(?:'..sql_regex..')\\s+)', '\'', '\\' },
+        regex  = { "'(?=[\\s(]*(?i:"..sql_regex..")\\s+)", '\'', '\\' },
         syntax = '.sql',
         type   = "string"
     },
@@ -192,40 +187,40 @@ syntax.add {
       },
       type = "string"
     },
-    { pattern = "0[bB][%d]+",                type = "number"   },
-    { pattern = "0[xX][%da-fA-F]+",          type = "number"   },
-    { pattern = "-?%d[%d_%.eE]*",            type = "number"   },
-    { pattern = "-?%.?%d+",                  type = "number"   },
-    { pattern = "[%.%+%-=/%*%^%%<>!~|&%?:]", type = "operator" },
+    { pattern = "0[bB][%d]+",                 type = "number"   },
+    { pattern = "0[xX][%da-fA-F]+",           type = "number"   },
+    { pattern = "-?%d[%d_%.eE]*",             type = "number"   },
+    { pattern = "-?%.?%d+",                   type = "number"   },
+    { pattern = "[%.%+%-=/%*%^%%<>!~|&%?:@]", type = "operator" },
      -- Variables
-    { pattern = "%$[%w_]+",                  type = "keyword2" },
+    { pattern = "%$[%w_]+",                   type = "keyword2" },
     -- Respect control structures, treat as keyword not function
-    { pattern = "if[%s]*%f[(]",              type = "keyword"  },
-    { pattern = "else[%s]*%f[(]",            type = "keyword"  },
-    { pattern = "elseif[%s]*%f[(]",          type = "keyword"  },
-    { pattern = "for[%s]*%f[(]",             type = "keyword"  },
-    { pattern = "foreach[%s]*%f[(]",         type = "keyword"  },
-    { pattern = "while[%s]*%f[(]",           type = "keyword"  },
-    { pattern = "catch[%s]*%f[(]",           type = "keyword"  },
-    { pattern = "switch[%s]*%f[(]",          type = "keyword"  },
-    { pattern = "match[%s]*%f[(]",           type = "keyword"  },
-    { pattern = "fn[%s]*%f[(]",              type = "keyword"  },
+    { pattern = "if[%s]*%f[(]",               type = "keyword"  },
+    { pattern = "else[%s]*%f[(]",             type = "keyword"  },
+    { pattern = "elseif[%s]*%f[(]",           type = "keyword"  },
+    { pattern = "for[%s]*%f[(]",              type = "keyword"  },
+    { pattern = "foreach[%s]*%f[(]",          type = "keyword"  },
+    { pattern = "while[%s]*%f[(]",            type = "keyword"  },
+    { pattern = "catch[%s]*%f[(]",            type = "keyword"  },
+    { pattern = "switch[%s]*%f[(]",           type = "keyword"  },
+    { pattern = "match[%s]*%f[(]",            type = "keyword"  },
+    { pattern = "fn[%s]*%f[(]",               type = "keyword"  },
     -- All functions that aren't control structures
-    { pattern = "[%a_][%w_]*[%s]*%f[(]",     type = "function" },
+    { pattern = "[%a_][%w_]*[%s]*%f[(]",      type = "function" },
     -- Array type hint not added on symbols to also make it work
     -- as a function call
-    { pattern = "array",                     type = "literal"  },
+    { pattern = "array",                      type = "literal"  },
     -- Match static or namespace container on sub element access
-    { pattern = "[%a_][%w_]*[%s]*%f[:]",     type = "literal"  },
+    { pattern = "[%a_][%w_]*[%s]*%f[:]",      type = "literal"  },
     -- Uppercase constants of at least 2 chars in len
     {
         pattern = "%u[%u_][%u%d_]*%f[%s%+%*%-%.%(%)%?%^%%=/<>~|&;:,!]",
         type = "number"
     },
     -- Magic constants
-    { pattern = "__[%u]+__",                 type = "number"   },
+    { pattern = "__[%u]+__",                  type = "number"   },
     -- Everything else
-    { pattern = "[%a_][%w_]*",               type = "symbol"   },
+    { pattern = "[%a_][%w_]*",                type = "symbol"   },
   },
   symbols = {
     ["return"] = "keyword",
@@ -348,24 +343,15 @@ syntax.add {
     },
     {
       pattern = {
-        "<%s*[sS][cC][rR][iI][pP][tT]%s+[tT][yY][pP][eE]%s*=%s*" ..
-          "['\"]%a+/[jJ][aA][vV][aA][sS][cC][rR][iI][pP][tT]['\"]%s*>",
-        "<%s*/[sS][cC][rR][iI][pP][tT]>"
+        "<%s*[sS][cC][rR][iI][pP][tT]%f[%s>].->",
+        "<%s*/%s*[sS][cC][rR][iI][pP][tT]%s*>"
       },
       syntax = ".js",
       type = "function"
     },
     {
       pattern = {
-        "<%s*[sS][cC][rR][iI][pP][tT]%s*>",
-        "<%s*/%s*[sS][cC][rR][iI][pP][tT]>"
-      },
-      syntax = ".js",
-      type = "function"
-    },
-    {
-      pattern = {
-        "<%s*[sS][tT][yY][lL][eE][^>]*>",
+        "<%s*[sS][tT][yY][lL][eE]%f[%s>].->",
         "<%s*/%s*[sS][tT][yY][lL][eE]%s*>"
       },
       syntax = ".css",

@@ -448,6 +448,13 @@ settings.add("Editor",
       max = 10
     },
     {
+      label = "Keep Newline Whitespace",
+      description = "Do not remove whitespace when pressing enter.",
+      path = "keep_newline_whitespace",
+      type = settings.type.TOGGLE,
+      default = false
+    },
+    {
       label = "Line Limit",
       description = "Amount of characters at which the line breaking column will be drawn.",
       path = "line_limit",
