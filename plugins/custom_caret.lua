@@ -18,28 +18,32 @@
 
 local core = require "core"
 local style = require "core.style"
+local common = require "core.common"
 local config = require "core.config"
 local DocView = require "core.docview"
 
-config.plugins.custom_caret = {}
+config.plugins.custom_caret = common.merge({
+    color = style.caret
+    shape = "line"
+}, config.plugins.custom_caret)
 
 function DocView:draw_caret(x, y)
-  local lh = self:get_line_height()
   local caret_top_width = math.ceil(self:get_font():get_width("a"))
+  local current_caret_shape = config.plugins.custom_caret.shape
 
-  if (config.plugins.custom_caret.shape == "Line") then
+  if (current_caret_shape == "line") then
     config.plugins.custom_caret.width = style.caret_width
-    config.plugins.custom_caret.height = lh
-  elseif (config.plugins.custom_caret.shape == "Block") then
+    config.plugins.custom_caret.height = self:get_line_height()
+  elseif (current_caret_shape == "block") then
     config.plugins.custom_caret.width = caret_top_width
-    config.plugins.custom_caret.height = lh
-  elseif (config.plugins.custom_caret.shape == "Underline") then
+    config.plugins.custom_caret.height = self:get_line_height()
+  elseif (current_caret_shape == "underline") then
     config.plugins.custom_caret.width = caret_top_width
     config.plugins.custom_caret.height = style.caret_width*1.5
-    y = y+lh
+    y = y+self:get_line_height()
   else
     config.plugins.custom_caret.width = style.caret_width
-    config.plugins.custom_caret.height = lh
+    config.plugins.custom_caret.height = self:get_line_height()
   end
 
   renderer.draw_rect(x, y, config.plugins.custom_caret.width, config.plugins.custom_caret.height, config.plugins.custom_caret.color)
