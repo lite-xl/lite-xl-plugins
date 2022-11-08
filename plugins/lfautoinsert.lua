@@ -27,7 +27,7 @@ config.plugins.lfautoinsert = common.merge({ map = {
     }
   },
   ["lua"] = {
-    file_patterns = { "%.lua$" },
+    file_patterns = { "%.lua$", "%.nelua$" },
     map = {
       ["%f[%w]do%s*\n"] = "end",
       ["%f[%w]then%s*\n"] = "end",
