@@ -246,6 +246,7 @@ syntax.add {
     ["default"] = "keyword",
     ["break"] = "keyword",
     ["goto"] = "keyword",
+    ["yield"] = "keyword",
 
     ["try"] = "keyword",
     ["catch"] = "keyword",
