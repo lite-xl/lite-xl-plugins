@@ -187,6 +187,18 @@ syntax.add {
       },
       type = "string"
     },
+    { pattern = { '`', '`', '\\' },
+      syntax = {
+        patterns = combine_patterns(inline_variables, {
+          -- prevent matching outside of the parent string
+          { pattern = "[^`]",          type = "string" },
+          { pattern = "%p+%f[`]",      type = "string" },
+          { pattern = "%p",            type = "string" },
+        }),
+        symbols = {}
+      },
+      type = "string"
+    },
     { pattern = "0[bB][%d]+",                 type = "number"   },
     { pattern = "0[xX][%da-fA-F]+",           type = "number"   },
     { pattern = "-?%d[%d_%.eE]*",             type = "number"   },
