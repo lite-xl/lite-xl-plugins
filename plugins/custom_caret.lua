@@ -7,7 +7,6 @@
   Features
     1. Change the Color and Opacity of the caret
     2. Change the Shape of the caret, available shapes are Line, Block, Underline
-    3. Change the dimensions of the caret
 
   Customizing the Caret (this can be changed from the .config/lite-xl/init.lua file)
     1. config.plugins.custom_caret.shape - Change the shape of the caret [string]
