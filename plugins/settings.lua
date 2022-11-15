@@ -212,7 +212,16 @@ settings.add("General",
       description = "List of lua patterns matching files to be ignored by the editor.",
       path = "ignore_files",
       type = settings.type.LIST_STRINGS,
-      default = { "^%." },
+      default = {
+        -- folders
+        "^%.svn/",        "^%.git/",   "^%.hg/",        "^CVS/", "^%.Trash/", "^%.Trash%-.*/",
+        "^node_modules/", "^%.cache/", "^__pycache__/",
+        -- files
+        "%.pyc$",         "%.pyo$",       "%.exe$",        "%.dll$",   "%.obj$", "%.o$",
+        "%.a$",           "%.lib$",       "%.so$",         "%.dylib$", "%.ncb$", "%.sdf$",
+        "%.suo$",         "%.pdb$",       "%.idb$",        "%.class$", "%.psd$", "%.db$",
+        "^desktop%.ini$", "^%.DS_Store$", "^%.directory$",
+      },
       on_apply = function()
         core.rescan_project_directories()
       end
@@ -533,6 +542,18 @@ settings.add("Editor",
       path = "scroll_past_end",
       type = settings.type.TOGGLE,
       default = true
+    },
+    {
+      label = "Force Scrollbar Status",
+      description = "Choose an fixed scrollbar state instead of resizing it on mouse hover.",
+      path = "force_scrollbar_status",
+      type = settings.type.SELECTION,
+      default = false,
+      values = {
+        {"Disabled", false},
+        {"Expanded", "expanded"},
+        {"Contracted", "contracted"}
+      }
     }
   }
 )
