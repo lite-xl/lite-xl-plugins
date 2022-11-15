@@ -5,6 +5,7 @@ local common = require "core.common"
 local command = require "core.command"
 local keymap = require "core.keymap"
 local style = require "core.style"
+local DocView = require "core.docview"
 
 -- check if widget is installed before proceeding
 local widget_found, Widget = pcall(require, "widget")
@@ -395,6 +396,56 @@ settings.add("User Interface",
       end
     },
     {
+      label = "Force Scrollbar Status",
+      description = "Choose a fixed scrollbar state instead of resizing it on mouse hover.",
+      path = "force_scrollbar_status",
+      type = settings.type.SELECTION,
+      default = false,
+      values = {
+        {"Disabled", false},
+        {"Expanded", "expanded"},
+        {"Contracted", "contracted"}
+      },
+      on_apply = function(value)
+        local mode = config.force_scrollbar_status_mode or "global"
+        local globally = mode == "global"
+        local views = core.root_view.root_node:get_children()
+        for _, view in ipairs(views) do
+          if globally or view:extends(DocView) then
+            view.h_scrollbar:set_forced_status(value)
+            view.v_scrollbar:set_forced_status(value)
+          else
+            view.h_scrollbar:set_forced_status(false)
+            view.v_scrollbar:set_forced_status(false)
+          end
+        end
+      end
+    },
+    {
+      label = "Force Scrollbar Status Mode",
+      description = "Choose between applying globally or document views only.",
+      path = "force_scrollbar_status_mode",
+      type = settings.type.SELECTION,
+      default = "global",
+      values = {
+        {"Documents", "docview"},
+        {"Globally", "global"}
+      },
+      on_apply = function(value)
+        local globally = value == "global"
+        local views = core.root_view.root_node:get_children()
+        for _, view in ipairs(views) do
+          if globally or view:extends(DocView) then
+            view.h_scrollbar:set_forced_status(config.force_scrollbar_status)
+            view.v_scrollbar:set_forced_status(config.force_scrollbar_status)
+          else
+            view.h_scrollbar:set_forced_status(false)
+            view.v_scrollbar:set_forced_status(false)
+          end
+        end
+      end
+    },
+    {
       label = "Disable Cursor Blinking",
       description = "Disables cursor blinking on text input elements.",
       path = "disable_blink",
@@ -542,18 +593,6 @@ settings.add("Editor",
       path = "scroll_past_end",
       type = settings.type.TOGGLE,
       default = true
-    },
-    {
-      label = "Force Scrollbar Status",
-      description = "Choose an fixed scrollbar state instead of resizing it on mouse hover.",
-      path = "force_scrollbar_status",
-      type = settings.type.SELECTION,
-      default = false,
-      values = {
-        {"Disabled", false},
-        {"Expanded", "expanded"},
-        {"Contracted", "contracted"}
-      }
     }
   }
 )
