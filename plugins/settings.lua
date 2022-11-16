@@ -5,6 +5,7 @@ local common = require "core.common"
 local command = require "core.command"
 local keymap = require "core.keymap"
 local style = require "core.style"
+local View = require "core.view"
 local DocView = require "core.docview"
 
 -- check if widget is installed before proceeding
@@ -1921,5 +1922,21 @@ if config.plugins.toolbarview ~= false then
   end
 end
 
+--------------------------------------------------------------------------------
+-- Overwrite View:new to allow setting force scrollbar status globally
+--------------------------------------------------------------------------------
+local view_new = View.new
+function View:new()
+  view_new(self)
+  local mode = config.force_scrollbar_status_mode or "global"
+  local globally = mode == "global"
+  if globally then
+    --This is delayed to allow widgets to also apply it to child views/widgets
+    core.add_thread(function()
+      self.v_scrollbar:set_forced_status(config.force_scrollbar_status)
+      self.h_scrollbar:set_forced_status(config.force_scrollbar_status)
+    end)
+  end
+end
 
 return settings;
