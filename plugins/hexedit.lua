@@ -4,6 +4,7 @@ local core = require "core"
 local View = require "core.view"
 local DocView = require "core.docview"
 local StatusView = require "core.statusview"
+local RootView = require "core.rootview"
 local command = require "core.command"
 local common = require "core.common"
 local style = require "core.style"
@@ -12,8 +13,13 @@ local keymap = require "core.keymap"
 
 local HexEdit = {}
 
-local HexView = DocView:extend()
+config.plugins.hexedit = common.merge({
+  auto_detect_binary = true, -- If true, will attempt to autodetect binary files, and open HexViews if asked to open them.
+  hex_area_width = 0.75      -- The percent of the area to be taken up by the hex representation.
+}, config.plugins.hexedit)
 
+
+local HexView = DocView:extend()
 
 function HexView:get_name()
   return "Hex View - " .. self.doc.filename
@@ -50,8 +56,9 @@ end
 
 function HexView:draw_line(x, y, hex, chars)
   local font = self:get_font()
-  renderer.draw_text(font, hex, x, y, style.normal)
-  renderer.draw_text(font, chars, x + self.hex_area_width, y, style.normal)
+  local lh = self:get_line_height()
+  common.draw_text(font, style.normal, hex, "left", x, y, nil, lh)
+  common.draw_text(font, style.normal, chars, "left", x + self.hex_area_width, y, nil, lh)
 end
 
 
@@ -60,8 +67,12 @@ function HexView:draw_line_highlight(x, y, col1, col2)
   local lh = self:get_line_height()
   local character_width = self:get_font():get_width(" ")
   local hex_byte_width = character_width * 3
-  renderer.draw_rect(x + gw + gpad + hex_byte_width * (col1 - 1), y, (col2 - col1) * hex_byte_width - character_width, lh, style.selection)
-  renderer.draw_rect(x + self.hex_area_width + gw + gpad + character_width * (col1 - 1), y, (col2 - col1) * character_width, lh, style.selection)
+  if col2 - col1 > 0 then
+    renderer.draw_rect(x + gw + gpad + hex_byte_width * (col1 - 1), y, (col2 - col1) * hex_byte_width - character_width, lh, style.selection)
+    renderer.draw_rect(x + self.hex_area_width + gw + gpad + character_width * (col1 - 1), y, (col2 - col1) * character_width, lh, style.selection)
+  end
+  renderer.draw_rect(x + gw + gpad + hex_byte_width * (col1 - 1) - 3, y, 1, lh, style.caret)
+  renderer.draw_rect(x + gw + gpad + hex_byte_width * (col1 - 1) - 3, y + lh, hex_byte_width - character_width + 3, 1, style.caret)
 end
 
 
@@ -91,11 +102,15 @@ function HexView:resolve_screen_position(x, y)
   local character_width = self:get_font():get_width(" ")
   local hex_byte_width = character_width * 3
   local total_bytes_per_line = math.floor((self.hex_area_width - style.padding.x) / hex_byte_width)
-
-
+  
   local ox, oy = self:get_line_screen_position(1)
-  local line = math.floor((y - oy) / self:get_line_height()) + 1
-  local col = common.round((x - ox - gw) / hex_byte_width) + 1
+  local line, col = math.floor((y - oy) / self:get_line_height()) + 1
+
+  if x > self.hex_area_width then
+    col = common.round((x - ox - gw - self.hex_area_width) / character_width) + 1
+  else
+    col = common.round((x - ox - gw) / hex_byte_width) + 1
+  end
   
   return self:get_line_byte_position((line - 1) * total_bytes_per_line + col)
 end
@@ -114,7 +129,7 @@ end
 function HexView:draw()
   self:draw_background(style.background)
   local gw, gpad = self:get_gutter_width()
-  self.hex_area_width = (self.size.x * 3 / 4) - style.padding.x - gw - gpad
+  self.hex_area_width = (self.size.x * config.plugins.hexedit.hex_area_width) - style.padding.x - gw - gpad
 
   local character_width = self:get_font():get_width(" ")
   local hex_byte_width = character_width * 3
@@ -124,7 +139,7 @@ function HexView:draw()
   local ox, oy = self:get_content_offset()
   local x,y = ox + style.padding.x, oy + style.padding.y
   local line, hex, chars = 1, "", ""
-  local visible_lower, visible_upper = 20, 127
+  local visible_lower, visible_upper = 20, 126
 
   -- Only support single selection for now; multiple selections is starting to get complicated.
   local line1, col1, line2, col2 = self.doc:get_selection(true)
@@ -134,6 +149,7 @@ function HexView:draw()
   core.push_clip_rect(self.position.x, self.position.y, self.size.x, self.size.y)
   renderer.draw_rect(self.position.x + self.hex_area_width + gw + gpad, self.position.y, 1, self.size.y, style.dim)
   local byte_lines = 1
+  local draw_cursor = true
   for line = 1, #self.doc.lines do
     for offset = 1, #self.doc.lines[line] do
       local value = self.doc.lines[line]:byte(offset)
@@ -220,17 +236,80 @@ core.status_view:add_item({
     }
   end
 })
+
+
+local function open_hex_view(doc, node)
+    node = node or core.root_view:get_active_node_default()
+    local view = HexView(doc)
+    node:add_view(view)
+    core.root_view.root_node:update_layout()
+    return view
+end
+
+local function get_codepoint_and_width(string, offset)
+  local top_four_bits = (string:byte(offset) & 240)
+  local codepoint, width, n
+  if     top_four_bits == 240 then codepoint, width = string:byte(offset) & 7, 4
+  elseif top_four_bits == 224 then codepoint, width = string:byte(offset) & 15, 3
+  elseif top_four_bits == 208 or top_four_bits == 192 then codepoint, width = string:byte(offset) & 15, 2
+  else return string:byte(offset), 1 
+  end
+  for n = 1, width - 1 do codepoint = (codepoint << 6) | (string:byte(offset + n) & 63) end
+  return codepoint, width
+end
+
+local function is_binary_doc(doc)
+  local max_characters_to_examine = 64
+  local string = ""
+  for i, line in ipairs(doc.lines) do
+    string = string .. line:sub(1, max_characters_to_examine - #string)
+    if #string >= max_characters_to_examine then break end
+  end
+  -- Detect BOM as first character; assume non binary if BOM exists. Otherwise, check to if we have >128 characters, that *aren't* easily valid unicode, or ASCII control characters.
+  if (
+    (string:byte(1) == 239 and string:byte(2) == 187 and string:byte(3) == 191) or
+    (string:byte(1) == 254 and string:byte(2) == 255) or
+    (string:byte(1) == 255 and string:byte(2) == 254) or
+    (string:byte(1) == 0 and string:byte(2) == 0 and string:byte(3) == 254 and string:byte(4) == 255) or
+    (string:byte(1) == 43 and string:byte(2) == 47 and string:byte(3) == 118) or
+    (string:byte(1) == 247 and string:byte(2) == 100 and string:byte(3) == 76) or
+    (string:byte(1) == 221 and string:byte(2) == 115 and string:byte(3) == 102 and string:byte(4) == 115)
+  )
+  then
+      return false
+  end
+  local i = 1
+  while i < #string do
+    local value = string:byte(i)
+    if value <= 8 then return true end
+    if value >= 128 then
+      local codepoint, width = get_codepoint_and_width(string, i)
+      if codepoint < 159  or codepoint > 1200000 then return true end
+      i = i + width
+    else
+      i = i + 1
+    end
+  end
+end
+
+local old_rootview_open_doc = RootView.open_doc
+function RootView:open_doc(doc)
+  if not config.plugins.hexedit or not is_binary_doc(doc) then return old_rootview_open_doc(self, doc) end
+  local node = self:get_active_node_default()
+  for i, view in ipairs(node.views) do
+    if view.doc == doc and view:is(HexView) then
+      node:set_active_view(node.views[i])
+      return view
+    end
+  end
+  return open_hex_view(doc)
+end
   
 command.add(function(doc)
   return doc or (core.active_view and core.active_view.doc)
 end, {
   ["hex-edit:open"] = function(doc)
-    doc = doc or core.active_view.doc
-    local node = core.root_view:get_active_node_default()
-    local view = HexView(doc)
-    node:add_view(view)
-    core.root_view.root_node:update_layout()
-    return view
+    return open_hex_view(doc or core.active_view.doc)
   end
 })
 
