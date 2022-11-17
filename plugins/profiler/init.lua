@@ -86,11 +86,11 @@ command.add(nil, {
   ["profiler:toggle"] = function()
     if RUNNING then
       Profiler.stop()
-      core.log("Profiler: Stopped")
+      core.log("Profiler: stopped")
       core.root_view:open_doc(core.open_doc(config.plugins.profiler.log_file))
     else
       Profiler.start()
-      core.log("Profiler: enabled")
+      core.log("Profiler: started")
     end
   end
 })
