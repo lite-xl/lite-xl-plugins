@@ -1,21 +1,28 @@
 # Lite XL plugins
 
-Plugins for the [Lite XL text editor](https://github.com/lite-xl/lite-xl), originally forked from the [lite plugins repository](https://github.com/rxi/lite-plugins).
+Plugins for the [Lite XL text editor](https://github.com/lite-xl/lite-xl),
+originally forked from the [lite plugins repository](https://github.com/rxi/lite-plugins).
 
-If you can't find a plugin that suits your needs, check if someone has already created an issue about it, otherwise feel free to create one yourself.
+If you can't find a plugin that suits your needs, check if someone has already
+created an issue about it, otherwise feel free to create one yourself.
 
 ## How to install
 
 To install a plugin:
 
 *   If the plugin links to a repository, follow its `README`.
-*   If the plugin is a single file, drop it directly in:
+*   If the plugin is a single file or directory, drop it directly in:
 
     *   Linux `~/.config/lite-xl/plugins/`
     *   MacOS `~/.config/lite-xl/plugins/`
     *   Windows `C:\Users\(username)\.config\lite-xl\plugins\`
 
-*Note: if you make a pull request, the table should be updated and kept in alphabetical order. If your plugin is large (or you'd otherwise prefer it to have its own repo), the table can simply be updated to add a link to the repo; otherwise the plugin file itself can be submitted. If a plugin's link resolves to something other than a raw file it should be marked with an asterisk.*
+*Note: if you make a pull request, the table should be updated and kept in
+alphabetical order. If your plugin is large (or you'd otherwise prefer it to
+have its own repo), the table can simply be updated to add a link to the
+repo; otherwise the plugin file itself can be submitted. If a plugin's link
+resolves to something other than a raw file it should be marked with an
+asterisk.*
 
 ***
 
