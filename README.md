@@ -1,21 +1,28 @@
 # Lite XL plugins
 
-Plugins for the [Lite XL text editor](https://github.com/lite-xl/lite-xl), originally forked from the [lite plugins repository](https://github.com/rxi/lite-plugins).
+Plugins for the [Lite XL text editor](https://github.com/lite-xl/lite-xl),
+originally forked from the [lite plugins repository](https://github.com/rxi/lite-plugins).
 
-If you can't find a plugin that suits your needs, check if someone has already created an issue about it, otherwise feel free to create one yourself.
+If you can't find a plugin that suits your needs, check if someone has already
+created an issue about it, otherwise feel free to create one yourself.
 
 ## How to install
 
 To install a plugin:
 
 *   If the plugin links to a repository, follow its `README`.
-*   If the plugin is a single file, drop it directly in:
+*   If the plugin is a single file or directory, drop it directly in:
 
     *   Linux `~/.config/lite-xl/plugins/`
     *   MacOS `~/.config/lite-xl/plugins/`
     *   Windows `C:\Users\(username)\.config\lite-xl\plugins\`
 
-*Note: if you make a pull request, the table should be updated and kept in alphabetical order. If your plugin is large (or you'd otherwise prefer it to have its own repo), the table can simply be updated to add a link to the repo; otherwise the plugin file itself can be submitted. If a plugin's link resolves to something other than a raw file it should be marked with an asterisk.*
+*Note: if you make a pull request, the table should be updated and kept in
+alphabetical order. If your plugin is large (or you'd otherwise prefer it to
+have its own repo), the table can simply be updated to add a link to the
+repo; otherwise the plugin file itself can be submitted. If a plugin's link
+resolves to something other than a raw file it should be marked with an
+asterisk.*
 
 ***
 
@@ -50,6 +57,7 @@ To install a plugin:
 | [`force_syntax`](plugins/force_syntax.lua?raw=1)                                                               | Change the syntax used for a file.                                                                                                                                                                                                                                                               |
 | [`formatter`](https://github.com/vincens2005/lite-formatters)\*                                                | formatters for various languages                                                                                                                                                                                                                                                                 |
 | [`ghmarkdown`](plugins/ghmarkdown.lua?raw=1)                                                                   | Opens a preview of the current markdown file in a browser window *([screenshot](https://user-images.githubusercontent.com/3920290/82754898-f7394600-9dc7-11ea-8278-2305363ed372.png))*                                                                                                           |
+| [`gitblame`](https://github.com/juliardi/lite-xl-gitblame)\*                                                   | Shows "git blame" information of a line *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-gitblame/main/screenshot_1.png))*                                                                                                                                                      |
 | [`gitdiff_highlight`](https://github.com/vincens2005/lite-xl-gitdiff-highlight)\*                              | highlight changed lines from git *([screenshot](https://raw.githubusercontent.com/vincens2005/lite-xl-gitdiff-highlight/master/screenshot.png))*                                                                                                                                                 |
 | [`gitstatus`](plugins/gitstatus.lua?raw=1)                                                                     | Displays git branch and insert/delete count in status bar *([screenshot](https://user-images.githubusercontent.com/3920290/81107223-bcea3080-8f0e-11ea-8fc7-d03173f42e33.png))*                                                                                                                  |
 | [`gofmt`](plugins/gofmt.lua?raw=1)                                                                             | Auto-formats the current go file, adds the missing imports and the missing return cases                                                                                                                                                                                                          |
@@ -150,6 +158,7 @@ To install a plugin:
 | [`openselected`](plugins/openselected.lua?raw=1)                                                               | Opens the selected filename or url                                                                                                                                                                                                                                                               |
 | [`pdfview`](plugins/pdfview.lua?raw=1)                                                                         | PDF preview for TeX files                                                                                                                                                                                                                                                                        |
 | [`primary_selection`](plugins/primary_selection.lua?raw=1)                                                     | Adds middle mouse click copy/paste (primary selection). To use this plugin, `xclip` must be installed.                                                                                                                                                                                           |
+| [`profiler`](plugins/profiler)                                                                                 | Adds the ability to profile lite-xl with the [lua-profiler](https://github.com/charlesmallah/lua-profiler)                                                                                                                                                                                       |
 | [`rainbowparen`](plugins/rainbowparen.lua?raw=1)                                                               | Show nesting of parentheses with rainbow colours                                                                                                                                                                                                                                                 |
 | [`regexreplacepreview`](plugins/regexreplacepreview.lua?raw=1)                                                 | Allows for you to write a regex and its replacement in one go, and live preview the results.                                                                                                                                                                                                     |
 | [`restoretabs`](plugins/restoretabs.lua?raw=1)                                                                 | Keep a list of recently closed tabs, and restore the tab in order on cntrl+shift+t.                                                                                                                                                                                                              |

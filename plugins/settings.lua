@@ -5,6 +5,8 @@ local common = require "core.common"
 local command = require "core.command"
 local keymap = require "core.keymap"
 local style = require "core.style"
+local View = require "core.view"
+local DocView = require "core.docview"
 
 -- check if widget is installed before proceeding
 local widget_found, Widget = pcall(require, "widget")
@@ -212,7 +214,16 @@ settings.add("General",
       description = "List of lua patterns matching files to be ignored by the editor.",
       path = "ignore_files",
       type = settings.type.LIST_STRINGS,
-      default = { "^%." },
+      default = {
+        -- folders
+        "^%.svn/",        "^%.git/",   "^%.hg/",        "^CVS/", "^%.Trash/", "^%.Trash%-.*/",
+        "^node_modules/", "^%.cache/", "^__pycache__/",
+        -- files
+        "%.pyc$",         "%.pyo$",       "%.exe$",        "%.dll$",   "%.obj$", "%.o$",
+        "%.a$",           "%.lib$",       "%.so$",         "%.dylib$", "%.ncb$", "%.sdf$",
+        "%.suo$",         "%.pdb$",       "%.idb$",        "%.class$", "%.psd$", "%.db$",
+        "^desktop%.ini$", "^%.DS_Store$", "^%.directory$",
+      },
       on_apply = function()
         core.rescan_project_directories()
       end
@@ -383,6 +394,56 @@ settings.add("User Interface",
       end,
       set_value = function(value)
         return value * SCALE
+      end
+    },
+    {
+      label = "Force Scrollbar Status",
+      description = "Choose a fixed scrollbar state instead of resizing it on mouse hover.",
+      path = "force_scrollbar_status",
+      type = settings.type.SELECTION,
+      default = false,
+      values = {
+        {"Disabled", false},
+        {"Expanded", "expanded"},
+        {"Contracted", "contracted"}
+      },
+      on_apply = function(value)
+        local mode = config.force_scrollbar_status_mode or "global"
+        local globally = mode == "global"
+        local views = core.root_view.root_node:get_children()
+        for _, view in ipairs(views) do
+          if globally or view:extends(DocView) then
+            view.h_scrollbar:set_forced_status(value)
+            view.v_scrollbar:set_forced_status(value)
+          else
+            view.h_scrollbar:set_forced_status(false)
+            view.v_scrollbar:set_forced_status(false)
+          end
+        end
+      end
+    },
+    {
+      label = "Force Scrollbar Status Mode",
+      description = "Choose between applying globally or document views only.",
+      path = "force_scrollbar_status_mode",
+      type = settings.type.SELECTION,
+      default = "global",
+      values = {
+        {"Documents", "docview"},
+        {"Globally", "global"}
+      },
+      on_apply = function(value)
+        local globally = value == "global"
+        local views = core.root_view.root_node:get_children()
+        for _, view in ipairs(views) do
+          if globally or view:extends(DocView) then
+            view.h_scrollbar:set_forced_status(config.force_scrollbar_status)
+            view.v_scrollbar:set_forced_status(config.force_scrollbar_status)
+          else
+            view.h_scrollbar:set_forced_status(false)
+            view.v_scrollbar:set_forced_status(false)
+          end
+        end
       end
     },
     {
@@ -1861,5 +1922,21 @@ if config.plugins.toolbarview ~= false then
   end
 end
 
+--------------------------------------------------------------------------------
+-- Overwrite View:new to allow setting force scrollbar status globally
+--------------------------------------------------------------------------------
+local view_new = View.new
+function View:new()
+  view_new(self)
+  local mode = config.force_scrollbar_status_mode or "global"
+  local globally = mode == "global"
+  if globally then
+    --This is delayed to allow widgets to also apply it to child views/widgets
+    core.add_thread(function()
+      self.v_scrollbar:set_forced_status(config.force_scrollbar_status)
+      self.h_scrollbar:set_forced_status(config.force_scrollbar_status)
+    end)
+  end
+end
 
 return settings;
