@@ -30,6 +30,7 @@ local ItemsList = require "widget.itemslist"
 local KeybindingDialog = require "widget.keybinddialog"
 local Fonts = require "widget.fonts"
 local FilePicker = require "widget.filepicker"
+local MessageBox = require "widget.messagebox"
 
 local settings = {}
 
@@ -66,63 +67,43 @@ settings.type = {
 
 ---Represents a setting to render on a settings pane.
 ---@class settings.option
+---Title displayed to the user eg: "My Option"
 ---@field public label string
+---Description of the option eg: "Modifies the document indentation"
 ---@field public description string
+---Config path in the config table, eg: section.myoption, myoption, etc...
 ---@field public path string
+---Type of option that will be used to render an appropriate control
 ---@field public type settings.types | integer
+---Default value of the option
 ---@field public default string | number | boolean | table<integer, string> | table<integer, integer>
+---Used for NUMBER to indicate the minimum number allowed
 ---@field public min number
+---Used for NUMBER to indiciate the maximum number allowed
 ---@field public max number
+---Used for NUMBER to indiciate the increment/decrement amount
 ---@field public step number
+---Used in a SELECTION to provide the list of valid options
 ---@field public values table
+---Optionally used for FONT to store the generated font group.
 ---@field public fonts_list table<string, renderer.font>
+---Flag set to true when loading user defined fonts fail
 ---@field public font_error boolean
+---Optional function that is used to manipulate the current value on retrieval.
 ---@field public get_value nil | fun(value:any):any
+---Optional function that is used to manipulate the saved value on save.
 ---@field public set_value nil | fun(value:any):any
+---The icon set for a BUTTON
 ---@field public icon string
+---Command or function executed when a BUTTON is clicked
 ---@field public on_click nil | string | fun(button:string, x:integer, y:integer)
+---Optional function executed when the option value is applied.
 ---@field public on_apply nil | fun(value:any)
+---When FILE or DIRECTORY this flag tells the path should exist.
 ---@field public exists boolean
+---Lua patterns used on FILE or DIRECTORY to filter browser results and
+---also force the selection to match one of the filters.
 ---@field public filters table<integer,string>
-settings.option = {
-  ---Title displayed to the user eg: "My Option"
-  label = "",
-  ---Description of the option eg: "Modifies the document indentation"
-  description = "",
-  ---Config path in the config table, eg: section.myoption, myoption, etc...
-  path = "",
-  ---Type of option that will be used to render an appropriate control
-  type = "",
-  ---Default value of the option
-  default = "",
-  ---Used for NUMBER to indiciate the minimum number allowed
-  min = 0,
-  ---Used for NUMBER to indiciate the maximum number allowed
-  max = 0,
-  ---Used for NUMBER to indiciate the increment/decrement amount
-  step = 0,
-  ---Used in a SELECTION to provide the list of valid options
-  values = {},
-  ---Optionally used for FONT to store the generated font group.
-  fonts_list = {},
-  ---Flag set to true when loading user defined fonts fail
-  font_error = false,
-  ---Optional function that is used to manipulate the current value on retrieval.
-  get_value = nil,
-  ---Optional function that is used to manipulate the saved value on save.
-  set_value = nil,
-  ---The icon set for a BUTTON
-  icon = "",
-  ---Command or function executed when a BUTTON is clicked
-  on_click = nil,
-  ---Optional function executed when the option value is applied.
-  on_apply = nil,
-  ---When FILE or DIRECTORY this flag tells the path should exist.
-  exists = false,
-  ---Lua patterns used on FILE or DIRECTORY to filter browser results and
-  ---also force the selection to match one of the filters.
-  filters = {}
-}
 
 ---Add a new settings section to the settings UI
 ---@param section string
@@ -183,7 +164,29 @@ settings.add("General",
       type = settings.type.BUTTON,
       icon = "C",
       on_click = function()
-        Fonts.clean_cache()
+        if Fonts.cache_is_building() then
+          MessageBox.warning(
+            "Clear Fonts Cache",
+            { "The font cache is already been built,\n"
+              .. "status will be logged on the core log."
+            }
+          )
+        else
+          MessageBox.info(
+            "Clear Fonts Cache",
+            { "Re-building the font cache can take some time,\n"
+              .. "it is needed when you have installed new fonts\n"
+              .. "which are not listed on the font picker tool.\n\n"
+              .. "Do you want to continue?"
+            },
+            function(_, button_id, _)
+              if button_id == 1 then
+                Fonts.clean_cache()
+              end
+            end,
+            MessageBox.BUTTONS_YES_NO
+          )
+        end
       end
     },
     {
@@ -194,10 +197,8 @@ settings.add("General",
       default = 2000,
       min = 1,
       max = 100000,
-      on_apply = function(button, x, y)
-        if button == "left" then
-          core.rescan_project_directories()
-        end
+      on_apply = function()
+        core.rescan_project_directories()
       end
     },
     {
@@ -1316,7 +1317,7 @@ function Settings:load_core_settings()
   for _, section in ipairs(settings.sections) do
     local options = settings.core[section]
 
-    ---@type widget|widget.foldingbook.pane
+    ---@type widget|widget.foldingbook.pane|nil
     local pane = self.core_sections:get_pane(section)
     if not pane then
       pane = self.core_sections:add_pane(section, section)
@@ -1440,7 +1441,7 @@ function Settings:enable_plugin(plugin)
 
     for plugin_name, options in pairs(plugins) do
       if plugin_name == plugin then
-        ---@type widget
+        ---@type widget|widget.foldingbook.pane|nil
         local pane = self.plugin_sections:get_pane(section)
         if not pane then
           pane = self.plugin_sections:add_pane(section, section)
@@ -1478,7 +1479,7 @@ end
 
 ---Generate all the widgets for plugin settings.
 function Settings:load_plugin_settings()
-  ---@type widget
+  ---@type widget|widget.foldingbook.pane|nil
   local pane = self.plugin_sections:get_pane("enable_disable")
   if not pane then
     pane = self.plugin_sections:add_pane("enable_disable", "Installed")
@@ -1535,7 +1536,7 @@ function Settings:load_plugin_settings()
     local plugins = settings.plugins[section]
 
     for plugin_name, options in pairs(plugins) do
-      ---@type widget
+      ---@type widget|widget.foldingbook.pane|nil
       local pane = self.plugin_sections:get_pane(section)
       if not pane then
         pane = self.plugin_sections:add_pane(section, section)
