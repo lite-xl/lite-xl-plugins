@@ -9,11 +9,16 @@
     1. Change the Color and Opacity of the caret
     2. Change the Shape of the caret, available shapes are Line, Block, Underline
   Customizing the Caret: (this can be changed from the .config/lite-xl/init.lua file or from the settings menu plugin)
-    1. config.plugins.custom_caret.shape - Change the shape of the caret [string]
-    2. config.plugins.custom_caret.color_r - Change the r component of the caret's color [number]
-    3. config.plugins.custom_caret.color_g - Change the g component of the caret's color [number]
-    4. config.plugins.custom_caret.color_b - Change the b component of the caret's color [number]
-    5. config.plugins.custom_caret.opacity - Change the opacity of the caret [number]
+    1. style.custom_caret.shape - Change the shape of the caret [string]
+    2. style.custom_caret.color - Change the color of the caret [table]
+    5. style.custom_caret.opacity - Change the opacity of the caret [number]
+
+  Example Config(in the core/style.lua)
+    custom_caret = {
+      shape = "line",
+      color = {255, 255, 255}
+      opacity = 150
+    }
 ]]
 
 local core = require "core"
@@ -23,11 +28,11 @@ local config = require "core.config"
 local DocView = require "core.docview"
 
 config.plugins.custom_caret = common.merge({
-    color_r = style.caret[1],
-    color_g = style.caret[2],
-    color_b = style.caret[3],
-    opacity = style.caret[4],
-    shape = "line",
+    shape = style.custom_caret.shape,
+    color_r = style.custom_caret.color[1],
+    color_g = style.custom_caret.color[2],
+    color_b = style.custom_caret.color[3],
+    opacity = style.custom_caret.opacity,
     -- Config for settings gui
     config_spec = {
       name = "Custom Caret",
