@@ -1,17 +1,19 @@
 -- mod-version:3
 
 --[[
+  Author: techie-guy
+  
   Plugin to customize the caret in the editor
   Thanks to @Guldoman for the initial example on Discord
-  Features
+  Features:
     1. Change the Color and Opacity of the caret
     2. Change the Shape of the caret, available shapes are Line, Block, Underline
-  Customizing the Caret (this can be changed from the .config/lite-xl/init.lua file)
+  Customizing the Caret: (this can be changed from the .config/lite-xl/init.lua file or from the settings menu plugin)
     1. config.plugins.custom_caret.shape - Change the shape of the caret [string]
     2. config.plugins.custom_caret.color_r - Change the r component of the caret's color [number]
-    2. config.plugins.custom_caret.color_g - Change the g component of the caret's color [number]
-    2. config.plugins.custom_caret.color_b - Change the b component of the caret's color [number]
-    2. config.plugins.custom_caret.opacity - Change the opacity of the caret [number]
+    3. config.plugins.custom_caret.color_g - Change the g component of the caret's color [number]
+    4. config.plugins.custom_caret.color_b - Change the b component of the caret's color [number]
+    5. config.plugins.custom_caret.opacity - Change the opacity of the caret [number]
 ]]
 
 local core = require "core"
