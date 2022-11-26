@@ -5,15 +5,14 @@
   
   Plugin to customize the caret in the editor
   Thanks to @Guldoman for the initial example on Discord
-  Features:
-    1. Change the Color and Opacity of the caret
-    2. Change the Shape of the caret, available shapes are Line, Block, Underline
+
+  Features
+    Change the Color and Opacity of the caret
+    Change the Shape of the caret, available shapes are Line, Block, Underline
+
   Customizing the Caret: (this can be changed from the .config/lite-xl/init.lua file or from the settings menu plugin)
-    1. style.caret_shape - Change the shape of the caret [string]
-    2. style.caret[1] - Change the r component of the caret's color [number]
-    2. style.caret[2] - Change the g component of the caret's color [number]
-    2. style.caret[3] - Change the b component of the caret's color [number]
-    5. style.caret[4] - Change the opacity of the caret [number]
+    style.caret_shape - Change the shape of the caret [string]
+    style.caret - Change the rgba color of the caret [table]
 
   Example Config(in the core/style.lua)
     style.caret_shape = "block"
