@@ -32,6 +32,7 @@ local Fonts = require "widget.fonts"
 local FilePicker = require "widget.filepicker"
 local MessageBox = require "widget.messagebox"
 
+---@class plugins.settings
 local settings = {}
 
 settings.core = {}
@@ -965,6 +966,28 @@ local function merge_font_settings(option, path, saved_value)
   end
 end
 
+---Load the user_settings.lua stored options for a plugin into global config.
+---@param plugin_name string
+---@param options settings.option[]
+local function merge_plugin_settings(plugin_name, options)
+  for _, option in pairs(options) do
+    if type(option.path) == "string" then
+      local path = "plugins." .. plugin_name .. "." .. option.path
+      local saved_value = get_config_value(settings.config, path)
+      if type(saved_value) ~= "nil" then
+        if option.type == settings.type.FONT or option.type == "font" then
+          merge_font_settings(option, path, saved_value)
+        else
+          set_config_value(config, path, saved_value)
+        end
+        if option.on_apply then
+          option.on_apply(saved_value)
+        end
+      end
+    end
+  end
+end
+
 ---Merge previously saved settings without destroying the config table.
 local function merge_settings()
   if type(settings.config) ~= "table" then return end
@@ -994,22 +1017,7 @@ local function merge_settings()
   for _, section in ipairs(settings.plugin_sections) do
     local plugins = settings.plugins[section]
     for plugin_name, options in pairs(plugins) do
-      for _, option in pairs(options) do
-        if type(option.path) == "string" then
-          local path = "plugins." .. plugin_name .. "." .. option.path
-          local saved_value = get_config_value(settings.config, path)
-          if type(saved_value) ~= "nil" then
-            if option.type == settings.type.FONT or option.type == "font" then
-              merge_font_settings(option, path, saved_value)
-            else
-              set_config_value(config, path, saved_value)
-            end
-            if option.on_apply then
-              option.on_apply(saved_value)
-            end
-          end
-        end
-      end
+      merge_plugin_settings(plugin_name, options)
     end
   end
 
@@ -1448,6 +1456,8 @@ function Settings:enable_plugin(plugin)
         else
           pane = pane.container
         end
+
+        merge_plugin_settings(plugin, options)
 
         for _, opt in ipairs(options) do
           ---@type settings.option
