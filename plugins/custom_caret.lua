@@ -11,12 +11,12 @@
     Change the Shape of the caret, available shapes are Line, Block, Underline
 
   Customizing the Caret: (this can be changed from the .config/lite-xl/init.lua file or from the settings menu plugin)
-    style.caret_shape - Change the shape of the caret [string]
+    plugins.custom_caret.shape - Change the shape of the caret [string]
     style.caret - Change the rgba color of the caret [table]
 
-  Example Config(in the core/style.lua)
-    style.caret_shape = "block"
+  Example Config(in the .config/lite-xl/init.lua)
     style.caret = {0, 255, 255, 150}
+    plugins.custom_caret.shape = "block"
 ]]
 
 local core = require "core"
@@ -26,7 +26,7 @@ local config = require "core.config"
 local DocView = require "core.docview"
 
 config.plugins.custom_caret = common.merge({
-    shape = style.caret_shape,
+    shape = "line",
     color_r = style.caret[1],
     color_g = style.caret[2],
     color_b = style.caret[3],
@@ -39,7 +39,7 @@ config.plugins.custom_caret = common.merge({
         description = "The Shape of the cursor.",
         path = "shape",
         type = "selection",
-        default = style.caret_shape,
+        default = "line",
         values = {
           {"Line", "line"},
           {"Block", "block"},
