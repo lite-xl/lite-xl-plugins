@@ -11,12 +11,12 @@
     Change the Shape of the caret, available shapes are Line, Block, Underline
 
   Customizing the Caret: (this can be changed from the .config/lite-xl/init.lua file or from the settings menu plugin)
-    plugins.custom_caret.shape - Change the shape of the caret [string]
+    config.plugins.custom_caret.shape - Change the shape of the caret [string]
     style.caret - Change the rgba color of the caret [table]
 
   Example Config(in the .config/lite-xl/init.lua)
     style.caret = {0, 255, 255, 150}
-    plugins.custom_caret.shape = "block"
+    config.plugins.custom_caret.shape = "block"
 ]]
 
 local core = require "core"
