@@ -50,11 +50,11 @@ local editorconfig = {}
 ---@param project_dir string
 ---@return boolean loaded
 function editorconfig.load(project_dir)
-  local config = project_dir .. "/" .. ".editorconfig"
-  local file = io.open(config)
+  local editor_config = project_dir .. "/" .. ".editorconfig"
+  local file = io.open(editor_config)
   if file then
     file:close()
-    project_configs[project_dir] = Parser(config)
+    project_configs[project_dir] = Parser(editor_config)
     return true
   end
   return false
@@ -101,10 +101,10 @@ local function recursive_get_config(file_path)
   local project_dir = ""
 
   local root_config
-  for path, config in pairs(project_configs) do
+  for path, editor_config in pairs(project_configs) do
     if common.path_belongs_to(file_path, path) then
       project_dir = path
-      root_config = config:getConfig(
+      root_config = editor_config:getConfig(
         common.relative_path(path, file_path)
       )
       break
@@ -123,10 +123,10 @@ local function recursive_get_config(file_path)
   local relative_file_path = common.relative_path(project_dir, file_path)
   local dir = common.dirname(relative_file_path)
 
-  local config = {}
+  local editor_config = {}
   local config_found = false
   if not dir and root_config then
-    config = root_config
+    editor_config = root_config
     config_found = true
   elseif dir then
     local path_list = split_path(dir)
@@ -138,7 +138,7 @@ local function recursive_get_config(file_path)
         local parser = Parser(path .. "/" .. ".editorconfig")
         local pconfig = parser:getConfig(common.relative_path(path, file_path))
         if pconfig then
-          merge_config(config, pconfig)
+          merge_config(editor_config, pconfig)
           config_found = true
         end
         if parser.root then
@@ -148,11 +148,11 @@ local function recursive_get_config(file_path)
       end
     end
     if not root_found and root_config then
-      merge_config(config, root_config)
+      merge_config(editor_config, root_config)
       config_found = true
     end
   end
-  return config_found and config or nil
+  return config_found and editor_config or nil
 end
 
 ---Apply editorconfig rules to given doc if possible.
@@ -210,6 +210,8 @@ function editorconfig.apply(doc)
 
     if options.insert_final_newline then
       doc.insert_final_newline = true
+    elseif options.insert_final_newline == false then
+      doc.insert_final_newline = false
     else
       doc.insert_final_newline = nil
     end
@@ -310,6 +312,18 @@ function Doc:save(...)
     local newline = self.crlf and "\r\n" or "\n"
     if self.lines[#self.lines] ~= "\n" then
       table.insert(self.lines, newline)
+    end
+  ---@diagnostic disable-next-line
+  elseif type(self.insert_final_newline) == "boolean" then
+    for _=#self.lines, 1, -1 do
+      local l = #self.lines
+      if l > 1 and self.lines[l] == "\n" then
+        local current_line = self:get_selection()
+        if current_line == l then
+          self:set_selection(l-1, 1, l-1, 1)
+        end
+        table.remove(self.lines, l)
+      end
     end
   end
 
