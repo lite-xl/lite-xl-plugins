@@ -152,6 +152,20 @@ local function recursive_get_config(file_path)
       config_found = true
     end
   end
+
+  -- clean unset options
+  if config_found then
+    local all_unset = true
+    for name, value in pairs(editor_config) do
+      if value == "unset" then
+        editor_config[name] = nil
+      else
+        all_unset = false
+      end
+    end
+    if all_unset then config_found = false end
+  end
+
   return config_found and editor_config or nil
 end
 
