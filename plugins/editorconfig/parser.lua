@@ -57,6 +57,8 @@ local RULES = {
   { rule = "^\\[",  conversion = function() return "\\[" end },
   { rule = "^\\]",  conversion = function() return "\\]" end },
   { rule = "^\\!",  conversion = function() return "!" end },
+  { rule = "^\\;",  conversion = function() return ";" end },
+  { rule = "^\\#",  conversion = function() return "#" end },
   -- escape special chars
   { rule = "^%.",   conversion = function() return "\\." end },
   { rule = "^%(",   conversion = function() return "\\(" end },
