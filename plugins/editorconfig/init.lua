@@ -190,9 +190,15 @@ function editorconfig.apply(doc)
       end
     end
 
-    if indent_type == "hard" and options.tab_width then
-      indent_size = options.tab_width
-    elseif options.indent_size then
+    if options.indent_size and options.indent_size == "tab" then
+      if options.tab_width then
+        options.indent_size = options.tab_width
+      else
+        options.indent_size = config.indent_size or 2
+      end
+    end
+
+    if options.indent_size then
       indent_size = options.indent_size
     end
 
