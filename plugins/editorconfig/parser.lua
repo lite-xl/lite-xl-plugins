@@ -69,8 +69,8 @@ local RULES = {
   -- Is this the correct one or the one below?
   { rule = "^%b[]",
     conversion = function(match)
-      local negation = match:match("%[!")
-      local chars = match:match("%[!?(.-)%]")
+      local negation = match:umatch("%[!")
+      local chars = match:umatch("%[!?(.-)%]")
       if negation then return "[^"..chars.."]" end
       return "["..chars.."]"
     end
@@ -78,7 +78,7 @@ local RULES = {
   -- Is this the correct one or the one above :P
   { rule = "^!%w+",
     conversion = function(match)
-      local chars = match:match("%w+")
+      local chars = match:umatch("%w+")
       return "[^"..chars.."]"
     end
   },
@@ -94,7 +94,7 @@ local RULES = {
   -- match a number range
   { rule = "^{%-?%d+%.%.%-?%d+}",
     conversion = function(match, section)
-      local min, max = match:match("(-?%d+)%.%.(-?%d+)")
+      local min, max = match:umatch("(-?%d+)%.%.(-?%d+)")
       min = tonumber(min)
       max = tonumber(max)
       if min and max then
@@ -112,12 +112,12 @@ local RULES = {
   -- match any of the strings separated by commas inside the curly braces
   { rule = "^%b{}",
     conversion = function(match)
-      local out = match:gsub("%(", "\\(")
-        :gsub("%)", "\\)") -- escape parenthesis just to be safe...
-        :gsub("{", "(")
-        :gsub(",", "|")
-        :gsub("}", ")")
-        :gsub("%.", "\\.")
+      local out = match:ugsub("%(", "\\(")
+        :ugsub("%)", "\\)") -- escape parenthesis just to be safe...
+        :ugsub("{", "(")
+        :ugsub(",", "|")
+        :ugsub("}", ")")
+        :ugsub("%.", "\\.")
       return out
     end
   }
@@ -136,28 +136,28 @@ local function rule_to_regex(section)
     return
   end
 
-  local pos, len, exp = 1, #rule, ""
+  local pos, len, exp = 1, rule:ulen(), ""
 
   -- if expression starts with ! it is treated entirely as a negation
-  local negation = rule:match("^%s*!")
+  local negation = rule:umatch("^%s*!")
   if negation then
-    pos = pos + #negation + 1
+    pos = pos + negation:ulen() + 1
   end
 
   -- apply all conversion rules by looping the path expression/rule
   while pos <= len do
     local found = false
     for _, r in ipairs(RULES) do
-      local match = rule:match(r.rule, pos)
+      local match = rule:umatch(r.rule, pos)
       if match then
         exp = exp .. r.conversion(match, section)
-        pos = pos + #match
+        pos = pos + match:ulen()
         found = true
         break
       end
     end
     if not found then
-      exp = exp .. rule:sub(pos, pos)
+      exp = exp .. rule:usub(pos, pos)
       pos = pos + 1
     end
   end
@@ -195,7 +195,7 @@ function Parser:read()
 
     -- first we try to see if the line is a rule section
     local rule = ""
-    rule = line:match("^%s*%[(.-)%]")
+    rule = line:umatch("^%s*%[(.-)%]")
     if rule then
       if section.rule then
         -- save previous section and crerate new one
@@ -210,7 +210,7 @@ function Parser:read()
     end
 
     if not rule then
-      local name, value = line:match("^%s*(%w%S+)%s*=%s*([^%s;#]+)")
+      local name, value = line:umatch("^%s*(%w%S+)%s*=%s*([^%s;#]+)")
       if name and value then
         name = name:ulower()
         value = value:ulower()
