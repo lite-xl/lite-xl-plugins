@@ -160,6 +160,9 @@ local function rule_to_regex(section)
     end
   end
 
+  -- force match up to the end
+  exp = exp .. "$"
+
   -- store changes to the section rule
   section.rule.regex, section.rule.negation = exp, negation
   section.rule.regex_compiled = regex.compile(section.rule.regex)
