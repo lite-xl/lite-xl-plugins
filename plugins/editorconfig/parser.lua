@@ -205,7 +205,7 @@ function Parser:read()
     end
 
     if not rule then
-      local name, value = line:match("(%S+)%s*=%s*(%S+)")
+      local name, value = line:match("^%s*(%w%S+)%s*=%s*([^%s;#]+)")
       if name and value then
         if value == "true" then
           value = true
