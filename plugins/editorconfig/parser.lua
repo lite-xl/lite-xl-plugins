@@ -7,10 +7,10 @@ local Object = require "core.object"
 
 ---Represents an .editorconfig path rule/expression.
 ---@class plugins.editorconfig.parser.rule
----@field expression string Config expression as found between square brackets.
+---@field expression string Path expression as found between square brackets.
 ---@field regex string The expression converted to a regex.
 ---@field regex_compiled any?
----@field negation boolean Indicates that the rule is a negation.
+---@field negation boolean Indicates that the expression is a negation.
 ---@field ranges table<integer,number> List of ranges found on the expression.
 
 ---Represents a section of the .editorconfig with all its config options.
@@ -63,10 +63,6 @@ local RULES = {
   { rule = "^%.",   conversion = function() return "\\." end },
   { rule = "^%(",   conversion = function() return "\\(" end },
   { rule = "^%)",   conversion = function() return "\\)" end },
-  -- The .editorconfig documentation says [!chars] for negation or [chars]
-  -- to negate for match any of the chars but I'm not sure if the square
-  -- brackets should not be included...
-  -- Is this the correct one or the one below?
   { rule = "^%b[]",
     conversion = function(match)
       local negation = match:umatch("%[!")
@@ -75,7 +71,7 @@ local RULES = {
       return "["..chars.."]"
     end
   },
-  -- Is this the correct one or the one above :P
+  -- Is this negation rule valid?
   { rule = "^!%w+",
     conversion = function(match)
       local chars = match:umatch("%w+")
@@ -123,7 +119,7 @@ local RULES = {
   }
 }
 
----Adds the regex equivalent of a section path/rule expression.
+---Adds the regex equivalent of a section path expression.
 ---@param section plugins.editorconfig.parser.section
 local function rule_to_regex(section)
   local rule = section.rule.expression

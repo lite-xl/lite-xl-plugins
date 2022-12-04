@@ -81,8 +81,8 @@ local function file_exists(file_path)
 end
 
 ---Merge a config options to target if they don't already exists on target.
----@param config_target plugins.editorconfig.parser.section?
----@param config_from plugins.editorconfig.parser.section?
+---@param config_target? plugins.editorconfig.parser.section
+---@param config_from? plugins.editorconfig.parser.section
 local function merge_config(config_target, config_from)
   if config_target and config_from then
     for name, value in pairs(config_from) do
