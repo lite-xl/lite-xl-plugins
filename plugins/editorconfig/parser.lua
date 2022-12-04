@@ -210,6 +210,7 @@ function Parser:read()
     if not rule then
       local name, value = line:match("^%s*(%w%S+)%s*=%s*([^%s;#]+)")
       if name and value then
+        value = value:ulower()
         if value == "true" then
           value = true
         elseif value == "false" then
@@ -222,7 +223,7 @@ function Parser:read()
 
         if section.rule then
           section[name] = value
-        elseif name == "root" then
+        elseif name == "root" and type(value) == "boolean" then
           self.root = value
         end
       end
