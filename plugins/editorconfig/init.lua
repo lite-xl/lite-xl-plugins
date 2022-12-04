@@ -172,13 +172,14 @@ end
 ---Apply editorconfig rules to given doc if possible.
 ---@param doc core.doc
 function editorconfig.apply(doc)
-  if not doc.abs_filename then return end
-  local options = recursive_get_config(doc.abs_filename)
+  if not doc.abs_filename and not doc.filename then return end
+  local file_path = doc.abs_filename or (main_project .. "/" .. doc.filename)
+  local options = recursive_get_config(file_path)
   if options then
     if config.plugins.editorconfig.debug then
       core.log(
         "[EditorConfig]: %s applied %s",
-        doc.abs_filename, common.serialize(options, {pretty = true})
+        file_path, common.serialize(options, {pretty = true})
       )
     end
     local indent_type, indent_size = doc:get_indent_info()
@@ -322,6 +323,8 @@ end
 
 local doc_save = Doc.save
 function Doc:save(...)
+  local new_file = self.new_file
+
   ---@diagnostic disable-next-line
   if self.trim_trailing_whitespace then
     trim_trailing_whitespace(self)
@@ -359,6 +362,9 @@ function Doc:save(...)
     end
     -- re-apply editorconfig options to all open files
     editorconfig.apply_all()
+  elseif new_file then
+    -- apply editorconfig options for file that was previously unsaved
+    editorconfig.apply(self)
   end
 end
 
