@@ -212,6 +212,7 @@ function Parser:read()
     if not rule then
       local name, value = line:match("^%s*(%w%S+)%s*=%s*([^%s;#]+)")
       if name and value then
+        name = name:ulower()
         value = value:ulower()
         if value == "true" then
           value = true
