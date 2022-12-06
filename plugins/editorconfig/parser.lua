@@ -326,8 +326,11 @@ function Parser:rule_to_regex(section)
   -- force match up to the end
   exp = exp .. "$"
 
+  -- allow expressions that start with * to match anything on start
+  if exp:match("^%[^\\/%]%*") then
+    exp = exp:gsub("^%[^\\/%]%*", ".*")
   -- fixes two failing tests
-  if exp:match("^%[") then
+  elseif exp:match("^%[") then
     exp = "^" .. exp
   -- match only on root dir
   elseif exp:match("^/") then
