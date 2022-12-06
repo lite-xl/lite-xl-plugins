@@ -326,6 +326,14 @@ function Parser:rule_to_regex(section)
   -- force match up to the end
   exp = exp .. "$"
 
+  -- fixes two failing tests
+  if exp:match("^%[") then
+    exp = "^" .. exp
+  -- match only on root dir
+  elseif exp:match("^/") then
+    exp = exp:gsub("^/", "^")
+  end
+
   -- store changes to the section rule
   section.rule.regex, section.rule.negation = exp, negation
   section.rule.regex_compiled = regex.compile(section.rule.regex)
