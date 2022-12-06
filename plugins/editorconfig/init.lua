@@ -54,7 +54,7 @@ function editorconfig.load(project_dir)
   local file = io.open(editor_config)
   if file then
     file:close()
-    project_configs[project_dir] = Parser(editor_config)
+    project_configs[project_dir] = Parser.new(editor_config)
     return true
   end
   return false
@@ -135,7 +135,7 @@ local function recursive_get_config(file_path)
       local path = project_dir .. "/" .. table.concat(path_list, "/", 1, p)
       if file_exists(path .. "/" .. ".editorconfig") then
         ---@type plugins.editorconfig.parser
-        local parser = Parser(path .. "/" .. ".editorconfig")
+        local parser = Parser.new(path .. "/" .. ".editorconfig")
         local pconfig = parser:getConfig(common.relative_path(path, file_path))
         if pconfig then
           merge_config(editor_config, pconfig)
@@ -365,6 +365,13 @@ function Doc:save(...)
   elseif new_file then
     -- apply editorconfig options for file that was previously unsaved
     editorconfig.apply(self)
+  end
+end
+
+for i, argument in ipairs(ARGS) do
+  if argument == "test" and ARGS[i+1] == "editorconfig" then
+    require "plugins.editorconfig.runtest"
+    os.exit()
   end
 end
 

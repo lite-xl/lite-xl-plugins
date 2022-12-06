@@ -37,3 +37,25 @@ Applied on document save:
 * Supports multiple project directories
 * Implements hot reloading, so modifying an .editorconfig file from within
   the editor will re-apply all rules to currently opened files.
+
+## Testing
+
+This plugin includes a test suite to check how well the .editorconfig parser
+is working.
+
+The [editorconfig-core-test](https://github.com/editorconfig/editorconfig-core-test)
+glob, parser and properties cmake tests where ported and we are getting a 100%
+pass rate.
+
+If you are interested in running the test suite, from the terminal execute
+the following:
+
+```sh
+lite-xl test editorconfig
+```
+
+To inspect the generated sections and regex rules:
+
+```sh
+lite-xl test editorconfig --parsers
+```

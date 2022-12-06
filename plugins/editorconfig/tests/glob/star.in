@@ -1,0 +1,12 @@
+; test *
+
+root=true
+
+[a*e.c]
+key=value
+
+[Bar/*]
+keyb=valueb
+
+[*]
+keyc=valuec
