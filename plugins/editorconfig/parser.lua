@@ -242,7 +242,7 @@ local RULES = {
       end
       local minus = ""
       if min < 0 or max < 0 then minus = "\\-?" end
-      return "("..minus.."[1-9]\\d*)"
+      return "(?<!0)("..minus.."[1-9]\\d*)"
     end
   },
   -- threat single option braces literally
@@ -324,7 +324,7 @@ function Parser:rule_to_regex(section)
   end
 
   -- force match up to the end
-  exp = "^" .. exp .. "$"
+  exp = exp .. "$"
 
   -- store changes to the section rule
   section.rule.regex, section.rule.negation = exp, negation
