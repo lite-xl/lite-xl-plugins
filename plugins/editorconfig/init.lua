@@ -60,6 +60,44 @@ function editorconfig.load(project_dir)
   return false
 end
 
+---Helper to add or substract final new line, it also makes final new line
+---visble which lite-xl does not.
+---@param doc core.doc
+---@param not_raw boolean If true register change on undo stack
+---@return boolean handled_new_line
+local function handle_final_new_line(doc, not_raw)
+  local handled = false
+  ---@diagnostic disable-next-line
+  if doc.insert_final_newline then
+    handled = true
+    if doc.lines[#doc.lines] ~= "\n" then
+      if not_raw then
+        doc:insert(#doc.lines, math.huge, "\n")
+      else
+        table.insert(doc.lines, "\n")
+      end
+    end
+  ---@diagnostic disable-next-line
+  elseif type(doc.insert_final_newline) == "boolean" then
+    handled = true
+    for _=#doc.lines, 1, -1 do
+      local l = #doc.lines
+      if l > 1 and doc.lines[l] == "\n" then
+        local current_line = doc:get_selection()
+        if current_line == l then
+          doc:set_selection(l-1, 1, l-1, 1)
+        end
+        if not_raw then
+          doc:remove(l, 1, l, math.huge)
+        else
+          table.remove(doc.lines, l)
+        end
+      end
+    end
+  end
+  return handled
+end
+
 ---Split the given relative path by / or \ separators.
 ---@param path string The path to split
 ---@return table
@@ -236,6 +274,8 @@ function editorconfig.apply(doc)
     else
       doc.insert_final_newline = nil
     end
+
+    handle_final_new_line(doc)
   end
 end
 
@@ -330,27 +370,20 @@ function Doc:save(...)
     trim_trailing_whitespace(self)
   end
 
-  ---@diagnostic disable-next-line
-  if self.insert_final_newline then
-    local newline = self.crlf and "\r\n" or "\n"
-    if self.lines[#self.lines] ~= "\n" then
-      table.insert(self.lines, newline)
-    end
-  ---@diagnostic disable-next-line
-  elseif type(self.insert_final_newline) == "boolean" then
-    for _=#self.lines, 1, -1 do
-      local l = #self.lines
-      if l > 1 and self.lines[l] == "\n" then
-        local current_line = self:get_selection()
-        if current_line == l then
-          self:set_selection(l-1, 1, l-1, 1)
-        end
-        table.remove(self.lines, l)
-      end
-    end
+  local lc = #self.lines
+  local handle_new_line = handle_final_new_line(self, true)
+
+  -- remove the unnecesary visible \n\n or the disabled \n
+  if handle_new_line then
+    self.lines[lc] = self.lines[lc]:gsub("\n$", "")
   end
 
   doc_save(self, ...)
+
+  -- restore the visible \n\n or disabled \n
+  if handle_new_line then
+    self.lines[lc] = self.lines[lc] .. "\n"
+  end
 
   if common.basename(self.abs_filename) == ".editorconfig" then
     -- blindlessly reload related project .editorconfig options
