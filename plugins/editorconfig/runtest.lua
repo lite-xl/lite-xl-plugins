@@ -1,10 +1,20 @@
 local core = require "core"
 local tests = require "plugins.editorconfig.tests"
 
+-- disable print buffer for immediate output
+io.stdout:setvbuf "no"
+
+-- overwrite to print into stdout
 function core.error(format, ...)
   print(string.format(format, ...))
 end
 
+function core.log(format, ...)
+  print(string.format(format, ...))
+end
+
+-- check if --parsers flag was given to only output the path expressions and
+-- their conversion into regular expressions.
 local PARSERS = false
 for _, argument in ipairs(ARGS) do
   if argument == "--parsers" then

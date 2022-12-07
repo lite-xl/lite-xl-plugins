@@ -368,6 +368,9 @@ function Doc:save(...)
   end
 end
 
+--------------------------------------------------------------------------------
+-- Run the test suite if requested on CLI with: lite-xl test editorconfig
+--------------------------------------------------------------------------------
 for i, argument in ipairs(ARGS) do
   if argument == "test" and ARGS[i+1] == "editorconfig" then
     require "plugins.editorconfig.runtest"
