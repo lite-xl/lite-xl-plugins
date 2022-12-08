@@ -3,6 +3,7 @@ local core = require "core"
 local config = require "core.config"
 local common = require "core.common"
 local command = require "core.command"
+local style = require "core.style"
 local keymap = require "core.keymap"
 local treeview = require "plugins.treeview"
 local DocView = require "core.docview"
@@ -22,7 +23,7 @@ function DocView:draw_line_gutter(line, x, y, width)
     lh = draw_line_gutter(self, line, x, y, width)
   else
     local real_gutter_width = self:get_font():get_width(#self.doc.lines)
-    local offset = self:get_gutter_width() - real_gutter_width * 2
+    local offset = self:get_gutter_width() - real_gutter_width * 2 - style.padding.x
     lh = draw_line_gutter(self, line, x + offset, y, real_gutter_width)
   end
   return lh
