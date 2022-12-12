@@ -215,7 +215,7 @@ function editorconfig.apply(doc)
   local options = recursive_get_config(file_path)
   if options then
     if config.plugins.editorconfig.debug then
-      core.log(
+      core.log_quiet(
         "[EditorConfig]: %s applied %s",
         file_path, common.serialize(options, {pretty = true})
       )

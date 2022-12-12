@@ -13,6 +13,10 @@ function core.log(format, ...)
   print(string.format(format, ...))
 end
 
+function core.log_quiet(format, ...)
+  print(string.format(format, ...))
+end
+
 -- check if --parsers flag was given to only output the path expressions and
 -- their conversion into regular expressions.
 local PARSERS = false
