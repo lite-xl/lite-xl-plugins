@@ -48,6 +48,7 @@ widget.name = "Search and Replace"
 widget:set_border_width(0)
 widget.scrollable = true
 widget:hide()
+widget.init_size = true
 
 ---@type widget.label
 local label = Label(widget, "Find and Replace")
@@ -243,6 +244,7 @@ end
 
 ---@return integer
 function Results:current()
+  if not self.doc then return 0 end
   local line1, col1, line2, col2 = self.doc:get_selection()
   if line1 == line2 and col1 == col2 then return 0 end
   local line = math.min(line1, line2)
@@ -281,9 +283,8 @@ end
 --------------------------------------------------------------------------------
 local function view_is_open(target_view)
   if not target_view then return false end
-  local node = core.root_view:get_active_node_default()
   local found = false
-  for _, view in ipairs(node.views) do
+  for _, view in ipairs(core.root_view.root_node:get_children()) do
     if view == target_view then
       found = true
       break
@@ -452,38 +453,17 @@ local function show_find(av, toggle)
     scope:get_selected() == 1
   then
     widget:swap_active_child()
-    widget:hide()
+    widget:hide_animated(false, true)
     return
-  end
-
-  if not widget:is_visible() then
-    -- hide search pane when document view changes
-    core.add_thread(function()
-      while widget:is_visible() do
-        if scope:get_selected() == 1 then
-          ---@type core.docview
-          local view = core.active_view
-          if view and view:extends(DocView) then
-            if view ~= findtext.textview and view ~= replacetext.textview then
-              if view ~= doc_view then
-                command.perform "search-replace:hide"
-                return
-              end
-            end
-          elseif not view_is_open(doc_view) then
-            command.perform "search-replace:hide"
-          end
-        end
-        coroutine.yield(1)
-      end
-    end)
   end
 
   if inside_node then
     if toggle then
-      widget:toggle_visible()
+      widget:toggle_visible(true, false, true)
     else
-      widget:show()
+      if not widget:is_visible() then
+        widget:show_animated(false, true)
+      end
     end
   else
     local node = core.root_view:get_primary_node()
@@ -571,16 +551,6 @@ function replace:on_click() find_replace() end
 -- reposition items on scale changes
 function widget:update()
   if Widget.update(self) then
-    if scope:get_selected() == 1 then
-      if self.size.x < replace:get_right() + replace:get_width() / 2 then
-        self:set_size(replace:get_right() + replace:get_width() / 2)
-      end
-    else
-      if self.size.x < findproject:get_right() + findproject:get_width() * 2 then
-        self:set_size(findproject:get_right() + findproject:get_width() * 2)
-      end
-    end
-
     label:set_position(10, 10)
     line:set_position(0, label:get_bottom() + 10)
     findtext:set_position(10, line:get_bottom() + 10)
@@ -621,6 +591,44 @@ function widget:update()
     else
       statusline:show()
     end
+    if widget.init_size then
+      if scope:get_selected() == 1 then
+        if self.size.x < replace:get_right() + replace:get_width() / 2 then
+          self.size.x = replace:get_right() + replace:get_width() / 2
+        end
+      else
+        if self.size.x < findproject:get_right() + findproject:get_width() * 2 then
+          self.size.x = findproject:get_right() + findproject:get_width() * 2
+        end
+      end
+      widget.init_size = false
+      widget:show_animated(false, true)
+    end
+  end
+end
+
+--------------------------------------------------------------------------------
+-- Override set_active_view to keep track of currently active docview
+--------------------------------------------------------------------------------
+local core_set_active_view = core.set_active_view
+function core.set_active_view(...)
+  core_set_active_view(...)
+  local view = core.next_active_view or core.active_view
+  if
+    view ~= doc_view
+    and
+    widget:is_visible()
+    and
+    view:extends(DocView)
+    and
+    view ~= findtext.textview
+    and
+    view ~= replacetext.textview
+    and
+    view.doc.filename
+  then
+    doc_view = view
+    Results:clear()
   end
 end
 
@@ -652,7 +660,7 @@ command.add(
 command.add(function() return widget:is_visible() and not core.active_view:is(CommandView) end, {
   ["search-replace:hide"] = function()
     widget:swap_active_child()
-    widget:hide()
+    widget:hide_animated(false, true)
     if view_is_open(doc_view) then
       core.set_active_view(doc_view)
     end
@@ -748,7 +756,11 @@ end
 
 local find_replace_repeat = command.map["find-replace:repeat-find"].perform
 command.map["find-replace:repeat-find"].perform = function(...)
-  if widget:is_visible() then
+  if
+    widget:is_visible()
+    or
+    (config.plugins.search_ui.replace_core_find and findtext:get_text() ~= "")
+  then
     find(false)
     return
   end
@@ -757,7 +769,11 @@ end
 
 local find_replace_previous = command.map["find-replace:previous-find"].perform
 command.map["find-replace:previous-find"].perform = function(...)
-  if widget:is_visible() then
+  if
+    widget:is_visible()
+    or
+    (config.plugins.search_ui.replace_core_find and findtext:get_text() ~= "")
+  then
     find(true)
     return
   end
@@ -771,7 +787,17 @@ command.map["project-search:find"].perform = function(path)
     if path then
       filepicker:set_path(path)
     end
-    show_find(nil, false)
+    local av = doc_view
+    if
+      core.active_view:extends(DocView)
+      and
+      core.active_view ~= findtext.textview
+      and
+      core.active_view ~= replacetext.textview
+    then
+      av = core.active_view
+    end
+    show_find(av, false)
     return
   end
   project_search_find(path)
