@@ -181,7 +181,7 @@ function Results:find(text, doc, force)
   if regexcheck:is_checked() then
     local pattern = regex.compile(
       findtext:get_text(),
-      insensitive:is_checked() and "i" or nil
+      insensitive:is_checked() and "im" or "m"
     )
     if not pattern then return end
     search_func = function(line_text)
@@ -524,16 +524,22 @@ function findtext:on_change(text)
   end
 end
 
+function insensitive:on_checked(checked)
+  Results:clear()
+end
+
 function patterncheck:on_checked(checked)
   if checked then
     regexcheck:set_checked(false)
   end
+  Results:clear()
 end
 
 function regexcheck:on_checked(checked)
   if checked then
     patterncheck:set_checked(false)
   end
+  Results:clear()
 end
 
 function scope:on_selected(idx)
@@ -681,10 +687,12 @@ command.add(function() return widget:is_visible() and not core.active_view:is(Co
 
   ["search-replace:toggle-sensitivity"] = function()
     insensitive:set_checked(not insensitive:is_checked())
+    Results:clear()
   end,
 
   ["search-replace:toggle-regex"] = function()
     regexcheck:set_checked(not regexcheck:is_checked())
+    Results:clear()
   end,
 
   ["search-replace:toggle-in-selection"] = function()
