@@ -279,6 +279,19 @@ end
 --------------------------------------------------------------------------------
 -- Helper functions
 --------------------------------------------------------------------------------
+local function view_is_open(target_view)
+  if not target_view then return false end
+  local node = core.root_view:get_active_node_default()
+  local found = false
+  for _, view in ipairs(node.views) do
+    if view == target_view then
+      found = true
+      break
+    end
+  end
+  return found
+end
+
 local function toggle_scope(idx, not_set)
   if not not_set then scope:set_selected(idx) end
 
@@ -292,7 +305,7 @@ local function toggle_scope(idx, not_set)
     findproject:hide()
     filepicker:hide()
 
-    if findtext:get_text() ~= "" then
+    if view_is_open(doc_view) and findtext:get_text() ~= "" then
       Results:find(findtext:get_text(), doc_view.doc)
     else
       Results:clear()
@@ -327,7 +340,9 @@ end
 
 local find_enabled = true
 local function find(reverse)
-  if findtext:get_text() == "" or not find_enabled then
+  if
+    not view_is_open(doc_view) or findtext:get_text() == "" or not find_enabled
+  then
     Results:clear()
     return
   end
@@ -424,10 +439,18 @@ end
 local inside_node = false
 
 ---Show or hide the search pane.
----@param av core.docview
----@param toggle boolean
+---@param av? core.docview
+---@param toggle? boolean
 local function show_find(av, toggle)
-  widget.last_active = av
+  if
+    not view_is_open(av)
+    and
+    scope:get_selected() == 1
+  then
+    widget:swap_active_child()
+    widget:hide()
+    return
+  end
 
   if not widget:is_visible() then
     -- hide search pane when document view changes
@@ -443,6 +466,8 @@ local function show_find(av, toggle)
                 return
               end
             end
+          elseif not view_is_open(doc_view) then
+            command.perform "search-replace:hide"
           end
         end
         coroutine.yield(1)
@@ -468,7 +493,7 @@ local function show_find(av, toggle)
 
     widget:swap_active_child(findtext)
     doc_view = av
-    if doc_view.doc then
+    if view_is_open(doc_view) and doc_view.doc then
       local doc_text = doc_view.doc:get_text(
         table.unpack({ doc_view.doc:get_selection() })
       )
@@ -500,7 +525,9 @@ local function show_find(av, toggle)
     end
   else
     widget:swap_active_child()
-    core.set_active_view(doc_view)
+    if view_is_open(doc_view) then
+      core.set_active_view(doc_view)
+    end
   end
 end
 
@@ -525,11 +552,17 @@ function regexcheck:on_checked(checked)
   end
 end
 
+function scope:on_selected(idx)
+  toggle_scope(idx, true)
+  if not view_is_open(doc_view) and idx == 1 then
+    command.perform "search-replace:hide"
+  end
+end
+
 function findnext:on_click() find(false) end
 function findprev:on_click() find(true) end
 function findproject:on_click() project_search() end
 function replace:on_click() find_replace() end
-function scope:on_selected(idx) toggle_scope(idx, true) end
 
 -- reposition items on scale changes
 function widget:update()
@@ -596,6 +629,8 @@ command.add(
       return true, core.active_view
     elseif widget:is_visible() then
       return true, doc_view
+    elseif scope:get_selected() == 2 then
+      return true, nil
     end
     return false
   end,
@@ -614,7 +649,9 @@ command.add(function() return widget:is_visible() and not core.active_view:is(Co
   ["search-replace:hide"] = function()
     widget:swap_active_child()
     widget:hide()
-    core.set_active_view(doc_view)
+    if view_is_open(doc_view) then
+      core.set_active_view(doc_view)
+    end
   end,
 
   ["search-replace:file-search"] = function()
@@ -689,7 +726,7 @@ local find_replace_find = command.map["find-replace:find"].perform
 command.map["find-replace:find"].perform = function(...)
   if config.plugins.search_ui.replace_core_find then
     toggle_scope(1)
-    command.perform("search-replace:show")
+    command.perform "search-replace:show"
   else
     find_replace_find(...)
   end
@@ -699,7 +736,7 @@ local find_replace_replace = command.map["find-replace:replace"].perform
 command.map["find-replace:replace"].perform = function(...)
   if config.plugins.search_ui.replace_core_find then
     toggle_scope(1)
-    command.perform("search-replace:show")
+    command.perform "search-replace:show"
   else
     find_replace_replace(...)
   end
@@ -724,13 +761,16 @@ command.map["find-replace:previous-find"].perform = function(...)
 end
 
 local project_search_find = command.map["project-search:find"].perform
-command.map["project-search:find"].perform = function(...)
+command.map["project-search:find"].perform = function(path)
   if config.plugins.search_ui.replace_core_find then
     toggle_scope(2)
-    command.perform("search-replace:show")
+    if path then
+      filepicker:set_path(path)
+    end
+    show_find(nil, false)
     return
   end
-  find_replace_previous(...)
+  project_search_find(path)
 end
 
 --------------------------------------------------------------------------------
