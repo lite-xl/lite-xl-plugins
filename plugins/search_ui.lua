@@ -419,7 +419,11 @@ local function find_replace()
 
   local results = doc:replace(function(text)
     if not regexcheck:is_checked() then
-      return text:gsub(old:gsub("%W", "%%%1"), new:gsub("%%", "%%%%"), nil)
+      if not patterncheck:is_checked() then
+        return text:gsub(old:gsub("%W", "%%%1"), new:gsub("%%", "%%%%"), nil)
+      else
+        return text:gsub(old, new)
+      end
     end
     local result, matches = regex.gsub(regex.compile(old, "m"), text, new)
     if type(matches) == "table" then
