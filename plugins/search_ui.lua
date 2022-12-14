@@ -179,6 +179,10 @@ function Results:find(text, doc, force)
 
   -- regex search
   if regexcheck:is_checked() then
+    local regex_find_offsets = regex.match
+    if regex.find_offsets then
+      regex_find_offsets = regex.find_offsets
+    end
     local pattern = regex.compile(
       findtext:get_text(),
       insensitive:is_checked() and "im" or "m"
@@ -187,7 +191,7 @@ function Results:find(text, doc, force)
     search_func = function(line_text)
       ---@cast line_text string
       local results = nil
-      local offsets = {regex.match(pattern, line_text)}
+      local offsets = {regex_find_offsets(pattern, line_text)}
       if offsets[1] then
         results = {}
         for i=1, #offsets, 2 do
