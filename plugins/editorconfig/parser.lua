@@ -439,9 +439,11 @@ end
 ---@return table<integer, string>
 local function regex_result_to_table(offsets, value)
   local result = {}
+  local offset_fix = 0
+  if not regex.find_offsets then
+    offset_fix = 1
+  end
   for i=3, #offsets, 2 do
-    local offset_fix = 0
-    if i > 1 then offset_fix = 1 end -- workaround for regex offsets bug
     table.insert(result, value:sub(offsets[i], offsets[i+1]-offset_fix))
   end
   return result
@@ -456,6 +458,11 @@ function Parser:getConfig(file_name, defaults)
     file_name = file_name:gsub("\\", "/")
   end
 
+  local regex_match = regex.match
+  if regex.find_offsets then
+    regex_match = regex.find_offsets
+  end
+
   local properties = {}
 
   local found = false
@@ -463,11 +470,11 @@ function Parser:getConfig(file_name, defaults)
     if section.rule.regex_compiled then
       local negation = section.rule.negation
       -- default rule
-      local matched = {regex.match(section.rule.regex_compiled, file_name)}
+      local matched = {regex_match(section.rule.regex_compiled, file_name)}
       -- try equivalent rules if available
       if not matched[1] and section.equivalent_rules then
         for _, esection in ipairs(section.equivalent_rules) do
-          matched = {regex.match(esection.regex_compiled, file_name)}
+          matched = {regex_match(esection.regex_compiled, file_name)}
           if matched[1] then
             break
           end
