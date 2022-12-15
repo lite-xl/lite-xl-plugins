@@ -85,10 +85,10 @@ local function handle_final_new_line(doc, not_raw)
       if l > 1 and doc.lines[l] == "\n" then
         local current_line = doc:get_selection()
         if current_line == l then
-          doc:set_selection(l-1, 1, l-1, 1)
+          doc:set_selection(l-1, math.huge, l-1, math.huge)
         end
         if not_raw then
-          doc:remove(l, 1, l, math.huge)
+          doc:remove(l-1, math.huge, l, math.huge)
         else
           table.remove(doc.lines, l)
         end
@@ -319,18 +319,17 @@ end
 
 local core_remove_project_directory = core.remove_project_directory
 function core.remove_project_directory(path)
-  core_remove_project_directory(path)
+  local out = core_remove_project_directory(path)
   if project_configs[path] then project_configs[path] = nil end
+  return out
 end
 
--- delay this override because otherwise causes startup issues due to yielding.
-core.add_thread(function()
-  local core_add_project_directory = core.add_project_directory
-  function core.add_project_directory(directory)
-    core_add_project_directory(directory)
-    editorconfig.load(directory)
-  end
-end)
+local core_add_project_directory = core.add_project_directory
+function core.add_project_directory(directory)
+  local out = core_add_project_directory(directory)
+  editorconfig.load(directory)
+  return out
+end
 
 --------------------------------------------------------------------------------
 -- Hook into the core.doc to apply editor config options
