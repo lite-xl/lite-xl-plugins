@@ -45,6 +45,7 @@ config.plugins.search_ui = common.merge({
       type = "selection",
       default = "bottom",
       values = {
+        { "Top", "top" },
         { "Right", "right" },
         { "Bottom", "bottom" }
       }
@@ -479,6 +480,9 @@ local function add_to_node()
     if config.plugins.search_ui.position == "right" then
       current_node = node:split("right", widget, {x=true}, true)
       current_position = "right"
+    elseif config.plugins.search_ui.position == "top" then
+      current_node = node:split("up", widget, {y=true}, false)
+      current_position = "top"
     else
       current_node = node:split("down", widget, {y=true}, false)
       current_position = "bottom"
@@ -604,10 +608,9 @@ function findprev:on_click() find(true) end
 function findproject:on_click() project_search() end
 function replace:on_click() find_replace() end
 
+---@param self widget
 local function update_size(self)
-  if config.plugins.search_ui.position == "bottom" then
-    self:set_size(nil, self:get_real_height() + 10)
-  else
+  if config.plugins.search_ui.position == "right" then
     if scope:get_selected() == 1 then
       if self.size.x < replace:get_right() + replace:get_width() / 2 then
         self.size.x = replace:get_right() + replace:get_width() / 2
@@ -617,9 +620,12 @@ local function update_size(self)
         self.size.x = findproject:get_right() + findproject:get_width() * 2
       end
     end
+  else
+    self:set_size(nil, self:get_real_height() + 10)
   end
 end
 
+---@param self widget
 local function update_right_positioning(self)
   scope:show()
   label:show()
@@ -631,6 +637,7 @@ local function update_right_positioning(self)
   line:set_position(0, label:get_bottom() + 10)
   findtext:set_position(10, line:get_bottom() + 10)
   findtext.size.x = self.size.x - 20
+
   if scope:get_selected() == 1 then
     replacetext:set_position(10, findtext:get_bottom() + 10)
     replacetext.size.x = self.size.x - 20
@@ -643,6 +650,7 @@ local function update_right_positioning(self)
     replace:set_position(findproject:get_right() + 5, replacetext:get_bottom() + 10)
     line_options:set_position(0, findproject:get_bottom() + 10)
   end
+
   insensitive:set_position(10, line_options:get_bottom() + 10)
   if scope:get_selected() == 1 then
     patterncheck:set_position(10, insensitive:get_bottom() + 10)
@@ -653,6 +661,7 @@ local function update_right_positioning(self)
     regexcheck:set_position(10, insensitive:get_bottom() + 10)
     scope:set_position(10, regexcheck:get_bottom() + 10)
   end
+
   scope:set_size(self.size.x - 20)
   if scope:get_selected() == 1 then
     statusline:set_position(0, scope:get_bottom() + 30)
@@ -661,21 +670,24 @@ local function update_right_positioning(self)
     filepicker:set_size(self.size.x - 20, nil)
     statusline:set_position(0, filepicker:get_bottom() + 30)
   end
+
   status:set_position(10, statusline:get_bottom() + 10)
   if status.label == "" then
     statusline:hide()
   else
     statusline:show()
   end
-  if widget.init_size then
+
+  if self.init_size then
     update_size(self)
-    widget.init_size = false
-    widget:show_animated(false, true)
+    self.init_size = false
+    self:show_animated(false, true)
   end
 
   add_to_node()
 end
 
+---@param self widget
 local function update_bottom_positioning(self)
   scope:hide()
   statusline:hide()
@@ -720,10 +732,10 @@ local function update_bottom_positioning(self)
     filepicker:set_size(self.size.x - 20, nil)
   end
 
-  if widget.init_size then
+  if self.init_size then
     update_size(self)
-    widget.init_size = false
-    widget:show_animated(true, false)
+    self.init_size = false
+    self:show_animated(true, false)
   end
 
   add_to_node()
