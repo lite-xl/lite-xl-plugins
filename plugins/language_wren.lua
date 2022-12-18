@@ -20,7 +20,7 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&?:]", type = "operator" },
     { pattern = "__?[%w_]*",              type = "keyword2" },
     { pattern = "%a[%w_]*()%s*%f[(]",     type = {"function", "normal"} },
-    { pattern = "%a+",                    type = "symbol"   },
+    { pattern = "%a[%w_]+",               type = "symbol"   },
   },
   symbols = {
     ["break"]     = "keyword",
