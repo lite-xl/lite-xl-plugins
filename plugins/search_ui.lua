@@ -25,8 +25,10 @@ local FilePicker = require "widget.filepicker"
 
 ---@class config.plugins.search_ui
 ---@field replace_core_find boolean
+---@field position "right" | "bottom"
 config.plugins.search_ui = common.merge({
   replace_core_find = true,
+  position = "bottom",
   config_spec = {
     name = "Search User Interface",
     {
@@ -35,6 +37,17 @@ config.plugins.search_ui = common.merge({
       path = "replace_core_find",
       type = "toggle",
       default = true
+    },
+    {
+      label = "Position",
+      description = "Location of search interface.",
+      path = "position",
+      type = "selection",
+      default = "bottom",
+      values = {
+        { "Right", "right" },
+        { "Bottom", "bottom" }
+      }
     }
   }
 }, config.plugins.search_ui)
@@ -446,6 +459,34 @@ local function find_replace()
 end
 
 local inside_node = false
+local current_node = nil
+local current_position = ""
+
+local function add_to_node()
+  if not inside_node or current_position ~= config.plugins.search_ui.position then
+    if
+      current_position ~= ""
+      and
+      current_position ~= config.plugins.search_ui.position
+    then
+      widget:hide()
+      current_node:remove_view(core.root_view.root_node, widget)
+      core.root_view.root_node:update_layout()
+      widget:set_size(0, 0)
+      widget.init_size = true
+    end
+    local node = core.root_view:get_primary_node()
+    if config.plugins.search_ui.position == "right" then
+      current_node = node:split("right", widget, {x=true}, true)
+      current_position = "right"
+    else
+      current_node = node:split("down", widget, {y=true}, false)
+      current_position = "bottom"
+    end
+    widget:show()
+    inside_node = true
+  end
+end
 
 ---Show or hide the search pane.
 ---@param av? core.docview
@@ -457,23 +498,28 @@ local function show_find(av, toggle)
     scope:get_selected() == 1
   then
     widget:swap_active_child()
-    widget:hide_animated(false, true)
+    if config.plugins.search_ui.position == "right" then
+      widget:hide_animated(false, true)
+    else
+      widget:hide_animated(true, false)
+    end
     return
   end
 
-  if inside_node then
+  if inside_node and current_position == config.plugins.search_ui.position then
     if toggle then
       widget:toggle_visible(true, false, true)
     else
       if not widget:is_visible() then
-        widget:show_animated(false, true)
+        if config.plugins.search_ui.position == "right" then
+          widget:show_animated(false, true)
+        else
+          widget:show_animated(true, false)
+        end
       end
     end
   else
-    local node = core.root_view:get_primary_node()
-    node:split("right", widget, {x=true}, true)
-    widget:show()
-    inside_node = true
+    add_to_node()
   end
 
   if widget:is_visible() then
@@ -558,63 +604,145 @@ function findprev:on_click() find(true) end
 function findproject:on_click() project_search() end
 function replace:on_click() find_replace() end
 
+local function update_size(self)
+  if config.plugins.search_ui.position == "bottom" then
+    self:set_size(nil, self:get_real_height() + 10)
+  else
+    if scope:get_selected() == 1 then
+      if self.size.x < replace:get_right() + replace:get_width() / 2 then
+        self.size.x = replace:get_right() + replace:get_width() / 2
+      end
+    else
+      if self.size.x < findproject:get_right() + findproject:get_width() * 2 then
+        self.size.x = findproject:get_right() + findproject:get_width() * 2
+      end
+    end
+  end
+end
+
+local function update_right_positioning(self)
+  scope:show()
+  label:show()
+  status:show()
+  line_options:show()
+  label:set_label("Find and Replace")
+
+  label:set_position(10, 10)
+  line:set_position(0, label:get_bottom() + 10)
+  findtext:set_position(10, line:get_bottom() + 10)
+  findtext.size.x = self.size.x - 20
+  if scope:get_selected() == 1 then
+    replacetext:set_position(10, findtext:get_bottom() + 10)
+    replacetext.size.x = self.size.x - 20
+    findprev:set_position(10, replacetext:get_bottom() + 10)
+    findnext:set_position(findprev:get_right() + 5, replacetext:get_bottom() + 10)
+    replace:set_position(findnext:get_right() + 5, replacetext:get_bottom() + 10)
+    line_options:set_position(0, replace:get_bottom() + 10)
+  else
+    findproject:set_position(10, findtext:get_bottom() + 10)
+    replace:set_position(findproject:get_right() + 5, replacetext:get_bottom() + 10)
+    line_options:set_position(0, findproject:get_bottom() + 10)
+  end
+  insensitive:set_position(10, line_options:get_bottom() + 10)
+  if scope:get_selected() == 1 then
+    patterncheck:set_position(10, insensitive:get_bottom() + 10)
+    regexcheck:set_position(10, patterncheck:get_bottom() + 10)
+    replaceinselection:set_position(10, regexcheck:get_bottom() + 10)
+    scope:set_position(10, replaceinselection:get_bottom() + 10)
+  else
+    regexcheck:set_position(10, insensitive:get_bottom() + 10)
+    scope:set_position(10, regexcheck:get_bottom() + 10)
+  end
+  scope:set_size(self.size.x - 20)
+  if scope:get_selected() == 1 then
+    statusline:set_position(0, scope:get_bottom() + 30)
+  else
+    filepicker:set_position(10, scope:get_bottom() + 10)
+    filepicker:set_size(self.size.x - 20, nil)
+    statusline:set_position(0, filepicker:get_bottom() + 30)
+  end
+  status:set_position(10, statusline:get_bottom() + 10)
+  if status.label == "" then
+    statusline:hide()
+  else
+    statusline:show()
+  end
+  if widget.init_size then
+    update_size(self)
+    widget.init_size = false
+    widget:show_animated(false, true)
+  end
+
+  add_to_node()
+end
+
+local function update_bottom_positioning(self)
+  scope:hide()
+  statusline:hide()
+
+  if scope:get_selected() == 1 then
+    label:hide()
+    status:show()
+    status:set_position(10, 10)
+    replaceinselection:set_position(self.size.x - replaceinselection:get_width() - 10, 10)
+    regexcheck:set_position(replaceinselection:get_position().x - 10 - regexcheck:get_width(), 10)
+    patterncheck:set_position(regexcheck:get_position().x - 10  - patterncheck:get_width(), 10)
+    insensitive:set_position(patterncheck:get_position().x - 10 - insensitive:get_width(), 10)
+    line:set_position(0, status:get_bottom() + 10)
+  else
+    label:show()
+    status:hide()
+    label:set_label("Find in Directory")
+    label:set_position(10, 10)
+    regexcheck:set_position(self.size.x - regexcheck:get_width() - 10, 10)
+    insensitive:set_position(regexcheck:get_position().x - 10 - insensitive:get_width(), 10)
+    line:set_position(0, label:get_bottom() + 10)
+  end
+
+  if scope:get_selected() == 1 then
+    findtext:set_position(10, line:get_bottom() + 10)
+    findtext.size.x = self.size.x - 40 - findprev:get_width() - findnext:get_width()
+    findnext:set_position(self.size.x - 10 - findnext:get_width(), line:get_bottom() + 10)
+    findprev:set_position(findnext:get_position().x - 10 - findprev:get_width(), line:get_bottom() + 10)
+    replacetext:set_position(10, findtext:get_bottom() + 10)
+    replacetext.size.x = findtext.size.x
+    replace:set_position(self.size.x - 15 - replace:get_width(), findtext:get_bottom() + 10)
+    replace.size.x = findprev:get_width() + findnext:get_width() + 10
+    line_options:hide()
+  else
+    findtext:set_position(10, line:get_bottom() + 10)
+    findtext.size.x = self.size.x - 30 - findproject:get_width()
+    findproject:set_position(self.size.x - 10 - findproject:get_width(), line:get_bottom() + 10)
+    replace:set_position(findproject:get_right() + 5, replacetext:get_bottom() + 10)
+    line_options:show()
+    line_options:set_position(0, findproject:get_bottom() + 10)
+    filepicker:set_position(10, line_options:get_bottom() + 10)
+    filepicker:set_size(self.size.x - 20, nil)
+  end
+
+  if widget.init_size then
+    update_size(self)
+    widget.init_size = false
+    widget:show_animated(true, false)
+  end
+
+  add_to_node()
+end
+
 -- reposition items on scale changes
 function widget:update()
   if Widget.update(self) then
-    label:set_position(10, 10)
-    line:set_position(0, label:get_bottom() + 10)
-    findtext:set_position(10, line:get_bottom() + 10)
-    findtext.size.x = self.size.x - 20
-    if scope:get_selected() == 1 then
-      replacetext:set_position(10, findtext:get_bottom() + 10)
-      replacetext.size.x = self.size.x - 20
-      findprev:set_position(10, replacetext:get_bottom() + 10)
-      findnext:set_position(findprev:get_right() + 5, replacetext:get_bottom() + 10)
-      replace:set_position(findnext:get_right() + 5, replacetext:get_bottom() + 10)
-      line_options:set_position(0, replace:get_bottom() + 10)
+    if config.plugins.search_ui.position == "right" then
+      update_right_positioning(self)
     else
-      findproject:set_position(10, findtext:get_bottom() + 10)
-      replace:set_position(findproject:get_right() + 5, replacetext:get_bottom() + 10)
-      line_options:set_position(0, findproject:get_bottom() + 10)
-    end
-    insensitive:set_position(10, line_options:get_bottom() + 10)
-    if scope:get_selected() == 1 then
-      patterncheck:set_position(10, insensitive:get_bottom() + 10)
-      regexcheck:set_position(10, patterncheck:get_bottom() + 10)
-      replaceinselection:set_position(10, regexcheck:get_bottom() + 10)
-      scope:set_position(10, replaceinselection:get_bottom() + 10)
-    else
-      regexcheck:set_position(10, insensitive:get_bottom() + 10)
-      scope:set_position(10, regexcheck:get_bottom() + 10)
-    end
-    scope:set_size(self.size.x - 20)
-    if scope:get_selected() == 1 then
-      statusline:set_position(0, scope:get_bottom() + 30)
-    else
-      filepicker:set_position(10, scope:get_bottom() + 10)
-      filepicker:set_size(self.size.x - 20, nil)
-      statusline:set_position(0, filepicker:get_bottom() + 30)
-    end
-    status:set_position(10, statusline:get_bottom() + 10)
-    if status.label == "" then
-      statusline:hide()
-    else
-      statusline:show()
-    end
-    if widget.init_size then
-      if scope:get_selected() == 1 then
-        if self.size.x < replace:get_right() + replace:get_width() / 2 then
-          self.size.x = replace:get_right() + replace:get_width() / 2
-        end
-      else
-        if self.size.x < findproject:get_right() + findproject:get_width() * 2 then
-          self.size.x = findproject:get_right() + findproject:get_width() * 2
-        end
-      end
-      widget.init_size = false
-      widget:show_animated(false, true)
+      update_bottom_positioning(self)
     end
   end
+end
+
+function widget:on_scale_change(...)
+  Widget.on_scale_change(self, ...)
+  update_size(self)
 end
 
 --------------------------------------------------------------------------------
@@ -670,7 +798,11 @@ command.add(
 command.add(function() return widget:is_visible() and not core.active_view:is(CommandView) end, {
   ["search-replace:hide"] = function()
     widget:swap_active_child()
-    widget:hide_animated(false, true)
+    if config.plugins.search_ui.position == "right" then
+      widget:hide_animated(false, true)
+    else
+      widget:hide_animated(true, false)
+    end
     if view_is_open(doc_view) then
       core.set_active_view(doc_view)
     end
