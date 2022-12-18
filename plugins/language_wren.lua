@@ -13,6 +13,7 @@ syntax.add {
     { pattern = "%d+%.%d+[Ee]%d+",        type = "number"   },
     { pattern = "%d+%.%d+",               type = "number"   },
     { pattern = "%d+[Ee]%d+",             type = "number"   },
+    { pattern = "0x%x+",                  type = "number"   },
     { pattern = "%d+",                    type = "number"   },
     { pattern = "%.%.%.?",                type = "operator" },
     { pattern = "[<>!=]=",                type = "operator" },
