@@ -20,6 +20,7 @@ style.syntax.paren4  =  style.syntax.paren4 or { common.color "#52dab2"}
 style.syntax.paren5  =  style.syntax.paren5 or { common.color "#5a98cf"}
 
 local tokenize = tokenizer.tokenize
+local extract_subsyntaxes = tokenizer.extract_subsyntaxes
 local closers = {
   ["("] = ")",
   ["["] = "]",
@@ -28,6 +29,13 @@ local closers = {
 
 local function parenstyle(parenstack)
   return "paren" .. ((#parenstack % config.plugins.rainbowparen.parens) + 1)
+end
+
+function tokenizer.extract_subsyntaxes(base_syntax, state)
+  if not config.plugins.rainbowparen.enabled then
+    return extract_subsyntaxes(base_syntax, state)
+  end
+  return extract_subsyntaxes(base_syntax, state.istate)
 end
 
 function tokenizer.tokenize(syntax, text, state)
