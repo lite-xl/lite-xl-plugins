@@ -20,6 +20,7 @@ syntax.add {
     { pattern = "|[^|]+|%s+",             type = "string"   },
     { pattern = "[%+%-=/%*%^%%<>!~|&?:]", type = "operator" },
     { pattern = "_[%w_]*",                type = "keyword2" },
+    { pattern = "#!?%a[%w_]*%s*%(?[%w _,\"=]*%)?", type = "comment"  },
     { pattern = "%a[%w_]*()%s+()is()%s+%a[%w_]*%s*%f[{]", type = {"function", "normal", "keyword", "normal"}},
     { pattern = "%a[%w_]*%s*=()%s*%f[(]", type = {"function", "normal"} },
     { pattern = "%a[%w_]*()%s*%f[({]",    type = {"function", "normal"} },
