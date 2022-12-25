@@ -13,6 +13,7 @@
 local core = require "core"
 local common = require "core.common"
 local config = require "core.config"
+local trimwhitespace = require "plugins.trimwhitespace"
 local Doc = require "core.doc"
 local Parser = require "plugins.editorconfig.parser"
 
@@ -63,15 +64,15 @@ end
 ---Helper to add or substract final new line, it also makes final new line
 ---visble which lite-xl does not.
 ---@param doc core.doc
----@param not_raw boolean If true register change on undo stack
+---@param raw? boolean If true does not register change on undo stack
 ---@return boolean handled_new_line
-local function handle_final_new_line(doc, not_raw)
+local function handle_final_new_line(doc, raw)
   local handled = false
   ---@diagnostic disable-next-line
   if doc.insert_final_newline then
     handled = true
     if doc.lines[#doc.lines] ~= "\n" then
-      if not_raw then
+      if not raw then
         doc:insert(#doc.lines, math.huge, "\n")
       else
         table.insert(doc.lines, "\n")
@@ -80,17 +81,22 @@ local function handle_final_new_line(doc, not_raw)
   ---@diagnostic disable-next-line
   elseif type(doc.insert_final_newline) == "boolean" then
     handled = true
-    for _=#doc.lines, 1, -1 do
-      local l = #doc.lines
-      if l > 1 and doc.lines[l] == "\n" then
-        local current_line = doc:get_selection()
-        if current_line == l then
-          doc:set_selection(l-1, math.huge, l-1, math.huge)
-        end
-        if not_raw then
-          doc:remove(l-1, math.huge, l, math.huge)
-        else
-          table.remove(doc.lines, l)
+    if trimwhitespace.trim_empty_end_lines then
+      trimwhitespace.trim_empty_end_lines(doc, raw)
+    -- TODO: remove this once 2.1.1 is released
+    else
+      for _=#doc.lines, 1, -1 do
+        local l = #doc.lines
+        if l > 1 and doc.lines[l] == "\n" then
+          local current_line = doc:get_selection()
+          if current_line == l then
+            doc:set_selection(l-1, math.huge, l-1, math.huge)
+          end
+          if not raw then
+            doc:remove(l-1, math.huge, l, math.huge)
+          else
+            table.remove(doc.lines, l)
+          end
         end
       end
     end
@@ -263,6 +269,8 @@ function editorconfig.apply(doc)
 
     if options.trim_trailing_whitespace then
       doc.trim_trailing_whitespace = true
+    elseif options.trim_trailing_whitespace == false then
+      doc.trim_trailing_whitespace = false
     else
       doc.trim_trailing_whitespace = nil
     end
@@ -275,7 +283,20 @@ function editorconfig.apply(doc)
       doc.insert_final_newline = nil
     end
 
-    handle_final_new_line(doc)
+    if
+      (
+        type(doc.trim_trailing_whitespace) == "boolean"
+        or
+        type(doc.insert_final_newline) == "boolean"
+      )
+      -- TODO: remove this once 2.1.1 is released
+      and
+      trimwhitespace.disable
+    then
+      trimwhitespace.disable(doc)
+    end
+
+    handle_final_new_line(doc, true)
   end
 end
 
@@ -343,6 +364,12 @@ end
 ---Cloned trimwitespace plugin until it is exposed for other plugins.
 ---@param doc core.doc
 local function trim_trailing_whitespace(doc)
+  if trimwhitespace.trim then
+    trimwhitespace.trim(doc)
+    return
+  end
+
+  -- TODO: remove this once 2.1.1 is released
   local cline, ccol = doc:get_selection()
   for i = 1, #doc.lines do
     local old_text = doc:get_text(i, 1, i, math.huge)
@@ -370,7 +397,7 @@ function Doc:save(...)
   end
 
   local lc = #self.lines
-  local handle_new_line = handle_final_new_line(self, true)
+  local handle_new_line = handle_final_new_line(self)
 
   -- remove the unnecesary visible \n\n or the disabled \n
   if handle_new_line then
