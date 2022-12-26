@@ -5,6 +5,7 @@ local config = require "core.config"
 local command = require "core.command"
 local common = require "core.common"
 local DocView = require "core.docview"
+local Highlighter = require "core.doc.highlighter"
 local Doc = require "core.doc"
 
 local platform_dictionary_file
@@ -23,6 +24,58 @@ config.plugins.spellcheck = common.merge({
 local last_input_time = 0
 local word_pattern = "%a+"
 local words
+
+local spell_cache = setmetatable({}, { __mode = "k" })
+local font_canary
+local font_size_canary
+
+
+-- Move cache to make space for new lines
+local prev_insert_notify = Highlighter.insert_notify
+function Highlighter:insert_notify(line, n, ...)
+  prev_insert_notify(self, line, n, ...)
+  local blanks = { }
+  if not spell_cache[self] then
+    spell_cache[self] = {}
+  end
+  for i = 1, n do
+    blanks[i] = false
+  end
+  common.splice(spell_cache[self], line, 0, blanks)
+end
+
+
+-- Close the cache gap created by removed lines
+local prev_remove_notify = Highlighter.remove_notify
+function Highlighter:remove_notify(line, n, ...)
+  prev_remove_notify(self, line, n, ...)
+  if not spell_cache[self] then
+    spell_cache[self] = {}
+  end
+  common.splice(spell_cache[self], line, n)
+end
+
+
+-- Remove changed lines from the cache
+local prev_tokenize_line = Highlighter.tokenize_line
+function Highlighter:tokenize_line(idx, state, ...)
+  local res = prev_tokenize_line(self, idx, state, ...)
+  if not spell_cache[self] then
+    spell_cache[self] = {}
+  end
+  spell_cache[self][idx] = false
+  return res
+end
+
+local function reset_cache()
+  for i=1,#spell_cache do
+    local cache = spell_cache[i]
+    for j=1,#cache do
+      cache[j] = false
+    end
+  end
+end
+
 
 local function load_dictionary()
   core.add_thread(function()
@@ -61,7 +114,6 @@ end
 
 
 local text_input = Doc.text_input
-
 function Doc:text_input(...)
   text_input(self, ...)
   last_input_time = system.get_time()
@@ -69,7 +121,6 @@ end
 
 
 local draw_line_text = DocView.draw_line_text
-
 function DocView:draw_line_text(idx, x, y)
   local lh = draw_line_text(self, idx, x, y)
 
@@ -83,20 +134,39 @@ function DocView:draw_line_text(idx, x, y)
     return lh
   end
 
-  local s, e = 0, 0
-  local text = self.doc.lines[idx]
+  if font_canary ~= style.code_font
+    or font_size_canary ~= style.code_font:get_size()
+  then
+    spell_cache[self.doc.highlighter] = {}
+    font_canary = style.code_font
+    font_size_canary = style.code_font:get_size()
+    reset_cache()
+  end
+  if not spell_cache[self.doc.highlighter][idx] then
+    local calculated = {}
+    local s, e = 0, 0
+    local text = self.doc.lines[idx]
 
-  while true do
-    s, e = text:find(word_pattern, e + 1)
-    if not s then break end
-    local word = text:sub(s, e):lower()
-    if not words[word] and not active_word(self.doc, idx, e + 1) then
-      local color = style.spellcheck_error or style.syntax.keyword2
-      local x1, y1 = self:get_line_screen_position(idx, s)
-      local x2, y2 = self:get_line_screen_position(idx, e + 1)
-      local h = math.ceil(1 * SCALE)
-      renderer.draw_rect(x1, y1 + self:get_line_height() - h, x2 - x1, h, color)
+    while true do
+      s, e = text:find(word_pattern, e + 1)
+      if not s then break end
+      local word = text:sub(s, e):lower()
+      if not words[word] and not active_word(self.doc, idx, e + 1) then
+        table.insert(calculated, self:get_col_x_offset(idx, s))
+        table.insert(calculated, self:get_col_x_offset(idx, e + 1))
+      end
     end
+
+    spell_cache[self.doc.highlighter][idx] = calculated
+  end
+
+  local color = style.spellcheck_error or style.syntax.keyword2
+  local h = math.ceil(1 * SCALE)
+  local lh = self:get_line_height()
+  local calculated = spell_cache[self.doc.highlighter][idx]
+  for i=1,#calculated,2 do
+    local x1, x2 = calculated[i] + x, calculated[i+1] + x
+    renderer.draw_rect(x1, y + lh - h, x2 - x1, h, color)
   end
   return lh
 end
