@@ -1,6 +1,7 @@
 -- mod-version:3
 local core = require "core"
 local command = require "core.command"
+local keymap = require "core.keymap"
 local common = require "core.common"
 local DocView = require "core.docview"
 
@@ -49,6 +50,11 @@ command.add(nil,{
   ["tab-switcher:tab-list-current-split"] = function()
     ask_selection("Switch to tab in current split", tab_switcher.get_tab_list(core.root_view:get_active_node()))
   end
+})
+
+keymap.add({
+  ["alt+p"]       = "tab-switcher:tab-list",
+  ["alt+shift+p"] = "tab-switcher:tab-list-current-split"
 })
 
 return tab_switcher
