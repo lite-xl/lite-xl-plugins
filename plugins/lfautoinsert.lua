@@ -12,7 +12,7 @@ config.plugins.lfautoinsert = common.merge({ map = {
   ["=%s*\n"] = false,
   [":%s*\n"] = false,
   ["->%s*\n"] = false,
-  ["^%s*<([^/][^%s>]*)[^>]*>%s*\n"] = "</$TEXT>",
+  ["^%s*<([^/!][^%s>]*)[^>]*>%s*\n"] = "</$TEXT>",
   ["^%s*{{#([^/][^%s}]*)[^}]*}}%s*\n"] = "{{/$TEXT}}",
   ["/%*%s*\n"] = "*/",
   ["c/c++"] = {
