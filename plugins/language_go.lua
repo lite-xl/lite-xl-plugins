@@ -193,3 +193,40 @@ syntax.add {
   },
 }
 
+syntax.add {
+  name = "Go",
+  files = { "go%.mod" },
+  comment = "//",
+  patterns = {
+    { pattern = "//.-\n", type = "comment"},
+    { pattern = "module() %S+()",
+      type = { "keyword", "string", "normal"}
+    },
+    { pattern = "go() %S+()",
+      type = { "keyword", "string", "normal" }
+    },
+    { pattern = "%S+() v%S+()",
+      type = { "string", "keyword", "normal" }
+    },
+  },
+  symbols = {
+    ["require"] = "keyword",
+    ["module"]  = "keyword",
+    ["go"]      = "keyword",
+  }
+}
+
+syntax.add {
+  name = "Go",
+  files = { "go%.sum" },
+  patterns = {
+    { pattern = "%S+() v[^/]-() h1:()%S+()=",
+      type = { "string", "keyword", "normal", "string", "normal" }
+    },
+    { pattern = "%S+() v[^/]-()/%S+() h1:()%S+()=",
+      type = { "string", "keyword", "string", "normal", "string", "normal" }
+    },
+  },
+  symbols = {}
+}
+
