@@ -79,10 +79,10 @@ local inline_variables = {
   { pattern = "{()%$[%a_][%w_]*()}",
     type = { "keyword", "keyword2", "keyword" }
   },
-  { pattern = "%$[%a_][%w_]*()%[()%w*()%]",
+  { pattern = "%$[%a_][%w_]*()%[()[%w_]*()%]",
     type = { "keyword2", "keyword", "string", "keyword" }
   },
-  { pattern = "%$[%a_][%w_]*()%->()%w+",
+  { pattern = "%$[%a_][%w_]*()%->()%a[%w_]*",
     type = { "keyword2", "keyword", "symbol" }
   },
   { pattern = "%$[%a_][%w_]*", type = "keyword2" },
@@ -335,13 +335,12 @@ end
 syntax.add {
   name = "PHP",
   files = { "%.php$", "%.phtml" },
-  comment = "//",
-  block_comment = {"/*", "*/"},
+  block_comment = { "<!--", "-->" },
   patterns = {
     {
       regex = {
         "<\\?php\\s+",
-        "(\\?>|(?=`{3}))" -- end if inside markdown code tags
+        "(?:\\?>|(?=`{3}))" -- end if inside markdown code tags
       },
       syntax = ".phps",
       type = "keyword2"

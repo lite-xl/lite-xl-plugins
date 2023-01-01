@@ -75,6 +75,24 @@ function M.load_blocking(font_name, font_size, font_opt)
   return result
 end
 
+function M.load_group_blocking(group, font_size, font_opt)
+  local fonts = {}
+  for i in ipairs(group) do
+    local co = coroutine.create(function()
+      return M.load(group[i], font_size, font_opt)
+    end)
+    local result
+    while coroutine.status(co) ~= "dead" do
+      local ok, err = coroutine.resume(co)
+      if not ok then error(err) end
+      result = err
+    end
+    table.insert(fonts, result)
+  end
+
+  return renderer.font.group(fonts)
+end
+
 function M.use(spec)
   core.add_thread(function()
     for key, value in pairs(spec) do
@@ -87,7 +105,13 @@ end
 -- I'll leave this here
 function M.use_blocking(spec)
   for key, value in pairs(spec) do
-    style[key] = M.load_blocking(value.name, value.size, value)
+    local font
+    if value.group then
+      font = M.load_group_blocking(value.group, value.size, value)
+    else
+      font = M.load_blocking(value.name, value.size, value)
+    end
+    style[key] = font
   end
 end
 

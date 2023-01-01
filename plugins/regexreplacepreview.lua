@@ -3,6 +3,68 @@ local core = require "core"
 local keymap = require "core.keymap"
 local command = require "core.command"
 
+-- Compatibility with latest lite-xl regex changes.
+local regex_match = regex.find_offsets or regex.match
+
+-- Will iterate back through any UTF-8 bytes so that we don't replace bits
+-- mid character.
+local function previous_character(str, index)
+  local byte
+  repeat
+    index = index - 1
+    byte = string.byte(str, index)
+  until byte < 128 or byte >= 192
+  return index
+end
+
+-- Moves to the end of the identified character.
+local function end_character(str, index)
+  local byte = string.byte(str, index + 1)
+  while byte and byte >= 128 and byte < 192 do
+    index = index + 1
+    byte = string.byte(str, index + 1)
+  end
+  return index
+end
+
+-- Build off matching. For now, only support basic replacements, but capture
+-- groupings should be doable. We can even have custom group replacements and
+-- transformations and stuff in lua. Currently, this takes group replacements
+-- as \1 - \9.
+-- Should work on UTF-8 text.
+local function substitute(pattern_string, str, replacement)
+  local pattern = type(pattern_string) == "table" and
+    pattern_string or regex.compile(pattern_string)
+  local result, indices = {}
+  local matches, replacements = {}, {}
+  local offset = 0
+  repeat
+    indices = { regex.cmatch(pattern, str, offset) }
+    if #indices > 0 then
+      table.insert(matches, indices)
+      local currentReplacement = replacement
+      if #indices > 2 then
+        for i = 1, (#indices/2 - 1) do
+          currentReplacement = string.gsub(
+            currentReplacement,
+            "\\" .. i,
+            str:sub(indices[i*2+1], end_character(str,indices[i*2+2]-1))
+          )
+        end
+      end
+      currentReplacement = string.gsub(currentReplacement, "\\%d", "")
+      table.insert(replacements, { indices[1], #currentReplacement+indices[1] })
+      if indices[1] > 1 then
+        table.insert(result, str:sub(offset, previous_character(str, indices[1])) .. currentReplacement)
+      else
+        table.insert(result, currentReplacement)
+      end
+      offset = indices[2]
+    end
+  until #indices == 0 or indices[1] == indices[2]
+  return table.concat(result) .. str:sub(offset), matches, replacements
+end
+
 -- Workaround for bug in Lite XL 2.1
 -- Remove this when b029f5993edb7dee5ccd2ba55faac1ec22e24609 is in a release
 local function get_selection(doc, sort)
@@ -64,7 +126,7 @@ local function regex_replace_file(view, pattern, old_lines, raw, start_line, end
       local old_text = old_lines[i] or doc.lines[i]
       local old_length = #old_text
       if replacement then
-        new_text, matches, rmatches = regex.gsub(re, old_text, replacement)
+        new_text, matches, rmatches = substitute(re, old_text, replacement)
       end
       if matches and #matches > 0 then
         old_lines[i] = old_text
@@ -78,7 +140,7 @@ local function regex_replace_file(view, pattern, old_lines, raw, start_line, end
         old_lines[i] = nil
       end
       if not replacement then
-        local s,e = regex.match(re, old_text)
+        local s,e = regex_match(re, old_text)
         if s then
           line_scroll = i
           doc:set_selection(i, s, i, e)

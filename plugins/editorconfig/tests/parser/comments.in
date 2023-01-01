@@ -1,0 +1,47 @@
+; test comments
+
+root = true
+
+[test3.c]
+; Comment before properties ignored
+key=value
+
+[test4.c]
+key1=value1
+; Comment between properties ignored
+key2=value2
+
+; Semicolon or hash at end of value read as part of value
+[test5.c]
+key1=value; not comment
+key2=value # not comment
+
+; Backslash before a semicolon or hash is part of the value
+[test6.c]
+key1=value \; not comment
+key2=value \# not comment
+
+; Escaped semicolon in section name
+[test\;.c]
+key=value
+
+[test9.c]
+# Comment before properties ignored
+key=value
+
+[test10.c]
+key1=value1
+# Comment between properties ignored
+key2=value2
+
+# Octothorpe at end of value read as part of value
+[test11.c]
+key=value# not comment
+
+# Escaped octothorpe in value
+[test12.c]
+key=value \# not comment
+
+# Escaped octothorpe in section name
+[test\#.c]
+key=value
