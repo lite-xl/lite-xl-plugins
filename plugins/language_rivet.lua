@@ -28,11 +28,11 @@ syntax.add {
             type = "number"
         },
         {pattern = "[A-Z][%w_]*", type = "keyword2"}, -- types
+        {pattern = "%@%s?[%a_][%w_]*", type = "literal"}, -- builtin func/var
         {pattern = "[%a_][%w_]*%f[(]", type = "function"},
-        {pattern = "[%a_][%w_]*!%f[(]", type = "keyword2"}, -- builtin function
         {pattern = "[%a_][%w_]*", type = "symbol"},
         {pattern = {"#%[", "%]"}, type = "literal"},
-        {pattern = "#%s?[%a_][%w_]*", type = "comment"} -- #if/#elif/#else/#endif
+        {pattern = "#%s?[%a_][%w_]*", type = "comment"} -- if/elif/else/endif
     },
     symbols = {
         ["and"] = "keyword",
@@ -49,9 +49,11 @@ syntax.add {
         ["errdefer"] = "keyword",
         ["extend"] = "keyword",
         ["extern"] = "keyword",
+        ["export"] = "keyword",
         ["false"] = "literal",
         ["fn"] = "keyword",
         ["for"] = "keyword",
+        ["from"] = "keyword",
         ["if"] = "keyword",
         ["import"] = "keyword",
         ["in"] = "keyword",
