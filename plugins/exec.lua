@@ -1,7 +1,6 @@
 -- mod-version:3
 local core = require "core"
 local command = require "core.command"
-local process = require "process"
 
 
 local function exec(cmd, keep_newline)
