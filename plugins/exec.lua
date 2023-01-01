@@ -12,14 +12,6 @@ local function exec(cmd, keep_newline)
 end
 
 
-local function get_active_view()
-  if getmetatable(core.active_view) == DocView then
-    return core.active_view
-  end
-  return nil
-end
-
-
 local function execw(cmd, v, keep_newline)
   local fp = io.popen(cmd, "w")
   fp:write(tostring(v))
@@ -27,10 +19,9 @@ local function execw(cmd, v, keep_newline)
 end
 
 
-local function exec_doc(cmd, keep_newline)
+local function exec_doc(dv, cmd, keep_newline)
   local tmp = exec("mktemp -t lite-xl.tmp.XXXXXXXXXX", false)
-  local av_doc = get_active_view().doc
-  execw(cmd .. " 2>&1 >" .. tmp, av_doc, keep_newline)
+  execw(cmd .. " 2>&1 >" .. tmp, dv, keep_newline)
 
   return exec("cat " .. tmp, keep_newline)
 end
@@ -77,7 +68,7 @@ command.add("core.docview", {
     core.command_view:enter("Replace With Result Of Command From Piped Document Content", {
       submit = function(cmd)
         dv.doc:replace(function(str)
-          return exec_doc(
+          return exec_doc(dv, 
             "printf %b " .. printfb_quote(str:gsub("%\n$", "") .. "\n") .. " | eval '' " .. shell_quote(cmd),
             str:find("%\n$")
           )
