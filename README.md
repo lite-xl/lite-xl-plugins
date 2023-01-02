@@ -24,7 +24,7 @@ you may install plugins by doing
   lpm install plugin_name
 ```
 
-*Note: if you make a pull request, the manifest.json file should be updated to match the
+*Note: if you make a pull request, the manifest.json file should be updated to
 include any new plugins added, as specified in the [lite-xl plugin manifest specification]
 (https://github.com/adamharrison/lite-xl-plugin-manager/blob/master/SPEC.md).*
 
