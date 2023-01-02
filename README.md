@@ -26,15 +26,17 @@ you may install plugins by doing
 
 *Note: if you make a pull request, the manifest.json file should be updated to match the
 include any new plugins added, as specified in the [lite-xl plugin manifest specification]
-(https://github.com/adamharrison/lite-xl-plugin-manager/blob/master/SPEC.md).
+(https://github.com/adamharrison/lite-xl-plugin-manager/blob/master/SPEC.md).*
 
-Please note, that in this official repository, any plugins that specify a `remote` must also
+*Please note, that in this official repository, any plugins that specify a `remote` must also
 pin the remote to a specific commit hash. Any plugin that is hosted not in a repository, 
-but only with a `url` must provide a `checksum` that matches the existing plugin.
+but only with a `url` must provide a `checksum` that matches the existing plugin.*
 
-Any non-conforming PRs will not be accepted. The table below will be updated automatically.
+*Any non-conforming PRs will not be accepted. The table below will be updated automatically.*
 
-Any entries marked with an asterisk are hosted on external repositories.*
+*Any entries marked with an asterisk are hosted on external repositories.*
+
+***
 
 | Plugin                                                                                                         | Description                                                                                                                                                                                                                                                                                      |
 | :------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
