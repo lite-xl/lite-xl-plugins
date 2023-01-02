@@ -32,19 +32,20 @@ local string_interpolation = {
     patterns = default_patterns,
     symbols = default_symbols,
   }},
-  { pattern = '[%S][%w]*', type = "string" },
+  { pattern = "[%S][%w]*", type = "string" },
 }
 
 merge_tables(default_patterns, {
-  { pattern = "#.-\n",            type = "comment" },
-  { pattern = { "/%*", "%*/" },   type = "comment" },
-  { pattern = "-?%.?%d+",         type = "number"  },
+  { pattern = "#.-\n",        type = "comment" },
+  { pattern = {"/%*", "%*/"}, type = "comment" },
+  { pattern = "-?%.?%d+",     type = "number"  },
+
   -- interpolation
   { pattern = {"%${", "}"}, type = "keyword2", syntax = {
     patterns = default_patterns,
     symbols = default_symbols,
   }},
-  { pattern = { '"', '"'}, type = "string", syntax = {
+  { pattern = {'"', '"'}, type = "string", syntax = {
     patterns = string_interpolation,
     symbols = {},
   }},
@@ -52,6 +53,7 @@ merge_tables(default_patterns, {
     patterns = string_interpolation,
     symbols = {},
   }},
+
   -- operators
   { pattern = "[%+%-%?!<>%*]", type = "operator" },
   { pattern = "/ ",            type = "operator" },
@@ -63,9 +65,12 @@ merge_tables(default_patterns, {
   { pattern = "!=",            type = "operator" },
   { pattern = ">=",            type = "operator" },
   { pattern = "<=",            type = "operator" },
+
   -- paths (function because its not used otherwise)
-  { pattern = "~?%.?%.?/[^%s%[%]%(%){};,:]+", type = "function" },
-  { pattern = {"<", ">"},                     type = "function" },
+  { pattern = "%.?%.?/[^%s%[%]%(%){};,:]+", type = "function" },
+  { pattern = "~/[^%s%[%]%(%){};,:]+",      type = "function" },
+  { pattern = {"<", ">"},                   type = "function" },
+
   -- every other symbol
   { pattern = "[%a%-%_][%w%-%_]*", type = "symbol" },
   { pattern = ";%.,:",             type = "normal" },
@@ -73,9 +78,9 @@ merge_tables(default_patterns, {
 
 syntax.add {
   name = "Nix",
-  files = { "%.nix$" },
+  files = {"%.nix$"},
   comment = "#",
-  block_comment = { "/*", "*/" },
+  block_comment = {"/*", "*/"},
   patterns = default_patterns,
   symbols = default_symbols,
 }
