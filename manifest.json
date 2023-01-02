@@ -4,42 +4,42 @@
       "description": "Align multiple carets and selections *([clip](https://user-images.githubusercontent.com/2798487/165631951-532f8d24-d596-4dd0-9d21-ff53c71ed32f.mp4))*",
       "version": "0.1",
       "path": "plugins/align_carets.lua",
-      "name": "align_carets",
+      "id": "align_carets",
       "mod_version": "3"
     },
     {
       "description": "Automatically inserts closing brackets and quotes. Also allows selected text to be wrapped with brackets or quotes.",
       "version": "0.1",
       "path": "plugins/autoinsert.lua",
-      "name": "autoinsert",
+      "id": "autoinsert",
       "mod_version": "3"
     },
     {
       "description": "Automatically saves files when they are changed",
       "version": "0.1",
       "path": "plugins/autosave.lua",
-      "name": "autosave",
+      "id": "autosave",
       "mod_version": "3"
     },
     {
       "description": "Automatically saves files that were changed when the main window loses focus by switching to another application",
       "version": "0.1",
       "path": "plugins/autosaveonfocuslost.lua",
-      "name": "autosaveonfocuslost",
+      "id": "autosaveonfocuslost",
       "mod_version": "3"
     },
     {
       "description": "Automatically hardwraps lines when typing",
       "version": "0.1",
       "path": "plugins/autowrap.lua",
-      "name": "autowrap",
+      "id": "autowrap",
       "mod_version": "3"
     },
     {
       "description": "Shows the current time and date in a view with large text *([screenshot](https://user-images.githubusercontent.com/3920290/82752891-3318df00-9db9-11ea-803f-261d80d5cf53.png))*",
       "version": "0.1",
       "path": "plugins/bigclock.lua",
-      "name": "bigclock",
+      "id": "bigclock",
       "mod_version": "3"
     },
     {
@@ -47,27 +47,27 @@
       "version": "0.1",
       "remote": "https://git.sr.ht/~tmpod/black-lite:2a1ab1b703f954edb39efb73e72b44c0d18b30a2",
       "mod_version": 3,
-      "name": "black"
+      "id": "black"
     },
     {
       "description": "Underlines matching pair for bracket under the caret *([screenshot](https://user-images.githubusercontent.com/3920290/80132745-0c863f00-8594-11ea-8875-c455c6fd7eae.png))*",
       "version": "0.1",
       "path": "plugins/bracketmatch.lua",
-      "name": "bracketmatch",
+      "id": "bracketmatch",
       "mod_version": "3"
     },
     {
       "description": "Centers document's content on the screen and adds zen mode support *([screenshot](https://user-images.githubusercontent.com/3920290/82127896-bf6e4500-97ae-11ea-97fc-ba9a552bc9a4.png))*",
       "version": "0.1",
       "path": "plugins/centerdoc.lua",
-      "name": "centerdoc",
+      "id": "centerdoc",
       "mod_version": "3"
     },
     {
       "description": "Underlays color values (eg. `#ff00ff` or `rgb(255, 0, 255)`) with their resultant color. *([screenshot](https://user-images.githubusercontent.com/3920290/80743752-731bd780-8b15-11ea-97d3-847db927c5dc.png))*",
       "version": "0.1",
       "path": "plugins/colorpreview.lua",
-      "name": "colorpreview",
+      "id": "colorpreview",
       "mod_version": "3"
     },
     {
@@ -75,34 +75,34 @@
       "version": "0.1",
       "remote": "https://github.com/franko/console:08c3f5e1483627c3ae688ce5a99008e823357f2c",
       "mod_version": 3,
-      "name": "console"
+      "id": "console"
     },
     {
       "description": "Simple context menu *([screenshot](https://github.com/takase1121/lite-contextmenu/blob/master/assets/screenshot.jpg?raw=true))*",
       "version": "0.1",
       "remote": "https://github.com/takase1121/lite-contextmenu:5af041bf27319c6c26316c7fc8b7a60494be7d32",
       "mod_version": 3,
-      "name": "contextmenu"
+      "id": "contextmenu"
     },
     {
       "description": "Copy file location to clipboard",
       "version": "0.1",
       "path": "plugins/copyfilelocation.lua",
-      "name": "copyfilelocation",
+      "id": "copyfilelocation",
       "mod_version": "3"
     },
     {
       "description": "Customize the caret in the editor",
       "version": "0.1",
       "path": "plugins/custom_caret.lua",
-      "name": "custom_caret",
+      "id": "custom_caret",
       "mod_version": "3"
     },
     {
       "description": "Insert date-, time- and date-time-stamps",
       "version": "0.1",
       "path": "plugins/datetimestamps.lua",
-      "name": "datetimestamps",
+      "id": "datetimestamps",
       "mod_version": "3"
     },
     {
@@ -110,27 +110,27 @@
       "version": "0.1",
       "remote": "https://github.com/vincens2005/lite-xl-discord:93ac3abb7381fe6d5c9734e40c008cd26713f1a8",
       "mod_version": 3,
-      "name": "discord"
+      "id": "discord-presence"
     },
     {
       "description": "Provides basic drag and drop of selected text (in same document)",
       "version": "0.1",
       "path": "plugins/dragdropselected.lua",
-      "name": "dragdropselected",
+      "id": "dragdropselected",
       "mod_version": "3"
     },
     {
       "description": "[EditorConfig](https://editorconfig.org/) implementation for Lite XL",
       "version": "0.1",
       "path": "plugins/editorconfig",
-      "name": "editorconfig",
+      "id": "editorconfig",
       "mod_version": 3
     },
     {
       "checksum": "e3607f5107f4e42fd99006289b8214a473824c6973b8e9c637b4657eba763650",
       "description": "Make sure the file ends with one blank line.",
       "version": "0.1",
-      "name": "eofnewline",
+      "id": "eofnewline",
       "mod_version": 3,
       "url": "https://github.com/bokunodev/lite_modules/blob/master/plugins/eofnewline-xl.lua?raw=1"
     },
@@ -138,7 +138,7 @@
       "description": "Preview tabs. Opening a doc will replace the contents of the preview tab. Marks tabs as non-preview on any change or tab double clicking.",
       "version": "0.1",
       "path": "plugins/ephemeral_tabs.lua",
-      "name": "ephemeral_tabs",
+      "id": "ephemeral_tabs",
       "mod_version": "3"
     },
     {
@@ -146,13 +146,13 @@
       "version": "0.1",
       "remote": "https://github.com/ThaCuber/equationgrapher?raw=1:bd7056b5d4a6f6b98365e1a5e3e78e29ed843d13",
       "mod_version": 3,
-      "name": "equationgrapher"
+      "id": "equationgrapher"
     },
     {
       "description": "Replaces selected Lua code with its evaluated result",
       "version": "0.1",
       "path": "plugins/eval.lua",
-      "name": "eval",
+      "id": "eval",
       "mod_version": "3"
     },
     {
@@ -160,20 +160,20 @@
       "version": "0.1",
       "remote": "https://github.com/TorchedSammy/Evergreen.lxl:c4058bfdedd27aee3b23319905b5df7b4ca52ef8",
       "mod_version": 3,
-      "name": "evergreen"
+      "id": "evergreen"
     },
     {
       "description": "Runs selected text through shell command and replaces with result",
       "version": "0.1",
       "path": "plugins/exec.lua",
-      "name": "exec",
+      "id": "exec",
       "mod_version": "3"
     },
     {
       "description": "When a selection crosses multiple lines, it is drawn to the end of the screen *([screenshot](https://user-images.githubusercontent.com/2798487/140995616-89a20b55-5917-4df8-8a7c-d7c53732fa8b.png))*",
       "version": "0.1",
       "path": "plugins/extend_selection_line.lua",
-      "name": "extend_selection_line",
+      "id": "extend_selection_line",
       "mod_version": "3"
     },
     {
@@ -181,27 +181,27 @@
       "version": "0.1",
       "remote": "https://github.com/ShadiestGoat/lite-xl-exterm:aca8827fc1af831890cffd3dd122debac72429c6",
       "mod_version": 3,
-      "name": "exterm"
+      "id": "exterm"
     },
     {
       "description": "Adds support for fallback fonts *([gif](https://raw.githubusercontent.com/takase1121/lite-fallback-fonts/master/assets/Iw18fI57J0.gif))*",
       "version": "0.1",
       "remote": "https://github.com/takase1121/lite-fallback-fonts:281cafc014f7931f041046f76496797695678bb4",
       "mod_version": 3,
-      "name": "fallbackfonts"
+      "id": "fallbackfonts"
     },
     {
       "description": "Allows users to load fonts with [fontconfig](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html).",
       "version": "0.1",
       "path": "plugins/fontconfig.lua",
-      "name": "fontconfig",
+      "id": "fontconfig",
       "mod_version": "3"
     },
     {
       "description": "Change the syntax used for a file.",
       "version": "0.1",
       "path": "plugins/force_syntax.lua",
-      "name": "force_syntax",
+      "id": "force_syntax",
       "mod_version": "3"
     },
     {
@@ -209,13 +209,13 @@
       "version": "0.1",
       "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
       "mod_version": 3,
-      "name": "formatter"
+      "id": "formatter"
     },
     {
       "description": "Opens a preview of the current markdown file in a browser window *([screenshot](https://user-images.githubusercontent.com/3920290/82754898-f7394600-9dc7-11ea-8278-2305363ed372.png))*",
       "version": "0.1",
       "path": "plugins/ghmarkdown.lua",
-      "name": "ghmarkdown",
+      "id": "ghmarkdown",
       "mod_version": "3"
     },
     {
@@ -223,27 +223,27 @@
       "version": "0.1",
       "remote": "https://github.com/juliardi/lite-xl-gitblame:6de7a97bb2b635ac667750f49087afd9980f2e06",
       "mod_version": 3,
-      "name": "gitblame"
+      "id": "gitblame"
     },
     {
       "description": "highlight changed lines from git *([screenshot](https://raw.githubusercontent.com/vincens2005/lite-xl-gitdiff-highlight/master/screenshot.png))*",
       "version": "0.1",
       "remote": "https://github.com/vincens2005/lite-xl-gitdiff-highlight:12ddfa619054dfdd1ed86426d60b569dc536c43e",
       "mod_version": 3,
-      "name": "gitdiff_highlight"
+      "id": "gitdiff_highlight"
     },
     {
       "description": "Displays git branch and insert/delete count in status bar *([screenshot](https://user-images.githubusercontent.com/3920290/81107223-bcea3080-8f0e-11ea-8fc7-d03173f42e33.png))*",
       "version": "0.1",
       "path": "plugins/gitstatus.lua",
-      "name": "gitstatus",
+      "id": "gitstatus",
       "mod_version": "3"
     },
     {
       "description": "Auto-formats the current go file, adds the missing imports and the missing return cases",
       "version": "0.1",
       "path": "plugins/gofmt.lua",
-      "name": "gofmt",
+      "id": "gofmt",
       "mod_version": "3"
     },
     {
@@ -251,27 +251,27 @@
       "version": "0.1",
       "remote": "https://github.com/takase1121/lite-xl-immersive-title:cf3a8029ac7154ea53ac819a95d44a6ff102f051",
       "mod_version": 3,
-      "name": "immersive"
+      "id": "immersive"
     },
     {
       "description": "Convert between tabs and spaces indentation",
       "version": "0.1",
       "path": "plugins/indent_convert.lua",
-      "name": "indent_convert",
+      "id": "indent_convert",
       "mod_version": "3"
     },
     {
       "description": "Adds indent guides *([screenshot](https://user-images.githubusercontent.com/3920290/79640716-f9860000-818a-11ea-9c3b-26d10dd0e0c0.png))*",
       "version": "0.1",
       "path": "plugins/indentguide.lua",
-      "name": "indentguide",
+      "id": "indentguide",
       "mod_version": "3"
     },
     {
       "description": "Adds inter-process communication support",
       "version": "0.1",
       "path": "plugins/ipc.lua",
-      "name": "ipc",
+      "id": "ipc",
       "mod_version": "3"
     },
     {
@@ -279,20 +279,24 @@
       "version": "0.1",
       "remote": "https://github.com/Kode-Community/kinc_plugin:309fe4193a09cf739ed0a058b1a6966a463a1dbd",
       "mod_version": 3,
-      "name": "Kinc"
+      "name": "Kinc Projects",
+      "id": "kinc-projects",
+      "dependencies": {
+        "console": {}
+      }
     },
     {
       "description": "Syntax for the [Angelscript](https://www.angelcode.com/angelscript/) programming language",
       "version": "0.1",
       "path": "plugins/language_angelscript.lua",
-      "name": "language_angelscript",
+      "id": "language_angelscript",
       "mod_version": "3"
     },
     {
       "description": "Syntax for Intel x86 assembly",
       "version": "0.1",
       "path": "plugins/language_assembly_x86.lua",
-      "name": "language_assembly_x86",
+      "id": "language_assembly_x86",
       "mod_version": "3"
     },
     {
@@ -300,34 +304,34 @@
       "version": "0.1",
       "remote": "https://github.com/devPnal/lite-plugin-autohotkey:e1597623163ab9e1d99ec1e8ee75cbe95b3e5d91",
       "mod_version": 3,
-      "name": "language_autohotkey"
+      "id": "language_autohotkey"
     },
     {
       "description": "Syntax for Windows [Batch Files](https://en.wikipedia.org/wiki/Batch_file)",
       "version": "0.1",
       "path": "plugins/language_batch.lua",
-      "name": "language_batch",
+      "id": "language_batch",
       "mod_version": "3"
     },
     {
       "description": "Syntax for [BibTex](https://en.wikipedia.org/wiki/BibTeX) files",
       "version": "0.1",
       "path": "plugins/language_bib.lua",
-      "name": "language_bib",
+      "id": "language_bib",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the Caddyfile used on the [Caddy](https://caddyserver.com/) web server",
       "version": "0.1",
       "path": "plugins/language_caddyfile.lua",
-      "name": "language_caddyfile",
+      "id": "language_caddyfile",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the CMake build system language",
       "version": "0.1",
       "path": "plugins/language_cmake.lua",
-      "name": "language_cmake",
+      "id": "language_cmake",
       "mod_version": "3"
     },
     {
@@ -335,55 +339,55 @@
       "version": "0.1",
       "remote": "https://github.com/FilBot3/lite-xl-language-containerfile:2d5e46b1051c48d74f9b63f9844913c630d19b87",
       "mod_version": 3,
-      "name": "language_containerfile"
+      "id": "language_containerfile"
     },
     {
       "description": "Syntax for the [Crystal](https://crystal-lang.org) programming language",
       "version": "0.1",
       "remote": "https://github.com/Tamnac/lite-plugin-crystal:1913a6dd23a7640b507943230291a15aecc3235d",
       "mod_version": 3,
-      "name": "language_crystal"
+      "id": "language_crystal"
     },
     {
       "description": "Syntax for the [C#](http://csharp.net) programming language",
       "version": "0.1",
       "path": "plugins/language_csharp.lua",
-      "name": "language_csharp",
+      "id": "language_csharp",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [D](https://dlang.org/) programming language",
       "version": "0.1",
       "path": "plugins/language_d.lua",
-      "name": "language_d",
+      "id": "language_d",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Dart](https://dart.dev/) programming languiage",
       "version": "0.1",
       "path": "plugins/language_dart.lua",
-      "name": "language_dart",
+      "id": "language_dart",
       "mod_version": "3"
     },
     {
       "description": "Syntax for diff and patch files",
       "version": "0.1",
       "path": "plugins/language_diff.lua",
-      "name": "language_diff",
+      "id": "language_diff",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Elixir](https://elixir-lang.org) programming language",
       "version": "0.1",
       "path": "plugins/language_elixir.lua",
-      "name": "language_elixir",
+      "id": "language_elixir",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Elm](https://elm-lang.org) programming language",
       "version": "0.1",
       "path": "plugins/language_elm.lua",
-      "name": "language_elm",
+      "id": "language_elm",
       "mod_version": "3"
     },
     {
@@ -391,82 +395,82 @@
       "version": "0.1",
       "remote": "https://github.com/anthonyaxenov/lite-xl-env-syntax:89a4274af6a786963930d7a8fb542dfe61daa801",
       "mod_version": 3,
-      "name": "language_env"
+      "id": "language_env"
     },
     {
       "description": "Syntax for the [ERB](https://github.com/ruby/erb) programming language. Also known as eRuby or Embedded Ruby.",
       "version": "0.1",
       "path": "plugins/language_erb.lua",
-      "name": "language_erb",
+      "id": "language_erb",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [fe](https://github.com/rxi/fe) programming language",
       "version": "0.1",
       "path": "plugins/language_fe.lua",
-      "name": "language_fe",
+      "id": "language_fe",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [fennel](https://fennel-lang.org) programming language",
       "version": "0.1",
       "path": "plugins/language_fennel.lua",
-      "name": "language_fennel",
+      "id": "language_fennel",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [fstab](https://en.wikipedia.org/wiki/Fstab) config files",
       "version": "0.1",
       "path": "plugins/language_fstab.lua",
-      "name": "language_fstab",
+      "id": "language_fstab",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Godot Engine](https://godotengine.org/)'s GDScript scripting language",
       "version": "0.1",
       "path": "plugins/language_gdscript.lua",
-      "name": "language_gdscript",
+      "id": "language_gdscript",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [GLSL](https://www.khronos.org/registry/OpenGL/specs/gl/) programming language",
       "version": "0.1",
       "path": "plugins/language_glsl.lua",
-      "name": "language_glsl",
+      "id": "language_glsl",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Gemtext](https://gemini.circumlunar.space/docs/gemtext.gmi) markup language",
       "version": "0.1",
       "path": "plugins/language_gmi.lua",
-      "name": "language_gmi",
+      "id": "language_gmi",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Go](https://golang.org/) programming language",
       "version": "0.1",
       "path": "plugins/language_go.lua",
-      "name": "language_go",
+      "id": "language_go",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [HLSL](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl) programming language",
       "version": "0.1",
       "path": "plugins/language_hlsl.lua",
-      "name": "language_hlsl",
+      "id": "language_hlsl",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Haskell](https://www.haskell.org/) programming language",
       "version": "0.1",
       "path": "plugins/language_hs.lua",
-      "name": "language_hs",
+      "id": "language_hs",
       "mod_version": "3"
     },
     {
       "version": "0.1",
       "path": "/plugins/language_htaccess.lua",
-      "name": "language_htaccess",
+      "id": "language_htaccess",
       "mod_version": "3"
     },
     {
@@ -474,48 +478,48 @@
       "version": "0.1",
       "remote": "https://github.com/anthonyaxenov/lite-xl-ignore-syntax:3a9a5e0ae03b82358473da5d1c6012944d65ea95",
       "mod_version": 3,
-      "name": "language_ignore"
+      "id": "language_ignore"
     },
     {
       "description": "Syntax for [ini](https://en.wikipedia.org/wiki/INI_file) files",
       "version": "0.1",
       "path": "plugins/language_ini.lua",
-      "name": "language_ini",
+      "id": "language_ini",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Java](https://en.wikipedia.org/wiki/Java_\\(programming_language\\)) programming language",
       "version": "0.1",
       "path": "plugins/language_java.lua",
-      "name": "language_java",
+      "id": "language_java",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [jiyu](https://github.com/machinamentum/jiyu) programming language",
       "version": "0.1",
       "path": "plugins/language_jiyu.lua",
-      "name": "language_jiyu",
+      "id": "language_jiyu",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [JSX](https://reactjs.org/docs/introducing-jsx.html) language for the React framework in JavaScript",
       "version": "0.1",
       "path": "plugins/language_jsx.lua",
-      "name": "language_jsx",
+      "id": "language_jsx",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Julia](https://julialang.org/) programming language",
       "version": "0.1",
       "path": "plugins/language_julia.lua",
-      "name": "language_julia",
+      "id": "language_julia",
       "mod_version": "3"
     },
     {
       "checksum": "08a9f8635b09a98cec9dfca8bb65f24fd7b6585c7e8308773e7ddff9a3e5a60f",
       "description": "Syntax for [Kaitai](http://kaitai.io/) struct files",
       "version": "0.1",
-      "name": "language_ksy",
+      "id": "language_ksy",
       "mod_version": 3,
       "url": "https://raw.githubusercontent.com/whiteh0le/lite-plugins/main/plugins/language_ksy.lua?raw=1"
     },
@@ -523,42 +527,42 @@
       "description": "Syntax for [Liquid](https://shopify.github.io/liquid/) templating language",
       "version": "0.1",
       "path": "plugins/language_liquid.lua",
-      "name": "language_liquid",
+      "id": "language_liquid",
       "mod_version": "3"
     },
     {
       "description": "Syntax for [Lobster](https://strlen.com/lobster/) programming language",
       "version": "0.1",
       "path": "plugins/language_lobster.lua",
-      "name": "language_lobster",
+      "id": "language_lobster",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the Make build system language",
       "version": "0.1",
       "path": "plugins/language_make.lua",
-      "name": "language_make",
+      "id": "language_make",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Meson](https://mesonbuild.com) build system language",
       "version": "0.1",
       "path": "plugins/language_meson.lua",
-      "name": "language_meson",
+      "id": "language_meson",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [MiniScript](https://miniscript.org) programming language",
       "version": "0.1",
       "path": "plugins/language_miniscript.lua",
-      "name": "language_miniscript",
+      "id": "language_miniscript",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [MoonScript](https://moonscript.org) scripting language",
       "version": "0.1",
       "path": "plugins/language_moon.lua",
-      "name": "language_moon",
+      "id": "language_moon",
       "mod_version": "3"
     },
     {
@@ -566,69 +570,69 @@
       "version": "0.1",
       "remote": "https://github.com/AKDev21/nelua-lite-xl:8bf0ec5e7bf2b8dc9d39e6ebaaa5344fc5969319",
       "mod_version": 3,
-      "name": "language_nelua"
+      "id": "language_nelua"
     },
     {
       "description": "Syntax for [Nginx](https://www.nginx.com/) config files",
       "version": "0.1",
       "path": "plugins/language_nginx.lua",
-      "name": "language_nginx",
+      "id": "language_nginx",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Nim](https://nim-lang.org) programming language",
       "version": "0.1",
       "path": "plugins/language_nim.lua",
-      "name": "language_nim",
+      "id": "language_nim",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Objective C](https://en.wikipedia.org/wiki/Objective-C) programming language",
       "version": "0.1",
       "path": "plugins/language_objc.lua",
-      "name": "language_objc",
+      "id": "language_objc",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Odin](https://github.com/odin-lang/Odin) programming language",
       "version": "0.1",
       "path": "plugins/language_odin.lua",
-      "name": "language_odin",
+      "id": "language_odin",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Perl](https://perl.org) programming language",
       "version": "0.1",
       "path": "plugins/language_perl.lua",
-      "name": "language_perl",
+      "id": "language_perl",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [PHP](https://php.net) programming language",
       "version": "0.1",
       "path": "plugins/language_php.lua",
-      "name": "language_php",
+      "id": "language_php",
       "mod_version": "3"
     },
     {
       "description": "Syntax for [Pico-8](https://www.lexaloffle.com/pico-8.php) cartridge files",
       "version": "0.1",
       "path": "plugins/language_pico8.lua",
-      "name": "language_pico8",
+      "id": "language_pico8",
       "mod_version": "3"
     },
     {
       "description": "Syntax for [PKGBUILD](https://wiki.archlinux.org/title/PKGBUILD) package description files",
       "version": "0.1",
       "path": "plugins/language_pkgbuild.lua",
-      "name": "language_pkgbuild",
+      "id": "language_pkgbuild",
       "mod_version": "3"
     },
     {
       "description": "Syntax for [PO](https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html) translation files",
       "version": "0.1",
       "path": "plugins/language_po.lua",
-      "name": "language_po",
+      "id": "language_po",
       "mod_version": "3"
     },
     {
@@ -636,173 +640,168 @@
       "version": "0.1",
       "remote": "https://github.com/MrAnyx/lite-plugin-pony:34d9ec673eaa6c409bcef0febaa0a36cc3acdf4e",
       "mod_version": 3,
-      "name": "language_pony"
+      "id": "language_pony"
     },
     {
       "description": "Syntax for [PowerShell](https://docs.microsoft.com/en-us/powershell) scripting language",
       "version": "0.1",
       "path": "plugins/language_powershell.lua",
-      "name": "language_powershell",
+      "id": "language_powershell",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the postgresql database access language",
       "version": "0.1",
       "path": "plugins/language_psql.lua",
-      "name": "language_psql",
+      "id": "language_psql",
       "mod_version": "3"
     },
     {
       "description": "Syntax for [R](https://www.r-project.org/) scripting language",
       "version": "0.1",
       "path": "plugins/language_R.lua",
-      "name": "language_r",
-      "mod_version": 3
-    },
-    {
-      "version": "0.1",
-      "path": "/plugins/language_R.lua",
+      "id": "language_r",
       "name": "language_R",
-      "mod_version": "3"
+      "mod_version": 3
     },
     {
       "description": "Syntax for the [ReScript](https://rescript-lang.org/) programming language",
       "version": "0.1",
       "path": "plugins/language_rescript.lua",
-      "name": "language_rescript",
+      "id": "language_rescript",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Rivet](https://github.com/rivet-lang/rivet) programming language",
       "version": "0.1",
       "path": "plugins/language_rivet.lua",
-      "name": "language_rivet",
+      "id": "language_rivet",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Ruby](https://www.ruby-lang.org/) programming language",
       "version": "0.1",
       "path": "plugins/language_ruby.lua",
-      "name": "language_ruby",
+      "id": "language_ruby",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Rust](https://rust-lang.org/) programming language",
       "version": "0.1",
       "path": "plugins/language_rust.lua",
-      "name": "language_rust",
+      "id": "language_rust",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Sass](https://sass-lang.com/) CSS preprocessor",
       "version": "0.1",
       "path": "plugins/language_sass.lua",
-      "name": "language_sass",
+      "id": "language_sass",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Scala](https://scala-lang.org/) programming language",
       "version": "0.1",
       "path": "plugins/language_scala.lua",
-      "name": "language_scala",
+      "id": "language_scala",
       "mod_version": "3"
     },
     {
       "description": "Syntax for shell scripting language",
       "version": "0.1",
       "path": "plugins/language_sh.lua",
-      "name": "language_sh",
+      "id": "language_sh",
       "mod_version": "3"
     },
     {
       "description": "Syntax for ssh & sshd config files",
       "version": "0.1",
       "path": "plugins/language_ssh_config.lua",
-      "name": "language_ssh_config",
+      "id": "language_ssh_config",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Tcl](https://www.tcl.tk/) programming language",
       "version": "0.1",
       "path": "plugins/language_tcl.lua",
-      "name": "language_tcl",
+      "id": "language_tcl",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Teal](https://github.com/teal-language/tl) programming language, a typed dialect of Lua.",
       "version": "0.1",
       "path": "plugins/language_teal.lua",
-      "name": "language_teal",
+      "id": "language_teal",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [LaTeX](https://www.latex-project.org/) typesetting language",
       "version": "0.1",
       "path": "plugins/language_tex.lua",
-      "name": "language_tex",
+      "id": "language_tex",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [TOML](https://toml.io/en/) configuration language",
       "version": "0.1",
       "path": "plugins/language_toml.lua",
-      "name": "language_toml",
+      "id": "language_toml",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [TypeScript](https://www.typescriptlang.org/) programming language, a typed dialect of JavaScript.",
       "version": "0.1",
       "path": "plugins/language_ts.lua",
-      "name": "language_ts",
+      "id": "language_ts",
       "mod_version": "3"
     },
     {
       "description": "Syntax for [TSX](https://www.typescriptlang.org/docs/handbook/jsx.html) language",
       "version": "0.1",
       "path": "plugins/language_tsx.lua",
-      "name": "language_tsx",
+      "id": "language_tsx",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [V](https://vlang.io/) programming language",
       "version": "0.1",
       "path": "plugins/language_v.lua",
-      "name": "language_v",
+      "id": "language_v",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Wren](http://wren.io/) programming language",
       "version": "0.1",
       "path": "plugins/language_wren.lua",
-      "name": "language_wren",
+      "id": "language_wren",
       "mod_version": "3"
     },
     {
       "description": "Syntax for [YAML](https://yaml.org/) serialization language",
       "version": "0.1",
       "path": "plugins/language_yaml.lua",
-      "name": "language_yaml",
+      "id": "language_yaml",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Zig](https://ziglang.org/) programming language",
       "version": "0.1",
       "path": "plugins/language_zig.lua",
-      "name": "language_zig",
+      "id": "language_zig",
       "mod_version": "3"
     },
     {
       "description": "Automatically inserts indentation and closing bracket/text after newline",
       "version": "0.1",
       "path": "plugins/lfautoinsert.lua",
-      "name": "lfautoinsert",
+      "id": "lfautoinsert",
       "mod_version": "3"
     },
     {
       "description": "The ability to change the display of the line number *([screenshot](https://user-images.githubusercontent.com/5556081/129493788-6a4cbd7a-9074-4133-bab7-110ed55f18f7.png))*",
       "version": "0.1",
       "path": "plugins/linenumbers.lua",
-      "name": "linenumbers",
+      "id": "linenumbers",
       "mod_version": "3"
     },
     {
@@ -810,244 +809,244 @@
       "version": "0.1",
       "remote": "https://github.com/liquid600pgm/lintplus:3268641818069070b270486a88966b2a8bfef97e",
       "mod_version": 3,
-      "name": "lint"
+      "id": "lint"
     },
     {
       "description": "Linters for multiple languages",
       "version": "0.1",
       "remote": "https://github.com/drmargarido/linters:eb1611eaade6e5328df5172bd3f759d853c33a31",
       "mod_version": 3,
-      "name": "linter"
+      "id": "linter"
     },
     {
       "description": "Discord rich presence for Lite XL (display file editing in Discord)",
       "version": "0.1",
       "remote": "https://github.com/TorchedSammy/Litepresence:1985e8a59feaaea5085a5add2521293a11f6d376",
       "mod_version": 3,
-      "name": "litepresence"
+      "id": "litepresence"
     },
     {
       "description": "Generates Lorem Ipsum placeholder dummy text",
       "version": "0.1",
       "remote": "https://github.com/sheetcoder/lorem:b2da386519850d6f91ef67097e50141b3b11a90e",
       "mod_version": 3,
-      "name": "lorem"
+      "id": "lorem"
     },
     {
       "description": "Provides code completion (also known as IntelliSense) using the Language Server Protocol",
       "version": "0.1",
       "remote": "https://github.com/lite-xl/lite-xl-lsp:a6a8f70d6304bd77c7588e0a652945002df7fbad",
       "mod_version": 3,
-      "name": "lsp"
+      "id": "lsp"
     },
     {
       "description": "Completion menu kind/type icons for Lite XL LSP",
       "version": "0.1",
       "remote": "https://github.com/TorchedSammy/lite-xl-lspkind:272ebd0010cd3e205cfb486b1bae889080fec437",
       "mod_version": 3,
-      "name": "lspkind"
+      "id": "lspkind"
     },
     {
       "description": "Remaps mac modkeys `command/option` to `ctrl/alt`",
       "version": "0.1",
       "path": "plugins/macmodkeys.lua",
-      "name": "macmodkeys",
+      "id": "macmodkeys",
       "mod_version": "3"
     },
     {
       "description": "Add markers to docs and jump between them quickly *([screenshot](https://user-images.githubusercontent.com/3920290/82252149-5faaa200-9946-11ea-9199-bea2efb7ee23.png))*",
       "version": "0.1",
       "path": "plugins/markers.lua",
-      "name": "markers",
+      "id": "markers",
       "mod_version": "3"
     },
     {
       "description": "Show memory usage in the status view",
       "version": "0.1",
       "path": "plugins/memoryusage.lua",
-      "name": "memoryusage",
+      "id": "memoryusage",
       "mod_version": "3"
     },
     {
       "description": "Shows a minimap on the right-hand side of the docview. Taken from [@andsve](https://github.com/andsve/lite-plugins/tree/minimap-plugin), and improved upon.",
       "version": "0.1",
       "path": "plugins/minimap.lua",
-      "name": "minimap",
+      "id": "minimap",
       "mod_version": "3"
     },
     {
       "description": "Adds a motion-trail to the caret *([gif](https://user-images.githubusercontent.com/3920290/83256814-085ccb00-a1ab-11ea-9e35-e6633cbed1a9.gif))*",
       "version": "0.1",
       "path": "plugins/motiontrail.lua",
-      "name": "motiontrail",
+      "id": "motiontrail",
       "mod_version": "3"
     },
     {
       "description": "Allows moving back and forward between document positions, reducing the amount of scrolling",
       "version": "0.1",
       "path": "plugins/navigate.lua",
-      "name": "navigate",
+      "id": "navigate",
       "mod_version": "3"
     },
     {
       "description": "File icons set for TreeView. Download [font](https://github.com/yamatsum/nonicons/raw/6a2faf4fbdfbe353c5ae6a496740ac4bfb6d0e74/dist/nonicons.ttf) to your config/fonts folder",
       "version": "0.1",
       "path": "plugins/nonicons.lua",
-      "name": "nonicons",
+      "id": "nonicons",
       "mod_version": "3"
     },
     {
       "description": "Change the opaqueness/transparency of `lite-xl` using shift+mousewheel or a command.",
       "version": "0.1",
       "path": "plugins/opacity.lua",
-      "name": "opacity",
+      "id": "opacity",
       "mod_version": "3"
     },
     {
       "description": "Automatically prompts you if you tried to open a binary file in the editor",
       "version": "0.1",
       "path": "plugins/open_ext.lua",
-      "name": "open_ext",
+      "id": "open_ext",
       "mod_version": "3"
     },
     {
       "description": "Opens the parent directory of the current file in the file manager",
       "version": "0.1",
       "path": "plugins/openfilelocation.lua",
-      "name": "openfilelocation",
+      "id": "openfilelocation",
       "mod_version": "3"
     },
     {
       "description": "Opens the selected filename or url",
       "version": "0.1",
       "path": "plugins/openselected.lua",
-      "name": "openselected",
+      "id": "openselected",
       "mod_version": "3"
     },
     {
       "description": "PDF preview for TeX files",
       "version": "0.1",
       "path": "plugins/pdfview.lua",
-      "name": "pdfview",
+      "id": "pdfview",
       "mod_version": "3"
     },
     {
       "description": "Adds middle mouse click copy/paste (primary selection). To use this plugin, `xclip` must be installed.",
       "version": "0.1",
       "path": "plugins/primary_selection.lua",
-      "name": "primary_selection",
+      "id": "primary_selection",
       "mod_version": "3"
     },
     {
       "description": "Adds the ability to profile lite-xl with the [lua-profiler](https://github.com/charlesmallah/lua-profiler)",
       "version": "0.1",
       "path": "plugins/profiler",
-      "name": "profiler",
+      "id": "profiler",
       "mod_version": 3
     },
     {
       "description": "Show nesting of parentheses with rainbow colours",
       "version": "0.1",
       "path": "plugins/rainbowparen.lua",
-      "name": "rainbowparen",
+      "id": "rainbowparen",
       "mod_version": "3"
     },
     {
       "description": "Allows for you to write a regex and its replacement in one go, and live preview the results.",
       "version": "0.1",
       "path": "plugins/regexreplacepreview.lua",
-      "name": "regexreplacepreview",
+      "id": "regexreplacepreview",
       "mod_version": "3"
     },
     {
       "description": "Keep a list of recently closed tabs, and restore the tab in order on ctrl+shift+t.",
       "version": "0.1",
       "path": "plugins/restoretabs.lua",
-      "name": "restoretabs",
+      "id": "restoretabs",
       "mod_version": "3"
     },
     {
       "description": "Displays current scale (zoom) in status view (depends on scale plugin)",
       "version": "0.1",
       "path": "plugins/scalestatus.lua",
-      "name": "scalestatus",
+      "id": "scalestatus",
       "mod_version": "3"
     },
     {
       "description": "Select a color theme, like VScode, Sublime Text.(plugin saves changes)",
       "version": "0.1",
       "path": "plugins/select_colorscheme.lua",
-      "name": "select_colorscheme",
+      "id": "select_colorscheme",
       "mod_version": "3"
     },
     {
       "description": "Highlights regions of code that match the current selection *([screenshot](https://user-images.githubusercontent.com/3920290/80710883-5f597c80-8ae7-11ea-97f0-76dfacc08439.png))*",
       "version": "0.1",
       "path": "plugins/selectionhighlight.lua",
-      "name": "selectionhighlight",
+      "id": "selectionhighlight",
       "mod_version": "3"
     },
     {
       "description": "Provides a GUI to manage core and plugin settings, bindings and select color theme *([video](https://user-images.githubusercontent.com/1702572/169743674-ececae24-f6b7-4ff2-bfa2-c4762cd327d9.mp4))*. (depends on [`widget`](https://github.com/lite-xl/lite-xl-widgets))",
       "version": "0.1",
       "path": "plugins/settings.lua",
-      "name": "settings",
+      "id": "settings",
       "mod_version": "3"
     },
     {
       "description": "Displays the current time in the corner of the status view",
       "version": "0.1",
       "path": "plugins/smallclock.lua",
-      "name": "smallclock",
+      "id": "smallclock",
       "mod_version": "3"
     },
     {
       "description": "Smooth caret animation *([gif](https://user-images.githubusercontent.com/20792268/139006049-a0ba6559-88cb-49a7-8077-4822445b4a1f.gif))*",
       "version": "0.1",
       "path": "plugins/smoothcaret.lua",
-      "name": "smoothcaret",
+      "id": "smoothcaret",
       "mod_version": "3"
     },
     {
       "description": "Sorts selected lines alphabetically",
       "version": "0.1",
       "path": "plugins/sort.lua",
-      "name": "sort",
+      "id": "sort",
       "mod_version": "3"
     },
     {
       "description": "Underlines misspelt words *([screenshot](https://user-images.githubusercontent.com/3920290/79923973-9caa7400-842e-11ea-85d4-7a196a91ca50.png))* *-- note: on Windows a [`words.txt`](https://github.com/dwyl/english-words/blob/master/words.txt) dictionary file must be placed beside the exe*",
       "version": "0.1",
       "path": "plugins/spellcheck.lua",
-      "name": "spellcheck",
+      "id": "spellcheck",
       "mod_version": "3"
     },
     {
       "description": "Displays the current date and time in the corner of the status view",
       "version": "0.1",
       "path": "plugins/statusclock.lua",
-      "name": "statusclock",
+      "id": "statusclock",
       "mod_version": "3"
     },
     {
       "description": "Switch between open tabs by searching by name",
       "version": "0.1",
       "path": "plugins/tab_switcher.lua",
-      "name": "tab_switcher",
+      "id": "tab_switcher",
       "mod_version": "3"
     },
     {
       "description": "Displays tab numbers from 1–9 next to their names \\*([screenshot](https://user-images.githubusercontent.com/16415678/101285362-007a8500-37e5-11eb-869b-c10eb9d9d902.png))",
       "version": "0.1",
       "path": "plugins/tabnumbers.lua",
-      "name": "tabnumbers",
+      "id": "tabnumbers",
       "mod_version": "3"
     },
     {
       "description": "Compile Tex files into PDF",
       "version": "0.1",
       "path": "plugins/texcompile.lua",
-      "name": "texcompile",
+      "id": "texcompile",
       "mod_version": "3",
       "dependencies": {
         "console": {}
@@ -1058,20 +1057,20 @@
       "version": "0.1",
       "remote": "https://github.com/monolifed/theme16:c39b33cb318d4baa2b4b9cc6e6370cb3ede3ef22",
       "mod_version": 3,
-      "name": "theme16"
+      "id": "theme16"
     },
     {
       "description": "Select a theme based on filename of active document",
       "version": "0.1",
       "path": "plugins/themeselect.lua",
-      "name": "themeselect",
+      "id": "themeselect",
       "mod_version": "3"
     },
     {
       "description": "Titleizes selected string (`hello world` => `Hello World`)",
       "version": "0.1",
       "path": "plugins/titleize.lua",
-      "name": "titleize",
+      "id": "titleize",
       "mod_version": "3"
     },
     {
@@ -1079,13 +1078,13 @@
       "version": "0.1",
       "remote": "https://github.com/drmargarido/TodoTreeView:a9371045ead3bc820224d3be55db6066398a11c5",
       "mod_version": 3,
-      "name": "todotreeview"
+      "id": "todotreeview"
     },
     {
       "description": "Toggles symbols between `snake_case` and `camelCase`",
       "version": "0.1",
       "path": "plugins/togglesnakecamel.lua",
-      "name": "togglesnakecamel",
+      "id": "togglesnakecamel",
       "mod_version": "3"
     },
     {
@@ -1093,20 +1092,20 @@
       "version": "0.1",
       "remote": "https://github.com/juliardi/lite-xl-treeview-menu-extender:bd9063e453b4024dcd0bf6a4f775ded32ca24d1f",
       "mod_version": 3,
-      "name": "treeview"
+      "id": "treeview"
     },
     {
       "description": "Displays your current typing speed in characters and words per minute in the status bar",
       "version": "0.1",
       "path": "plugins/typingspeed.lua",
-      "name": "typingspeed",
+      "id": "typingspeed",
       "mod_version": "3"
     },
     {
       "description": "Allows scrolling outside the bounds of a document",
       "version": "0.1",
       "path": "plugins/unboundedscroll.lua",
-      "name": "unboundedscroll",
+      "id": "unboundedscroll",
       "mod_version": "3"
     },
     {
@@ -1114,34 +1113,34 @@
       "version": "0.1",
       "remote": "https://github.com/vincens2005/lite-xl-updatechecker:3478abd43618da857d4315bcc8fddf08c27e1150",
       "mod_version": 3,
-      "name": "updatechecker"
+      "id": "updatechecker"
     },
     {
       "description": "VI(vim?) bindings with a hint of DOOM Emacs, for lite-xl",
       "version": "0.1",
       "remote": "https://github.com/eugenpt/lite-xl-vibe:651c4fc55a285eeacbf5992b355d9c80f4fc78cb",
       "mod_version": 3,
-      "name": "vibe"
+      "id": "vibe"
     },
     {
       "description": "Audio visualizer for Lite XL",
       "version": "0.1",
       "remote": "https://github.com/TorchedSammy/Visu:782c7b1ebde38dad2c3c6a1c1dee6761230dea16",
       "mod_version": 3,
-      "name": "visu"
+      "id": "visu"
     },
     {
       "description": "Plugin library that provides a set of re-usable components to more easily write UI elements for your plugins",
       "version": "0.1",
       "remote": "https://github.com/lite-xl/lite-xl-widgets:a632bfdf7c66bacc272fe2c962621cd9860058e1",
       "mod_version": 3,
-      "name": "widget"
+      "id": "widget"
     },
     {
       "description": "Adds in a word count to the statusview.",
       "version": "0.1",
       "path": "plugins/wordcount.lua",
-      "name": "wordcount",
+      "id": "wordcount",
       "mod_version": "3"
     }
   ]
