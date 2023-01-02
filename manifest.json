@@ -809,7 +809,8 @@
       "version": "0.1",
       "remote": "https://github.com/liquid600pgm/lintplus:3268641818069070b270486a88966b2a8bfef97e",
       "mod_version": 3,
-      "id": "lint"
+      "id": "lintplus",
+      "name": "lint+"
     },
     {
       "description": "Linters for multiple languages",
@@ -1092,7 +1093,7 @@
       "version": "0.1",
       "remote": "https://github.com/juliardi/lite-xl-treeview-menu-extender:bd9063e453b4024dcd0bf6a4f775ded32ca24d1f",
       "mod_version": 3,
-      "id": "treeview"
+      "id": "treeview-menu-extender"
     },
     {
       "description": "Displays your current typing speed in characters and words per minute in the status bar",
