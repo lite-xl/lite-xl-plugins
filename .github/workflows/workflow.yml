@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Generate table with `lpm`
         run: |
-          wget https://github.com/adamharrison/lite-xl-plugin-manager/releases/download/v0.94/lpm.x86_64-linux -O lpm
+          wget https://github.com/lite-xl/lite-xl-plugin-manager/releases/download/v0.95/lpm.x86_64-linux -O lpm
           chmod +x lpm
           ./lpm table manifest.json README.md
       - name: Set environment variables
