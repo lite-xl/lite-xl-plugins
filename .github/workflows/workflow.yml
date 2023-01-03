@@ -3,6 +3,7 @@ name: Update README
 on:
   push:
     branches: [master]
+  workflow_disaptch: {}
 
 jobs:
   reorganize:
@@ -20,5 +21,3 @@ jobs:
             git commit -m '[CI] Updated README.md.'
             git push
           fi
-
-workflow_disaptch: {}
