@@ -1,4 +1,4 @@
-name: Reorganize README
+name: Update README
 
 on:
   push:
@@ -14,22 +14,9 @@ jobs:
           wget https://github.com/lite-xl/lite-xl-plugin-manager/releases/download/latest/lpm.x86_64-linux -O lpm
           chmod +x lpm
           ./lpm table manifest.json README.md
-      - name: Set environment variables
-        run: |
-          set +e # need to disable this
-          git diff --exit-code -s README.md
-          echo "has_diff=$?" >> $GITHUB_ENV
-      - name: create PR
-        if: env.has_diff == 1
-        uses: peter-evans/create-pull-request@v3
-        with:
-          commit-message: Reorganize README.md
-          branch: reorganize-ci
-          add-paths: README.md
-          delete-branch: false
-          title: '[CI] Reorganize README.md'
-          body: |
-            This is a CI that makes sure entries match the specified manifest.
-            Please check the [CI run][1] for logs.
-
-            [1]: https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}
+          if ! git diff --exit-code -s README.md; then
+            git config --global user.name "Github Actions" && git config --global user.email "<>"
+            git add README.md 
+            git commit -m '[CI] Updated README.md.'
+            git push
+          fi
