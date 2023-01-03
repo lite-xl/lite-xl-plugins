@@ -251,7 +251,7 @@
       "version": "0.1",
       "remote": "https://github.com/takase1121/lite-xl-immersive-title:cf3a8029ac7154ea53ac819a95d44a6ff102f051",
       "mod_version": 3,
-      "id": "immersive"
+      "id": "immersive-title"
     },
     {
       "description": "Convert between tabs and spaces indentation",
