@@ -3,7 +3,6 @@ name: Update README
 on:
   push:
     branches: [master]
-  workflow_disaptch: {}
 
 jobs:
   reorganize:
