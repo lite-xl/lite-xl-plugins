@@ -46,7 +46,7 @@
       "description": "Integrates the [black](https://github.com/psf/black) Python formatter with lite",
       "version": "0.1",
       "remote": "https://git.sr.ht/~tmpod/black-lite:2a1ab1b703f954edb39efb73e72b44c0d18b30a2",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "black"
     },
     {
@@ -74,14 +74,14 @@
       "description": "A console for running external commands and capturing their output *([gif](https://user-images.githubusercontent.com/3920290/81343656-49325a00-90ad-11ea-8647-ff39d8f1d730.gif))*",
       "version": "0.1",
       "remote": "https://github.com/franko/console:08c3f5e1483627c3ae688ce5a99008e823357f2c",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "console"
     },
     {
       "description": "Simple context menu *([screenshot](https://github.com/takase1121/lite-contextmenu/blob/master/assets/screenshot.jpg?raw=true))*",
       "version": "0.1",
       "remote": "https://github.com/takase1121/lite-contextmenu:5af041bf27319c6c26316c7fc8b7a60494be7d32",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "contextmenu"
     },
     {
@@ -109,7 +109,7 @@
       "description": "Adds the current workspace and file to your Discord Rich Presence",
       "version": "0.1",
       "remote": "https://github.com/vincens2005/lite-xl-discord:93ac3abb7381fe6d5c9734e40c008cd26713f1a8",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "discord-presence"
     },
     {
@@ -124,14 +124,14 @@
       "version": "0.1",
       "path": "plugins/editorconfig",
       "id": "editorconfig",
-      "mod_version": 3
+      "mod_version": "3"
     },
     {
       "checksum": "e3607f5107f4e42fd99006289b8214a473824c6973b8e9c637b4657eba763650",
       "description": "Make sure the file ends with one blank line.",
       "version": "0.1",
       "id": "eofnewline",
-      "mod_version": 3,
+      "mod_version": "3",
       "url": "https://github.com/bokunodev/lite_modules/blob/master/plugins/eofnewline-xl.lua?raw=1"
     },
     {
@@ -145,7 +145,7 @@
       "description": "Graphs y=x equations.",
       "version": "0.1",
       "remote": "https://github.com/ThaCuber/equationgrapher?raw=1:bd7056b5d4a6f6b98365e1a5e3e78e29ed843d13",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "equationgrapher"
     },
     {
@@ -159,7 +159,7 @@
       "description": "Adds Treesitter syntax highlighting support",
       "version": "0.1",
       "remote": "https://github.com/TorchedSammy/Evergreen.lxl:c4058bfdedd27aee3b23319905b5df7b4ca52ef8",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "evergreen"
     },
     {
@@ -180,14 +180,14 @@
       "description": "Allows to open an external console in current project directory",
       "version": "0.1",
       "remote": "https://github.com/ShadiestGoat/lite-xl-exterm:aca8827fc1af831890cffd3dd122debac72429c6",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "exterm"
     },
     {
       "description": "Adds support for fallback fonts *([gif](https://raw.githubusercontent.com/takase1121/lite-fallback-fonts/master/assets/Iw18fI57J0.gif))*",
       "version": "0.1",
       "remote": "https://github.com/takase1121/lite-fallback-fonts:281cafc014f7931f041046f76496797695678bb4",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "fallbackfonts"
     },
     {
@@ -208,7 +208,7 @@
       "description": "formatters for various languages",
       "version": "0.1",
       "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "formatter"
     },
     {
@@ -222,14 +222,14 @@
       "description": "Shows \"git blame\" information of a line *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-gitblame/main/screenshot_1.png))*",
       "version": "0.1",
       "remote": "https://github.com/juliardi/lite-xl-gitblame:6de7a97bb2b635ac667750f49087afd9980f2e06",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "gitblame"
     },
     {
       "description": "highlight changed lines from git *([screenshot](https://raw.githubusercontent.com/vincens2005/lite-xl-gitdiff-highlight/master/screenshot.png))*",
       "version": "0.1",
       "remote": "https://github.com/vincens2005/lite-xl-gitdiff-highlight:12ddfa619054dfdd1ed86426d60b569dc536c43e",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "gitdiff_highlight"
     },
     {
@@ -250,7 +250,7 @@
       "description": "Dark (or even Mica!) title bar for Lite XL",
       "version": "0.1",
       "remote": "https://github.com/takase1121/lite-xl-immersive-title:cf3a8029ac7154ea53ac819a95d44a6ff102f051",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "immersive-title"
     },
     {
@@ -278,7 +278,7 @@
       "description": "Adds [Kinc](https://github.com/Kode/Kinc) Project generation with basic build commands(depends on [`console`](https://github.com/franko/console))",
       "version": "0.1",
       "remote": "https://github.com/Kode-Community/kinc_plugin:309fe4193a09cf739ed0a058b1a6966a463a1dbd",
-      "mod_version": 3,
+      "mod_version": "3",
       "name": "Kinc Projects",
       "id": "kinc-projects",
       "dependencies": {
@@ -303,7 +303,7 @@
       "description": "Syntax for the [AutoHotkey](https://www.autohotkey.com) programming language",
       "version": "0.1",
       "remote": "https://github.com/devPnal/lite-plugin-autohotkey:e1597623163ab9e1d99ec1e8ee75cbe95b3e5d91",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "language_autohotkey"
     },
     {
@@ -338,14 +338,14 @@
       "description": "Syntax for [Containerfile](https://github.com/containers/common/blob/main/docs/Containerfile.5.md)/[Dockerfile](https://docs.docker.com/engine/reference/builder/)",
       "version": "0.1",
       "remote": "https://github.com/FilBot3/lite-xl-language-containerfile:2d5e46b1051c48d74f9b63f9844913c630d19b87",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "language_containerfile"
     },
     {
       "description": "Syntax for the [Crystal](https://crystal-lang.org) programming language",
       "version": "0.1",
       "remote": "https://github.com/Tamnac/lite-plugin-crystal:1913a6dd23a7640b507943230291a15aecc3235d",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "language_crystal"
     },
     {
@@ -394,7 +394,7 @@
       "description": "Syntax for the [env](https://hexdocs.pm/dotenvy/dotenv-file-format.html) (dotenv) files",
       "version": "0.1",
       "remote": "https://github.com/anthonyaxenov/lite-xl-env-syntax:89a4274af6a786963930d7a8fb542dfe61daa801",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "language_env"
     },
     {
@@ -478,7 +478,7 @@
       "description": "Syntax for [.gitignore](https://git-scm.com/docs/gitignore), [.dockerignore](https://docs.docker.com/engine/reference/builder/#dockerignore-file) and some other `.*ignore` files",
       "version": "0.1",
       "remote": "https://github.com/anthonyaxenov/lite-xl-ignore-syntax:3a9a5e0ae03b82358473da5d1c6012944d65ea95",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "language_ignore"
     },
     {
@@ -521,7 +521,7 @@
       "description": "Syntax for [Kaitai](http://kaitai.io/) struct files",
       "version": "0.1",
       "id": "language_ksy",
-      "mod_version": 3,
+      "mod_version": "3",
       "url": "https://raw.githubusercontent.com/whiteh0le/lite-plugins/main/plugins/language_ksy.lua?raw=1"
     },
     {
@@ -570,7 +570,7 @@
       "description": "Syntax for [Nelua](http://nelua.io/) programming",
       "version": "0.1",
       "remote": "https://github.com/AKDev21/nelua-lite-xl:8bf0ec5e7bf2b8dc9d39e6ebaaa5344fc5969319",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "language_nelua"
     },
     {
@@ -640,7 +640,7 @@
       "description": "Syntax for [Pony](https://www.ponylang.io/) programming language",
       "version": "0.1",
       "remote": "https://github.com/MrAnyx/lite-plugin-pony:34d9ec673eaa6c409bcef0febaa0a36cc3acdf4e",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "language_pony"
     },
     {
@@ -663,7 +663,7 @@
       "path": "plugins/language_R.lua",
       "id": "language_r",
       "name": "language_R",
-      "mod_version": 3
+      "mod_version": "3"
     },
     {
       "description": "Syntax for the [ReScript](https://rescript-lang.org/) programming language",
@@ -809,7 +809,7 @@
       "description": "Advanced linter with ErrorLens-like error reporting. Compatible with linters made for `linter` *([screenshot](https://raw.githubusercontent.com/liquid600pgm/lintplus/master/screenshots/1.png))*",
       "version": "0.1",
       "remote": "https://github.com/liquid600pgm/lintplus:3268641818069070b270486a88966b2a8bfef97e",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "lintplus",
       "name": "lint+"
     },
@@ -817,35 +817,35 @@
       "description": "Linters for multiple languages",
       "version": "0.1",
       "remote": "https://github.com/drmargarido/linters:eb1611eaade6e5328df5172bd3f759d853c33a31",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "linter"
     },
     {
       "description": "Discord rich presence for Lite XL (display file editing in Discord)",
       "version": "0.1",
       "remote": "https://github.com/TorchedSammy/Litepresence:1985e8a59feaaea5085a5add2521293a11f6d376",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "litepresence"
     },
     {
       "description": "Generates Lorem Ipsum placeholder dummy text",
       "version": "0.1",
       "remote": "https://github.com/sheetcoder/lorem:b2da386519850d6f91ef67097e50141b3b11a90e",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "lorem"
     },
     {
       "description": "Provides code completion (also known as IntelliSense) using the Language Server Protocol",
       "version": "0.1",
       "remote": "https://github.com/lite-xl/lite-xl-lsp:a6a8f70d6304bd77c7588e0a652945002df7fbad",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "lsp"
     },
     {
       "description": "Completion menu kind/type icons for Lite XL LSP",
       "version": "0.1",
       "remote": "https://github.com/TorchedSammy/lite-xl-lspkind:272ebd0010cd3e205cfb486b1bae889080fec437",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "lspkind"
     },
     {
@@ -944,7 +944,7 @@
       "version": "0.1",
       "path": "plugins/profiler",
       "id": "profiler",
-      "mod_version": 3
+      "mod_version": "3"
     },
     {
       "description": "Show nesting of parentheses with rainbow colours",
@@ -1058,7 +1058,7 @@
       "description": "Theme manager with base16 themes",
       "version": "0.1",
       "remote": "https://github.com/monolifed/theme16:c39b33cb318d4baa2b4b9cc6e6370cb3ede3ef22",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "theme16"
     },
     {
@@ -1079,7 +1079,7 @@
       "description": "Todo tree viewer for annotations in code like `TODO`, `BUG`, `FIX`, `IMPROVEMENT`",
       "version": "0.1",
       "remote": "https://github.com/drmargarido/TodoTreeView:a9371045ead3bc820224d3be55db6066398a11c5",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "todotreeview"
     },
     {
@@ -1093,7 +1093,7 @@
       "description": "Extend Lite XL's treeview menu *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-treeview-menu-extender/main/screenshot.png))*",
       "version": "0.1",
       "remote": "https://github.com/juliardi/lite-xl-treeview-menu-extender:bd9063e453b4024dcd0bf6a4f775ded32ca24d1f",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "treeview-menu-extender"
     },
     {
@@ -1114,28 +1114,28 @@
       "description": "Automatically checks for updates and notifies you",
       "version": "0.1",
       "remote": "https://github.com/vincens2005/lite-xl-updatechecker:3478abd43618da857d4315bcc8fddf08c27e1150",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "updatechecker"
     },
     {
       "description": "VI(vim?) bindings with a hint of DOOM Emacs, for lite-xl",
       "version": "0.1",
       "remote": "https://github.com/eugenpt/lite-xl-vibe:651c4fc55a285eeacbf5992b355d9c80f4fc78cb",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "vibe"
     },
     {
       "description": "Audio visualizer for Lite XL",
       "version": "0.1",
       "remote": "https://github.com/TorchedSammy/Visu:782c7b1ebde38dad2c3c6a1c1dee6761230dea16",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "visu"
     },
     {
       "description": "Plugin library that provides a set of re-usable components to more easily write UI elements for your plugins",
       "version": "0.1",
       "remote": "https://github.com/lite-xl/lite-xl-widgets:a632bfdf7c66bacc272fe2c962621cd9860058e1",
-      "mod_version": 3,
+      "mod_version": "3",
       "id": "widget"
     },
     {
