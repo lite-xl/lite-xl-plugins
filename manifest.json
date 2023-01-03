@@ -471,7 +471,8 @@
       "version": "0.1",
       "path": "/plugins/language_htaccess.lua",
       "id": "language_htaccess",
-      "mod_version": "3"
+      "mod_version": "3",
+      "description": "Syntax for [.htaccess](https://httpd.apache.org/docs/2.4/howto/htaccess.html) files."
     },
     {
       "description": "Syntax for [.gitignore](https://git-scm.com/docs/gitignore), [.dockerignore](https://docs.docker.com/engine/reference/builder/#dockerignore-file) and some other `.*ignore` files",
