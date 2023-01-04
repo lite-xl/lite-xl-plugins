@@ -49,7 +49,7 @@ merge_tables(default_patterns, {
     patterns = string_interpolation,
     symbols = {},
   }},
-  { pattern = {"''", "''", "\\'\\'"}, type = "string", syntax = {
+  { pattern = {"''", "''"}, type = "string", syntax = {
     patterns = string_interpolation,
     symbols = {},
   }},
