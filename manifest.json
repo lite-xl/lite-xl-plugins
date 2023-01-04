@@ -588,6 +588,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Syntax for the [Nix](https://nixos.wiki/wiki/Overview_of_the_Nix_Language) expression language",
+      "version": "0.1",
+      "path": "plugins/language_nix.lua",
+      "id": "language_nix",
+      "mod_version": "3"
+    },
+    {
       "description": "Syntax for the [Objective C](https://en.wikipedia.org/wiki/Objective-C) programming language",
       "version": "0.1",
       "path": "plugins/language_objc.lua",
