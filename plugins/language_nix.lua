@@ -55,16 +55,17 @@ merge_tables(default_patterns, {
   }},
 
   -- operators
-  { pattern = "[%+%-%?!<>%*]", type = "operator" },
-  { pattern = "/ ",            type = "operator" },
-  { pattern = "//",            type = "operator" },
-  { pattern = "&&",            type = "operator" },
-  { pattern = "%->",           type = "operator" },
-  { pattern = "||",            type = "operator" },
-  { pattern = "==",            type = "operator" },
-  { pattern = "!=",            type = "operator" },
-  { pattern = ">=",            type = "operator" },
-  { pattern = "<=",            type = "operator" },
+  { pattern = "[%+%-%?!>%*]", type = "operator" },
+  { pattern = "/ ",           type = "operator" },
+  { pattern = "< ",           type = "operator" },
+  { pattern = "//",           type = "operator" },
+  { pattern = "&&",           type = "operator" },
+  { pattern = "%->",          type = "operator" },
+  { pattern = "||",           type = "operator" },
+  { pattern = "==",           type = "operator" },
+  { pattern = "!=",           type = "operator" },
+  { pattern = ">=",           type = "operator" },
+  { pattern = "<=",           type = "operator" },
 
   -- paths (function because its not used otherwise)
   { pattern = "%.?%.?/[^%s%[%]%(%){};,:]+", type = "function" },
