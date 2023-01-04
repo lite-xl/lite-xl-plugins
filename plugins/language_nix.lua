@@ -36,7 +36,7 @@ local string_interpolation = {
 }
 
 merge_tables(default_patterns, {
-  { pattern = "#.-\n",        type = "comment" },
+  { pattern = "#.*",          type = "comment" },
   { pattern = {"/%*", "%*/"}, type = "comment" },
   { pattern = "-?%.?%d+",     type = "number"  },
 
