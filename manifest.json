@@ -127,6 +127,22 @@
       "mod_version": "3"
     },
     {
+      "description": "Add support for detecting file and string encodings as converting between them.",
+      "version": "1.1",
+      "type": "library",
+      "remote": "https://github.com/jgmdev/lite-xl-encoding:b1ddf226277ea12a03ed9db2ddda458988020e91",
+      "mod_version": "3",
+      "id": "encoding"
+    },
+    {
+      "description": "Properly read files that are not encoded in UTF-8 or ASCII by auto-detecting their encoding and allows saving on different text encodings.",
+      "version": "1.0",
+      "remote": "https://github.com/jgmdev/lite-xl-encoding:b1ddf226277ea12a03ed9db2ddda458988020e91",
+      "mod_version": "3",
+      "id": "encodings",
+      "dependencies": { "encoding": { } }
+    },
+    {
       "checksum": "e3607f5107f4e42fd99006289b8214a473824c6973b8e9c637b4657eba763650",
       "description": "Make sure the file ends with one blank line.",
       "version": "0.1",
@@ -189,6 +205,15 @@
       "remote": "https://github.com/takase1121/lite-fallback-fonts:281cafc014f7931f041046f76496797695678bb4",
       "mod_version": "3",
       "id": "fallbackfonts"
+    },
+    {
+      "name": "Multithreaded Find File",
+      "description": "Threaded project find files.",
+      "version": "1.0",
+      "remote": "https://github.com/jgmdev/lite-xl-threads:e61ffd28fc852b143fe468c4b43c68d605f22335",
+      "mod_version": "3",
+      "id": "findfileimproved",
+      "dependencies": { "thread": { } }
     },
     {
       "description": "Allows users to load fonts with [fontconfig](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html).",
@@ -898,6 +923,14 @@
       "mod_version": "3"
     },
     {
+      "description": "Add support for TCP and UDP sockets using SDL_net.",
+      "version": "1.1",
+      "type": "library",
+      "remote": "https://github.com/jgmdev/lite-xl-net:a1930395c89e24344db686f2e83ce67a602c5dbf",
+      "mod_version": "3",
+      "id": "net"
+    },
+    {
       "description": "File icons set for TreeView. Download [font](https://github.com/yamatsum/nonicons/raw/6a2faf4fbdfbe353c5ae6a496740ac4bfb6d0e74/dist/nonicons.ttf) to your config/fonts folder",
       "version": "0.1",
       "path": "plugins/nonicons.lua",
@@ -952,6 +985,15 @@
       "path": "plugins/profiler",
       "id": "profiler",
       "mod_version": "3"
+    },
+    {
+      "name": "Multithreaded Project Search",
+      "description": "Threaded project search with 5-10x better performance.",
+      "version": "1.2",
+      "remote": "https://github.com/jgmdev/lite-xl-threads:e61ffd28fc852b143fe468c4b43c68d605f22335",
+      "mod_version": "3",
+      "id": "projectsearch",
+      "dependencies": { "thread": { } }
     },
     {
       "description": "Show nesting of parentheses with rainbow colours",
@@ -1095,6 +1137,15 @@
       "path": "plugins/togglesnakecamel.lua",
       "id": "togglesnakecamel",
       "mod_version": "3"
+    },
+    {
+      "name": "Threads",
+      "description": "Adds the missing multithreading functionality.",
+      "version": "1.1",
+      "type": "library",
+      "remote": "https://github.com/jgmdev/lite-xl-threads:e61ffd28fc852b143fe468c4b43c68d605f22335",
+      "mod_version": "3",
+      "id": "thread"
     },
     {
       "description": "Extend Lite XL's treeview menu *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-treeview-menu-extender/main/screenshot.png))*",
