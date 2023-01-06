@@ -14,12 +14,13 @@ end
 local function exec_rw(dv, cmd, keep_newline)
   local proc = process.start { "sh", "-c", cmd }
   proc:write(tostring(dv))
-  local res = ""
+  local res = {}
   while true do
     local rdbuf = proc:read_stdout()
     if not rdbuf then break end
-    res = res .. rdbuf
+    if #rdbuf > 0 then table.insert(res, rdbuf) end
   end
+  res = table.concat(res)
   return keep_newline and res or res:gsub("%\n$", "")
 end
 
