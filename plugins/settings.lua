@@ -12,7 +12,7 @@ local DocView = require "core.docview"
 local widget_found, Widget = pcall(require, "libraries.widget")
 if not widget_found then
   core.error("Widget library not found: https://github.com/lite-xl/lite-xl-widgets")
-  return
+  return false
 end
 
 local Label = require "libraries.widget.label"
