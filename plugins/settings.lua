@@ -9,7 +9,7 @@ local View = require "core.view"
 local DocView = require "core.docview"
 
 -- check if widget is installed before proceeding
-local widget_found, Widget = pcall(require, "widget")
+local widget_found, Widget = pcall(require, "libraries.widget")
 if not widget_found then
   core.error("Widget library not found: https://github.com/lite-xl/lite-xl-widgets")
   return
