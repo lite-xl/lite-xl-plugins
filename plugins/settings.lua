@@ -15,22 +15,22 @@ if not widget_found then
   return
 end
 
-local Label = require "widget.label"
-local Line = require "widget.line"
-local NoteBook = require "widget.notebook"
-local Button = require "widget.button"
-local TextBox = require "widget.textbox"
-local SelectBox = require "widget.selectbox"
-local NumberBox = require "widget.numberbox"
-local Toggle = require "widget.toggle"
-local ListBox = require "widget.listbox"
-local FoldingBook = require "widget.foldingbook"
-local FontsList = require "widget.fontslist"
-local ItemsList = require "widget.itemslist"
-local KeybindingDialog = require "widget.keybinddialog"
-local Fonts = require "widget.fonts"
-local FilePicker = require "widget.filepicker"
-local MessageBox = require "widget.messagebox"
+local Label = require "libraries.widget.label"
+local Line = require "libraries.widget.line"
+local NoteBook = require "libraries.widget.notebook"
+local Button = require "libraries.widget.button"
+local TextBox = require "libraries.widget.textbox"
+local SelectBox = require "libraries.widget.selectbox"
+local NumberBox = require "libraries.widget.numberbox"
+local Toggle = require "libraries.widget.toggle"
+local ListBox = require "libraries.widget.listbox"
+local FoldingBook = require "libraries.widget.foldingbook"
+local FontsList = require "libraries.widget.fontslist"
+local ItemsList = require "libraries.widget.itemslist"
+local KeybindingDialog = require "libraries.widget.keybinddialog"
+local Fonts = require "libraries.widget.fonts"
+local FilePicker = require "libraries.widget.filepicker"
+local MessageBox = require "libraries.widget.messagebox"
 
 ---@class plugins.settings
 local settings = {}
