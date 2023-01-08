@@ -1,0 +1,16 @@
+[*.a]
+option1=value1
+
+; repeat section
+[*.a]
+option2=value2
+
+[*.b]
+option1 = a
+option2 = a
+
+[b.b]
+option2 = b
+
+[*.b]
+option1 = c

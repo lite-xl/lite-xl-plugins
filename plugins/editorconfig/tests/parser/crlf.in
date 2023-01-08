@@ -1,0 +1,6 @@
+; test EditorConfig files with CRLF line separators
+
+root = true
+
+[*]
+key = value

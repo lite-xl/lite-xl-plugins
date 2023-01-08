@@ -326,7 +326,7 @@ function MiniMap:is_minimap_enabled()
       return last_line > config.plugins.minimap.avoid_small_docs
     else
       local docview = self.dv
-      local _, y = docview:get_line_screen_position(last_line, docview.doc.lines[last_line])
+      local _, y = docview:get_line_screen_position(last_line, #docview.doc.lines[last_line])
       y = y + docview.scroll.y - docview.position.y + docview:get_line_height()
       return y > docview.size.y
     end

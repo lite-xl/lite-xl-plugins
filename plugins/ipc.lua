@@ -866,7 +866,7 @@ end
 local system_get_time = system.get_time
 
 system.get_time = function()
-  if settings_found and not settings.ui then
+  if settings_found and settings and not settings.ui then
     return system_get_time()
   end
 
