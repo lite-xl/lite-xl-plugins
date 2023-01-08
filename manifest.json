@@ -300,6 +300,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Exports the keymap to a JSON file.",
+      "version": "0.1",
+      "path": "plugins/keymap_export.lua",
+      "id": "keymap_export",
+      "mod_version": "3"
+    },
+    {
       "description": "Adds [Kinc](https://github.com/Kode/Kinc) Project generation with basic build commands(depends on [`console`](https://github.com/franko/console))",
       "version": "0.1",
       "remote": "https://github.com/Kode-Community/kinc_plugin:309fe4193a09cf739ed0a058b1a6966a463a1dbd",
