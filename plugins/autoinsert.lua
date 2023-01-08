@@ -18,18 +18,6 @@ config.plugins.autoinsert = common.merge({ map = {
 } }, config.plugins.autoinsert)
 
 
--- Workaround for bug in Lite XL 2.1
--- Remove this when b029f5993edb7dee5ccd2ba55faac1ec22e24609 is in a release
-local function get_selection(doc, sort)
-  local line1, col1, line2, col2 = doc:get_selection_idx(doc.last_selection)
-  if line1 then
-    return doc:get_selection_idx(doc.last_selection, sort)
-  else
-    return doc:get_selection_idx(1, sort)
-  end
-end
-
-
 local function is_closer(chr)
   for _, v in pairs(config.plugins.autoinsert.map) do
     if v == chr then
@@ -50,6 +38,9 @@ end
 local on_text_input = DocView.on_text_input
 
 function DocView:on_text_input(text)
+  -- Don't insert on multiselections
+  if(doc.selections > 4) return on_text_input(self, text)
+  
   local mapping = config.plugins.autoinsert.map[text]
 
   -- prevents plugin from operating on `CommandView`
@@ -59,7 +50,7 @@ function DocView:on_text_input(text)
 
   -- wrap selection if we have a selection
   if mapping and self.doc:has_selection() then
-    local l1, c1, l2, c2, swap = get_selection(self.doc, true)
+    local l1, c1, l2, c2, swap = self.doc:get_selection(true)
     self.doc:insert(l2, c2, mapping)
     self.doc:insert(l1, c1, text)
     self.doc:set_selection(l1, c1, l2, c2 + 2, swap)
@@ -93,12 +84,13 @@ end
 
 
 local function predicate()
-  return core.active_view:is(DocView)
-     and not core.active_view.doc:has_selection(), core.active_view.doc
+  return getmetatable(core.active_view) == DocView
+     and not core.active_view.doc:has_selection()
 end
 
 command.add(predicate, {
-  ["autoinsert:backspace"] = function(doc)
+  ["autoinsert:backspace"] = function()
+    local doc = core.active_view.doc
     local l, c = doc:get_selection()
     if c > 1 then
       local chr = doc:get_char(l, c)
@@ -110,7 +102,8 @@ command.add(predicate, {
     command.perform "doc:backspace"
   end,
 
-  ["autoinsert:delete-to-previous-word-start"] = function(doc)
+  ["autoinsert:delete-to-previous-word-start"] = function()
+    local doc = core.active_view.doc
     local le, ce = translate.previous_word_start(doc, doc:get_selection())
     while true do
       local l, c = doc:get_selection()
