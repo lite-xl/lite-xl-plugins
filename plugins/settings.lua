@@ -1624,11 +1624,13 @@ function Settings:load_keymap_settings()
   end
   table.sort(ordered)
 
+  ---@type widget.textbox
+  local textbox = TextBox(self.keybinds, "", "filter bindings...")
+
   ---@type widget.listbox
   local listbox = ListBox(self.keybinds)
 
   listbox.border.width = 0
-  listbox:enable_expand(true)
 
   listbox:add_column("Command")
   listbox:add_column("Bindings")
@@ -1653,8 +1655,15 @@ function Settings:load_keymap_settings()
     }, name)
   end
 
-  function listbox:on_row_click(idx, data)
-    if not keymap_dialog:is_visible() then
+  function textbox:on_change(value)
+    listbox:filter(value)
+  end
+
+  function listbox:on_mouse_pressed(button, x, y, clicks)
+    listbox.super.on_mouse_pressed(self, button, x, y, clicks)
+    local idx = listbox:get_selected()
+    local data = listbox:get_row_data(idx)
+    if clicks == 2 and not keymap_dialog:is_visible() then
       local bindings = { keymap.get_binding(data) }
       keymap_dialog:set_bindings(bindings)
       keymap_dialog.row_id = idx
@@ -1662,6 +1671,14 @@ function Settings:load_keymap_settings()
       keymap_dialog.listbox = self
       keymap_dialog:show()
     end
+  end
+
+  ---@param self widget
+  function self.keybinds:update_positions()
+    textbox:set_position(0, 0)
+    textbox:set_size(self:get_width() - self.border.width * 2)
+    listbox:set_position(0, textbox:get_bottom())
+    listbox:set_size(self:get_width() - self.border.width * 2, self:get_height() - textbox:get_height())
   end
 end
 
@@ -1817,6 +1834,10 @@ function Settings:update()
         end
       end
     end
+  end
+
+  if self.keybinds:is_visible() then
+    self.keybinds:update_positions()
   end
 
   if self.about:is_visible() then
