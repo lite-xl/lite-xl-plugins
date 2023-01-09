@@ -98,7 +98,7 @@ end
 
 local function predicate()
   return core.active_view:is(DocView)
-     and not core.active_view.doc:has_selection(), core.active_view.doc
+     and not core.active_view.doc:has_selection() and #core.active_view.doc.selections <= 4, core.active_view.doc
 end
 
 command.add(predicate, {
