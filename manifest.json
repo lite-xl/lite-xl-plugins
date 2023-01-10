@@ -987,6 +987,13 @@
       "mod_version": "3"
     },
     {
+      "description": "A plugin manager view for lite-xl that provides GUI access to `lpm`",
+      "version": "0.1",
+      "remote": "https://github.com/lite-xl/lite-xl-plugin-manager.git:3e5d5b0827058f2eeddfb166d8128fc086a87e28",
+      "id": "plugin_manager",
+      "mod_version": "3"
+    },
+    {
       "description": "Adds middle mouse click copy/paste (primary selection). To use this plugin, `xclip` must be installed.",
       "version": "0.1",
       "path": "plugins/primary_selection.lua",
