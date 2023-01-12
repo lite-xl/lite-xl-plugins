@@ -113,6 +113,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Debug Lite-XL's Lua VM interactively",
+      "version": "0.1",
+      "path": "plugins/lite-debugger.lua",
+      "id": "lite-debugger",
+      "mod_version": "3"
+    },
+    {
       "description": "Provides a debugger integration, with pluggable backends. Currently supports only gdb. *([screenshot](https://raw.githubusercontent.com/adamharrison/lite-xl-ide/main/screenshots/debugger.png))*",
       "version": "0.1",
       "remote": "https://github.com/adamharrison/lite-xl-ide.git:445345f2b25898404879dacbd7709f8a7c7b0795",
