@@ -71,6 +71,14 @@
       "mod_version": "3"
     },
     {
+      "description": "Color picker dialog that supports html and rgb notations.",
+      "version": "0.1",
+      "path": "plugins/colorpicker.lua",
+      "id": "colorpicker",
+      "mod_version": "3",
+      "dependencies": { "widget": {} }
+    },
+    {
       "description": "Underlays color values (eg. `#ff00ff` or `rgb(255, 0, 255)`) with their resultant color. *([screenshot](https://user-images.githubusercontent.com/3920290/80743752-731bd780-8b15-11ea-97d3-847db927c5dc.png))*",
       "version": "0.1",
       "path": "plugins/colorpreview.lua",
@@ -1063,7 +1071,8 @@
       "version": "0.5",
       "path": "plugins/settings.lua",
       "id": "settings",
-      "mod_version": "3"
+      "mod_version": "3",
+      "dependencies": { "widget": {} }
     },
     {
       "description": "Displays the current time in the corner of the status view",
