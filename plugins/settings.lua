@@ -30,6 +30,7 @@ local ItemsList = require "libraries.widget.itemslist"
 local KeybindingDialog = require "libraries.widget.keybinddialog"
 local Fonts = require "libraries.widget.fonts"
 local FilePicker = require "libraries.widget.filepicker"
+local ColorPicker = require "libraries.widget.colorpicker"
 local MessageBox = require "libraries.widget.messagebox"
 
 ---@class plugins.settings
@@ -53,7 +54,8 @@ settings.type = {
   BUTTON = 6,
   FONT = 7,
   FILE = 8,
-  DIRECTORY = 9
+  DIRECTORY = 9,
+  COLOR = 10
 }
 
 ---@alias settings.types
@@ -65,6 +67,8 @@ settings.type = {
 ---| `settings.type.BUTTON`
 ---| `settings.type.FONT`
 ---| `settings.type.FILE`
+---| `settings.type.DIRECTORY`
+---| `settings.type.COLOR`
 
 ---Represents a setting to render on a settings pane.
 ---@class settings.option
@@ -1260,6 +1264,14 @@ local function add_control(pane, option, plugin_name)
     end
     file.filters = option.filters or {}
     widget = file
+    found = true
+
+  elseif option.type == settings.type.COLOR then
+    ---@type widget.label
+    Label(pane, option.label .. ":")
+    ---@type widget.colorpicker
+    local color = ColorPicker(pane, option_value)
+    widget = color
     found = true
   end
 

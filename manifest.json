@@ -1060,7 +1060,7 @@
     },
     {
       "description": "Provides a GUI to manage core and plugin settings, bindings and select color theme *([video](https://user-images.githubusercontent.com/1702572/169743674-ececae24-f6b7-4ff2-bfa2-c4762cd327d9.mp4))*. (depends on [`widget`](https://github.com/lite-xl/lite-xl-widgets))",
-      "version": "0.4",
+      "version": "0.5",
       "path": "plugins/settings.lua",
       "id": "settings",
       "mod_version": "3"
@@ -1212,8 +1212,8 @@
     },
     {
       "description": "Plugin library that provides a set of re-usable components to more easily write UI elements for your plugins",
-      "version": "0.1",
-      "remote": "https://github.com/lite-xl/lite-xl-widgets:a632bfdf7c66bacc272fe2c962621cd9860058e1",
+      "version": "0.2",
+      "remote": "https://github.com/lite-xl/lite-xl-widgets:46ed39168cea8db3f792c0346dd37c74141cfba4",
       "mod_version": "3",
       "id": "widget"
     },
