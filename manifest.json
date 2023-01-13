@@ -1,5 +1,5 @@
 {
-  "plugins": [
+  "addons": [
     {
       "description": "Align multiple carets and selections *([clip](https://user-images.githubusercontent.com/2798487/165631951-532f8d24-d596-4dd0-9d21-ff53c71ed32f.mp4))*",
       "version": "0.1",
