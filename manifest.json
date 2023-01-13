@@ -917,7 +917,7 @@
     },
     {
       "description": "Shows a minimap on the right-hand side of the docview. Taken from [@andsve](https://github.com/andsve/lite-plugins/tree/minimap-plugin), and improved upon.",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/minimap.lua",
       "id": "minimap",
       "mod_version": "3"

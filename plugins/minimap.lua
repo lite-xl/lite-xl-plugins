@@ -135,29 +135,21 @@ config.plugins.minimap = common.merge({
     },
     {
       label = "Selection Color",
-      description = "Background color of selected text in html notation eg: #FFFFFF. Leave empty to use default.",
-      path = "selection_color_html",
-      type = "string",
-      on_apply = function(value)
-        if value and value:match("#%x%x%x%x%x%x") then
-          config.plugins.minimap.selection_color = { common.color(value) }
-        else
-          config.plugins.minimap.selection_color = nil
-        end
-      end
+      description = "Background color of selected text.",
+      path = "selection_color",
+      type = "color",
+      default = string.format("#%02X%02X%02X%02X",
+        style.dim[1], style.dim[2], style.dim[3], style.dim[4]
+      )
     },
     {
       label = "Caret Color",
-      description = "Background color of active line in html notation eg: #FFFFFF. Leave empty to use default.",
-      path = "caret_color_html",
-      type = "string",
-      on_apply = function(value)
-        if value and value:match("#%x%x%x%x%x%x") then
-          config.plugins.minimap.caret_color = { common.color(value) }
-        else
-          config.plugins.minimap.caret_color = nil
-        end
-      end
+      description = "Background color of active line.",
+      path = "caret_color",
+      type = "color",
+      default = string.format("#%02X%02X%02X%02X",
+        style.caret[1], style.caret[2], style.caret[3], style.caret[4]
+      )
     },
     {
       label = "Highlight Alignment",
@@ -663,4 +655,3 @@ command.add("core.docview!", {
 })
 
 return MiniMap
-
