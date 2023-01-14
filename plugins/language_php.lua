@@ -79,15 +79,14 @@ local inline_variables = {
   { pattern = "{()%$[%a_][%w_]*()}",
     type = { "keyword", "keyword2", "keyword" }
   },
-  { pattern = "%$[%a_][%w_]*()%[()%w*()%]",
+  { pattern = "%$[%a_][%w_]*()%[()[%w_]*()%]",
     type = { "keyword2", "keyword", "string", "keyword" }
   },
-  { pattern = "%$[%a_][%w_]*()%->()%w+",
+  { pattern = "%$[%a_][%w_]*()%->()%a[%w_]*",
     type = { "keyword2", "keyword", "symbol" }
   },
   { pattern = "%$[%a_][%w_]*", type = "keyword2" },
-  { pattern = "%w+",           type = "string" },
-  { pattern = "[^\"]",         type = "string" },
+  { pattern = "%w+",           type = "string" }
 }
 
 local function combine_patterns(t1, t2)
@@ -180,7 +179,20 @@ syntax.add {
       syntax = {
         patterns = combine_patterns(inline_variables, {
           -- prevent matching outside of the parent string
+          { pattern = "[^\"]",         type = "string" },
           { pattern = "%p+%f[\"]",     type = "string" },
+          { pattern = "%p",            type = "string" },
+        }),
+        symbols = {}
+      },
+      type = "string"
+    },
+    { pattern = { '`', '`', '\\' },
+      syntax = {
+        patterns = combine_patterns(inline_variables, {
+          -- prevent matching outside of the parent string
+          { pattern = "[^`]",          type = "string" },
+          { pattern = "%p+%f[`]",      type = "string" },
           { pattern = "%p",            type = "string" },
         }),
         symbols = {}
@@ -246,6 +258,7 @@ syntax.add {
     ["default"] = "keyword",
     ["break"] = "keyword",
     ["goto"] = "keyword",
+    ["yield"] = "keyword",
 
     ["try"] = "keyword",
     ["catch"] = "keyword",
@@ -322,13 +335,12 @@ end
 syntax.add {
   name = "PHP",
   files = { "%.php$", "%.phtml" },
-  comment = "//",
-  block_comment = {"/*", "*/"},
+  block_comment = { "<!--", "-->" },
   patterns = {
     {
-      pattern = {
-        "<%?php%s+",
-        "%?>"
+      regex = {
+        "<\\?php\\s+",
+        "(?:\\?>|(?=`{3}))" -- end if inside markdown code tags
       },
       syntax = ".phps",
       type = "keyword2"
@@ -369,6 +381,9 @@ syntax.add {
     { pattern = "%f[^<]/[%a_][%w_]*",      type = "function" },
     { pattern = "[%a_][%w_]*",             type = "keyword"  },
     { pattern = "[/<>=]",                  type = "operator" },
+    -- match markdown code tags to be able to end php highlighting
+    -- when inside the subsyntax .phps
+    { regex = "(?=`{3})",                  type = "string"   }
   },
   symbols = {},
 }

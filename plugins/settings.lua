@@ -5,6 +5,8 @@ local common = require "core.common"
 local command = require "core.command"
 local keymap = require "core.keymap"
 local style = require "core.style"
+local View = require "core.view"
+local DocView = require "core.docview"
 
 -- check if widget is installed before proceeding
 local widget_found, Widget = pcall(require, "widget")
@@ -28,7 +30,9 @@ local ItemsList = require "widget.itemslist"
 local KeybindingDialog = require "widget.keybinddialog"
 local Fonts = require "widget.fonts"
 local FilePicker = require "widget.filepicker"
+local MessageBox = require "widget.messagebox"
 
+---@class plugins.settings
 local settings = {}
 
 settings.core = {}
@@ -64,63 +68,43 @@ settings.type = {
 
 ---Represents a setting to render on a settings pane.
 ---@class settings.option
+---Title displayed to the user eg: "My Option"
 ---@field public label string
+---Description of the option eg: "Modifies the document indentation"
 ---@field public description string
+---Config path in the config table, eg: section.myoption, myoption, etc...
 ---@field public path string
+---Type of option that will be used to render an appropriate control
 ---@field public type settings.types | integer
+---Default value of the option
 ---@field public default string | number | boolean | table<integer, string> | table<integer, integer>
+---Used for NUMBER to indicate the minimum number allowed
 ---@field public min number
+---Used for NUMBER to indiciate the maximum number allowed
 ---@field public max number
+---Used for NUMBER to indiciate the increment/decrement amount
 ---@field public step number
+---Used in a SELECTION to provide the list of valid options
 ---@field public values table
+---Optionally used for FONT to store the generated font group.
 ---@field public fonts_list table<string, renderer.font>
+---Flag set to true when loading user defined fonts fail
 ---@field public font_error boolean
+---Optional function that is used to manipulate the current value on retrieval.
 ---@field public get_value nil | fun(value:any):any
+---Optional function that is used to manipulate the saved value on save.
 ---@field public set_value nil | fun(value:any):any
+---The icon set for a BUTTON
 ---@field public icon string
+---Command or function executed when a BUTTON is clicked
 ---@field public on_click nil | string | fun(button:string, x:integer, y:integer)
+---Optional function executed when the option value is applied.
 ---@field public on_apply nil | fun(value:any)
+---When FILE or DIRECTORY this flag tells the path should exist.
 ---@field public exists boolean
+---Lua patterns used on FILE or DIRECTORY to filter browser results and
+---also force the selection to match one of the filters.
 ---@field public filters table<integer,string>
-settings.option = {
-  ---Title displayed to the user eg: "My Option"
-  label = "",
-  ---Description of the option eg: "Modifies the document indentation"
-  description = "",
-  ---Config path in the config table, eg: section.myoption, myoption, etc...
-  path = "",
-  ---Type of option that will be used to render an appropriate control
-  type = "",
-  ---Default value of the option
-  default = "",
-  ---Used for NUMBER to indiciate the minimum number allowed
-  min = 0,
-  ---Used for NUMBER to indiciate the maximum number allowed
-  max = 0,
-  ---Used for NUMBER to indiciate the increment/decrement amount
-  step = 0,
-  ---Used in a SELECTION to provide the list of valid options
-  values = {},
-  ---Optionally used for FONT to store the generated font group.
-  fonts_list = {},
-  ---Flag set to true when loading user defined fonts fail
-  font_error = false,
-  ---Optional function that is used to manipulate the current value on retrieval.
-  get_value = nil,
-  ---Optional function that is used to manipulate the saved value on save.
-  set_value = nil,
-  ---The icon set for a BUTTON
-  icon = "",
-  ---Command or function executed when a BUTTON is clicked
-  on_click = nil,
-  ---Optional function executed when the option value is applied.
-  on_apply = nil,
-  ---When FILE or DIRECTORY this flag tells the path should exist.
-  exists = false,
-  ---Lua patterns used on FILE or DIRECTORY to filter browser results and
-  ---also force the selection to match one of the filters.
-  filters = {}
-}
 
 ---Add a new settings section to the settings UI
 ---@param section string
@@ -181,7 +165,29 @@ settings.add("General",
       type = settings.type.BUTTON,
       icon = "C",
       on_click = function()
-        Fonts.clean_cache()
+        if Fonts.cache_is_building() then
+          MessageBox.warning(
+            "Clear Fonts Cache",
+            { "The font cache is already been built,\n"
+              .. "status will be logged on the core log."
+            }
+          )
+        else
+          MessageBox.info(
+            "Clear Fonts Cache",
+            { "Re-building the font cache can take some time,\n"
+              .. "it is needed when you have installed new fonts\n"
+              .. "which are not listed on the font picker tool.\n\n"
+              .. "Do you want to continue?"
+            },
+            function(_, button_id, _)
+              if button_id == 1 then
+                Fonts.clean_cache()
+              end
+            end,
+            MessageBox.BUTTONS_YES_NO
+          )
+        end
       end
     },
     {
@@ -192,10 +198,8 @@ settings.add("General",
       default = 2000,
       min = 1,
       max = 100000,
-      on_apply = function(button, x, y)
-        if button == "left" then
-          core.rescan_project_directories()
-        end
+      on_apply = function()
+        core.rescan_project_directories()
       end
     },
     {
@@ -212,7 +216,16 @@ settings.add("General",
       description = "List of lua patterns matching files to be ignored by the editor.",
       path = "ignore_files",
       type = settings.type.LIST_STRINGS,
-      default = { "^%." },
+      default = {
+        -- folders
+        "^%.svn/",        "^%.git/",   "^%.hg/",        "^CVS/", "^%.Trash/", "^%.Trash%-.*/",
+        "^node_modules/", "^%.cache/", "^__pycache__/",
+        -- files
+        "%.pyc$",         "%.pyo$",       "%.exe$",        "%.dll$",   "%.obj$", "%.o$",
+        "%.a$",           "%.lib$",       "%.so$",         "%.dylib$", "%.ncb$", "%.sdf$",
+        "%.suo$",         "%.pdb$",       "%.idb$",        "%.class$", "%.psd$", "%.db$",
+        "^desktop%.ini$", "^%.DS_Store$", "^%.directory$",
+      },
       on_apply = function()
         core.rescan_project_directories()
       end
@@ -383,6 +396,56 @@ settings.add("User Interface",
       end,
       set_value = function(value)
         return value * SCALE
+      end
+    },
+    {
+      label = "Force Scrollbar Status",
+      description = "Choose a fixed scrollbar state instead of resizing it on mouse hover.",
+      path = "force_scrollbar_status",
+      type = settings.type.SELECTION,
+      default = false,
+      values = {
+        {"Disabled", false},
+        {"Expanded", "expanded"},
+        {"Contracted", "contracted"}
+      },
+      on_apply = function(value)
+        local mode = config.force_scrollbar_status_mode or "global"
+        local globally = mode == "global"
+        local views = core.root_view.root_node:get_children()
+        for _, view in ipairs(views) do
+          if globally or view:extends(DocView) then
+            view.h_scrollbar:set_forced_status(value)
+            view.v_scrollbar:set_forced_status(value)
+          else
+            view.h_scrollbar:set_forced_status(false)
+            view.v_scrollbar:set_forced_status(false)
+          end
+        end
+      end
+    },
+    {
+      label = "Force Scrollbar Status Mode",
+      description = "Choose between applying globally or document views only.",
+      path = "force_scrollbar_status_mode",
+      type = settings.type.SELECTION,
+      default = "global",
+      values = {
+        {"Documents", "docview"},
+        {"Globally", "global"}
+      },
+      on_apply = function(value)
+        local globally = value == "global"
+        local views = core.root_view.root_node:get_children()
+        for _, view in ipairs(views) do
+          if globally or view:extends(DocView) then
+            view.h_scrollbar:set_forced_status(config.force_scrollbar_status)
+            view.v_scrollbar:set_forced_status(config.force_scrollbar_status)
+          else
+            view.h_scrollbar:set_forced_status(false)
+            view.v_scrollbar:set_forced_status(false)
+          end
+        end
       end
     },
     {
@@ -903,6 +966,28 @@ local function merge_font_settings(option, path, saved_value)
   end
 end
 
+---Load the user_settings.lua stored options for a plugin into global config.
+---@param plugin_name string
+---@param options settings.option[]
+local function merge_plugin_settings(plugin_name, options)
+  for _, option in pairs(options) do
+    if type(option.path) == "string" then
+      local path = "plugins." .. plugin_name .. "." .. option.path
+      local saved_value = get_config_value(settings.config, path)
+      if type(saved_value) ~= "nil" then
+        if option.type == settings.type.FONT or option.type == "font" then
+          merge_font_settings(option, path, saved_value)
+        else
+          set_config_value(config, path, saved_value)
+        end
+        if option.on_apply then
+          option.on_apply(saved_value)
+        end
+      end
+    end
+  end
+end
+
 ---Merge previously saved settings without destroying the config table.
 local function merge_settings()
   if type(settings.config) ~= "table" then return end
@@ -932,22 +1017,7 @@ local function merge_settings()
   for _, section in ipairs(settings.plugin_sections) do
     local plugins = settings.plugins[section]
     for plugin_name, options in pairs(plugins) do
-      for _, option in pairs(options) do
-        if type(option.path) == "string" then
-          local path = "plugins." .. plugin_name .. "." .. option.path
-          local saved_value = get_config_value(settings.config, path)
-          if type(saved_value) ~= "nil" then
-            if option.type == settings.type.FONT or option.type == "font" then
-              merge_font_settings(option, path, saved_value)
-            else
-              set_config_value(config, path, saved_value)
-            end
-            if option.on_apply then
-              option.on_apply(saved_value)
-            end
-          end
-        end
-      end
+      merge_plugin_settings(plugin_name, options)
     end
   end
 
@@ -1255,7 +1325,7 @@ function Settings:load_core_settings()
   for _, section in ipairs(settings.sections) do
     local options = settings.core[section]
 
-    ---@type widget|widget.foldingbook.pane
+    ---@type widget|widget.foldingbook.pane|nil
     local pane = self.core_sections:get_pane(section)
     if not pane then
       pane = self.core_sections:add_pane(section, section)
@@ -1379,13 +1449,15 @@ function Settings:enable_plugin(plugin)
 
     for plugin_name, options in pairs(plugins) do
       if plugin_name == plugin then
-        ---@type widget
+        ---@type widget|widget.foldingbook.pane|nil
         local pane = self.plugin_sections:get_pane(section)
         if not pane then
           pane = self.plugin_sections:add_pane(section, section)
         else
           pane = pane.container
         end
+
+        merge_plugin_settings(plugin, options)
 
         for _, opt in ipairs(options) do
           ---@type settings.option
@@ -1417,7 +1489,7 @@ end
 
 ---Generate all the widgets for plugin settings.
 function Settings:load_plugin_settings()
-  ---@type widget
+  ---@type widget|widget.foldingbook.pane|nil
   local pane = self.plugin_sections:get_pane("enable_disable")
   if not pane then
     pane = self.plugin_sections:add_pane("enable_disable", "Installed")
@@ -1474,7 +1546,7 @@ function Settings:load_plugin_settings()
     local plugins = settings.plugins[section]
 
     for plugin_name, options in pairs(plugins) do
-      ---@type widget
+      ---@type widget|widget.foldingbook.pane|nil
       local pane = self.plugin_sections:get_pane(section)
       if not pane then
         pane = self.plugin_sections:add_pane(section, section)
@@ -1861,5 +1933,21 @@ if config.plugins.toolbarview ~= false then
   end
 end
 
+--------------------------------------------------------------------------------
+-- Overwrite View:new to allow setting force scrollbar status globally
+--------------------------------------------------------------------------------
+local view_new = View.new
+function View:new()
+  view_new(self)
+  local mode = config.force_scrollbar_status_mode or "global"
+  local globally = mode == "global"
+  if globally then
+    --This is delayed to allow widgets to also apply it to child views/widgets
+    core.add_thread(function()
+      self.v_scrollbar:set_forced_status(config.force_scrollbar_status)
+      self.h_scrollbar:set_forced_status(config.force_scrollbar_status)
+    end)
+  end
+end
 
 return settings;

@@ -18,7 +18,7 @@ local MESSAGE_EXPIRATION=3
 
 ---@class config.plugins.ipc
 ---@field single_instance boolean
----@field dirs_instance string
+---@field dirs_instance '"new"' | '"add"' | '"change"'
 config.plugins.ipc = common.merge({
   single_instance = true,
   dirs_instance = "new",
@@ -59,99 +59,71 @@ config.plugins.ipc = common.merge({
 ---| '"signal"'
 
 ---@class plugins.ipc.message
+---Id of the message
 ---@field id string
+---The id of process that sent the message
 ---@field sender string
+---Name of the message
 ---@field name string
+---Type of message.
 ---@field type plugins.ipc.messagetype | string
+---List with id of the instance that should receive the message.
 ---@field destinations table<integer,string>
+---A list of named values sent to receivers.
 ---@field data table<string,any>
+---Time in seconds when the message was sent for automatic expiration purposes.
 ---@field timestamp number
+---Optional callback executed by the receiver when the message is read.
 ---@field on_read plugins.ipc.onmessageread
+---Optional callback executed when a reply to the message is received.
 ---@field on_reply plugins.ipc.onreply
+---The received replies for the message.
 ---@field replies plugins.ipc.reply[]
-local IPCMessage = {
-  ---Id of the message
-  id = "",
-  ---The id of process that sent the message
-  sender = "",
-  ---Name of the message
-  name = "",
-  ---Type of message.
-  type = "",
-  ---List with id of the instance that should receive the message.
-  destinations = {},
-  ---A list of named values sent to receivers.
-  data = {},
-  ---Time in seconds when the message was sent for automatic expiration purposes.
-  timestamp = 0,
-  ---Optional callback executed by the receiver when the message is read.
-  on_read = function(message) end,
-  ---Optional callback executed when a reply to the message is received.
-  on_reply = function(reply) end,
-  ---The received replies for the message.
-  replies = {}
-}
 
 ---@class plugins.ipc.reply
+---Id of the message
 ---@field id string
+---The id of process that sent the message
 ---@field sender string
+---The id of the replier
 ---@field replier string
+---A list of named values sent back to sender.
 ---@field data table<string,any>
+---Time in seconds when the reply was sent for automatic expiration purposes.
 ---@field timestamp number
+---Optional callback executed by the sender when the reply is read.
 ---@field on_read plugins.ipc.onreplyread
-local IPCReply = {
-  ---Id of the message
-  id = "",
-  ---The id of process that sent the message
-  sender = "",
-  ---The id of the replier
-  replier = "",
-  ---A list of named values sent back to sender.
-  data = {},
-  ---Time in seconds when the reply was sent for automatic expiration purposes.
-  timestamp = 0,
-  ---Optional callback executed by the sender when the reply is read.
-  on_read = function(reply) end
-}
 
 ---@class plugins.ipc.instance
+---Process id of the instance.
 ---@field id string
+---The position in which the instance was launched.
 ---@field position integer
+---Flag that indicates if this instance was the first started.
+---@field primary boolean
+---Indicates the last time this instance updated its session file.
 ---@field last_update integer
+---The messages been broadcasted.
 ---@field messages plugins.ipc.message[]
+---The replies been broadcasted.
 ---@field replies plugins.ipc.reply[]
+---Table of properties associated with the instance. (NOT IMPLEMENTED)
 ---@field properties table
-local IPCInstance = {
-  ---Process id of the instance.
-  id = "",
-  ---The position in which the instance was launched.
-  position = 0,
-  ---Flag that indicates if this instance was the first started.
-  primary = false,
-  ---Indicates the last time this instance updated its session file.
-  last_update = 0,
-  ---The messages been broadcasted.
-  messages = {},
-  ---The replies been broadcasted.
-  replies = {},
-  ---Table of properties associated with the instance.
-  properties = {}
-}
 
----@class core.ipc : core.object
----@field private id string
----@field private user_dir string
----@field private running boolean
----@field private file string
----@field private primary boolean
----@field private position integer
----@field private messages plugins.ipc.message[]
----@field private replies plugins.ipc.reply[]
----@field private listeners table<string,table<integer,plugins.ipc.onmessage>>
----@field private signals table<string,integer>
----@field private methods table<string,integer>
----@field private signal_definitions table<integer,string>
----@field private method_definitions table<integer,string>
+---@class plugins.ipc : core.object
+---@field protected id string
+---@field protected user_dir string
+---@field protected running boolean
+---@field protected file string
+---@field protected primary boolean
+---@field protected position integer
+---@field protected messages plugins.ipc.message[]
+---@field protected replies plugins.ipc.reply[]
+---@field protected listeners table<string,table<integer,plugins.ipc.onmessage>>
+---@field protected signals table<string,integer>
+---@field protected methods table<string,integer>
+---@field protected signal_definitions table<integer,string>
+---@field protected method_definitions table<integer,string>
 local IPC = Object:extend()
 
 ---@class plugins.ipc.threads
@@ -171,7 +143,7 @@ local function add_thread(f)
 end
 
 ---Updates the session file of an IPC object.
----@param self core.ipc
+---@param self plugins.ipc
 local function update_file(self)
   local file, errmsg = io.open(self.file, "w+")
 
@@ -817,11 +789,11 @@ function IPC:call_async(destinations, name, callback, ...)
 end
 
 ---Main ipc session for current instance.
----@type core.ipc
+---@type plugins.ipc
 local ipc = IPC()
 
 ---Get the IPC session for the running lite-xl instance.
----@return core.ipc
+---@return plugins.ipc
 function IPC.current()
   return ipc
 end
