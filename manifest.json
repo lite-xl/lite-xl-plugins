@@ -861,8 +861,8 @@
     },
     {
       "description": "Advanced linter with ErrorLens-like error reporting. Compatible with linters made for `linter` *([screenshot](https://raw.githubusercontent.com/liquid600pgm/lintplus/master/screenshots/1.png))*",
-      "version": "0.1",
-      "remote": "https://github.com/liquid600pgm/lintplus:3268641818069070b270486a88966b2a8bfef97e",
+      "version": "0.2",
+      "remote": "https://github.com/liquid600pgm/lintplus:771b1fe6cddb7897cd034ed5ee96201d6a2831c2",
       "mod_version": "3",
       "id": "lintplus",
       "name": "lint+"
