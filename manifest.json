@@ -152,7 +152,7 @@
       "description": "Add support for detecting file and string encodings as converting between them.",
       "version": "1.1",
       "type": "library",
-      "remote": "https://github.com/jgmdev/lite-xl-encoding:b1ddf226277ea12a03ed9db2ddda458988020e91",
+      "remote": "https://github.com/jgmdev/lite-xl-encoding:16e2477e916f52e18f6d63f5ac61ace58b0c5e45",
       "mod_version": "3",
       "id": "encoding"
     },
@@ -232,7 +232,7 @@
       "name": "Multithreaded Find File",
       "description": "Threaded project find files.",
       "version": "1.0",
-      "remote": "https://github.com/jgmdev/lite-xl-threads:e61ffd28fc852b143fe468c4b43c68d605f22335",
+      "remote": "https://github.com/jgmdev/lite-xl-threads:e97d3471033a6ee940b480d7782ea33a2e5236c7",
       "mod_version": "3",
       "id": "findfileimproved",
       "dependencies": { "thread": { } }
@@ -890,8 +890,8 @@
     },
     {
       "description": "Provides code completion (also known as IntelliSense) using the Language Server Protocol",
-      "version": "0.1",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp:a6a8f70d6304bd77c7588e0a652945002df7fbad",
+      "version": "0.2",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp:8a359b6b7c7783f1a6870263e25ae89ca6b69577",
       "mod_version": "3",
       "id": "lsp"
     },
@@ -948,7 +948,7 @@
       "description": "Add support for TCP and UDP sockets using SDL_net.",
       "version": "1.1",
       "type": "library",
-      "remote": "https://github.com/jgmdev/lite-xl-net:a1930395c89e24344db686f2e83ce67a602c5dbf",
+      "remote": "https://github.com/jgmdev/lite-xl-net:4ddece50cdc6d00ab09be1896ef0474e89da89b8",
       "mod_version": "3",
       "id": "net"
     },
@@ -1019,7 +1019,7 @@
       "name": "Multithreaded Project Search",
       "description": "Threaded project search with 5-10x better performance.",
       "version": "1.2",
-      "remote": "https://github.com/jgmdev/lite-xl-threads:e61ffd28fc852b143fe468c4b43c68d605f22335",
+      "remote": "https://github.com/jgmdev/lite-xl-threads:e97d3471033a6ee940b480d7782ea33a2e5236c7",
       "mod_version": "3",
       "id": "projectsearch",
       "dependencies": { "thread": { } }
@@ -1173,7 +1173,7 @@
       "description": "Adds the missing multithreading functionality.",
       "version": "1.1",
       "type": "library",
-      "remote": "https://github.com/jgmdev/lite-xl-threads:e61ffd28fc852b143fe468c4b43c68d605f22335",
+      "remote": "https://github.com/jgmdev/lite-xl-threads:e97d3471033a6ee940b480d7782ea33a2e5236c7",
       "mod_version": "3",
       "id": "thread"
     },
@@ -1222,7 +1222,7 @@
     {
       "description": "Plugin library that provides a set of re-usable components to more easily write UI elements for your plugins",
       "version": "0.2",
-      "remote": "https://github.com/lite-xl/lite-xl-widgets:46ed39168cea8db3f792c0346dd37c74141cfba4",
+      "remote": "https://github.com/lite-xl/lite-xl-widgets:4c29ff3f89fb2988a7169094a554fee7972c9803",
       "mod_version": "3",
       "id": "widget"
     },
