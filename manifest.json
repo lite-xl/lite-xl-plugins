@@ -1110,6 +1110,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Takes an SVG screenshot. Only browsers seem to support the generated SVG properly.",
+      "version": "0.1",
+      "path": "plugins/svg_screenshot.lua",
+      "id": "svg_screenshot",
+      "mod_version": "3"
+    },
+    {
       "description": "Switch between open tabs by searching by name",
       "version": "0.1",
       "path": "plugins/tab_switcher.lua",
