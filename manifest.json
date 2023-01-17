@@ -159,7 +159,7 @@
     {
       "description": "Properly read files that are not encoded in UTF-8 or ASCII by auto-detecting their encoding and allows saving on different text encodings.",
       "version": "1.0",
-      "remote": "https://github.com/jgmdev/lite-xl-encoding:b1ddf226277ea12a03ed9db2ddda458988020e91",
+      "remote": "https://github.com/jgmdev/lite-xl-encoding:16e2477e916f52e18f6d63f5ac61ace58b0c5e45",
       "mod_version": "3",
       "id": "encodings",
       "dependencies": { "encoding": { } }
