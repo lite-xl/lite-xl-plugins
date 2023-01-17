@@ -93,13 +93,6 @@
       "id": "console"
     },
     {
-      "description": "Simple context menu *([screenshot](https://github.com/takase1121/lite-contextmenu/blob/master/assets/screenshot.jpg?raw=true))*",
-      "version": "0.1",
-      "remote": "https://github.com/takase1121/lite-contextmenu:5af041bf27319c6c26316c7fc8b7a60494be7d32",
-      "mod_version": "3",
-      "id": "contextmenu"
-    },
-    {
       "description": "Copy file location to clipboard",
       "version": "0.1",
       "path": "plugins/copyfilelocation.lua",
