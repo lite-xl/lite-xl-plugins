@@ -9,28 +9,29 @@ local View = require "core.view"
 local DocView = require "core.docview"
 
 -- check if widget is installed before proceeding
-local widget_found, Widget = pcall(require, "widget")
+local widget_found, Widget = pcall(require, "libraries.widget")
 if not widget_found then
   core.error("Widget library not found: https://github.com/lite-xl/lite-xl-widgets")
-  return
+  return false
 end
 
-local Label = require "widget.label"
-local Line = require "widget.line"
-local NoteBook = require "widget.notebook"
-local Button = require "widget.button"
-local TextBox = require "widget.textbox"
-local SelectBox = require "widget.selectbox"
-local NumberBox = require "widget.numberbox"
-local Toggle = require "widget.toggle"
-local ListBox = require "widget.listbox"
-local FoldingBook = require "widget.foldingbook"
-local FontsList = require "widget.fontslist"
-local ItemsList = require "widget.itemslist"
-local KeybindingDialog = require "widget.keybinddialog"
-local Fonts = require "widget.fonts"
-local FilePicker = require "widget.filepicker"
-local MessageBox = require "widget.messagebox"
+local Label = require "libraries.widget.label"
+local Line = require "libraries.widget.line"
+local NoteBook = require "libraries.widget.notebook"
+local Button = require "libraries.widget.button"
+local TextBox = require "libraries.widget.textbox"
+local SelectBox = require "libraries.widget.selectbox"
+local NumberBox = require "libraries.widget.numberbox"
+local Toggle = require "libraries.widget.toggle"
+local ListBox = require "libraries.widget.listbox"
+local FoldingBook = require "libraries.widget.foldingbook"
+local FontsList = require "libraries.widget.fontslist"
+local ItemsList = require "libraries.widget.itemslist"
+local KeybindingDialog = require "libraries.widget.keybinddialog"
+local Fonts = require "libraries.widget.fonts"
+local FilePicker = require "libraries.widget.filepicker"
+local ColorPicker = require "libraries.widget.colorpicker"
+local MessageBox = require "libraries.widget.messagebox"
 
 ---@class plugins.settings
 local settings = {}
@@ -53,7 +54,8 @@ settings.type = {
   BUTTON = 6,
   FONT = 7,
   FILE = 8,
-  DIRECTORY = 9
+  DIRECTORY = 9,
+  COLOR = 10
 }
 
 ---@alias settings.types
@@ -65,6 +67,8 @@ settings.type = {
 ---| `settings.type.BUTTON`
 ---| `settings.type.FONT`
 ---| `settings.type.FILE`
+---| `settings.type.DIRECTORY`
+---| `settings.type.COLOR`
 
 ---Represents a setting to render on a settings pane.
 ---@class settings.option
@@ -1261,6 +1265,14 @@ local function add_control(pane, option, plugin_name)
     file.filters = option.filters or {}
     widget = file
     found = true
+
+  elseif option.type == settings.type.COLOR then
+    ---@type widget.label
+    Label(pane, option.label .. ":")
+    ---@type widget.colorpicker
+    local color = ColorPicker(pane, option_value)
+    widget = color
+    found = true
   end
 
   if widget and type(path) ~= "nil" then
@@ -1624,11 +1636,13 @@ function Settings:load_keymap_settings()
   end
   table.sort(ordered)
 
+  ---@type widget.textbox
+  local textbox = TextBox(self.keybinds, "", "filter bindings...")
+
   ---@type widget.listbox
   local listbox = ListBox(self.keybinds)
 
   listbox.border.width = 0
-  listbox:enable_expand(true)
 
   listbox:add_column("Command")
   listbox:add_column("Bindings")
@@ -1653,8 +1667,15 @@ function Settings:load_keymap_settings()
     }, name)
   end
 
-  function listbox:on_row_click(idx, data)
-    if not keymap_dialog:is_visible() then
+  function textbox:on_change(value)
+    listbox:filter(value)
+  end
+
+  function listbox:on_mouse_pressed(button, x, y, clicks)
+    listbox.super.on_mouse_pressed(self, button, x, y, clicks)
+    local idx = listbox:get_selected()
+    local data = listbox:get_row_data(idx)
+    if clicks == 2 and not keymap_dialog:is_visible() then
       local bindings = { keymap.get_binding(data) }
       keymap_dialog:set_bindings(bindings)
       keymap_dialog.row_id = idx
@@ -1662,6 +1683,14 @@ function Settings:load_keymap_settings()
       keymap_dialog.listbox = self
       keymap_dialog:show()
     end
+  end
+
+  ---@param self widget
+  function self.keybinds:update_positions()
+    textbox:set_position(0, 0)
+    textbox:set_size(self:get_width() - self.border.width * 2)
+    listbox:set_position(0, textbox:get_bottom())
+    listbox:set_size(self:get_width() - self.border.width * 2, self:get_height() - textbox:get_height())
   end
 end
 
@@ -1817,6 +1846,10 @@ function Settings:update()
         end
       end
     end
+  end
+
+  if self.keybinds:is_visible() then
+    self.keybinds:update_positions()
   end
 
   if self.about:is_visible() then
