@@ -206,8 +206,10 @@ local function draw_decoration(dv, x, y, line, col, width)
   local h = conf.line_size
 
   if conf.color_char or conf.style == "block" then
-    redraw_char(dv, x, y, line, col,
-                conf.style == "block" and block_color, conf.color_char and char_color)
+    for i = 1, width, 1 do
+      redraw_char(dv, x, y, line, col + i - 1,
+                  conf.style == "block" and block_color, conf.color_char and char_color)
+    end
   end
   if conf.style == "underline" then
     local x1 = x + dv:get_col_x_offset(line, col)
