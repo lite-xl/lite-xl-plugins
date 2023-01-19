@@ -101,7 +101,7 @@
     },
     {
       "description": "Customize the caret in the editor",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/custom_caret.lua",
       "id": "custom_caret",
       "mod_version": "3"
