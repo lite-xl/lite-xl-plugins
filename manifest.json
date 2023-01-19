@@ -1046,6 +1046,15 @@
       "mod_version": "3"
     },
     {
+      "name": "Source Control Management",
+      "description": "Extensible source control management plugin with git and fossil backends.",
+      "version": "0.1",
+      "remote": "https://github.com/lite-xl/lite-xl-scm:930951990f9a3c78178265e5380e3c9e40b109d2",
+      "id": "scm",
+      "mod_version": "3",
+      "dependencies": { "widget": {} }
+    },
+    {
       "description": "Friendlier search and replace user interface using Widgets.",
       "version": "0.1",
       "path": "plugins/search_ui.lua",
