@@ -29,10 +29,7 @@ local DocView = require "core.docview"
 config.plugins.custom_caret = common.merge({
     shape = "line",
     custom_color = true,
-    color_r = style.caret[1],
-    color_g = style.caret[2],
-    color_b = style.caret[3],
-    opacity = style.caret[4]
+    caret_color = table.pack(table.unpack(style.caret))
 }, config.plugins.custom_caret)
 
 -- Reference to plugin config
@@ -41,20 +38,17 @@ local conf = config.plugins.custom_caret
 -- Get real default caret color after everything is loaded up
 core.add_thread(function()
   if
-    conf.color_r == 147 and conf.color_g == 221
+    conf.caret_color[1] == 147 and conf.caret_color[2] == 221
     and
-    conf.color_b == 250 and conf.opacity == 255
+    conf.caret_color[3] == 250 and conf.caret_color[4] == 255
     and
     (
-      style.caret[1] ~= conf.color_r or style.caret[2] ~= conf.color_g
+      style.caret[1] ~= conf.caret_color[1] or style.caret[2] ~= conf.caret_color[2]
       or
-      style.caret[3] ~= conf.color_b or style.caret[4] ~= conf.opacity
+      style.caret[3] ~= conf.caret_color[3] or style.caret[4] ~= conf.caret_color[4]
     )
   then
-    conf.color_r = style.caret[1]
-    conf.color_g = style.caret[2]
-    conf.color_b = style.caret[3]
-    conf.opacity = style.caret[4]
+    conf.caret_color = table.pack(table.unpack(style.caret))
   end
 
   local settings_loaded, settings = pcall(require, "plugins.settings")
@@ -81,48 +75,12 @@ core.add_thread(function()
         default = true
       },
       {
-        label = "Red Component of Color",
-        description = "The color consists of 3 components RGB, "
-          .. "This modifies the 'R' component of the caret's color",
-        path = "color_r",
-        type = "number",
-        min = 0,
-        max = 255,
-        default = style.caret[1],
-        step = 1,
-      },
-      {
-        label = "Green Component of Color",
-        description = "The color consists of 3 components RGB, "
-          .. "This modifies the 'G' component of the caret's color",
-        path = "color_g",
-        type = "number",
-        min = 0,
-        max = 255,
-        default = style.caret[2],
-        step = 1,
-      },
-      {
-        label = "Blue Component of Color",
-        description = "The color consists of 3 components RGB, "
-          .. "This modifies the 'B' component of the caret's color",
-        path = "color_b",
-        type = "number",
-        min = 0,
-        max = 255,
-        default = style.caret[3],
-        step = 1,
-      },
-      {
-        label = "Opacity of the Cursor",
-        description = "The Opacity of the caret",
-        path = "opacity",
-        type = "number",
-        min = 0,
-        max = 255,
-        default = style.caret[4],
-        step = 1,
-      },
+        label = "Caret Color",
+        description = "Custom color of the caret.",
+        path = "caret_color",
+        type = "color",
+        default = table.pack(table.unpack(style.caret)),
+      }
     }
 
     ---@cast settings plugins.settings
@@ -134,12 +92,7 @@ function DocView:draw_caret(x, y)
   local caret_width = style.caret_width
   local caret_height = self:get_line_height()
   local current_caret_shape = conf.shape
-  local caret_color = conf.custom_color and {
-    conf.color_r,
-    conf.color_g,
-    conf.color_b,
-    conf.opacity
-  } or style.caret
+  local caret_color = conf.custom_color and conf.caret_color or style.caret
 
   if (current_caret_shape == "block") then
     caret_width = math.ceil(self:get_font():get_width("a"))
