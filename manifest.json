@@ -1046,6 +1046,14 @@
       "mod_version": "3"
     },
     {
+      "description": "Friendlier search and replace user interface using Widgets.",
+      "version": "0.1",
+      "path": "plugins/search_ui.lua",
+      "id": "search_ui",
+      "mod_version": "3",
+      "dependencies": { "widget": {} }
+    },
+    {
       "description": "Select a color theme, like VScode, Sublime Text.(plugin saves changes)",
       "version": "0.1",
       "path": "plugins/select_colorscheme.lua",
