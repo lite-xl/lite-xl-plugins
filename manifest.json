@@ -51,7 +51,7 @@
     },
     {
       "description": "Underlines matching pair for bracket under the caret *([screenshot](https://user-images.githubusercontent.com/3920290/80132745-0c863f00-8594-11ea-8875-c455c6fd7eae.png))*",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/bracketmatch.lua",
       "id": "bracketmatch",
       "mod_version": "3"
