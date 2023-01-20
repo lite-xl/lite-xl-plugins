@@ -114,7 +114,7 @@
       "mod_version": "3"
     },
     {
-      "description": "Debug Lite-XL's Lua VM interactively",
+      "description": "Debug Lite-XL's Lua VM interactively, if you're running it from a terminal.",
       "version": "0.1",
       "path": "plugins/lite-debugger.lua",
       "id": "lite-debugger",
