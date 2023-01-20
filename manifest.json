@@ -966,7 +966,7 @@
       "path": "plugins/nerdicons.lua",
       "id": "nerdicons",
       "mod_version": "3"
-    }
+    },
     {
       "description": "File icons set for TreeView. Download [font](https://github.com/yamatsum/nonicons/raw/6a2faf4fbdfbe353c5ae6a496740ac4bfb6d0e74/dist/nonicons.ttf) to your config/fonts folder",
       "version": "0.1",
