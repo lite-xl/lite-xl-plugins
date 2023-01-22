@@ -36,7 +36,7 @@
       "mod_version": "3"
     },
     {
-      "description": "Shows the current time and date in a view with large text *([screenshot](https://user-images.git  hubusercontent.com/3920290/82752891-3318df00-9db9-11ea-803f-261d80d5cf53.png))*",
+      "description": "Shows the current time and date in a view with large text *([screenshot](https://user-images.githubusercontent.com/3920290/82752891-3318df00-9db9-11ea-803f-261d80d5cf53.png))*",
       "version": "0.1",
       "path": "plugins/bigclock.lua",
       "id": "bigclock",
