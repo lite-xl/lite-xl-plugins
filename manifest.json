@@ -36,7 +36,7 @@
       "mod_version": "3"
     },
     {
-      "description": "Shows the current time and date in a view with large text *([screenshot](https://user-images.githubusercontent.com/3920290/82752891-3318df00-9db9-11ea-803f-261d80d5cf53.png))*",
+      "description": "Shows the current time and date in a view with large text *([screenshot](https://user-images.git  hubusercontent.com/3920290/82752891-3318df00-9db9-11ea-803f-261d80d5cf53.png))*",
       "version": "0.1",
       "path": "plugins/bigclock.lua",
       "id": "bigclock",
@@ -278,6 +278,13 @@
       "remote": "https://github.com/vincens2005/lite-xl-gitdiff-highlight:12ddfa619054dfdd1ed86426d60b569dc536c43e",
       "mod_version": "3",
       "id": "gitdiff_highlight"
+    },
+    {
+      "description": "Open project files that are in a git commit (default=HEAD)",
+      "version": "0.1",
+      "path": "plugins/gitopen.lua",
+      "id": "gitopen",
+      "mod_version": "3"
     },
     {
       "description": "Displays git branch and insert/delete count in status bar *([screenshot](https://user-images.githubusercontent.com/3920290/81107223-bcea3080-8f0e-11ea-8fc7-d03173f42e33.png))*",
