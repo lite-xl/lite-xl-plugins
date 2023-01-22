@@ -967,7 +967,7 @@
       "id": "net"
     },
     {
-      "description": "File icons set for TreeView. Download font from nerdfonts.com. Modification of the [nonicons](plugins/nonicons.lua) plugin"
+      "description": "File icons set for TreeView. Download font from nerdfonts.com. Modification of the [nonicons](plugins/nonicons.lua) plugin",
       "version": "1.0",
       "type": "plugin",
       "path": "plugins/nerdicons.lua",
