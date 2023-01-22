@@ -1121,6 +1121,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Opens the selected filename or path in project. Useful to open imports.",
+      "version": "0.1",
+      "path": "plugins/smartopenselected.lua",
+      "id": "smartopenselected",
+      "mod_version": "3"
+    },
+    {
       "description": "Smooth caret animation *([gif](https://user-images.githubusercontent.com/20792268/139006049-a0ba6559-88cb-49a7-8077-4822445b4a1f.gif))*",
       "version": "0.1",
       "path": "plugins/smoothcaret.lua",
