@@ -9,7 +9,7 @@
     },
     {
       "description": "Automatically inserts closing brackets and quotes. Also allows selected text to be wrapped with brackets or quotes.",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/autoinsert.lua",
       "id": "autoinsert",
       "mod_version": "3"

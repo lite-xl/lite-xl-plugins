@@ -50,6 +50,10 @@ end
 local on_text_input = DocView.on_text_input
 
 function DocView:on_text_input(text)
+
+  -- Don't insert on multiselections
+  if #self.doc.selections > 4 then return on_text_input(self, text) end
+
   local mapping = config.plugins.autoinsert.map[text]
 
   -- prevents plugin from operating on `CommandView`
@@ -94,7 +98,7 @@ end
 
 local function predicate()
   return core.active_view:is(DocView)
-     and not core.active_view.doc:has_selection(), core.active_view.doc
+    and #core.active_view.doc.selections <= 4 and not core.active_view.doc:has_selection(), core.active_view.doc
 end
 
 command.add(predicate, {
