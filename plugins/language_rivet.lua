@@ -38,10 +38,8 @@ syntax.add {
         ["alias"] = "keyword",
         ["and"] = "keyword",
         ["as"] = "keyword",
-        ["base"] = "literal",
         ["break"] = "keyword",
         ["catch"] = "keyword",
-        ["class"] = "keyword",
         ["const"] = "keyword",
         ["continue"] = "keyword",
         ["defer"] = "keyword",
@@ -95,7 +93,6 @@ syntax.add {
         ["mut_anyptr"] = "keyword2",
         ["rune"] = "keyword2",
         ["string"] = "keyword2",
-        ["Base"] = "keyword2",
         ["Self"] = "keyword2"
     }
 }
