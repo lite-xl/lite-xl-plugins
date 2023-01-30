@@ -3,7 +3,7 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "PKGBUILD",
-  files = "/*PKGBUILD$",
+  files = "/PKGBUILD$",
   comment = "#",
   patterns = {
     -- Don't colorize number of arguments expression as comment

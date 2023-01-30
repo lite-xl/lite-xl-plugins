@@ -4,7 +4,7 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "fstab",
-  files = { "fstab" },
+  files = { "/fstab$" },
   comment = '#',
   patterns = {
     -- Only lines that start with a # are comments; you can have #'s in fuse

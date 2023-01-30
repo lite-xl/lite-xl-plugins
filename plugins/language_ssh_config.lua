@@ -3,7 +3,7 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "SSH config",
-  files = { "sshd?/?_?config$" },
+  files = { "/sshd?/?_?config$" },
   comment = '#',
   patterns = {
     { pattern = "#.*\n",        type = "comment"  },

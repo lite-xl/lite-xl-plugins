@@ -165,7 +165,7 @@ local xml_syntax = {
 
 syntax.add {
   name = ".htaccess File",
-  files = { "^%.htaccess$" },
+  files = { "/%.htaccess$" },
   comment = "#",
   patterns = {
     -- Comments
