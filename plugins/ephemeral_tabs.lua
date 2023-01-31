@@ -17,14 +17,17 @@ config.plugins.ephemeral_tabs = common.merge({
   default = false
 }, config.plugins.ephemeral_tabs)
 
+local TreeView, ProjectSearch, has_treeview, has_projectsearch
 
-local _, TreeView = pcall(require, "plugins.treeview")
-local _, ProjectSearch = pcall(require, "plugins.projectsearch")
+if config.plugins.treeview then has_treeview, TreeView = pcall(require, "plugins.treeview") end
+if config.plugins.projectsearch then has_projectsearch, ProjectSearch = pcall(require, "plugins.projectsearch") end
+
 local callee = "startup"
 
-if TreeView then
+if has_treeview then
   local old_open_doc = TreeView.open_doc
-  -- KLUDGE: This function is not present on master, and so will restore old functionality if not present.
+  -- KLUDGE: #workaround for functionality not present in 2.1.1
+  -- Remove this when ad272fce5366303f593c4d37295ac5c04adfa3c5 present in release.
   if old_open_doc then
     function TreeView:open_doc(filename)
       callee = TreeView
@@ -48,7 +51,7 @@ if TreeView then
 end
 
 
-if ProjectSearch then
+if has_projectsearch then
   local old_open_doc = ProjectSearch.ResultsView.open_selected_result
   function ProjectSearch.ResultsView:open_selected_result()
     callee = ProjectSearch
@@ -93,6 +96,7 @@ function DocView:get_name()
           or DocView_get_name(self)
 end
 
+
 -- Any change to the document makes the tab normal
 local Doc_on_text_change = Doc.on_text_change
 function Doc:on_text_change(type)
@@ -103,7 +107,7 @@ function Doc:on_text_change(type)
 end
 
 
--- Double clicking on a tab makes it normal
+--- Double clicking on a tab makes it normal
 local RootView_on_mouse_pressed = RootView.on_mouse_pressed
 function RootView:on_mouse_pressed(button, x, y, clicks)
   local result = RootView_on_mouse_pressed(self, button, x, y, clicks)
@@ -113,11 +117,12 @@ function RootView:on_mouse_pressed(button, x, y, clicks)
     if idx then
       node.views[idx].ephemeral = false
     end
-  end
+   end
   return result
 end
 
--- Dragging a tab makes it normal
+
+-- Dragging a tab deephemeralizes
 local RootView_on_mouse_released = RootView.on_mouse_released
 function RootView:on_mouse_released(button, x, y, ...)
   if self.dragged_node then
@@ -131,8 +136,10 @@ function RootView:on_mouse_released(button, x, y, ...)
   return RootView_on_mouse_released(self, button, x, y, ...)
 end
 
+
 local core_run = core.run
 function core.run()
   callee = nil
   core_run()
 end
+
