@@ -1,10 +1,44 @@
 -- mod-version:3
 local core = require "core"
 local command = require "core.command"
+local common = require "core.common"
 local RootView = require "core.rootview"
 local DocView = require "core.docview"
 local Doc = require "core.doc"
-local TreeView = require "plugins.treeview"
+
+config.plugins.ephemeral_tabs = common.merge({
+  -- Mark tabs as ephemeral when opening from the treeview.
+  treeview = true,
+  -- Mark tabs as ephemeral when opening from the project search.
+  projectsearch = true,
+  -- Mark tabs as ephemeral in all other cases. Can take a function.
+  default = false
+}, config.plugins.ephemeral_tabs)
+
+
+local _, TreeView = pcall(require, "plugins.treeview")
+local _, ProjectSearch = pcall(require, "plugins.projectsearch")
+local callee = nil
+
+if TreeView then
+  local old_open_doc = TreeView.open_doc
+  function TreeView:open_doc(filename)
+    callee = TreeView
+    local status, err = pcall(old_open_doc, self, filename)
+    callee = nil
+    if not status error(err) end
+  end
+end
+if ProjectSearch then
+  local old_open_doc = ProjectSearch.ResultsView.open_selected_result
+  function ProjectSearch.ResultsView:open_selected_result()
+    callee = ProjectSearch
+    local status, err = old_open_doc(self)
+    callee = nil
+    if not status then error(err) end
+  end
+end
+
 
 local RootView_open_doc = RootView.open_doc
 function RootView:open_doc(doc)
@@ -20,7 +54,13 @@ function RootView:open_doc(doc)
         node:close_view(self.root_node, v)
       end
     end
-    docview.ephemeral = true
+    if callee then
+      docview.ephemeral = (callee == TreeView and config.plugins.ephemeral_tabs.treeview) or (callee == ProjectSearch and config.plugins.ephemeral_tabs.projectsearch)
+    elseif type(config.plugins.ephemeral_tabs.default) == "function" then
+      docview.ephemeral = config.plugins.ephemeral_tabs.default(docview)
+    else
+      docview.ephemeral = config.plugins.ephemeral_tabs.default
+    end
   end
   return docview
 end
@@ -75,3 +115,4 @@ function RootView:on_mouse_released(button, x, y, ...)
   end
   return RootView_on_mouse_released(self, button, x, y, ...)
 end
+
