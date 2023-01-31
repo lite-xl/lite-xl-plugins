@@ -1,5 +1,6 @@
 -- mod-version:3
 local core = require "core"
+local config = require "core.config"
 local command = require "core.command"
 local common = require "core.common"
 local RootView = require "core.rootview"
@@ -22,11 +23,25 @@ local callee = nil
 
 if TreeView then
   local old_open_doc = TreeView.open_doc
-  function TreeView:open_doc(filename)
-    callee = TreeView
-    local status, err = pcall(old_open_doc, self, filename)
-    callee = nil
-    if not status error(err) end
+  -- KLUDGE: This function is not present on master, and so will restore old functionality if not present.
+  if old_open_doc then
+    function TreeView:open_doc(filename)
+      callee = TreeView
+      local status, err = pcall(old_open_doc, self, filename)
+      callee = nil
+      if not status then error(err) end
+    end
+  else
+    config.plugins.ephemeral_tabs.default = true
+  end
+  -- Double clicking in the TreeView makes the tab normal
+  local TreeView_on_mouse_pressed = TreeView.on_mouse_pressed
+  function TreeView:on_mouse_pressed(button, x, y, clicks)
+    local result = TreeView_on_mouse_pressed(self, button, x, y, clicks)
+    if (clicks > 1) and (core.active_view.doc ~= nil) then
+      core.active_view.ephemeral = false
+    end
+    return result
   end
 end
 if ProjectSearch then
@@ -50,7 +65,7 @@ function RootView:open_doc(doc)
     -- We assume that ephemeral tab is always the last one
     -- But user can drag and drop tabs so full check is needed
     for i, v in ipairs(node.views) do
-      if v.ephemeral then
+      if v.ephemeral and docview ~= v then
         node:close_view(self.root_node, v)
       end
     end
@@ -58,7 +73,7 @@ function RootView:open_doc(doc)
       docview.ephemeral = (callee == TreeView and config.plugins.ephemeral_tabs.treeview) or (callee == ProjectSearch and config.plugins.ephemeral_tabs.projectsearch)
     elseif type(config.plugins.ephemeral_tabs.default) == "function" then
       docview.ephemeral = config.plugins.ephemeral_tabs.default(docview)
-    else
+    elseif config.plugins.ephemeral_tabs.default then
       docview.ephemeral = config.plugins.ephemeral_tabs.default
     end
   end
@@ -78,15 +93,6 @@ function Doc:on_text_change(type)
   Doc_on_text_change(self, type)
 end
 
--- Double clicking in the TreeView makes the tab normal
-local TreeView_on_mouse_pressed = TreeView.on_mouse_pressed
-function TreeView:on_mouse_pressed(button, x, y, clicks)
-  local result = TreeView_on_mouse_pressed(self, button, x, y, clicks)
-  if (clicks > 1) and (core.active_view.doc ~= nil) then
-    core.active_view.ephemeral = false
-  end
-  return result
-end
 
 -- Double clicking on a tab makes it normal
 local RootView_on_mouse_pressed = RootView.on_mouse_pressed
