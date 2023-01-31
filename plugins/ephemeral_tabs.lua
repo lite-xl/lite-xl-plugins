@@ -34,7 +34,7 @@ config.plugins.ephemeral_tabs = common.merge({
     {
       label = "Ephemeralize by default",
       description = "Ephemeralize tabs opened any other way.",
-      path = "projectsearch",
+      path = "default",
       type = "toggle",
       default = false
     }
