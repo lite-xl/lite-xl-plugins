@@ -80,7 +80,7 @@
     },
     {
       "description": "Underlays color values (eg. `#ff00ff` or `rgb(255, 0, 255)`) with their resultant color. *([screenshot](https://user-images.githubusercontent.com/3920290/80743752-731bd780-8b15-11ea-97d3-847db927c5dc.png))*",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/colorpreview.lua",
       "id": "colorpreview",
       "mod_version": "3"
@@ -136,7 +136,7 @@
     },
     {
       "description": "Provides basic drag and drop of selected text (in same document)",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/dragdropselected.lua",
       "id": "dragdropselected",
       "mod_version": "3"
@@ -1055,7 +1055,7 @@
     },
     {
       "description": "Allows for you to write a regex and its replacement in one go, and live preview the results.",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/regexreplacepreview.lua",
       "id": "regexreplacepreview",
       "mod_version": "3"
@@ -1100,7 +1100,7 @@
     },
     {
       "description": "Highlights regions of code that match the current selection *([screenshot](https://user-images.githubusercontent.com/3920290/80710883-5f597c80-8ae7-11ea-97f0-76dfacc08439.png))*",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/selectionhighlight.lua",
       "id": "selectionhighlight",
       "mod_version": "3"
@@ -1136,7 +1136,7 @@
     },
     {
       "description": "Sorts selected lines alphabetically",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/sort.lua",
       "id": "sort",
       "mod_version": "3"
