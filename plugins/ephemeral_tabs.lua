@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:3.1
 local core = require "core"
 local config = require "core.config"
 local command = require "core.command"
@@ -14,20 +14,41 @@ config.plugins.ephemeral_tabs = common.merge({
   -- Mark tabs as ephemeral when opening from the project search.
   projectsearch = true,
   -- Mark tabs as ephemeral in all other cases. Can take a function.
-  default = false
+  default = false,
+  config_spec = {
+    name = "Treeview",
+    {
+      label = "Ephemeralize TreeView",
+      description = "Ephemeralize tabs opened from TreeView.",
+      path = "treeview",
+      type = "toggle",
+      default = true
+    },
+    {
+      label = "Ephemeralize ProjectSearch",
+      description = "Ephemeralize tabs opened from ProjectSearch.",
+      path = "projectsearch",
+      type = "toggle",
+      default = true
+    },
+    {
+      label = "Ephemeralize ProjectSearch",
+      description = "Ephemeralize tabs opened from ProjectSearch.",
+      path = "projectsearch",
+      type = "toggle",
+      default = false
+    }
+  }
 }, config.plugins.ephemeral_tabs)
 
-local TreeView, ProjectSearch, has_treeview, has_projectsearch
 
-if config.plugins.treeview then has_treeview, TreeView = pcall(require, "plugins.treeview") end
-if config.plugins.projectsearch then has_projectsearch, ProjectSearch = pcall(require, "plugins.projectsearch") end
-
+local TreeView, ProjectSearch
 local callee = "startup"
 
-if has_treeview then
+
+config.plugins.treeview.onload = function(tv)
+  TreeView = tv
   local old_open_doc = TreeView.open_doc
-  -- KLUDGE: #workaround for functionality not present in 2.1.1
-  -- Remove this when ad272fce5366303f593c4d37295ac5c04adfa3c5 present in release.
   if old_open_doc then
     function TreeView:open_doc(filename)
       callee = TreeView
@@ -35,8 +56,6 @@ if has_treeview then
       callee = nil
       if not status then error(err) end
     end
-  else
-    config.plugins.ephemeral_tabs.default = true
   end
   command.add(function()
     return core.active_view == TreeView and TreeView.hovered_item
@@ -51,7 +70,8 @@ if has_treeview then
 end
 
 
-if has_projectsearch then
+config.plugins.projectsearch.onload = function(ps)
+  ProjectSearch = ps
   local old_open_doc = ProjectSearch.ResultsView.open_selected_result
   function ProjectSearch.ResultsView:open_selected_result()
     callee = ProjectSearch
