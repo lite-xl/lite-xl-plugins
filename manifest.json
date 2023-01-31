@@ -174,10 +174,10 @@
     },
     {
       "description": "Preview tabs. Opening a doc will replace the contents of the preview tab. Marks tabs as non-preview on any change or tab double clicking.",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/ephemeral_tabs.lua",
       "id": "ephemeral_tabs",
-      "mod_version": "3"
+      "mod_version": "3.1"
     },
     {
       "description": "Graphs y=x equations.",
