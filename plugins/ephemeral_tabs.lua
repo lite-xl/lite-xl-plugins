@@ -3,6 +3,7 @@ local core = require "core"
 local config = require "core.config"
 local command = require "core.command"
 local common = require "core.common"
+local keymap = require "core.keymap"
 local RootView = require "core.rootview"
 local DocView = require "core.docview"
 local Doc = require "core.doc"
@@ -34,16 +35,19 @@ if TreeView then
   else
     config.plugins.ephemeral_tabs.default = true
   end
-  -- Double clicking in the TreeView makes the tab normal
-  local TreeView_on_mouse_pressed = TreeView.on_mouse_pressed
-  function TreeView:on_mouse_pressed(button, x, y, clicks)
-    local result = TreeView_on_mouse_pressed(self, button, x, y, clicks)
-    if (clicks > 1) and (core.active_view.doc ~= nil) then
-      core.active_view.ephemeral = false
+  command.add(function()
+    return core.active_view == TreeView and TreeView.hovered_item
+  end, {
+    ["treeview:deephemeralize"] = function()
+      core.root_view:open_doc(core.open_doc(TreeView.hovered_item.abs_filename)).ephemeral = false
     end
-    return result
-  end
+  })
+  keymap.add {
+    ["2lclick"] = "treeview:deephemeralize"
+  }
 end
+
+
 if ProjectSearch then
   local old_open_doc = ProjectSearch.ResultsView.open_selected_result
   function ProjectSearch.ResultsView:open_selected_result()
@@ -53,6 +57,7 @@ if ProjectSearch then
     if not status then error(err) end
   end
 end
+
 
 local DocView_new = DocView.new
 function DocView:new(doc)
@@ -66,11 +71,6 @@ function DocView:new(doc)
   end
 end
 
-local core_run = core.run
-function core.run()
-  callee = nil
-  core_run()
-end
 
 local RootView_open_doc = RootView.open_doc
 function RootView:open_doc(doc)
@@ -131,3 +131,8 @@ function RootView:on_mouse_released(button, x, y, ...)
   return RootView_on_mouse_released(self, button, x, y, ...)
 end
 
+local core_run = core.run
+function core.run()
+  callee = nil
+  core_run()
+end
