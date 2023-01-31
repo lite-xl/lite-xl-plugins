@@ -19,7 +19,7 @@ config.plugins.ephemeral_tabs = common.merge({
 
 local _, TreeView = pcall(require, "plugins.treeview")
 local _, ProjectSearch = pcall(require, "plugins.projectsearch")
-local callee = nil
+local callee = "startup"
 
 if TreeView then
   local old_open_doc = TreeView.open_doc
@@ -54,42 +54,51 @@ if ProjectSearch then
   end
 end
 
+local DocView_new = DocView.new
+function DocView:new(doc)
+  DocView_new(self, doc)
+  if callee then
+    self.ephemeral = callee ~= "startup" and (callee == TreeView and config.plugins.ephemeral_tabs.treeview) or (callee == ProjectSearch and config.plugins.ephemeral_tabs.projectsearch)
+  elseif type(config.plugins.ephemeral_tabs.default) == "function" then
+    self.ephemeral = config.plugins.ephemeral_tabs.default(docview)
+  elseif config.plugins.ephemeral_tabs.default then
+    self.ephemeral = config.plugins.ephemeral_tabs.default
+  end
+end
+
+local core_run = core.run
+function core.run()
+  callee = nil
+  core_run()
+end
 
 local RootView_open_doc = RootView.open_doc
 function RootView:open_doc(doc)
   local docview = RootView_open_doc(self, doc)
-  -- The absence of the ephemeral flag means that before this moment in this
-  -- node this document was not exists
-  if docview.ephemeral == nil then
+  if docview.ephemeral then
     local node = self:get_active_node_default()
-    -- We assume that ephemeral tab is always the last one
-    -- But user can drag and drop tabs so full check is needed
     for i, v in ipairs(node.views) do
       if v.ephemeral and docview ~= v then
         node:close_view(self.root_node, v)
       end
     end
-    if callee then
-      docview.ephemeral = (callee == TreeView and config.plugins.ephemeral_tabs.treeview) or (callee == ProjectSearch and config.plugins.ephemeral_tabs.projectsearch)
-    elseif type(config.plugins.ephemeral_tabs.default) == "function" then
-      docview.ephemeral = config.plugins.ephemeral_tabs.default(docview)
-    elseif config.plugins.ephemeral_tabs.default then
-      docview.ephemeral = config.plugins.ephemeral_tabs.default
-    end
   end
   return docview
 end
 
-local Doc_get_name = DocView.get_name
+
+local DocView_get_name = DocView.get_name
 function DocView:get_name()
-  return self.doc and self.ephemeral and ("~ " .. Doc_get_name(self) .. " ~")
-          or Doc_get_name(self)
+  return self.doc and self.ephemeral and ("~ " .. DocView_get_name(self) .. " ~")
+          or DocView_get_name(self)
 end
 
 -- Any change to the document makes the tab normal
 local Doc_on_text_change = Doc.on_text_change
 function Doc:on_text_change(type)
-  core.active_view.ephemeral = false
+  if core.active_view.doc == self then
+    core.active_view.ephemeral = false
+  end
   Doc_on_text_change(self, type)
 end
 
