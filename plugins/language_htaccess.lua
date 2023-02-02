@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:3.1
 local syntax = require "core.syntax"
 
 local keywords = {

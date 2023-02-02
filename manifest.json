@@ -386,14 +386,14 @@
       "version": "0.2",
       "path": "plugins/language_caddyfile.lua",
       "id": "language_caddyfile",
-      "mod_version": "3"
+      "mod_version": "3.1"
     },
     {
       "description": "Syntax for the CMake build system language",
       "version": "0.2",
       "path": "plugins/language_cmake.lua",
       "id": "language_cmake",
-      "mod_version": "3"
+      "mod_version": "3.1"
     },
     {
       "description": "Syntax for [Containerfile](https://github.com/containers/common/blob/main/docs/Containerfile.5.md)/[Dockerfile](https://docs.docker.com/engine/reference/builder/)",
@@ -484,7 +484,7 @@
       "version": "0.2",
       "path": "plugins/language_fstab.lua",
       "id": "language_fstab",
-      "mod_version": "3"
+      "mod_version": "3.1"
     },
     {
       "description": "Syntax for the [Godot Engine](https://godotengine.org/)'s GDScript scripting language",
@@ -532,7 +532,7 @@
       "version": "0.2",
       "path": "/plugins/language_htaccess.lua",
       "id": "language_htaccess",
-      "mod_version": "3",
+      "mod_version": "3.1",
       "description": "Syntax for [.htaccess](https://httpd.apache.org/docs/2.4/howto/htaccess.html) files."
     },
     {
@@ -604,14 +604,14 @@
       "version": "0.2",
       "path": "plugins/language_make.lua",
       "id": "language_make",
-      "mod_version": "3"
+      "mod_version": "3.1"
     },
     {
       "description": "Syntax for the [Meson](https://mesonbuild.com) build system language",
       "version": "0.2",
       "path": "plugins/language_meson.lua",
       "id": "language_meson",
-      "mod_version": "3"
+      "mod_version": "3.1"
     },
     {
       "description": "Syntax for the [MiniScript](https://miniscript.org) programming language",
@@ -695,7 +695,7 @@
       "version": "0.2",
       "path": "plugins/language_pkgbuild.lua",
       "id": "language_pkgbuild",
-      "mod_version": "3"
+      "mod_version": "3.1"
     },
     {
       "description": "Syntax for [PO](https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html) translation files",
@@ -752,7 +752,7 @@
       "version": "0.2",
       "path": "plugins/language_ruby.lua",
       "id": "language_ruby",
-      "mod_version": "3"
+      "mod_version": "3.1"
     },
     {
       "description": "Syntax for the [Rust](https://rust-lang.org/) programming language",
@@ -780,14 +780,14 @@
       "version": "0.2",
       "path": "plugins/language_sh.lua",
       "id": "language_sh",
-      "mod_version": "3"
+      "mod_version": "3.1"
     },
     {
       "description": "Syntax for ssh & sshd config files",
       "version": "0.2",
       "path": "plugins/language_ssh_config.lua",
       "id": "language_ssh_config",
-      "mod_version": "3"
+      "mod_version": "3.1"
     },
     {
       "description": "Syntax for the [Tcl](https://www.tcl.tk/) programming language",

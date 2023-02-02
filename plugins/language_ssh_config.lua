@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:3.1
 local syntax = require "core.syntax"
 
 syntax.add {
@@ -45,7 +45,6 @@ syntax.add {
     ["RekeyLimit"]                   = "keyword",
     ["SendEnv"]                      = "keyword",
     ["HashKnownHosts"]               = "keyword",
-    ["GSSAPIAuthentication"]         = "keyword",
 
     -- sshd config
     ["Subsystem"]                    = "keyword2",
