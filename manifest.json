@@ -361,6 +361,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Syntax for RISC-V assembly",
+      "version": "0.1",
+      "path": "plugins/language_assembly_riscv.lua",
+      "id": "language_assembly_riscv",
+      "mod_version": "3"
+    },
+    {
       "description": "Syntax for the [AutoHotkey](https://www.autohotkey.com) programming language",
       "version": "0.1",
       "remote": "https://github.com/devPnal/lite-plugin-autohotkey:e1597623163ab9e1d99ec1e8ee75cbe95b3e5d91",
