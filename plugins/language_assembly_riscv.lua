@@ -9,15 +9,15 @@ syntax.add {
   files = { "%.asm$", "%.[sS]$" },
   comment = "#",
   patterns = {
-    { pattern = "#.-\n", type = "comment" },
+    { pattern = "#.*\n", type = "comment" },
     { pattern = { '"', '"', '\\' }, type = "string" },
     { pattern = { "'", "'", '\\' }, type = "string" },
     { pattern = "0[bB][0-1]+%W", type = "number" },
     { pattern = "0[xX]%x+", type = "number" },
-    { pattern = "%--%d+[%d%.eE]*f?", type = "number" },
     { pattern = "%%+[%a_][%w_]*", type = "function" },
+    { pattern = "[%a%._][%w%._]*:%W", type = "function" },
+    { pattern = "[^%p%a]%-?%d[%d%.]*", type = "number" },
     { pattern = "[%+%-=/%*%^%%<>!~|&%$]", type = "operator" },
-    { pattern = ".*:%W", type = "function" },
     { pattern = "[%a_][%w_]*", type = "symbol" },
     { pattern = "%.%a+", type = "normal" }
   },
@@ -89,7 +89,6 @@ syntax.add {
     ["t5"] = "literal",
     ["t6"] = "literal",
     ["pc"] = "literal",
-    
     -- Floating-point Registers
     ["f0"] = "literal",
     ["f1"] = "literal",
