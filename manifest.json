@@ -1107,7 +1107,7 @@
     },
     {
       "description": "Provides a GUI to manage core and plugin settings, bindings and select color theme *([video](https://user-images.githubusercontent.com/1702572/169743674-ececae24-f6b7-4ff2-bfa2-c4762cd327d9.mp4))*. (depends on [`widget`](https://github.com/lite-xl/lite-xl-widgets))",
-      "version": "0.5",
+      "version": "0.6",
       "path": "plugins/settings.lua",
       "id": "settings",
       "mod_version": "3",
