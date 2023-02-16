@@ -4,6 +4,7 @@ local syntax = require "core.syntax"
 syntax.add {
   name = "Haxe Compiler Arguments",
   files = "%.hxml$",
+  comment = "#",
   patterns = {
     { pattern = "#.*",             type = "comment"},
     { pattern = "%-[%-%w_]*",      type="keyword"},
@@ -55,7 +56,7 @@ syntax.add {
     { pattern = "-?%d+%.[%deE]+",                           type = "number"   },
     { pattern = "-?%d+[%deE]+",                             type = "number"   },
     { pattern = "[%+%-%.=/%*%^%%<>!~|&]",                   type = "operator" },
-    { pattern = "[%a_][%w_]*%f[(]",                         type = "function" },
+    { pattern = "[%a_][%w_]*()%s*%f[(]",                    type = {"function", "normal"} },
     { pattern = "[%a_][%w_]*",                              type = "symbol"   },
     { pattern = ":()%u[%a_][%w_]*",                         type = {"normal", "keyword2"}},
     { pattern = "@:[%a_][%w_]*%f[(]",                       type = "keyword"   },
