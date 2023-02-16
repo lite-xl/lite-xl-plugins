@@ -515,6 +515,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Syntax for the [Haxe](https://haxe.org) programming language",
+      "version": "0.1",
+      "path": "plugins/language_haxe.lua",
+      "id": "language_haxe",
+      "mod_version": "3"
+    },
+    {
       "description": "Syntax for the [HLSL](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl) programming language",
       "version": "0.1",
       "path": "plugins/language_hlsl.lua",
