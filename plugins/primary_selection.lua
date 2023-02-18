@@ -106,6 +106,7 @@ local function delayed_copy()
         if written == 0 or not written then
           if retry > 0 then
             retry = retry - 1
+            coroutine.yield(((3-retry) ^ 2) * 0.05)
           else
             core.error("Error while setting primary selection. "..(err or ""))
             break
