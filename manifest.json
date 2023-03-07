@@ -1163,6 +1163,14 @@
       "mod_version": "3"
     },
     {
+      "description": "Keep track of the current scope at the top of the view (*[video](https://user-images.githubusercontent.com/2798487/222133911-e467a583-596c-47ab-8e65-eefc7b5c9112.mp4)*)",
+      "version": "1.0",
+      "path": "plugins/sticky_scroll.lua",
+      "id": "sticky_scroll",
+      "name": "Sticky Scroll",
+      "mod_version": "3"
+    },
+    {
       "description": "Takes an SVG screenshot. Only browsers seem to support the generated SVG properly.",
       "version": "0.1",
       "path": "plugins/svg_screenshot.lua",
