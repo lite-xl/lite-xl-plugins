@@ -8,6 +8,7 @@ local DocView = require "core.docview"
 local Highlighter = require "core.doc.highlighter"
 local Object = require "core.object"
 local Scrollbar = require "core.scrollbar"
+local encoding = require "libraries.encoding"
 
 -- Sample configurations:
 -- full width:
@@ -29,6 +30,7 @@ config.plugins.minimap = common.merge({
   instant_scroll = false,
   syntax_highlight = true,
   scale = 1,
+  non_utf = false,
   -- number of spaces needed to split a token
   spaces_to_split = 2,
   -- hide on small docs (can be true, false or min number of lines)
@@ -301,6 +303,12 @@ function MiniMap:new(dv)
   MiniMap.super.new(self, { direction = "v", alignment = "e" })
   self.dv = dv
   self.enabled = nil
+
+  local enc, err = encoding.detect(dv.doc.abs_filename)
+  if enc == nil then 
+    core.log_quiet("Minimap: error when trying to detect file encoding: "..err)
+  end
+  if enc ~= "UTF-8" then self.non_utf = true end
 end
 
 
@@ -310,6 +318,7 @@ end
 
 
 function MiniMap:is_minimap_enabled()
+  if self.non_utf then return false end
   if self.enabled ~= nil then return self.enabled end
   if not config.plugins.minimap.enabled then return false end
   if config.plugins.minimap.avoid_small_docs then
