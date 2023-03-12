@@ -361,11 +361,11 @@
       "mod_version": "3"
     },
     {
-      "description": "Syntax for the [AutoHotkey](https://www.autohotkey.com) programming language",
+      "description": "Syntax for the [AutoHotkey](https://www.autohotkey.com)(v1) programming language",
       "version": "0.1",
-      "remote": "https://github.com/devPnal/lite-plugin-autohotkey:e1597623163ab9e1d99ec1e8ee75cbe95b3e5d91",
+      "path": "plugins/langauge_autohotkey_v1.lua",
       "mod_version": "3",
-      "id": "language_autohotkey"
+      "id": "language_autohotkey_v1"
     },
     {
       "description": "Syntax for Windows [Batch Files](https://en.wikipedia.org/wiki/Batch_file)",
