@@ -363,7 +363,7 @@
     {
       "description": "Syntax for the [AutoHotkey](https://www.autohotkey.com)(v1) programming language",
       "version": "0.1",
-      "path": "plugins/langauge_autohotkey_v1.lua",
+      "path": "plugins/language_autohotkey_v1.lua",
       "mod_version": "3",
       "id": "language_autohotkey_v1"
     },
