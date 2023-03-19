@@ -120,6 +120,17 @@ function Doc:text_input(...)
 end
 
 
+local function compare_arrays(a, b)
+  if b == a then return true end
+  if not a or not b then return false end
+  if #b ~= #a then return false end
+  for i=1,#a do
+    if b[i] ~= a[i] then return false end
+  end
+  return true
+end
+
+
 local draw_line_text = DocView.draw_line_text
 function DocView:draw_line_text(idx, x, y)
   local lh = draw_line_text(self, idx, x, y)
@@ -136,10 +147,12 @@ function DocView:draw_line_text(idx, x, y)
 
   if font_canary ~= style.code_font
     or font_size_canary ~= style.code_font:get_size()
+    or not compare_arrays(self.wrapped_lines, self.old_wrapped_lines)
   then
     spell_cache[self.doc.highlighter] = {}
     font_canary = style.code_font
     font_size_canary = style.code_font:get_size()
+    self.old_wrapped_lines = self.wrapped_lines
     reset_cache()
   end
   if not spell_cache[self.doc.highlighter][idx] then
