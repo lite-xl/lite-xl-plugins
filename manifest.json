@@ -1150,7 +1150,7 @@
     },
     {
       "description": "Underlines misspelt words *([screenshot](https://user-images.githubusercontent.com/3920290/79923973-9caa7400-842e-11ea-85d4-7a196a91ca50.png))* *-- note: on Windows a [`words.txt`](https://github.com/dwyl/english-words/blob/master/words.txt) dictionary file must be placed beside the exe*",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/spellcheck.lua",
       "id": "spellcheck",
       "mod_version": "3"
