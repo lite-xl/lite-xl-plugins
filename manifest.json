@@ -924,14 +924,14 @@
       "id": "lspkind"
     },
     {
-      "description": "Automatic binary download for lsp for C/C++ with clangd.",
+      "description": "Automatic configuration/binary download for LSP completion for C/C++ with clangd.",
       "version": "0.1",
       "remote": "https://github.com/adamharirson/lite-xl-lsp-servers:3be577fb8aaada3b88e2779ec56cfbbb48eea9c7",
       "mod_version": "3",
       "id": "lsp_c"
     },
     {
-      "description": "Automatic binary download for lsp for Lua with sumneko.",
+      "description": "Automatic configuration/binary download for LSP completion for Lua with sumneko.",
       "version": "0.1",
       "remote": "https://github.com/adamharirson/lite-xl-lsp-servers:3be577fb8aaada3b88e2779ec56cfbbb48eea9c7",
       "mod_version": "3",
