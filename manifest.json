@@ -382,6 +382,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Syntax for [Blade](https://github.com/blade-lang/blade/) files",
+      "version": "0.1",
+      "path": "plugins/language_blade.lua",
+      "id": "language_blade",
+      "mod_version": "3"
+    },
+    {
       "description": "Syntax for the Caddyfile used on the [Caddy](https://caddyserver.com/) web server",
       "version": "0.1",
       "path": "plugins/language_caddyfile.lua",
