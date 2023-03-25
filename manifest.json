@@ -368,11 +368,11 @@
       "mod_version": "3"
     },
     {
-      "description": "Syntax for the [AutoHotkey](https://www.autohotkey.com) programming language",
+      "description": "Syntax for the [AutoHotkey](https://www.autohotkey.com)(v1) programming language",
       "version": "0.1",
-      "remote": "https://github.com/devPnal/lite-plugin-autohotkey:e1597623163ab9e1d99ec1e8ee75cbe95b3e5d91",
+      "path": "plugins/language_autohotkey_v1.lua",
       "mod_version": "3",
-      "id": "language_autohotkey"
+      "id": "language_autohotkey_v1"
     },
     {
       "description": "Syntax for Windows [Batch Files](https://en.wikipedia.org/wiki/Batch_file)",
@@ -386,6 +386,13 @@
       "version": "0.1",
       "path": "plugins/language_bib.lua",
       "id": "language_bib",
+      "mod_version": "3"
+    },
+    {
+      "description": "Syntax for [Blade](https://github.com/blade-lang/blade/) files",
+      "version": "0.1",
+      "path": "plugins/language_blade.lua",
+      "id": "language_blade",
       "mod_version": "3"
     },
     {
@@ -446,7 +453,7 @@
     },
     {
       "description": "Syntax for the [Elixir](https://elixir-lang.org) programming language",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_elixir.lua",
       "id": "language_elixir",
       "mod_version": "3"
@@ -519,6 +526,13 @@
       "version": "0.1",
       "path": "plugins/language_go.lua",
       "id": "language_go",
+      "mod_version": "3"
+    },
+    {
+      "description": "Syntax for the [Haxe](https://haxe.org) programming language",
+      "version": "0.1",
+      "path": "plugins/language_haxe.lua",
+      "id": "language_haxe",
       "mod_version": "3"
     },
     {
@@ -924,6 +938,20 @@
       "id": "lspkind"
     },
     {
+      "description": "Automatic configuration/binary download for LSP completion for C/C++ with clangd.",
+      "version": "0.1",
+      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:d8f85c5fb09d2a97594fead7cf495510e22502a9",
+      "mod_version": "3",
+      "id": "lsp_c"
+    },
+    {
+      "description": "Automatic configuration/binary download for LSP completion for Lua with sumneko.",
+      "version": "0.1",
+      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:d8f85c5fb09d2a97594fead7cf495510e22502a9",
+      "mod_version": "3",
+      "id": "lsp_lua"
+    },
+    {
       "description": "Remaps mac modkeys `command/option` to `ctrl/alt`",
       "version": "0.1",
       "path": "plugins/macmodkeys.lua",
@@ -1032,7 +1060,7 @@
     },
     {
       "description": "Adds middle mouse click copy/paste (primary selection). To use this plugin, `xclip` must be installed.",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/primary_selection.lua",
       "id": "primary_selection",
       "mod_version": "3"
@@ -1114,7 +1142,7 @@
     },
     {
       "description": "Provides a GUI to manage core and plugin settings, bindings and select color theme *([video](https://user-images.githubusercontent.com/1702572/169743674-ececae24-f6b7-4ff2-bfa2-c4762cd327d9.mp4))*. (depends on [`widget`](https://github.com/lite-xl/lite-xl-widgets))",
-      "version": "0.5",
+      "version": "0.6",
       "path": "plugins/settings.lua",
       "id": "settings",
       "mod_version": "3",
@@ -1150,7 +1178,7 @@
     },
     {
       "description": "Underlines misspelt words *([screenshot](https://user-images.githubusercontent.com/3920290/79923973-9caa7400-842e-11ea-85d4-7a196a91ca50.png))* *-- note: on Windows a [`words.txt`](https://github.com/dwyl/english-words/blob/master/words.txt) dictionary file must be placed beside the exe*",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/spellcheck.lua",
       "id": "spellcheck",
       "mod_version": "3"
@@ -1160,6 +1188,14 @@
       "version": "0.1",
       "path": "plugins/statusclock.lua",
       "id": "statusclock",
+      "mod_version": "3"
+    },
+    {
+      "description": "Keep track of the current scope at the top of the view (*[video](https://user-images.githubusercontent.com/2798487/222133911-e467a583-596c-47ab-8e65-eefc7b5c9112.mp4)*)",
+      "version": "1.0",
+      "path": "plugins/sticky_scroll.lua",
+      "id": "sticky_scroll",
+      "name": "Sticky Scroll",
       "mod_version": "3"
     },
     {

@@ -1867,11 +1867,7 @@ function core.run()
   -- load plugins disabled by default and enabled by user
   if settings.config.enabled_plugins then
     for name, _ in pairs(settings.config.enabled_plugins) do
-      if
-        type(config.plugins[name]) == "boolean"
-        and
-        not config.plugins[name]
-      then
+      if not config.plugins[name] then
         require("plugins." .. name)
       end
     end
@@ -1910,7 +1906,7 @@ load_settings()
 -- only disable non already loaded plugins
 if settings.config.disabled_plugins then
   for name, _ in pairs(settings.config.disabled_plugins) do
-    if type(rawget(config.plugins, name)) == "nil" then
+    if not package.loaded[name] then
       config.plugins[name] = false
     end
   end
