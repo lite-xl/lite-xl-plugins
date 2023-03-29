@@ -114,6 +114,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Add end tags in variety of languages. Similar to [Vim Endwise](https://github.com/tpope/vim-endwise)",
+      "version": "0.1",
+      "remote": "https://github.com/LolsonX/endwise-lite-xl.git:d9ced6089ab7f54bad197c30ba581055270f2dad",
+      "id": "endwise",
+      "mod_version": "3"
+    },
+    {
       "description": "Debug Lite-XL's Lua VM interactively, if you're running it from a terminal. Warning: Will significantly slow down Lite-XL if installed.",
       "version": "0.1",
       "path": "plugins/lite-debugger.lua",
