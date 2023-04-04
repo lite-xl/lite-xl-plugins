@@ -959,6 +959,13 @@
       "id": "lsp_lua"
     },
     {
+      "description": "Adds LSP snippets support to the snippets plugin",
+      "version": "1",
+      "remote": "https://github.com/vqns/lite-xl-snippets:37a24d0970668e39ef571e607281e61135f7a504",
+      "id": "lsp_snippets",
+      "mod_version": "3"
+    },
+    {
       "description": "Remaps mac modkeys `command/option` to `ctrl/alt`",
       "version": "0.1",
       "path": "plugins/macmodkeys.lua",
@@ -1174,6 +1181,13 @@
       "version": "0.1",
       "path": "plugins/smoothcaret.lua",
       "id": "smoothcaret",
+      "mod_version": "3"
+    },
+    {
+      "description": "Provides code snippets support",
+      "version": "1",
+      "remote": "https://github.com/vqns/lite-xl-snippets:37a24d0970668e39ef571e607281e61135f7a504",
+      "id": "snippets",
       "mod_version": "3"
     },
     {
