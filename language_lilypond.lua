@@ -7,7 +7,7 @@ syntax.add {
   comment = "%%",
   patterns = {
     { pattern = "#%(()[%a_]%S*",          type = { "operator", "function" } },
-    { pattern = "%%.-\n",                 type = "comment"  },
+    { pattern = "%%.*",                   type = "comment"  },
     { pattern = "#[%w_-]*",               type = "keyword2" },
     { pattern = "\\%a%w+",                type = "keyword"  },
     { pattern = "\\\\",                   type = "operator" },
