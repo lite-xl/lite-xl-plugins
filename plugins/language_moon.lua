@@ -21,6 +21,7 @@ syntax.add {
     { pattern = "[%a_][%w_]*",            type = "symbol"   },
     { pattern = {"\\", "[%a_][%w_]*"},    type = "function" },
     { pattern = {"%.", "[%a_][%w_]*"},    type = "function" },
+    { pattern = "@[%a_][%w_]*",           type = "keyword2" },
     { pattern = "@",                      type = "keyword2" },
     { pattern = "!",                      type = "keyword2" },
     { pattern = "[%p]",                   type = "keyword"  },
