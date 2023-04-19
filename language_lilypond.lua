@@ -3,7 +3,7 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "LilyPond",
-  files = { "%.ly$" },
+  files = { "%.i?ly$" },
   comment = "%%",
   patterns = {
     { pattern = "#%(()[%a_]%S*",          type = { "operator", "function" } },
