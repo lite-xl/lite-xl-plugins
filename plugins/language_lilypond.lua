@@ -5,6 +5,7 @@ syntax.add {
   name = "LilyPond",
   files = { "%.i?ly$" },
   comment = "%%",
+  block_comment = { "%%{", "%%}" },
   patterns = {
     { pattern = "#%(()[%a_]%S*",          type = { "operator", "function" } },
     { pattern = {"%%{", "%%}"},           type = "comment"  },
