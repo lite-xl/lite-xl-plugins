@@ -614,6 +614,13 @@
       "url": "https://raw.githubusercontent.com/whiteh0le/lite-plugins/main/plugins/language_ksy.lua?raw=1"
     },
     {
+      "description": "Syntax for the [LilyPond](https://lilypond.org/) music typesetting language",
+      "version": "0.1",
+      "path": "plugins/language_lilypond.lua",
+      "id": "language_lilypond",
+      "mod_version": "3"
+    },
+    {
       "description": "Syntax for [Liquid](https://shopify.github.io/liquid/) templating language",
       "version": "0.1",
       "path": "plugins/language_liquid.lua",
