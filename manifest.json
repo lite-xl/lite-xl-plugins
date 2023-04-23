@@ -664,7 +664,7 @@
     },
     {
       "description": "Syntax for the [MoonScript](https://moonscript.org) scripting language",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_moon.lua",
       "id": "language_moon",
       "mod_version": "3"
