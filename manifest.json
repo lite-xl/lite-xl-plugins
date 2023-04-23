@@ -508,6 +508,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Syntax for the [GABC](https://gregorio-project.github.io/gabc) music typesetting language",
+      "version": "0.1",
+      "path": "plugins/language_gabc.lua",
+      "id": "language_gabc",
+      "mod_version": "3"
+    },
+    {
       "description": "Syntax for the [Godot Engine](https://godotengine.org/)'s GDScript scripting language",
       "version": "0.1",
       "path": "plugins/language_gdscript.lua",
