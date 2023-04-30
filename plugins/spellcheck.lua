@@ -120,6 +120,17 @@ function Doc:text_input(...)
 end
 
 
+local function compare_arrays(a, b)
+  if b == a then return true end
+  if not a or not b then return false end
+  if #b ~= #a then return false end
+  for i=1,#a do
+    if b[i] ~= a[i] then return false end
+  end
+  return true
+end
+
+
 local draw_line_text = DocView.draw_line_text
 function DocView:draw_line_text(idx, x, y)
   local lh = draw_line_text(self, idx, x, y)
@@ -136,10 +147,12 @@ function DocView:draw_line_text(idx, x, y)
 
   if font_canary ~= style.code_font
     or font_size_canary ~= style.code_font:get_size()
+    or not compare_arrays(self.wrapped_lines, self.old_wrapped_lines)
   then
     spell_cache[self.doc.highlighter] = {}
     font_canary = style.code_font
     font_size_canary = style.code_font:get_size()
+    self.old_wrapped_lines = self.wrapped_lines
     reset_cache()
   end
   if not spell_cache[self.doc.highlighter][idx] then
@@ -152,8 +165,12 @@ function DocView:draw_line_text(idx, x, y)
       if not s then break end
       local word = text:sub(s, e):lower()
       if not words[word] and not active_word(self.doc, idx, e + 1) then
-        table.insert(calculated, self:get_col_x_offset(idx, s))
-        table.insert(calculated, self:get_col_x_offset(idx, e + 1))
+        local x,y = self:get_line_screen_position(idx, s)
+        table.insert(calculated, x + self.scroll.x)
+        table.insert(calculated, y + self.scroll.y)
+        x,y = self:get_line_screen_position(idx, e + 1)
+        table.insert(calculated, x + self.scroll.x)
+        table.insert(calculated, y + self.scroll.y)
       end
     end
 
@@ -162,11 +179,11 @@ function DocView:draw_line_text(idx, x, y)
 
   local color = style.spellcheck_error or style.syntax.keyword2
   local h = math.ceil(1 * SCALE)
-  local lh = self:get_line_height()
+  local slh = self:get_line_height()
   local calculated = spell_cache[self.doc.highlighter][idx]
-  for i=1,#calculated,2 do
-    local x1, x2 = calculated[i] + x, calculated[i+1] + x
-    renderer.draw_rect(x1, y + lh - h, x2 - x1, h, color)
+  for i=1,#calculated,4 do
+    local x1, y1, x2, y2 = calculated[i], calculated[i+1], calculated[i+2], calculated[i+3]
+    renderer.draw_rect(x1 - self.scroll.x, y1 + slh - self.scroll.y, x2 - x1, h, color)
   end
   return lh
 end
