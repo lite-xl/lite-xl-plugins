@@ -1,7 +1,6 @@
 -- mod-version:3
 local core = require "core"
 local config = require "core.config"
-local style = require "core.style"
 local common = require "core.common"
 local DocView = require "core.docview"
 
@@ -31,6 +30,10 @@ config.plugins.smoothcaret = common.merge({
   }
 }, config.plugins.smoothcaret)
 
+-- We need to keep track of all the carets
+-- and we need the list of visible ones that `DocView:draw_caret` will use in succession
+local caret_idx = 1
+
 local docview_update = DocView.update
 function DocView:update()
   docview_update(self)
@@ -39,11 +42,7 @@ function DocView:update()
 
   local minline, maxline = self:get_visible_line_range()
 
-  -- We need to keep track of all the carets
-  if not self.carets then
-    self.carets = { }
-  end
-  -- and we need the list of visible ones that `DocView:draw_caret` will use in succession
+  if not self.carets then self.carets = { } end
   self.visible_carets = { }
 
   local idx, v_idx = 1, 1
@@ -82,9 +81,7 @@ function DocView:update()
   self.last_n_selections = #self.doc.selections
 
   -- Remove unused carets to avoid animating new ones when they are added
-  for i = idx, #self.carets do
-    self.carets[i] = nil
-  end
+  for i = idx, #self.carets do self.carets[i] = nil end
 
   if self.mouse_selecting ~= self.last_mouse_selecting then
     self.last_mouse_selecting = self.mouse_selecting
@@ -96,7 +93,7 @@ function DocView:update()
   end
 
   -- This is used by `DocView:draw_caret` to keep track of the current caret
-  self.caret_idx = 1
+  caret_idx = 1
 end
 
 local docview_draw_caret = DocView.draw_caret
@@ -106,11 +103,10 @@ function DocView:draw_caret(x, y)
     return
   end
 
-  local c = self.visible_carets[self.caret_idx] or { current = { x = x, y = y } }
-  local lh = self:get_line_height()
+  local c = self.visible_carets[caret_idx] or { current = { x = x, y = y } }
 
   -- We use the scroll position to move back to the position relative to the window
-  renderer.draw_rect(c.current.x - self.scroll.x, c.current.y - self.scroll.y, style.caret_width, lh, style.caret)
+  docview_draw_caret(self, c.current.x - self.scroll.x, c.current.y - self.scroll.y)
 
-  self.caret_idx = self.caret_idx + 1
+  caret_idx = caret_idx + 1
 end
