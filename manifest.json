@@ -195,7 +195,7 @@
     },
     {
       "description": "Replaces selected Lua code with its evaluated result",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/eval.lua",
       "id": "eval",
       "mod_version": "3"
