@@ -832,7 +832,7 @@
       "mod_version": "3"
     },
     {
-      "description": "Syntax for the Uxntal assembly language",
+      "description": "Syntax for the [Uxntal](https://wiki.xxiivv.com/site/uxntal) assembly language",
       "version": "0.1",
       "path": "plugins/language_tal.lua",
       "id": "language_tal",
