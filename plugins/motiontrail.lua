@@ -84,7 +84,7 @@ function DocView:draw_caret(x,y)
       local iy = lerp(y, lsy, i)
       if cc_conf.shape == "underline" then iy = iy + self:get_line_height() end
       local iw = math.max(w, math.ceil(math.abs(ix - lx)))
-      renderer.draw_rect(ix, iy, iw, h, (cc_conf and cc_conf.custom_color) and cc_conf.caret_color or style.caret_color)
+      renderer.draw_rect(ix, iy, iw, h, (cc_conf and cc_conf.custom_color) and cc_conf.caret_color or style.caret)
       lx = ix
     end
     core.redraw = true
