@@ -330,7 +330,7 @@
     },
     {
       "description": "Adds inter-process communication support",
-      "version": "0.2",
+      "version": "0.3",
       "path": "plugins/ipc.lua",
       "id": "ipc",
       "mod_version": "3"
