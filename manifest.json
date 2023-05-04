@@ -1370,6 +1370,14 @@
       "path": "plugins/wordcount.lua",
       "id": "wordcount",
       "mod_version": "3"
+    },
+    {
+      "id": "www",
+      "description": "A simple library that provides a web client to fetch, and submit data via HTTP requests.",
+      "version": "0.1",
+      "type": "library",
+      "remote": "https://github.com/adamharrison/lite-xl-www.git:aecc866c33b0a954fbd41a5de2842bb97f4ac45e",
+      "mod_version": "3"
     }
   ]
 }
