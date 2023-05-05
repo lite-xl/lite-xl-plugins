@@ -52,13 +52,28 @@ local function get_caret_size(dv, i)
   return w, h
 end
 
-local last_x, last_y, last_view = {}, {}, {}
-local caret_idx = 1
+local caret_idx, caret_amt = 1, 0
 
 local dv_update = DocView.update
 function DocView:update()
+  self.last_x = self.last_x or {}
+  self.last_y = self.last_y or {}
+  self.last_view = self.last_view or {}
+  caret_idx = caret_idx or 1
+
+  -- continue from whatever caret_idx left
+  caret_amt = caret_amt and math.max(caret_amt, caret_idx) or 0
+  for i=1, caret_amt - caret_idx do
+    self.last_x[caret_idx + i], self.last_y[caret_idx + i], self.last_view[caret_idx + i] = nil, nil, nil
+  end
   caret_idx = 1
   dv_update(self)
+end
+
+local dv_draw = DocView.draw
+function DocView:draw()
+  self.draws = self.draws and self.draws + 1 or 1
+  return dv_draw(self)
 end
 
 local dv_draw_caret = DocView.draw_caret
@@ -68,33 +83,32 @@ function DocView:draw_caret(x, y)
     return
   end
 
-  local lsx, lsy = last_x[caret_idx], last_y[caret_idx]
-  local w, h = get_caret_size(self, caret_idx)
+  if self.draws <= 1 then
+    local lsx, lsy = self.last_x[caret_idx] or x, self.last_y[caret_idx] or y
+    local w, h = get_caret_size(self, caret_idx)
 
-  if last_view[caret_idx] == self and x ~= lsx or y ~= lsy then
-    if not lsx then lsx = 0 end
-    if not lsy then lsy = 0 end
-    local lx = x
-    for i = 0, 1, 1 / config.plugins.motiontrail.steps do
-      local ix = common.lerp(x, lsx, i)
-      local iy = common.lerp(y, lsy, i)
-      if cc_installed and cc_conf.shape == "underline" then
-        iy = iy + self:get_line_height()
+    if self.last_view[caret_idx] == self and x ~= lsx or y ~= lsy then
+      local lx = x
+      for i = 0, 1, 1 / config.plugins.motiontrail.steps do
+        local ix = common.lerp(x, lsx, i)
+        local iy = common.lerp(y, lsy, i)
+        if cc_installed and cc_conf.shape == "underline" then
+          iy = iy + self:get_line_height()
+        end
+        local iw = math.max(w, math.ceil(math.abs(ix - lx)))
+        local color = style.caret
+        if cc_installed and cc_conf.custom_color then
+          color = cc_conf.caret_color
+        end
+        renderer.draw_rect(ix, iy, iw, h, color)
+        lx = ix
       end
-      local iw = math.max(w, math.ceil(math.abs(ix - lx)))
-      local color = style.caret
-      if cc_conf.custom_color then
-        color = cc_conf.caret_color
-      end
-      renderer.draw_rect(ix, iy, iw, h, color)
-      lx = ix
+      core.redraw = true
     end
-    core.redraw = true
   end
 
-  last_x[caret_idx], last_y[caret_idx], last_view[caret_idx] = x, y, self
-
+  self.last_x[caret_idx], self.last_y[caret_idx], self.last_view[caret_idx] = x, y, self
   caret_idx = caret_idx + 1
-
+  self.draws = 0
   dv_draw_caret(self, x, y)
 end
