@@ -81,7 +81,7 @@ core.add_thread(function()
         path = "caret_color",
         type = "color",
         default = table.pack(table.unpack(style.caret)),
-      }
+      },
     }
 
     ---@cast settings plugins.settings
@@ -133,6 +133,8 @@ function DocView:draw_caret(x, y)
       )
     end
 
+    -- show characters around caret for when moving between characters
+    -- it's just there for cosmetic reasons
     for yo=-1, 1 do
       for xo=-1, 1 do
         draw_char(line+xo, col+yo)
