@@ -5,8 +5,6 @@ local common = require "core.common"
 local style = require "core.style"
 local DocView = require "core.docview"
 
-local world = 1
-
 config.plugins.motiontrail = common.merge({
   enabled = true,
   steps = 50,
@@ -58,7 +56,6 @@ local caret_idx, caret_amt = 1, 0
 
 local dv_update = DocView.update
 function DocView:update()
-  -- that's a lotta lasts
   self.last_pos = self.last_pos or {}
   self.last_view = self.last_view or {}
   self.last_doc_pos = self.last_doc_pos or {}

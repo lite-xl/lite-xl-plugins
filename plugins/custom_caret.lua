@@ -4,7 +4,6 @@
   Author: techie-guy
   Plugin to customize the caret in the editor
   Thanks to @Guldoman for the initial example on Discord
-  modifications by @thacuber2a03
 
   Features
     Change the Color and Opacity of the caret
@@ -30,7 +29,8 @@ local DocView = require "core.docview"
 config.plugins.custom_caret = common.merge({
     shape = "line",
     custom_color = true,
-    caret_color = table.pack(table.unpack(style.caret))
+    caret_color = table.pack(table.unpack(style.caret)),
+    surrounding_chars = false,
 }, config.plugins.custom_caret)
 
 -- Reference to plugin config
@@ -81,7 +81,14 @@ core.add_thread(function()
         path = "caret_color",
         type = "color",
         default = table.pack(table.unpack(style.caret)),
-      }
+      },
+      {
+        label = "Surrounding Characters",
+        description = "When using block caret, whether you want to show the characters around for a better character switch.",
+        path = "surrounding_chars",
+        type ="toggle",
+        default = false,
+      },
     }
 
     ---@cast settings plugins.settings
@@ -133,10 +140,14 @@ function DocView:draw_caret(x, y)
       )
     end
 
-    for yo=-1, 1 do
-      for xo=-1, 1 do
-        draw_char(line+xo, col+yo)
+    if conf.surrounding_chars then
+      for yo=-1, 1 do
+        for xo=-1, 1 do
+          draw_char(line+xo, col+yo)
+        end
       end
+    else
+      draw_char(line, col)
     end
 
     core.pop_clip_rect(x, y, caret_width, caret_height)
