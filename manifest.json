@@ -953,8 +953,8 @@
     },
     {
       "description": "Provides code completion (also known as IntelliSense) using the Language Server Protocol",
-      "version": "0.2",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp:dc37d18c91d3243f9d7530364d8c24a3da8446fa",
+      "version": "0.3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp:607cc85978b6fe169c2e6cabe779776d752267f8",
       "mod_version": "3",
       "id": "lsp"
     },
@@ -1359,8 +1359,8 @@
     },
     {
       "description": "Plugin library that provides a set of re-usable components to more easily write UI elements for your plugins",
-      "version": "0.2",
-      "remote": "https://github.com/lite-xl/lite-xl-widgets:4c29ff3f89fb2988a7169094a554fee7972c9803",
+      "version": "0.3",
+      "remote": "https://github.com/lite-xl/lite-xl-widgets:b5e6e212c0516ec7b55f57c7efcfda9d791cdb0d",
       "mod_version": "3",
       "id": "widget"
     },
