@@ -274,8 +274,8 @@
     },
     {
       "description": "Shows \"git blame\" information of a line *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-gitblame/main/screenshot_1.png))*",
-      "version": "0.1",
-      "remote": "https://github.com/juliardi/lite-xl-gitblame:6de7a97bb2b635ac667750f49087afd9980f2e06",
+      "version": "0.2",
+      "remote": "https://github.com/juliardi/lite-xl-gitblame:0395fed18d3a779bc1eae26130f00a2eb23638ad",
       "mod_version": "3",
       "id": "gitblame"
     },
@@ -1316,11 +1316,12 @@
       "id": "thread"
     },
     {
-      "description": "Extend Lite XL's treeview menu *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-treeview-menu-extender/main/screenshot.png))*",
-      "version": "0.1",
-      "remote": "https://github.com/juliardi/lite-xl-treeview-menu-extender:bd9063e453b4024dcd0bf6a4f775ded32ca24d1f",
+      "description": "Extend Lite XL's treeview menu *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-treeview-extender/main/screenshot.png))*",
+      "version": "1.0.0",
+      "remote": "https://github.com/juliardi/lite-xl-treeview-extender:c6583c3b7f726b08f98c1282d03408facd4cbc91",
       "mod_version": "3",
-      "id": "treeview-menu-extender"
+      "id": "treeview-extender",
+      "replaces": ["treeview-menu-extender"]
     },
     {
       "description": "Displays your current typing speed in characters and words per minute in the status bar",
