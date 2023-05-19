@@ -25,21 +25,22 @@ syntax.add {
         {pattern = "[%[%]%(%)%+%-=/%*%^%%<>!~|&%.%?:;]", type = "operator"},
         {
             pattern = "_?%u[%u_][%u%d_]*%f[%s%+%*%-%.%)%]}%?%^%%=/<>~|&;:,!]",
-            type = "number"
+            type = "literal"
         },
         {pattern = "[A-Z][%w_]*", type = "keyword2"}, -- types
         {pattern = "%@%s?[%a_][%w_]*", type = "literal"}, -- builtin func/var
         {pattern = "[%a_][%w_]*%f[(]", type = "function"},
-        {pattern = "[%a_][%w_]*", type = "symbol"},
-        {pattern = {"#%[", "%]"}, type = "literal"},
-        {pattern = "#%s?[%a_][%w_]*", type = "comment"} -- if/elif/else/endif
+        {pattern = "#%s?[%a_][%w_]*", type = "comment"}, -- if/else_if/else/endif
+        {pattern = "[%a_][%w_]*", type = "symbol"}
     },
     symbols = {
         ["alias"] = "keyword",
         ["and"] = "keyword",
         ["as"] = "keyword",
         ["break"] = "keyword",
+        ["c_import"] = "keyword",
         ["catch"] = "keyword",
+        ["comptime"] = "keyword",
         ["const"] = "keyword",
         ["continue"] = "keyword",
         ["defer"] = "keyword",
@@ -58,7 +59,7 @@ syntax.add {
         ["in"] = "keyword",
         ["is"] = "keyword",
         ["mut"] = "keyword",
-        ["nil"] = "literal",
+        ["none"] = "literal",
         ["or"] = "keyword",
         ["public"] = "keyword",
         ["return"] = "keyword",
@@ -68,6 +69,7 @@ syntax.add {
         ["test"] = "keyword",
         ["trait"] = "keyword",
         ["true"] = "literal",
+        ["undefined"] = "keyword",
         ["unsafe"] = "keyword",
         ["var"] = "keyword",
         ["while"] = "keyword",
