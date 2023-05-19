@@ -543,6 +543,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Syntax for the [Gravity](https://marcobambini.github.io/gravity/) programming language.",
+      "version": "0.1",
+      "path": "plugins/language_gravity.lua",
+      "id": "language_gravity",
+      "mod_version": "3"
+    },
+    {
       "description": "Syntax for the [Haxe](https://haxe.org) programming language",
       "version": "0.1",
       "path": "plugins/language_haxe.lua",
@@ -639,6 +646,13 @@
       "version": "0.1",
       "path": "plugins/language_lobster.lua",
       "id": "language_lobster",
+      "mod_version": "3"
+    },
+    {
+      "description": "Syntax for the [Lox](http://craftinginterpreters.com/the-lox-language.html) programming language, featured in the book '[Crafting Interpreters](http://craftinginterpreters.com/)'.",
+      "version": "0.1",
+      "path": "plugins/language_lox.lua",
+      "id": "language_lox",
       "mod_version": "3"
     },
     {
@@ -836,6 +850,13 @@
       "version": "0.1",
       "path": "plugins/language_tal.lua",
       "id": "language_tal",
+      "mod_version": "3"
+    },
+    {
+      "description": "Syntax for the [Umka](https://github.com/vtereshkov/umka-lang) programming language.",
+      "version": "0.1",
+      "path": "plugins/language_umka.lua",
+      "id": "language_umka",
       "mod_version": "3"
     },
     {
