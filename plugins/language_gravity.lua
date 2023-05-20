@@ -7,8 +7,8 @@ syntax.add {
 	comment = "//",
 	block_comment = {"/*", "*/"},
 	patterns = {
-		{ pattern = "#![^\n]+", type = "comment" },
-		{ pattern = "//[^\n]+", type = "comment" },
+		{ pattern = "#!.*", type = "comment" },
+		{ pattern = "//.*", type = "comment" },
 		{ pattern = { "/%*", "%*/" }, type = "comment" },
 		{ pattern = { '"', '"', "\\" }, type = "string" },
 
@@ -64,10 +64,8 @@ syntax.add {
 		["not"]       = "keyword",
 		["func"]      = "keyword",
 		["else"]      = "keyword",
-		["true"]      = "keyword",
 		["enum"]      = "keyword",
 		["case"]      = "keyword",
-		["null"]      = "keyword",
 		["file"]      = "keyword",
 		["lazy"]      = "keyword",
 		["super"]     = "keyword",

@@ -136,7 +136,7 @@ syntax.add {
   files = { "%.ahk$"},
   comment = ";",
   patterns = {
-    { pattern = { ";", "\n" },                  type = "comment"  },
+    { pattern = ";.*",                          type = "comment"  },
     { pattern = { "/%*", "*%/" },               type = "comment"  },
     { pattern = { "[ruU]?%%", "[%% ]", '\\' },  type = "operator" },
     { pattern = { "[ruU]?%%", "[ ,]", '\\' },   type = "normal"   },

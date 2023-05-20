@@ -6,7 +6,7 @@ syntax.add {
   files = "%.cs$",
   comment = "//",
   patterns = {
-    { pattern = "//.-\n",                   type = "comment"  },
+    { pattern = "//.*",                     type = "comment"  },
     { pattern = { "/%*", "%*/" },           type = "comment"  },
     { pattern = { '"', '"', '\\' },         type = "string"   },
     { pattern = { "[%$%@]?\"", '"', '\\' }, type = "string"   }, -- string interpolation and verbatim

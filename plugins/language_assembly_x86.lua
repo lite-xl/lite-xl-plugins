@@ -10,7 +10,7 @@ syntax.add {
   files = { "%.asm$", "%.[sS]$" },
   comment = ";",
   patterns = {
-    { pattern = ";.-\n", type = "comment" },
+    { pattern = ";.*", type = "comment" },
     { pattern = { '"', '"', '\\' }, type = "string" },
     { pattern = { "'", "'", '\\' }, type = "string" },
     { pattern = "0[bB][0-1]+%W", type = "number" },

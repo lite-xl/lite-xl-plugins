@@ -6,7 +6,7 @@ syntax.add {
   files = { "%.bib$" },
   comment = "%%",
   patterns = {
-    { pattern = {"%%", "\n"},     type = "comment"   },
+    { pattern = "%%.*",           type = "comment"   },
     { pattern = "@%a+",           type = "keyword"   },
     { pattern = "%a+%s=",         type = "keyword2"  },
   },

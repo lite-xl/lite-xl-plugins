@@ -6,7 +6,7 @@ syntax.add {
   files = { "%.tcl$" },
   comment = "#",
   patterns = {
-    { pattern = "#.-\n",                 type = "comment" },
+    { pattern = "#.*",                   type = "comment" },
     { pattern = { '"', '"', '\\' },      type = "string"  },
     { pattern = "0x%x+",                 type = "number"  },
     { pattern = "%d+[%d%.eE]*f?",        type = "number"  },

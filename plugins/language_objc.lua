@@ -6,7 +6,7 @@ syntax.add {
   files = { "%.m$" },
   comment = "//",
   patterns = {
-    { pattern = "//.-\n",               type = "comment"  },
+    { pattern = "//.*",                 type = "comment"  },
     { pattern = { "/%*", "%*/" },       type = "comment"  },
     { pattern = { "#", "[^\\]\n" },     type = "comment"  },
     { pattern = { '"', '"', '\\' },     type = "string"   },
@@ -44,7 +44,6 @@ syntax.add {
     ["case"]     = "keyword",
     ["default"]  = "keyword",
     ["auto"]     = "keyword",
-    ["const"]    = "keyword",
     ["void"]     = "keyword",
     ["int"]      = "keyword2",
     ["short"]    = "keyword2",

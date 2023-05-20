@@ -6,7 +6,7 @@ syntax.add {
   files = "%.lobster$",
   comment = "//",
   patterns = {
-    { pattern = "//.-\n",                    type = "comment" },
+    { pattern = "//.*",                      type = "comment" },
     { pattern = { "/%*", "%*/" },            type = "comment" },
 
     { pattern = "struct%s()[%a_][%w_]*", type = {"keyword", "keyword2"} },

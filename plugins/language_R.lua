@@ -6,7 +6,7 @@ syntax.add{
   files = {"%.r$", "%.rds$", "%.rda$", "%.rdata$", "%.R$"},
   comment = "#",
   patterns = {
-    {pattern = {"#", "\n"}, type = "comment"},
+    {pattern = "#.*", type = "comment"},
     {pattern = {'"', '"'}, type = "string"},
     {pattern = {"'", "'"}, type = "string"},
     {pattern = "[%a_][%w_]*%f[(]", type = "function"},

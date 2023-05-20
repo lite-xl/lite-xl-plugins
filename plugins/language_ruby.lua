@@ -10,7 +10,7 @@ syntax.add {
     { pattern = { '"', '"', '\\' },     type = "string"   },
     { pattern = { "'", "'", '\\' },     type = "string"   },
     { pattern = "-?0x%x+",              type = "number"   },
-    { pattern = "%#.-\n",               type = "comment"  },
+    { pattern = "%#.*",                 type = "comment"  },
     { pattern = "-?%d+[%d%.eE]*f?",     type = "number"   },
     { pattern = "-?%.?%d+f?",           type = "number"   },
     { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },

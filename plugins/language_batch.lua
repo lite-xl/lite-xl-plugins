@@ -45,12 +45,12 @@ syntax.add {
   files = { "%.bat$", "%.cmd$" },
   comment = "rem",
   patterns = {
-    { pattern = "@echo off\n",                  type = "keyword"  },
-    { pattern = "@echo on\n",                   type = "keyword"  },
-    { pattern = "rem.-\n",                      type = "comment"  },    -- rem comment line, rem, rem.
-    { pattern = "REM.-\n",                      type = "comment"  },
+    { pattern = "@echo off%s*$",                type = "keyword"  },
+    { pattern = "@echo on%s*$",                 type = "keyword"  },
+    { pattern = "rem.*",                        type = "comment"  },    -- rem comment line, rem, rem.
+    { pattern = "REM.*",                        type = "comment"  },
     { pattern = "%s*:[%w%-]+",                  type = "symbol"   },    -- :labels
-    { pattern = "%:%:.-\n",                     type = "comment"  },    -- :: comment line
+    { pattern = "%:%:.*",                       type = "comment"  },    -- :: comment line
     { pattern = "%%%w+%%",                      type = "symbol"   },    -- %variable%
     { pattern = "%%%%?~?[%w:]+",                type = "symbol"   },    -- %1, %~dpn1, %~1:2, %%i, %%~i
     { pattern = "[!=()%>&%^/\\@]",              type = "operator" },    -- operators

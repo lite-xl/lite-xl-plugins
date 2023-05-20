@@ -6,7 +6,7 @@ syntax.add {
   files = { "Makefile", "makefile", "%.mk$" },
   comment = "#",
   patterns = {
-    { pattern = "#.*\n",                  type = "comment"  },
+    { pattern = "#.*",                    type = "comment"  },
     { pattern = [[\.]],                   type = "normal"   },
     { pattern = "$[@^<%%?+|*]",           type = "keyword2" },
     { pattern = "$%(.-%)",                type = "symbol"   },

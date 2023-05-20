@@ -78,7 +78,7 @@ syntax.add {
   files = { "%.sql$", "%.psql$" },
   comment = "--",
   patterns = {
-    { pattern = "%-%-.-\n",                type = "comment"  },
+    { pattern = "%-%-.*",                  type = "comment"  },
     { pattern = { "/%*", "%*/" },          type = "comment"  },
     { pattern = { "'", "'", '\\' },        type = "string"   },
     { pattern = "-?%d+[%d%.eE]*f?",        type = "number"   },
