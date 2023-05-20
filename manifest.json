@@ -686,7 +686,7 @@
     {
       "description": "Syntax for [Nelua](http://nelua.io/) programming",
       "version": "0.1",
-      "remote": "https://github.com/AKDev21/nelua-lite-xl:8bf0ec5e7bf2b8dc9d39e6ebaaa5344fc5969319",
+      "path": "plugins/language_nelua.lua",
       "mod_version": "3",
       "id": "language_nelua"
     },
