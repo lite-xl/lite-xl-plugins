@@ -150,7 +150,7 @@ function DocView:draw_caret(x, y)
       draw_char(line, col)
     end
 
-    core.pop_clip_rect(x, y, caret_width, caret_height)
+    core.pop_clip_rect()
   end
 
   caret_idx = caret_idx + 1
