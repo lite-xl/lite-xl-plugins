@@ -59,7 +59,7 @@
     {
       "description": "Provides a build system, messages window, and easily clickable errors. Supports an internal build system, and `make`. *([screenshot](https://raw.githubusercontent.com/adamharrison/lite-xl-ide/main/screenshots/build.png))*",
       "version": "0.1",
-      "remote": "https://github.com/adamharrison/lite-xl-ide.git:c254d8cbc1932fd69e4c135f1d53c4e81a9f293a",
+      "remote": "https://github.com/adamharrison/lite-xl-ide.git:95639db0f96d8d560d48fa525496329dcbadbbde",
       "id": "build",
       "mod_version": "3"
     },
@@ -130,7 +130,7 @@
     {
       "description": "Provides a debugger integration, with pluggable backends. Currently supports only gdb. *([screenshot](https://raw.githubusercontent.com/adamharrison/lite-xl-ide/main/screenshots/debugger.png))*",
       "version": "0.1",
-      "remote": "https://github.com/adamharrison/lite-xl-ide.git:c254d8cbc1932fd69e4c135f1d53c4e81a9f293a",
+      "remote": "https://github.com/adamharrison/lite-xl-ide.git:95639db0f96d8d560d48fa525496329dcbadbbde",
       "id": "debugger",
       "mod_version": "3"
     },
