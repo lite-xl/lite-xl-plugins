@@ -27,6 +27,19 @@ local sh_syntax = {
       type = "string",
       syntax = string_interpolation_syntax,
     },
+    {
+      pattern = { "$'", "'", "\\" },
+      type = "string",
+      syntax = {
+        patterns = {
+          unicode,
+          hex,
+          backslash_escape,
+          { pattern = "[%S][%w]*", type = "string" },
+        },
+        symbols = {},
+      },
+    },
     { pattern = { "'", "'", "\\" }, type = "string" },
     { pattern = { "`", "`", "\\" }, type = "string" },
     -- Ignore numbers that start with dots or slashes
