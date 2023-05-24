@@ -1,6 +1,13 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
+local hex = { pattern = "\\[xX][%da-fA-F][%da-fA-F]", type = "function" }
+local backslash_escape = { pattern = "\\.", type = "function" }
+local unicode = {
+  pattern = "\\[uU][%da-fA-F][%da-fA-F][%da-fA-F][%da-fA-F]",
+  type = "function",
+}
+
 local string_interpolation_syntax = { patterns = {}, symbols = {} }
 
 local sh_syntax = {
@@ -100,9 +107,13 @@ local sh_syntax = {
 local function merge_tables(a, b) for _, v in pairs(b) do table.insert(a, v) end end
 
 merge_tables(string_interpolation_syntax.patterns, {
+  unicode,
+  hex,
+  backslash_escape,
   { pattern = "%$[%w_]+", type = "keyword2" },
   { pattern = "%$[@#]", type = "keyword2" },
   { pattern = "%${.-}", type = "keyword2" },
+  { pattern = { "%$%(%(", "%)%)" }, type = "keyword2", syntax = sh_syntax },
   { pattern = { "%$%(", "%)" }, type = "keyword2", syntax = sh_syntax },
   { pattern = "[%S][%w]*", type = "string" },
 })
