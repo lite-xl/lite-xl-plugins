@@ -30,43 +30,100 @@ config.plugins.motiontrail = common.merge({
   }
 }, config.plugins.motiontrail)
 
+local cc_installed = pcall(require, 'plugins.custom_caret')
+local cc_conf = config.plugins.custom_caret
 
-local function lerp(a, b, t)
-  return a + (b - a) * t
+local function get_caret_size(dv, i)
+  local line, col = dv.doc:get_selection_idx(i)
+  local chw = dv:get_font():get_width(dv.doc:get_char(line, col))
+  local w = style.caret_width
+  local h = dv:get_line_height()
+
+  if cc_installed then
+    local cc_shape = cc_conf.shape
+    if cc_shape == "underline" or dv.doc.overwrite then
+      w = chw
+      h = style.caret_width * 2
+    elseif cc_shape ==  "block" then
+      w = chw
+    end
+  end
+
+  return w, h
 end
 
+local caret_idx, caret_amt = 1, 0
 
-local function get_caret_rect(dv)
-  local line, col = dv.doc:get_selection()
-  local x, y = dv:get_line_screen_position(line, col)
-  return x, y, style.caret_width, dv:get_line_height()
+local dv_update = DocView.update
+function DocView:update()
+  self.last_pos = self.last_pos or {}
+  self.last_view = self.last_view or {}
+  self.last_doc_pos = self.last_doc_pos or {}
+  caret_idx = caret_idx or 1
+
+  -- continue from whatever caret_idx left
+  caret_amt = caret_amt and math.max(caret_amt, caret_idx) or 0
+  for i=1, caret_amt - caret_idx do
+    local ri = caret_idx + i
+    self.last_pos[ri] = nil
+    self.last_view[ri] = nil
+    self.last_doc_pos[ri] = nil
+  end
+  caret_idx = 1
+  dv_update(self)
 end
 
+local dv_draw = DocView.draw
+function DocView:draw()
+  self.draws = self.draws and self.draws + 1 or 1
+  return dv_draw(self)
+end
 
-local last_x, last_y, last_view
-
-local draw = DocView.draw
-
-function DocView:draw(...)
-  draw(self, ...)
+local dv_draw_caret = DocView.draw_caret
+function DocView:draw_caret(x, y)
   if not config.plugins.motiontrail.enabled or self ~= core.active_view then
+    dv_draw_caret(self, x, y)
     return
   end
 
-  local x, y, w, h = get_caret_rect(self)
+  self.last_pos[caret_idx] = self.last_pos[caret_idx] or {}
+  self.last_doc_pos[caret_idx] = self.last_doc_pos[caret_idx] or {}
+  local line, col = self.doc:get_selection_idx(caret_idx)
 
-  if last_view == self and (x ~= last_x or y ~= last_y) then
-    local lx = x
-    for i = 0, 1, 1 / config.plugins.motiontrail.steps do
-      local ix = lerp(x, last_x, i)
-      local iy = lerp(y, last_y, i)
-      local iw = math.max(w, math.ceil(math.abs(ix - lx)))
-      renderer.draw_rect(ix, iy, iw, h, style.caret)
-      lx = ix
+  if self.draws <= 1 then
+    local lsx, lsy = self.last_pos[caret_idx][1] or x, self.last_pos[caret_idx][2] or y
+    local lsl, lsc = self.last_doc_pos[caret_idx][1], self.last_doc_pos[caret_idx][2]
+    local w, h = get_caret_size(self, caret_idx)
+
+    if self.difference_in_coords and lsx == x and lsy == y then
+      self.difference_in_coords = false
     end
-    core.redraw = true
+
+    if lsl ~= line or lsc ~= col then self.difference_in_coords = true end
+
+    if self.difference_in_coords and self.last_view[caret_idx] == self then
+      local lx = x
+      for i = 0, 1, 1 / config.plugins.motiontrail.steps do
+        local ix = common.lerp(x, lsx, i)
+        local iy = common.lerp(y, lsy, i)
+        if cc_installed and cc_conf.shape == "underline" or self.doc.overwrite then
+          iy = iy + self:get_line_height()
+        end
+        local iw = math.max(w, math.ceil(math.abs(ix - lx)))
+        local color = style.caret
+        if cc_installed and cc_conf.custom_color then
+          color = cc_conf.caret_color
+        end
+        renderer.draw_rect(ix, iy, iw, h, color)
+        lx = ix
+      end
+      core.redraw = true
+    end
   end
 
-  last_view, last_x, last_y = self, x, y
+  self.last_pos[caret_idx][1], self.last_pos[caret_idx][2], self.last_view[caret_idx] = x, y, self
+  self.last_doc_pos[caret_idx][1], self.last_doc_pos[caret_idx][2] = line, col
+  caret_idx = caret_idx + 1
+  self.draws = 0
+  dv_draw_caret(self, x, y)
 end
-

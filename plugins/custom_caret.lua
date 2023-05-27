@@ -2,7 +2,6 @@
 
 --[[
   Author: techie-guy
-
   Plugin to customize the caret in the editor
   Thanks to @Guldoman for the initial example on Discord
 
@@ -26,10 +25,12 @@ local common = require "core.common"
 local config = require "core.config"
 local DocView = require "core.docview"
 
+
 config.plugins.custom_caret = common.merge({
     shape = "line",
     custom_color = true,
-    caret_color = table.pack(table.unpack(style.caret))
+    caret_color = table.pack(table.unpack(style.caret)),
+    surrounding_chars = false,
 }, config.plugins.custom_caret)
 
 -- Reference to plugin config
@@ -80,7 +81,14 @@ core.add_thread(function()
         path = "caret_color",
         type = "color",
         default = table.pack(table.unpack(style.caret)),
-      }
+      },
+      {
+        label = "Surrounding Characters",
+        description = "When using block caret, whether you want to show the characters around for a better character switch.",
+        path = "surrounding_chars",
+        type ="toggle",
+        default = false,
+      },
     }
 
     ---@cast settings plugins.settings
@@ -88,16 +96,28 @@ core.add_thread(function()
   end
 end)
 
+local caret_idx = 1
+
+local docview_update = DocView.update
+function DocView:update()
+  docview_update(self)
+  caret_idx = 1
+end
+
 function DocView:draw_caret(x, y)
   local caret_width = style.caret_width
   local caret_height = self:get_line_height()
   local current_caret_shape = conf.shape
   local caret_color = conf.custom_color and conf.caret_color or style.caret
 
+  local font = self:get_font()
+  local line, col = self.doc:get_selection_idx(caret_idx)
+  local charw = math.ceil(font:get_width(self.doc:get_char(line, col)))
+
   if (current_caret_shape == "block") then
-    caret_width = math.ceil(self:get_font():get_width("a"))
+    caret_width = charw
   elseif (current_caret_shape == "underline") then
-    caret_width = math.ceil(self:get_font():get_width("a"))
+    caret_width = charw
     caret_height = style.caret_width*2
     y = y+self:get_line_height()
   else
@@ -106,4 +126,32 @@ function DocView:draw_caret(x, y)
   end
 
   renderer.draw_rect(x, y, caret_width, caret_height, caret_color)
+  if current_caret_shape == "block" then
+    core.push_clip_rect(x, y, caret_width, caret_height)
+
+    local function draw_char(l, c)
+      l = common.clamp(l, 1, #self.doc.lines   )
+      c = common.clamp(c, 1, #self.doc.lines[l])
+      local cx,cy = self:get_line_screen_position(l, c)
+      renderer.draw_text(
+        font, self.doc:get_char(l, c),
+        cx, cy+self:get_line_text_y_offset(),
+        style.background
+      )
+    end
+
+    if conf.surrounding_chars then
+      for yo=-1, 1 do
+        for xo=-1, 1 do
+          draw_char(line+xo, col+yo)
+        end
+      end
+    else
+      draw_char(line, col)
+    end
+
+    core.pop_clip_rect()
+  end
+
+  caret_idx = caret_idx + 1
 end

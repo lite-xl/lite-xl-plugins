@@ -101,7 +101,7 @@
     },
     {
       "description": "Customize the caret in the editor",
-      "version": "0.2",
+      "version": "0.3",
       "path": "plugins/custom_caret.lua",
       "id": "custom_caret",
       "mod_version": "3"
@@ -1037,7 +1037,7 @@
     },
     {
       "description": "Adds a motion-trail to the caret *([gif](https://user-images.githubusercontent.com/3920290/83256814-085ccb00-a1ab-11ea-9e35-e6633cbed1a9.gif))*",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/motiontrail.lua",
       "id": "motiontrail",
       "mod_version": "3"
@@ -1220,7 +1220,7 @@
     },
     {
       "description": "Smooth caret animation *([gif](https://user-images.githubusercontent.com/20792268/139006049-a0ba6559-88cb-49a7-8077-4822445b4a1f.gif))*",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/smoothcaret.lua",
       "id": "smoothcaret",
       "mod_version": "3"
