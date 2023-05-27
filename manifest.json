@@ -931,7 +931,7 @@
     },
     {
       "description": "Automatically inserts indentation and closing bracket/text after newline",
-      "version": "0.2",
+      "version": "0.2.1",
       "path": "plugins/lfautoinsert.lua",
       "id": "lfautoinsert",
       "mod_version": "3"

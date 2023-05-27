@@ -90,7 +90,7 @@ command.add("core.docview!", {
           then
             close = str and close:gsub("$TEXT", str) or close
             -- Avoid inserting `close` if it's already present
-            if remainder:find("^"..close) then
+            if remainder:find(close, 1, true) == 1 then
               close = ""
             end
             post = string.format("\n%s%s", current_indent, close)
