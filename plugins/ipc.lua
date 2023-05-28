@@ -828,12 +828,12 @@ system.wait_event = function(timeout)
       local h = 0.5 / 2
       local dt = math.ceil(t / h) * h - t
 
-      system_wait_event(dt + 1 / config.fps)
+      return system_wait_event(dt + 1 / config.fps)
     else
-      system_wait_event()
+      return system_wait_event()
     end
   else
-    system_wait_event(timeout)
+    return system_wait_event(timeout)
   end
 end
 

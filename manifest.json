@@ -59,7 +59,7 @@
     {
       "description": "Provides a build system, messages window, and easily clickable errors. Supports an internal build system, and `make`. *([screenshot](https://raw.githubusercontent.com/adamharrison/lite-xl-ide/main/screenshots/build.png))*",
       "version": "0.1",
-      "remote": "https://github.com/adamharrison/lite-xl-ide.git:c254d8cbc1932fd69e4c135f1d53c4e81a9f293a",
+      "remote": "https://github.com/adamharrison/lite-xl-ide.git:95639db0f96d8d560d48fa525496329dcbadbbde",
       "id": "build",
       "mod_version": "3"
     },
@@ -101,7 +101,7 @@
     },
     {
       "description": "Customize the caret in the editor",
-      "version": "0.2",
+      "version": "0.3",
       "path": "plugins/custom_caret.lua",
       "id": "custom_caret",
       "mod_version": "3"
@@ -114,6 +114,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Add end tags in variety of languages. Similar to [Vim Endwise](https://github.com/tpope/vim-endwise)",
+      "version": "0.1",
+      "remote": "https://github.com/LolsonX/endwise-lite-xl.git:d9ced6089ab7f54bad197c30ba581055270f2dad",
+      "id": "endwise",
+      "mod_version": "3"
+    },
+    {
       "description": "Debug Lite-XL's Lua VM interactively, if you're running it from a terminal. Warning: Will significantly slow down Lite-XL if installed.",
       "version": "0.1",
       "path": "plugins/lite-debugger.lua",
@@ -123,7 +130,7 @@
     {
       "description": "Provides a debugger integration, with pluggable backends. Currently supports only gdb. *([screenshot](https://raw.githubusercontent.com/adamharrison/lite-xl-ide/main/screenshots/debugger.png))*",
       "version": "0.1",
-      "remote": "https://github.com/adamharrison/lite-xl-ide.git:c254d8cbc1932fd69e4c135f1d53c4e81a9f293a",
+      "remote": "https://github.com/adamharrison/lite-xl-ide.git:95639db0f96d8d560d48fa525496329dcbadbbde",
       "id": "debugger",
       "mod_version": "3"
     },
@@ -267,8 +274,8 @@
     },
     {
       "description": "Shows \"git blame\" information of a line *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-gitblame/main/screenshot_1.png))*",
-      "version": "0.1",
-      "remote": "https://github.com/juliardi/lite-xl-gitblame:6de7a97bb2b635ac667750f49087afd9980f2e06",
+      "version": "0.2",
+      "remote": "https://github.com/juliardi/lite-xl-gitblame:0395fed18d3a779bc1eae26130f00a2eb23638ad",
       "mod_version": "3",
       "id": "gitblame"
     },
@@ -323,7 +330,7 @@
     },
     {
       "description": "Adds inter-process communication support",
-      "version": "0.2",
+      "version": "0.3",
       "path": "plugins/ipc.lua",
       "id": "ipc",
       "mod_version": "3"
@@ -361,11 +368,18 @@
       "mod_version": "3"
     },
     {
-      "description": "Syntax for the [AutoHotkey](https://www.autohotkey.com) programming language",
+      "description": "Syntax for RISC-V assembly",
       "version": "0.1",
-      "remote": "https://github.com/devPnal/lite-plugin-autohotkey:e1597623163ab9e1d99ec1e8ee75cbe95b3e5d91",
+      "path": "plugins/language_assembly_riscv.lua",
+      "id": "language_assembly_riscv",
+      "mod_version": "3"
+    },
+    {
+      "description": "Syntax for the [AutoHotkey](https://www.autohotkey.com)(v1) programming language",
+      "version": "0.1",
+      "path": "plugins/language_autohotkey_v1.lua",
       "mod_version": "3",
-      "id": "language_autohotkey"
+      "id": "language_autohotkey_v1"
     },
     {
       "description": "Syntax for Windows [Batch Files](https://en.wikipedia.org/wiki/Batch_file)",
@@ -379,6 +393,13 @@
       "version": "0.1",
       "path": "plugins/language_bib.lua",
       "id": "language_bib",
+      "mod_version": "3"
+    },
+    {
+      "description": "Syntax for [Blade](https://github.com/blade-lang/blade/) files",
+      "version": "0.1",
+      "path": "plugins/language_blade.lua",
+      "id": "language_blade",
       "mod_version": "3"
     },
     {
@@ -439,7 +460,7 @@
     },
     {
       "description": "Syntax for the [Elixir](https://elixir-lang.org) programming language",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_elixir.lua",
       "id": "language_elixir",
       "mod_version": "3"
@@ -487,6 +508,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Syntax for the [GABC](https://gregorio-project.github.io/gabc) music typesetting language",
+      "version": "0.1",
+      "path": "plugins/language_gabc.lua",
+      "id": "language_gabc",
+      "mod_version": "3"
+    },
+    {
       "description": "Syntax for the [Godot Engine](https://godotengine.org/)'s GDScript scripting language",
       "version": "0.1",
       "path": "plugins/language_gdscript.lua",
@@ -512,6 +540,20 @@
       "version": "0.1",
       "path": "plugins/language_go.lua",
       "id": "language_go",
+      "mod_version": "3"
+    },
+    {
+      "description": "Syntax for the [Gravity](https://marcobambini.github.io/gravity/) programming language.",
+      "version": "0.1",
+      "path": "plugins/language_gravity.lua",
+      "id": "language_gravity",
+      "mod_version": "3"
+    },
+    {
+      "description": "Syntax for the [Haxe](https://haxe.org) programming language",
+      "version": "0.1",
+      "path": "plugins/language_haxe.lua",
+      "id": "language_haxe",
       "mod_version": "3"
     },
     {
@@ -586,6 +628,13 @@
       "url": "https://raw.githubusercontent.com/whiteh0le/lite-plugins/main/plugins/language_ksy.lua?raw=1"
     },
     {
+      "description": "Syntax for the [LilyPond](https://lilypond.org/) music typesetting language",
+      "version": "0.1",
+      "path": "plugins/language_lilypond.lua",
+      "id": "language_lilypond",
+      "mod_version": "3"
+    },
+    {
       "description": "Syntax for [Liquid](https://shopify.github.io/liquid/) templating language",
       "version": "0.1",
       "path": "plugins/language_liquid.lua",
@@ -597,6 +646,13 @@
       "version": "0.1",
       "path": "plugins/language_lobster.lua",
       "id": "language_lobster",
+      "mod_version": "3"
+    },
+    {
+      "description": "Syntax for the [Lox](http://craftinginterpreters.com/the-lox-language.html) programming language, featured in the book '[Crafting Interpreters](http://craftinginterpreters.com/)'.",
+      "version": "0.1",
+      "path": "plugins/language_lox.lua",
+      "id": "language_lox",
       "mod_version": "3"
     },
     {
@@ -622,7 +678,7 @@
     },
     {
       "description": "Syntax for the [MoonScript](https://moonscript.org) scripting language",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_moon.lua",
       "id": "language_moon",
       "mod_version": "3"
@@ -630,7 +686,7 @@
     {
       "description": "Syntax for [Nelua](http://nelua.io/) programming",
       "version": "0.1",
-      "remote": "https://github.com/AKDev21/nelua-lite-xl:8bf0ec5e7bf2b8dc9d39e6ebaaa5344fc5969319",
+      "path": "plugins/language_nelua.lua",
       "mod_version": "3",
       "id": "language_nelua"
     },
@@ -742,7 +798,7 @@
     },
     {
       "description": "Syntax for the [Rivet](https://github.com/rivet-lang/rivet) programming language",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_rivet.lua",
       "id": "language_rivet",
       "mod_version": "3"
@@ -787,6 +843,20 @@
       "version": "0.1",
       "path": "plugins/language_ssh_config.lua",
       "id": "language_ssh_config",
+      "mod_version": "3"
+    },
+    {
+      "description": "Syntax for the [Uxntal](https://wiki.xxiivv.com/site/uxntal) assembly language",
+      "version": "0.1",
+      "path": "plugins/language_tal.lua",
+      "id": "language_tal",
+      "mod_version": "3"
+    },
+    {
+      "description": "Syntax for the [Umka](https://github.com/vtereshkov/umka-lang) programming language.",
+      "version": "0.1",
+      "path": "plugins/language_umka.lua",
+      "id": "language_umka",
       "mod_version": "3"
     },
     {
@@ -861,7 +931,7 @@
     },
     {
       "description": "Automatically inserts indentation and closing bracket/text after newline",
-      "version": "0.1",
+      "version": "0.2.1",
       "path": "plugins/lfautoinsert.lua",
       "id": "lfautoinsert",
       "mod_version": "3"
@@ -904,8 +974,8 @@
     },
     {
       "description": "Provides code completion (also known as IntelliSense) using the Language Server Protocol",
-      "version": "0.2",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp:dc37d18c91d3243f9d7530364d8c24a3da8446fa",
+      "version": "0.3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp:607cc85978b6fe169c2e6cabe779776d752267f8",
       "mod_version": "3",
       "id": "lsp"
     },
@@ -915,6 +985,27 @@
       "remote": "https://github.com/TorchedSammy/lite-xl-lspkind:272ebd0010cd3e205cfb486b1bae889080fec437",
       "mod_version": "3",
       "id": "lspkind"
+    },
+    {
+      "description": "Automatic configuration/binary download for LSP completion for C/C++ with clangd.",
+      "version": "0.1",
+      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:d8f85c5fb09d2a97594fead7cf495510e22502a9",
+      "mod_version": "3",
+      "id": "lsp_c"
+    },
+    {
+      "description": "Automatic configuration/binary download for LSP completion for Lua with sumneko.",
+      "version": "0.1",
+      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:d8f85c5fb09d2a97594fead7cf495510e22502a9",
+      "mod_version": "3",
+      "id": "lsp_lua"
+    },
+    {
+      "description": "Adds LSP snippets support to the snippets plugin",
+      "version": "1",
+      "remote": "https://github.com/vqns/lite-xl-snippets:37a24d0970668e39ef571e607281e61135f7a504",
+      "id": "lsp_snippets",
+      "mod_version": "3"
     },
     {
       "description": "Remaps mac modkeys `command/option` to `ctrl/alt`",
@@ -946,7 +1037,7 @@
     },
     {
       "description": "Adds a motion-trail to the caret *([gif](https://user-images.githubusercontent.com/3920290/83256814-085ccb00-a1ab-11ea-9e35-e6633cbed1a9.gif))*",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/motiontrail.lua",
       "id": "motiontrail",
       "mod_version": "3"
@@ -1025,7 +1116,7 @@
     },
     {
       "description": "Adds middle mouse click copy/paste (primary selection). To use this plugin, `xclip` must be installed.",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/primary_selection.lua",
       "id": "primary_selection",
       "mod_version": "3"
@@ -1107,7 +1198,7 @@
     },
     {
       "description": "Provides a GUI to manage core and plugin settings, bindings and select color theme *([video](https://user-images.githubusercontent.com/1702572/169743674-ececae24-f6b7-4ff2-bfa2-c4762cd327d9.mp4))*. (depends on [`widget`](https://github.com/lite-xl/lite-xl-widgets))",
-      "version": "0.5",
+      "version": "0.6",
       "path": "plugins/settings.lua",
       "id": "settings",
       "mod_version": "3",
@@ -1129,9 +1220,16 @@
     },
     {
       "description": "Smooth caret animation *([gif](https://user-images.githubusercontent.com/20792268/139006049-a0ba6559-88cb-49a7-8077-4822445b4a1f.gif))*",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/smoothcaret.lua",
       "id": "smoothcaret",
+      "mod_version": "3"
+    },
+    {
+      "description": "Provides code snippets support",
+      "version": "1",
+      "remote": "https://github.com/vqns/lite-xl-snippets:37a24d0970668e39ef571e607281e61135f7a504",
+      "id": "snippets",
       "mod_version": "3"
     },
     {
@@ -1143,7 +1241,7 @@
     },
     {
       "description": "Underlines misspelt words *([screenshot](https://user-images.githubusercontent.com/3920290/79923973-9caa7400-842e-11ea-85d4-7a196a91ca50.png))* *-- note: on Windows a [`words.txt`](https://github.com/dwyl/english-words/blob/master/words.txt) dictionary file must be placed beside the exe*",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/spellcheck.lua",
       "id": "spellcheck",
       "mod_version": "3"
@@ -1153,6 +1251,14 @@
       "version": "0.1",
       "path": "plugins/statusclock.lua",
       "id": "statusclock",
+      "mod_version": "3"
+    },
+    {
+      "description": "Keep track of the current scope at the top of the view (*[video](https://user-images.githubusercontent.com/2798487/222133911-e467a583-596c-47ab-8e65-eefc7b5c9112.mp4)*)",
+      "version": "1.0",
+      "path": "plugins/sticky_scroll.lua",
+      "id": "sticky_scroll",
+      "name": "Sticky Scroll",
       "mod_version": "3"
     },
     {
@@ -1231,11 +1337,12 @@
       "id": "thread"
     },
     {
-      "description": "Extend Lite XL's treeview menu *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-treeview-menu-extender/main/screenshot.png))*",
-      "version": "0.1",
-      "remote": "https://github.com/juliardi/lite-xl-treeview-menu-extender:bd9063e453b4024dcd0bf6a4f775ded32ca24d1f",
+      "description": "Extend Lite XL's treeview menu *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-treeview-extender/main/screenshot.png))*",
+      "version": "1.0.0",
+      "remote": "https://github.com/juliardi/lite-xl-treeview-extender:c6583c3b7f726b08f98c1282d03408facd4cbc91",
       "mod_version": "3",
-      "id": "treeview-menu-extender"
+      "id": "treeview-extender",
+      "replaces": ["treeview-menu-extender"]
     },
     {
       "description": "Displays your current typing speed in characters and words per minute in the status bar",
@@ -1274,8 +1381,8 @@
     },
     {
       "description": "Plugin library that provides a set of re-usable components to more easily write UI elements for your plugins",
-      "version": "0.2",
-      "remote": "https://github.com/lite-xl/lite-xl-widgets:4c29ff3f89fb2988a7169094a554fee7972c9803",
+      "version": "0.3",
+      "remote": "https://github.com/lite-xl/lite-xl-widgets:b5e6e212c0516ec7b55f57c7efcfda9d791cdb0d",
       "mod_version": "3",
       "id": "widget"
     },
@@ -1284,6 +1391,14 @@
       "version": "0.1",
       "path": "plugins/wordcount.lua",
       "id": "wordcount",
+      "mod_version": "3"
+    },
+    {
+      "id": "www",
+      "description": "A simple library that provides a web client to fetch, and submit data via HTTP requests.",
+      "version": "0.1",
+      "type": "library",
+      "remote": "https://github.com/adamharrison/lite-xl-www.git:aecc866c33b0a954fbd41a5de2842bb97f4ac45e",
       "mod_version": "3"
     }
   ]
