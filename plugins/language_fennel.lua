@@ -12,7 +12,7 @@ syntax.add({
     files = "%.fnl$",
     name = "Fennel",
     patterns = {
-        { pattern = ";.-\n", type = "comment" },
+        { pattern = ";.*", type = "comment" },
         { pattern = { '"', '"', "\\" }, type = "string" },
         { pattern = "0x[%da-fA-F]+", type = "number" },
         { pattern = "-?%d+[%d%.]*", type = "number" },

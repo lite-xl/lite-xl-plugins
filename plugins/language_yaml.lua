@@ -4,7 +4,7 @@ local syntax = require "core.syntax"
 local yaml_bracket_list = {
   patterns = {
     -- comments
-    { pattern = { "#", "\n"},                  type = "comment"  },
+    { pattern = "#.*",                         type = "comment"  },
     -- strings
     { pattern = { '"', '"', '\\' },            type = "string"   },
     { pattern = { "'", "'", '\\' },            type = "string"   },
@@ -91,7 +91,7 @@ syntax.add {
     { pattern = "%s+",                         type = "normal"   },
   --- all the other rules
     -- comments
-    { pattern = { "#", "\n"},                  type = "comment"  },
+    { pattern = "#.*",                         type = "comment"  },
     -- strings
     { pattern = { '"', '"', '\\' },            type = "string"   },
     { pattern = { "'", "'", '\\' },            type = "string"   },

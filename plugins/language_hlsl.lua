@@ -10,7 +10,7 @@ syntax.add {
   files = { "%.hlsl$", },
   comment = "//",
   patterns = {
-    { pattern = "//.-\n",               type = "comment"  },
+    { pattern = "//.*",                 type = "comment"  },
     { pattern = { "/%*", "%*/" },       type = "comment"  },
     { pattern = { "#", "[^\\]\n" },     type = "comment"  },
     { pattern = { '"', '"', '\\' },     type = "string"   },

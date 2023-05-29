@@ -10,7 +10,7 @@ syntax.add {
   files = { "%.glsl$", "%.frag$", "%.vert$", },
   comment = "//",
   patterns = {
-    { pattern = "//.-\n",               type = "comment"  },
+    { pattern = "//.*",                 type = "comment"  },
     { pattern = { "/%*", "%*/" },       type = "comment"  },
     { pattern = { "#", "[^\\]\n" },     type = "comment"  },
     { pattern = { '"', '"', '\\' },     type = "string"   },
@@ -47,7 +47,6 @@ syntax.add {
     ["switch"]   = "keyword",
     ["case"]     = "keyword",
     ["default"]  = "keyword",
-    ["const"]    = "keyword",
     ["void"]     = "keyword",
     ["bool"]     = "keyword2",
     ["int"]      = "keyword2",

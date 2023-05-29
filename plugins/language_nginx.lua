@@ -102,7 +102,6 @@ syntax.add {
     ["tcp_nodelay"] = "keyword",
     ["tcp_nopush"] = "keyword",
     ["types"] = "keyword",
-    ["try_files"] = "keyword",
 
     -- constant.language.module.http.addition
     ["add_before_body"] = "keyword",
@@ -288,7 +287,6 @@ syntax.add {
     -- constant.language.module.http.upstream
     ["ip_hash"] = "keyword",
     ["upstream"] = "keyword",
-    ["server"] = "keyword",
 
     -- constant.language.module.http.userid
     ["userid"] = "keyword",

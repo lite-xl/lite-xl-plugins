@@ -7,7 +7,7 @@ syntax.add {
   comment = "//",
   block_comment = {"/*", "*/"},
   patterns = {
-    { pattern = "//.-\n",               type = "comment"  },
+    { pattern = "//.*",                 type = "comment"  },
     { pattern = { "/%*", "%*/" },       type = "comment"  },
     { pattern = { '"', '"', '\\' },     type = "string"   },
     { pattern = { "`", "`", '\\' },     type = "string"   },
@@ -198,7 +198,7 @@ syntax.add {
   files = { "go%.mod" },
   comment = "//",
   patterns = {
-    { pattern = "//.-\n", type = "comment"},
+    { pattern = "//.*", type = "comment"},
     { pattern = "module() %S+()",
       type = { "keyword", "string", "normal"}
     },

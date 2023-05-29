@@ -6,7 +6,7 @@ syntax.add {
   files = { "%.po$", "%.pot$" },
   comment = "#",
   patterns = {
-    { pattern = { "#", "\n"},        type = "comment"  },
+    { pattern = "#.*",               type = "comment"  },
     { pattern = { '"', '"', '\\' },  type = "string"   },
     { pattern = "[%[%]]",            type = "operator" },
     { pattern = "%d+",               type = "number"   },

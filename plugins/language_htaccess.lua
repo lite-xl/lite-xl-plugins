@@ -169,7 +169,7 @@ syntax.add {
   comment = "#",
   patterns = {
     -- Comments
-    { pattern = "#.*\n",                        type = "comment"  },
+    { pattern = "#.*",                          type = "comment"  },
     -- Strings
     { pattern = { '"', '"', '\\' },             type = "string"   },
     { pattern = { "'", "'", '\\' },             type = "string"   },

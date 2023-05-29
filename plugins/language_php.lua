@@ -153,8 +153,8 @@ syntax.add {
     -- Attributes
     { pattern = {"#%[", "%]"},               type = "normal"   },
     -- Comments
-    { pattern = "//.-\n",                    type = "comment"  },
-    { pattern = "#.-\n",                     type = "comment"  },
+    { pattern = "//.*",                      type = "comment"  },
+    { pattern = "#.*",                       type = "comment"  },
     { pattern = { "/%*", "%*/" },            type = "comment"  },
     -- Single quote string
     { pattern = { "'", "'", '\\' },          type = "string"   },

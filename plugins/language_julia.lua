@@ -10,7 +10,7 @@ syntax.add {
   comment = "#",
   patterns = {
     {pattern = {"#=", "=#"},            type="comment"    },
-    {pattern = "#.*$",                  type="comment"    },
+    {pattern = "#.*",                   type="comment"    },
     { pattern = { 'icxx"""', '"""' },     type = "string", syntax = ".cpp" },
     { pattern = { 'cxx"""', '"""' },     type = "string", syntax = ".cpp" },
     { pattern = { 'py"""', '"""' },     type = "string", syntax = ".py" },
@@ -76,7 +76,6 @@ syntax.add {
     ["struct"]            = "keyword2",
     ["abstract"]          = "keyword2",
     ["primitive"]         = "keyword2",
-    ["mutable"]           = "keyword2",
     ["Char"]              = "keyword2",
     ["Bool"]              = "keyword2",
     ["Int"]               = "keyword2",

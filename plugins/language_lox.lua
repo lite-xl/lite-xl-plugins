@@ -6,7 +6,7 @@ syntax.add {
 	files = { "%.lox$" },
 	comment = "//",
 	patterns = {
-		{ pattern = "//.-\n",              type = "comment"  },
+		{ pattern = "//.*",                type = "comment"  },
 		{ pattern = { '"', '"' },          type = "string"   },
 		{ pattern = "%a[%w_]*()%s*%f[(]",  type = {"function", "normal"} },
 		{ pattern = "[%a_][%w_]*%s*%f[(]", type = "function" },

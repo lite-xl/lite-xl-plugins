@@ -7,7 +7,7 @@ syntax.add {
   headers = "^#!.*[ /]perl",
   comment = "#",
   patterns = {
-    { pattern = "%#.-\n",                 type = "comment"  },
+    { pattern = "%#.*",                   type = "comment"  },
     { pattern = { '"', '"', '\\' },       type = "string"   },
     { pattern = { "'", "'", '\\' },       type = "string"   },
     -- until we can get this workign with s///, just don't do any of them.

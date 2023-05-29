@@ -6,7 +6,7 @@ syntax.add {
   files = { "%.as$", "%.asc$" },
   comment = "//",
   patterns = {
-    { pattern = "//.-\n",                   type = "comment"  },
+    { pattern = "//.*",                     type = "comment"  },
     { pattern = { "/%*", "%*/" },           type = "comment"  },
     { pattern = { "#", "[^\\]\n" },         type = "comment"  },
     { pattern = { '"', '"', '\\' },         type = "string"   },

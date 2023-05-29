@@ -8,7 +8,7 @@ syntax.add {
   patterns = {
     -- Don't colorize number of arguments expression as comment
     { pattern = "$#",                          type = "keyword2" },
-    { pattern = "#.*\n",                       type = "comment"  },
+    { pattern = "#.*",                         type = "comment"  },
     -- Strings
     { pattern = { '"', '"', '\\' },            type = "string"   },
     { pattern = { "'", "'", '\\' },            type = "string"   },

@@ -6,8 +6,8 @@ syntax.add {
   files = { "%.zig$" },
   comment = "//",
   patterns = {
-    { pattern = "//.-\n",                       type = "comment"  },
-    { pattern = "\\\\.-\n",                     type = "string" },
+    { pattern = "//.*",                         type = "comment"  },
+    { pattern = "\\\\.*",                       type = "string" },
     { pattern = { '"', '"', '\\' },             type = "string" },
     { pattern = { "'", "'", '\\' },             type = "string" },
     { pattern = "[iu][%d_]+",                   type = "keyword2" },

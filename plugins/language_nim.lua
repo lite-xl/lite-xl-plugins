@@ -91,7 +91,7 @@ end
 local user_patterns = {
   -- comments
   { pattern = { "##?%[", "]##?" },            type = "comment" },
-  { pattern = "##?.-\n",                      type = "comment" },
+  { pattern = "##?.*",                        type = "comment" },
   -- strings and chars
   { pattern = { '"', '"', '\\' },             type = "string" },
   { pattern = { '"""', '"""[^"]' },           type = "string" },

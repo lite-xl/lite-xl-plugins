@@ -355,42 +355,42 @@
     },
     {
       "description": "Syntax for the [Angelscript](https://www.angelcode.com/angelscript/) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_angelscript.lua",
       "id": "language_angelscript",
       "mod_version": "3"
     },
     {
       "description": "Syntax for Intel x86 assembly",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_assembly_x86.lua",
       "id": "language_assembly_x86",
       "mod_version": "3"
     },
     {
       "description": "Syntax for RISC-V assembly",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_assembly_riscv.lua",
       "id": "language_assembly_riscv",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [AutoHotkey](https://www.autohotkey.com)(v1) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_autohotkey_v1.lua",
       "mod_version": "3",
       "id": "language_autohotkey_v1"
     },
     {
       "description": "Syntax for Windows [Batch Files](https://en.wikipedia.org/wiki/Batch_file)",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_batch.lua",
       "id": "language_batch",
       "mod_version": "3"
     },
     {
       "description": "Syntax for [BibTex](https://en.wikipedia.org/wiki/BibTeX) files",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_bib.lua",
       "id": "language_bib",
       "mod_version": "3"
@@ -404,7 +404,7 @@
     },
     {
       "description": "Syntax for the Caddyfile used on the [Caddy](https://caddyserver.com/) web server",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_caddyfile.lua",
       "id": "language_caddyfile",
       "mod_version": "3"
@@ -432,21 +432,21 @@
     },
     {
       "description": "Syntax for the [C#](http://csharp.net) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_csharp.lua",
       "id": "language_csharp",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [D](https://dlang.org/) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_d.lua",
       "id": "language_d",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Dart](https://dart.dev/) programming languiage",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_dart.lua",
       "id": "language_dart",
       "mod_version": "3"
@@ -460,14 +460,14 @@
     },
     {
       "description": "Syntax for the [Elixir](https://elixir-lang.org) programming language",
-      "version": "0.2",
+      "version": "0.2.1",
       "path": "plugins/language_elixir.lua",
       "id": "language_elixir",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Elm](https://elm-lang.org) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_elm.lua",
       "id": "language_elm",
       "mod_version": "3"
@@ -488,14 +488,14 @@
     },
     {
       "description": "Syntax for the [fe](https://github.com/rxi/fe) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_fe.lua",
       "id": "language_fe",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [fennel](https://fennel-lang.org) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_fennel.lua",
       "id": "language_fennel",
       "mod_version": "3"
@@ -516,14 +516,14 @@
     },
     {
       "description": "Syntax for the [Godot Engine](https://godotengine.org/)'s GDScript scripting language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_gdscript.lua",
       "id": "language_gdscript",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [GLSL](https://www.khronos.org/registry/OpenGL/specs/gl/) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_glsl.lua",
       "id": "language_glsl",
       "mod_version": "3"
@@ -537,84 +537,84 @@
     },
     {
       "description": "Syntax for the [Go](https://golang.org/) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_go.lua",
       "id": "language_go",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Gravity](https://marcobambini.github.io/gravity/) programming language.",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_gravity.lua",
       "id": "language_gravity",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Haxe](https://haxe.org) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_haxe.lua",
       "id": "language_haxe",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [HLSL](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_hlsl.lua",
       "id": "language_hlsl",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Haskell](https://www.haskell.org/) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_hs.lua",
       "id": "language_hs",
       "mod_version": "3"
     },
     {
-      "version": "0.1",
-      "path": "/plugins/language_htaccess.lua",
+      "description": "Syntax for [.htaccess](https://httpd.apache.org/docs/2.4/howto/htaccess.html) files.",
+      "version": "0.1.1",
+      "path": "plugins/language_htaccess.lua",
       "id": "language_htaccess",
-      "mod_version": "3",
-      "description": "Syntax for [.htaccess](https://httpd.apache.org/docs/2.4/howto/htaccess.html) files."
+      "mod_version": "3"
     },
     {
       "description": "Syntax for [.gitignore](https://git-scm.com/docs/gitignore), [.dockerignore](https://docs.docker.com/engine/reference/builder/#dockerignore-file) and some other `.*ignore` files",
       "version": "0.1",
       "remote": "https://github.com/anthonyaxenov/lite-xl-ignore-syntax:3a9a5e0ae03b82358473da5d1c6012944d65ea95",
-      "mod_version": "3",
-      "id": "language_ignore"
+      "id": "language_ignore",
+      "mod_version": "3"
     },
     {
       "description": "Syntax for [ini](https://en.wikipedia.org/wiki/INI_file) files",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_ini.lua",
       "id": "language_ini",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Java](https://en.wikipedia.org/wiki/Java_\\(programming_language\\)) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_java.lua",
       "id": "language_java",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [jiyu](https://github.com/machinamentum/jiyu) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_jiyu.lua",
       "id": "language_jiyu",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [JSX](https://reactjs.org/docs/introducing-jsx.html) language for the React framework in JavaScript",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_jsx.lua",
       "id": "language_jsx",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Julia](https://julialang.org/) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_julia.lua",
       "id": "language_julia",
       "mod_version": "3"
@@ -643,28 +643,28 @@
     },
     {
       "description": "Syntax for [Lobster](https://strlen.com/lobster/) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_lobster.lua",
       "id": "language_lobster",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Lox](http://craftinginterpreters.com/the-lox-language.html) programming language, featured in the book '[Crafting Interpreters](http://craftinginterpreters.com/)'.",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_lox.lua",
       "id": "language_lox",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the Make build system language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_make.lua",
       "id": "language_make",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Meson](https://mesonbuild.com) build system language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_meson.lua",
       "id": "language_meson",
       "mod_version": "3"
@@ -678,7 +678,7 @@
     },
     {
       "description": "Syntax for the [MoonScript](https://moonscript.org) scripting language",
-      "version": "0.2",
+      "version": "0.2.1",
       "path": "plugins/language_moon.lua",
       "id": "language_moon",
       "mod_version": "3"
@@ -692,14 +692,14 @@
     },
     {
       "description": "Syntax for [Nginx](https://www.nginx.com/) config files",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_nginx.lua",
       "id": "language_nginx",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Nim](https://nim-lang.org) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_nim.lua",
       "id": "language_nim",
       "mod_version": "3"
@@ -713,49 +713,49 @@
     },
     {
       "description": "Syntax for the [Objective C](https://en.wikipedia.org/wiki/Objective-C) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_objc.lua",
       "id": "language_objc",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Odin](https://github.com/odin-lang/Odin) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_odin.lua",
       "id": "language_odin",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Perl](https://perl.org) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_perl.lua",
       "id": "language_perl",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [PHP](https://php.net) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_php.lua",
       "id": "language_php",
       "mod_version": "3"
     },
     {
       "description": "Syntax for [Pico-8](https://www.lexaloffle.com/pico-8.php) cartridge files",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_pico8.lua",
       "id": "language_pico8",
       "mod_version": "3"
     },
     {
       "description": "Syntax for [PKGBUILD](https://wiki.archlinux.org/title/PKGBUILD) package description files",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_pkgbuild.lua",
       "id": "language_pkgbuild",
       "mod_version": "3"
     },
     {
       "description": "Syntax for [PO](https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html) translation files",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_po.lua",
       "id": "language_po",
       "mod_version": "3"
@@ -769,21 +769,21 @@
     },
     {
       "description": "Syntax for [PowerShell](https://docs.microsoft.com/en-us/powershell) scripting language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_powershell.lua",
       "id": "language_powershell",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the postgresql database access language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_psql.lua",
       "id": "language_psql",
       "mod_version": "3"
     },
     {
       "description": "Syntax for [R](https://www.r-project.org/) scripting language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_R.lua",
       "id": "language_r",
       "name": "language_R",
@@ -791,7 +791,7 @@
     },
     {
       "description": "Syntax for the [ReScript](https://rescript-lang.org/) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_rescript.lua",
       "id": "language_rescript",
       "mod_version": "3"
@@ -805,42 +805,42 @@
     },
     {
       "description": "Syntax for the [Ruby](https://www.ruby-lang.org/) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_ruby.lua",
       "id": "language_ruby",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Rust](https://rust-lang.org/) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_rust.lua",
       "id": "language_rust",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Sass](https://sass-lang.com/) CSS preprocessor",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_sass.lua",
       "id": "language_sass",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Scala](https://scala-lang.org/) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_scala.lua",
       "id": "language_scala",
       "mod_version": "3"
     },
     {
       "description": "Syntax for shell scripting language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_sh.lua",
       "id": "language_sh",
       "mod_version": "3"
     },
     {
       "description": "Syntax for ssh & sshd config files",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_ssh_config.lua",
       "id": "language_ssh_config",
       "mod_version": "3"
@@ -853,78 +853,78 @@
       "mod_version": "3"
     },
     {
-      "description": "Syntax for the [Umka](https://github.com/vtereshkov/umka-lang) programming language.",
-      "version": "0.1",
-      "path": "plugins/language_umka.lua",
-      "id": "language_umka",
-      "mod_version": "3"
-    },
-    {
       "description": "Syntax for the [Tcl](https://www.tcl.tk/) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_tcl.lua",
       "id": "language_tcl",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Teal](https://github.com/teal-language/tl) programming language, a typed dialect of Lua.",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_teal.lua",
       "id": "language_teal",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [LaTeX](https://www.latex-project.org/) typesetting language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_tex.lua",
       "id": "language_tex",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [TOML](https://toml.io/en/) configuration language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_toml.lua",
       "id": "language_toml",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [TypeScript](https://www.typescriptlang.org/) programming language, a typed dialect of JavaScript.",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_ts.lua",
       "id": "language_ts",
       "mod_version": "3"
     },
     {
       "description": "Syntax for [TSX](https://www.typescriptlang.org/docs/handbook/jsx.html) language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_tsx.lua",
       "id": "language_tsx",
       "mod_version": "3"
     },
     {
+      "description": "Syntax for the [Umka](https://github.com/vtereshkov/umka-lang) programming language.",
+      "version": "0.1.1",
+      "path": "plugins/language_umka.lua",
+      "id": "language_umka",
+      "mod_version": "3"
+    },
+    {
       "description": "Syntax for the [V](https://vlang.io/) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_v.lua",
       "id": "language_v",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Wren](http://wren.io/) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_wren.lua",
       "id": "language_wren",
       "mod_version": "3"
     },
     {
       "description": "Syntax for [YAML](https://yaml.org/) serialization language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_yaml.lua",
       "id": "language_yaml",
       "mod_version": "3"
     },
     {
       "description": "Syntax for the [Zig](https://ziglang.org/) programming language",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/language_zig.lua",
       "id": "language_zig",
       "mod_version": "3"

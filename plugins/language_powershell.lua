@@ -9,7 +9,7 @@ syntax.add {
   },
   comment = "#",
   patterns = {
-    {pattern = "#.*\n", type = "comment"},
+    {pattern = "#.*", type = "comment"},
     {pattern = [[\.]], type = "normal"},
     {pattern = {'"', '"'}, type = "string"},
     {pattern = {"'", "'"}, type = "string"},
@@ -52,8 +52,6 @@ syntax.add {
     ["return"] = "keyword",
     ["where"] = "function",
     ["select"] = "function",
-    ["filter"] = "keyword",
-    ["in"] = "keyword",
     ["trap"] = "keyword",
     ["param"] = "keyword",
     ["data"] = "keyword",

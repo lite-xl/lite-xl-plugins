@@ -6,7 +6,7 @@ syntax.add {
   files = { "%.rs$" },
   comment = "//",
   patterns = {
-    { pattern = "//.-\n",                                          type = "comment"  },
+    { pattern = "//.*",                                            type = "comment"  },
     { pattern = { "/%*", "%*/" },                                  type = "comment"  },
     { pattern = { 'r#"', '"#', '\\' },                             type = "string"   },
     { pattern = { '"', '"', '\\' },                                type = "string"   },
