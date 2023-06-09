@@ -3,7 +3,7 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "Makefile",
-  files = { "Makefile", "makefile", "%.mk$" },
+  files = { PATHSEP .. "Makefile", PATHSEP .. "makefile", "%.mk$" },
   comment = "#",
   patterns = {
     { pattern = "#.*\n",                  type = "comment"  },

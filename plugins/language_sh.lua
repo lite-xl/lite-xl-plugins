@@ -3,7 +3,7 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "Shell script",
-  files = { "%.sh$", "%.bash$", "^%.bashrc$", "^%.bash_profile$", "^%.profile$" },
+  files = { "%.sh$", "%.bash$", PATHSEP .. "%.bashrc$", PATHSEP .. "%.bash_profile$", PATHSEP .. "%.profile$" },
   headers = "^#!.*bin.*sh\n",
   comment = "#",
   patterns = {
