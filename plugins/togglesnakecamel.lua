@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local core = require "core"
 local command = require "core.command"
 local keymap = require "core.keymap"
@@ -21,8 +21,8 @@ end
 
 
 command.add("core.docview", {
-  ["toggle-snake-camel:toggle"] = function()
-    core.active_view.doc:replace(function(text)
+  ["toggle-snake-camel:toggle"] = function(dv)
+    dv.doc:replace(function(text)
       return text:gsub("[%w][%w%d_]*", toggle)
     end)
   end,

@@ -1,85 +1,116 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local config = require "core.config"
 local style = require "core.style"
 local DocView = require "core.docview"
 local common = require "core.common"
 local command = require "core.command"
 
-local draw = DocView.draw_line_gutter
-local get_width = DocView.get_gutter_width
+config.plugins.linenumbers = common.merge({
+  show = true,
+  relative = false,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Line Numbers",
+    {
+      label = "Show Numbers",
+      description = "Display or hide the line numbers.",
+      path = "show",
+      type = "toggle",
+      default = true
+    },
+    {
+      label = "Relative Line Numbers",
+      description = "Display relative line numbers starting from active line.",
+      path = "relative",
+      type = "toggle",
+      default = false
+    }
+  }
+}, config.plugins.linenumbers)
 
-function DocView:draw_line_gutter(idx, x, y, width)
-  if not config.line_numbers and not config.relative_line_numbers then
-    return
+local draw_line_gutter = DocView.draw_line_gutter
+local get_gutter_width = DocView.get_gutter_width
+
+function DocView:draw_line_gutter(line, x, y, width)
+  local lh = self:get_line_height()
+  if not config.plugins.linenumbers.show then
+    return lh
   end
 
-  if config.relative_line_numbers then
-
+  if config.plugins.linenumbers.relative then
     local color = style.line_number
-    local local_idx = idx
-    local align = "right"
+    local local_idx = line
 
-    local l1 = self.doc:get_selection(false)
-    if idx == l1 then
-      color = style.line_number2
-      if config.line_numbers then
-        align = "center"
-      else
-        local_idx = 0
+    for _, line1, _, line2 in self.doc:get_selections(true) do
+      if line >= line1 and line <= line2 then
+        color = style.line_number2
+        break
       end
-    else
-      local_idx = math.abs(idx - l1)
     end
 
-    -- Fix for old version (<=1.16)
-    if width == nil then
-      local gpad = style.padding.x * 2
-      local gw = self:get_font():get_width(#self.doc.lines) + gpad
-      width = gpad and gw - gpad or gw
+    local l1 = self.doc:get_selection(false)
+    if line == l1 then
+      color = style.line_number2
+      local_idx = 0
+    else
+      local_idx = math.abs(line - l1)
     end
 
     common.draw_text(
       self:get_font(),
-      color, local_idx, align,
+      color, local_idx, "right",
       x + style.padding.x,
-      y + self:get_line_text_y_offset(),
-      width,  self:get_line_height()
+      y,
+      width, lh
     )
   else
-    draw(self, idx, x, y, width)
+    return draw_line_gutter(self, line, x, y, width)
   end
+  return lh
 end
 
 function DocView:get_gutter_width(...)
-  if not config.line_numbers and not config.relative_line_numbers then
-    return style.padding.x
+  if
+    not config.plugins.linenumbers.show
+  then
+    local width = get_gutter_width(self, ...)
+
+    local correct_width = self:get_font():get_width(#self.doc.lines)
+      + (style.padding.x * 2)
+
+    -- compatibility with center doc
+    if width <= correct_width then
+      width = style.padding.x
+    end
+
+    return width, 0
   else
-    return get_width(self, ...)
+    return get_gutter_width(self, ...)
   end
 end
 
 command.add(nil, {
   ["line-numbers:toggle"]  = function()
-    config.line_numbers = not config.line_numbers
+    config.plugins.linenumbers.show = not config.plugins.linenumbers.show
   end,
 
   ["line-numbers:disable"] = function()
-    config.line_numbers = false
+    config.plugins.linenumbers.show = false
   end,
 
   ["line-numbers:enable"]  = function()
-    config.line_numbers = true
+    config.plugins.linenumbers.show = true
   end,
 
   ["relative-line-numbers:toggle"]  = function()
-    config.relative_line_numbers = not config.relative_line_numbers
+    config.plugins.linenumbers.relative = not config.plugins.linenumbers.relative
   end,
 
   ["relative-line-numbers:enable"]  = function()
-    config.relative_line_numbers = true
+    config.plugins.linenumbers.relative = true
   end,
 
   ["relative-line-numbers:disable"]  = function()
-    config.relative_line_numbers = false
+    config.plugins.linenumbers.relative = false
   end
 })

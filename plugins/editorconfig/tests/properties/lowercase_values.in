@@ -1,0 +1,15 @@
+; test property name lowercasing
+
+root = true
+
+[test1.c]
+indent_style = Space
+end_of_line = CRLF
+
+[test2.c]
+insert_final_newline = TRUE
+trim_trailing_whitespace = False
+charset = UTF-8
+
+[test3.c]
+test_property = TestValue

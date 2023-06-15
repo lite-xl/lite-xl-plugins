@@ -1,0 +1,7 @@
+; test ?
+
+root=true
+
+[som?.c]
+key=value
+

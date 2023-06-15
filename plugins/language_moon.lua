@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local syntax = require "core.syntax"
 
 syntax.add {
@@ -21,7 +21,8 @@ syntax.add {
     { pattern = "[%a_][%w_]*",            type = "symbol"   },
     { pattern = {"\\", "[%a_][%w_]*"},    type = "function" },
     { pattern = {"%.", "[%a_][%w_]*"},    type = "function" },
-    { pattern = {"@", "[%a_][%w_]*"},     type = "keyword2" },
+    { pattern = "@[%a_][%w_]*",           type = "keyword2" },
+    { pattern = "@",                      type = "keyword2" },
     { pattern = "!",                      type = "keyword2" },
     { pattern = "[%p]",                   type = "keyword"  },
   },

@@ -1,0 +1,51 @@
+; test [ and ]
+
+root=true
+
+; Character choice
+[[ab].a]
+choice=true
+
+; Negative character choice
+[[!ab].b]
+choice=false
+
+; Character range
+[[d-g].c]
+range=true
+
+; Negative character range
+[[!d-g].d]
+range=false
+
+; Range and choice
+[[abd-g].e]
+range_and_choice=true
+
+; Choice with dash
+[[-ab].f]
+choice_with_dash=true
+
+; Close bracket inside
+[[\]ab].g]
+close_inside=true
+
+; Close bracket outside
+[[ab]].g]
+close_outside=true
+
+; Negative close bracket inside
+[[!\]ab].g]
+close_inside=false
+
+; Negative¬close bracket outside
+[[!ab]].g]
+close_outside=false
+
+; Slash inside brackets
+[ab[e/]cd.i]
+slash_inside=true
+
+; Slash after an half-open bracket
+[ab[/c]
+slash_half_open=true

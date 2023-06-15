@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local core = require "core"
 local Doc = require "core.doc"
 local syntax = require "core.syntax"
@@ -8,9 +8,9 @@ local style = require "core.style"
 local StatusView = require "core.statusview"
 local DocView = require "core.docview"
 
-local function doc()
-  if core.active_view and getmetatable(core.active_view) == DocView then return core.active_view.doc end
-  if core.last_active_view and getmetatable(core.last_active_view) == DocView then return core.last_active_view.doc end
+local function get_doc()
+  if core.active_view then return core.active_view:is(DocView), core.active_view.doc end
+  if core.last_active_view then return core.last_active_view:is(DocView), core.last_active_view.doc end
 end
 
 -- Force plaintext syntax to have a name
@@ -39,34 +39,27 @@ local function get_syntax_name(s)
   return name or "Undefined"
 end
 
-local statusview_get_items = StatusView.get_items
-function StatusView:get_items()
-  local left, right = statusview_get_items(self)
+core.status_view:add_item({
+  predicate = get_doc,
+  name = "doc:syntax",
+  alignment = StatusView.Item.RIGHT,
+  get_item = function()
+    local _, doc = get_doc()
+    local syntax_name = get_syntax_name(doc.syntax)
+    return {
+      style.text,
+      syntax_name
+    }
+  end,
+  command = "force-syntax:select-file-syntax",
+  position = -1,
+  tooltip = "file syntax",
+  separator = core.status_view.separator2
+})
 
-  local is_dv = core.active_view and getmetatable(core.active_view) == DocView
-  if not is_dv then return left, right end
-
-  local syntax_name = get_syntax_name(doc().syntax)
-
-  local ins = {
-    style.dim, 
-    self.separator2,
-    style.text,
-    syntax_name
-  }
-
-  if syntax_name then
-    for _,item in pairs(ins) do
-      table.insert(right, item)
-    end
-  end
-
-  return left, right
-end
-
-local function get_syntax_list()
+local function get_syntax_list(doc)
   local pt_name = plain_text_syntax.name
-  if doc().syntax == plain_text_syntax then
+  if doc.syntax == plain_text_syntax then
     pt_name = "Current: "..pt_name
   end
   local list = { ["Auto detect"] = false,
@@ -81,7 +74,7 @@ local function get_syntax_list()
       i = i + 1
       fullname = name.." ("..i..")"
     end
-    if doc().syntax == s then
+    if doc.syntax == s then
       fullname = "Current: "..fullname
     end
     list[fullname] = s
@@ -107,26 +100,23 @@ local function bias_sorter(a, b)
   return sorter(a, b)
 end
 
-command.add("core.docview", {
+command.add(get_doc, {
   ["force-syntax:select-file-syntax"] =
-    function()
-      core.command_view:enter(
-        "Set syntax for this file",
-        function(text, item) -- submit
-          local list, _ = get_syntax_list()
-          doc().force_syntax = list[item.text]
-          doc():reset_syntax()
+    function(doc)
+      core.command_view:enter("Set syntax for this file", {
+        submit = function(text, item)
+          local list, _ = get_syntax_list(doc)
+          doc.force_syntax = list[item.text]
+          doc:reset_syntax()
         end,
-        function(text) -- suggest
-          local _, keylist = get_syntax_list()
+        suggest = function(text)
+          local _, keylist = get_syntax_list(doc)
           local res = common.fuzzy_match(keylist, text)
           -- Force Current and Auto detect syntax to the bottom
           -- if the text is empty
           table.sort(res, #text == 0 and bias_sorter or sorter)
           return res
-        end,
-        nil, -- cancel
-        nil -- validate
-      )
+        end
+      })
     end
 })

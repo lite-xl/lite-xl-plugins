@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 -- Almost identical to JS, with the exception that / shouldn't denote a regex. Current JS syntax highlighter will highlight half the document due to closing tags.
 local syntax = require "core.syntax"
 
@@ -15,8 +15,9 @@ syntax.add {
     { pattern = "0x[%da-fA-F]+",        type = "number"   },
     { pattern = "-?%d+[%d%.eE]*",       type = "number"   },
     { pattern = "-?%.?%d+",             type = "number"   },
-    { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
+    { pattern = "%f[^<]/?[%a_][%w_]*",  type = "function" },
     { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
+    { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
     { pattern = "[%a_][%w_]*",          type = "symbol"   },
   },
   symbols = {
@@ -37,6 +38,7 @@ syntax.add {
     ["extends"]    = "keyword",
     ["finally"]    = "keyword",
     ["for"]        = "keyword",
+    ["from"]       = "keyword",
     ["function"]   = "keyword",
     ["get"]        = "keyword",
     ["if"]         = "keyword",

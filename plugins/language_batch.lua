@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local syntax = require "core.syntax"
 
 -- batch syntax for lite <liqube>
@@ -6,7 +6,7 @@ local syntax = require "core.syntax"
 -- windows batch files use caseless matching for symbols
 local symtable = {
   ["keyword"] = {
-  "if", "else", "elsif", "not", "for", "do", "in",
+  "if", "else", "not", "for", "do", "in",
   "equ", "neq", "lss", "leq", "gtr", "geq", -- == != < <= > >=
   "nul", "con", "prn", "prn", "lpt1", "com1", "com2", "com3", "com4",
   "exist", "defined",

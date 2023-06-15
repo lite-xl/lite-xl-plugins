@@ -1,0 +1,9 @@
+root = true
+
+[test.c]
+indent_style = space
+indent_size = 4
+
+[test2.c]
+indent_style = tab
+indent_size = tab

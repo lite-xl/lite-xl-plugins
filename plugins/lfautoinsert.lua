@@ -1,18 +1,18 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local core = require "core"
 local command = require "core.command"
 local common = require "core.common"
 local config = require "core.config"
 local keymap = require "core.keymap"
 
-config.plugins.lfautoinsert = { map = {
+config.plugins.lfautoinsert = common.merge({ map = {
   ["{%s*\n"] = "}",
   ["%(%s*\n"] = ")",
   ["%f[[]%[%s*\n"] = "]",
   ["=%s*\n"] = false,
   [":%s*\n"] = false,
   ["->%s*\n"] = false,
-  ["^%s*<([^/][^%s>]*)[^>]*>%s*\n"] = "</$TEXT>",
+  ["^%s*<([^/!][^%s>]*)[^>]*>%s*\n"] = "</$TEXT>",
   ["^%s*{{#([^/][^%s}]*)[^}]*}}%s*\n"] = "{{/$TEXT}}",
   ["/%*%s*\n"] = "*/",
   ["c/c++"] = {
@@ -27,7 +27,7 @@ config.plugins.lfautoinsert = { map = {
     }
   },
   ["lua"] = {
-    file_patterns = { "%.lua$" },
+    file_patterns = { "%.lua$", "%.nelua$" },
     map = {
       ["%f[%w]do%s*\n"] = "end",
       ["%f[%w]then%s*\n"] = "end",
@@ -37,7 +37,7 @@ config.plugins.lfautoinsert = { map = {
       ["%[%[%s*\n"] = "]]"
     }
   },
-} }
+} }, config.plugins.lfautoinsert)
 
 local function get_autoinsert_map(filename)
   local map = {}
@@ -64,40 +64,68 @@ local function indent_size(doc, line)
   return e - s
 end
 
-command.add("core.docview", {
-  ["autoinsert:newline"] = function()
-    command.perform("doc:newline")
+command.add("core.docview!", {
+  ["autoinsert:newline"] = function(dv)
+    local not_applied =  { }
+    local fallback = true
+    local doc = dv.doc
+    local indent_type, soft_size = doc:get_indent_info()
+    local indent_string = indent_type == "hard" and "\t" or string.rep(" ", soft_size)
 
-    local doc = core.active_view.doc
-    local line, col = doc:get_selection()
-    local text = doc.lines[line - 1]
+    for idx, line, col, line2, col2 in doc:get_selections(true, true) do
+      -- We need to add `\n` to keep compatibility with the patterns
+      -- that expected a newline to be placed where the caret is.
+      local text = doc.lines[line]:sub(1, col - 1) .. '\n'
+      local remainder = doc.lines[line]:sub(col, -1)
+      local current_indent = text:match("^[\t ]*")
 
-    for ptn, close in pairs(get_autoinsert_map(doc.filename)) do
-      local s, _, str = text:find(ptn)
-      if s then
-        if  close
-        and col == #doc.lines[line]
-        and indent_size(doc, line + 1) <= indent_size(doc, line - 1)
-        then
-          close = str and close:gsub("$TEXT", str) or close
-          command.perform("doc:newline")
-          core.active_view:on_text_input(close)
-          command.perform("doc:move-to-previous-line")
-          if doc.lines[line+1] == doc.lines[line+2] then
-            doc:remove(line+1, 1, line+2, 1)
+      local pre, post
+      for ptn, close in pairs(get_autoinsert_map(doc.filename)) do
+        local s, _, str = text:find(ptn)
+        if s then
+          pre = string.format("\n%s%s", current_indent, indent_string)
+          if  close
+          and col == #doc.lines[line]
+          and indent_size(doc, line + 1) <= indent_size(doc, line)
+          then
+            close = str and close:gsub("$TEXT", str) or close
+            -- Avoid inserting `close` if it's already present
+            if remainder:find(close, 1, true) == 1 then
+              close = ""
+            end
+            post = string.format("\n%s%s", current_indent, close)
+          elseif col < #doc.lines[line] then
+            post = string.format("\n%s", current_indent)
           end
-        elseif col < #doc.lines[line] then
-          command.perform("doc:newline")
-          command.perform("doc:move-to-previous-line")
+          break
         end
-        command.perform("doc:indent")
+      end
+
+      if pre or post then
+        fallback = false
+        doc:text_input(pre or "", idx)
+        local l, c, l2, c2 = doc:get_selection_idx(idx)
+        doc:text_input(post or "", idx)
+        doc:set_selections(idx, l, c, l2, c2)
+      else
+        table.insert(not_applied, {idx, current_indent})
+      end
+    end
+
+    -- Only call the fallback if no autoinsert was applied
+    if fallback then
+      command.perform("doc:newline")
+    else
+      for _,v in ipairs(not_applied) do
+        local idx, indent = table.unpack(v)
+        doc:text_input("\n"..indent, idx)
       end
     end
   end
 })
 
 keymap.add {
-  ["return"] = { "command:submit", "autoinsert:newline" }
+  ["return"] = { "autoinsert:newline" }
 }
 
 return {

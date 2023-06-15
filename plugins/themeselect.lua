@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local core = require "core"
 
 -- Load a specific theme when the filename of an active document does match
@@ -7,12 +7,11 @@ local core = require "core"
 -- usage:
 -- require("plugins.themeselect").add_pattern("%.md$", "summer")
 
-local theme_select = { }
+local theme_select = {}
 
 local saved_colors_module = "core.style"
 
-local themes_patterns = {
-}
+local themes_patterns = {}
 
 local reload_module = core.reload_module
 local set_visited = core.set_visited

@@ -1,0 +1,48 @@
+; test whitespace usage
+
+root = true
+
+; no whitespace
+[test1.c]
+key=value
+
+; spaces around equals
+[test2.c]
+key = value
+
+; lots of space after equals
+[test3.c]
+key  =   value
+
+; spaces before property name
+[test4.c]
+  key=value
+
+; spaces after property value
+[test5.c]
+key=value  
+
+; blank lines between properties
+[test6.c]
+
+key1=value1
+
+key2=value2
+
+; spaces in section name
+[ test 7 ]
+key=value
+
+; spaces before section name
+  [test8.c]
+key=value
+
+; spaces after section name
+[test9.c]  
+key=value
+
+; spacing before middle property
+[test10.c]
+key1=value1
+  key2=value2
+key3=value3

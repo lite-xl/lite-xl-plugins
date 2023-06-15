@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local core = require "core"
 local command = require "core.command"
 local keymap = require "core.keymap"
@@ -40,10 +40,8 @@ local html = [[
 ]]
 
 
-command.add("core.docview", {
-  ["ghmarkdown:show-preview"] = function()
-    local dv = core.active_view
-
+command.add("core.docview!", {
+  ["ghmarkdown:show-preview"] = function(dv)
     local content = dv.doc:get_text(1, 1, math.huge, math.huge)
     local esc = { ['"'] = '\\"', ["\n"] = '\\n' }
     local text = html:gsub("${(.-)}", {
@@ -71,4 +69,4 @@ command.add("core.docview", {
 })
 
 
-keymap.add { ["ctrl+shift+m"] = "ghmarkdown:show-preview" }
+keymap.add { ["ctrl+alt+m"] = "ghmarkdown:show-preview" }

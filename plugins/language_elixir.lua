@@ -1,4 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local syntax = require "core.syntax"
 
 syntax.add {
@@ -11,6 +11,7 @@ syntax.add {
     { pattern = { '"""', '"""', '\\' }, type = "string"   },
     { pattern = { '"', '"', '\\' },     type = "string"   },
     { pattern = { "'", "'", '\\' },     type = "string"   },
+    { pattern = { '~%a"""', '"""' },    type = "string"   },
     { pattern = { '~%a[/"|\'%(%[%{<]', '[/"|\'%)%]%}>]', '\\' }, type = "string"},
     { pattern = "-?0x%x+",              type = "number"   },
     { pattern = "-?%d+[%d%.eE]*f?",     type = "number"   },
@@ -74,7 +75,7 @@ syntax.add {
 }
 
 syntax.add {
-  files = { "%.l?eex$" },
+  files = { "%.l?eex$", "%.h?eex$" },
   patterns = {
     { pattern = { "<!%-%-", "%-%->" },     type = "comment"  },
     { pattern = { '%f[^>][^<]', '%f[<]' }, type = "normal"   },

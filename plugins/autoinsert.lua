@@ -1,20 +1,21 @@
--- mod-version:2 -- lite-xl 2.0
+-- mod-version:3
 local core = require "core"
 local translate = require "core.doc.translate"
 local config = require "core.config"
+local common = require "core.common"
 local DocView = require "core.docview"
 local command = require "core.command"
 local keymap = require "core.keymap"
 
 
-config.plugins.autoinsert = { map = {
+config.plugins.autoinsert = common.merge({ map = {
   ["["] = "]",
   ["{"] = "}",
   ["("] = ")",
   ['"'] = '"',
   ["'"] = "'",
   ["`"] = "`",
-} }
+} }, config.plugins.autoinsert)
 
 
 local function is_closer(chr)
@@ -37,6 +38,10 @@ end
 local on_text_input = DocView.on_text_input
 
 function DocView:on_text_input(text)
+
+  -- Don't insert on multiselections
+  if #self.doc.selections > 4 then return on_text_input(self, text) end
+
   local mapping = config.plugins.autoinsert.map[text]
 
   -- prevents plugin from operating on `CommandView`
@@ -80,23 +85,24 @@ end
 
 
 local function predicate()
-  return getmetatable(core.active_view) == DocView
-     and not core.active_view.doc:has_selection()
+  return core.active_view:is(DocView)
+    and #core.active_view.doc.selections <= 4 and not core.active_view.doc:has_selection(), core.active_view.doc
 end
 
 command.add(predicate, {
-  ["autoinsert:backspace"] = function()
-    local doc = core.active_view.doc
+  ["autoinsert:backspace"] = function(doc)
     local l, c = doc:get_selection()
-    local chr = doc:get_char(l, c)
-    if config.plugins.autoinsert.map[doc:get_char(l, c - 1)] and is_closer(chr) then
-      doc:delete_to(1)
+    if c > 1 then
+      local chr = doc:get_char(l, c)
+      local mapped = config.plugins.autoinsert.map[doc:get_char(l, c - 1)]
+      if mapped and mapped == chr then
+        doc:delete_to(1)
+      end
     end
     command.perform "doc:backspace"
   end,
 
-  ["autoinsert:delete-to-previous-word-start"] = function()
-    local doc = core.active_view.doc
+  ["autoinsert:delete-to-previous-word-start"] = function(doc)
     local le, ce = translate.previous_word_start(doc, doc:get_selection())
     while true do
       local l, c = doc:get_selection()
