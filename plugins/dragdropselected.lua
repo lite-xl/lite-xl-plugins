@@ -107,8 +107,7 @@ function DocView:on_mouse_moved(x, y, ...)
   end
   -- calculate line and column for current mouse position
   local iLine, iCol = self:resolve_screen_position(x, y)
-  -- show insert location (unfortunately it doesn't always show, even when
-  -- calling draw_caret)
+  -- show insert location
   self.doc:add_selection(iLine, iCol)
   -- update scroll position, if needed
   self:scroll_to_line(iLine, true)
@@ -144,6 +143,9 @@ function DocView:on_mouse_pressed(button, x, y, clicks)
   -- stash selection for inserting later
   self.dnd_sText = self.doc:get_text(self.doc:get_selection())
   self.dnd_lSelection = { iLine1, iCol1, iLine2, iCol2 }
+  -- disable blinking caret and stash user setting
+  self.dnd_bBlink = config.disable_blink
+  config.disable_blink = true
 end -- DocView:on_mouse_pressed
 
 
@@ -156,8 +158,10 @@ local function reset(oDocView)
     if not oDocView:is(DocView) then return end
   end
 
+  config.disable_blink = oDocView.dnd_bBlink
   oDocView.dnd_lSelection = nil
   oDocView.dnd_bDragging = nil
+  oDocView.dnd_bBlink = nil
   oDocView.dnd_sText = nil
   oDocView.cursor = 'ibeam'
 end -- reset
