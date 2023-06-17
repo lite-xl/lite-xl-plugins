@@ -1,22 +1,53 @@
 -- mod-version:3
 --[[
   dragdropselected.lua
-  provides basic drag and drop of selected text (in same document)
-  version: 20200627_133351
-  originally by SwissalpS
+  provides drag and drop of selected text (in same document)
+  - LMB+drag selected text to move it elsewhere
+  - or LMB on selection and then LMB at destination (if sticky is enabled)
+  - hold ctrl on release to copy selection
+  - press escape to abort
+  version: 20230616_094245 by SwissalpS
+  original: 20200627_133351 by SwissalpS
 
+  TODO: select moved/copied portion after release
   TODO: use OS drag and drop events
   TODO: change mouse cursor when duplicating
   TODO: add dragging image
 --]]
-local DocView = require "core.docview"
 local core = require "core"
+local common = require "core.common"
+local config = require "core.config"
+local DocView = require "core.docview"
 local keymap = require "core.keymap"
-local style = require "core.style"
 
--- helper function for on_mouse_pressed to determine if mouse down is in selection
--- iLine is line number where mouse down happened
--- iCol is column where mouse down happened
+config.plugins.dragdropselected = common.merge({
+  enabled = true,
+  useSticky = false,
+  -- The config specification used by the settings gui
+  config_spec = {
+    name = "Drag n' Drop Selected",
+    {
+      label = "Enable",
+      description = "Activates DnD support within same file. (ctrl to copy)",
+      path = "enabled",
+      type = "toggle",
+      default = true
+    },
+    {
+      label = "Use Sticky Drag",
+      description = "Allows to click selection then click insert location.\n"
+          .. "No actual dragging needed.",
+      path = "useSticky",
+      type = "toggle",
+      default = false,
+    }
+  }
+}, config.plugins.dragdropselected)
+
+
+-- helper function to determine if mouse is in selection
+-- iLine is line number where mouse is
+-- iCol is column where mouse is
 -- iSelLine1 is line number where selection starts
 -- iSelCol1 is column where selection starts
 -- iSelLine2 is line number where selection ends
@@ -29,149 +60,171 @@ local function isInSelection(iLine, iCol, iSelLine1, iSelCol1, iSelLine2, iSelCo
   return true
 end -- isInSelection
 
--- distance between two points
-local function distance(x1, y1, x2, y2)
-  return math.sqrt((x2-x1)^2+(y2-y1)^2)
-end
 
-local min_drag = style.code_font:get_width(" ")
-
--- override DocView:on_mouse_moved
 local on_mouse_moved = DocView.on_mouse_moved
 function DocView:on_mouse_moved(x, y, ...)
+  if not config.plugins.dragdropselected.enabled or not self.dnd_sText then
+    -- there is nothing to do -> hand off to original on_mouse_moved()
+    return on_mouse_moved(self, x, y, ...)
+  end
 
-  local sCursor = nil
-
-  -- make sure we only act if previously on_mouse_pressed was in selection
-  if
-    self.bClickedIntoSelection
-    and
-    ( -- we are already dragging or we moved enough to start dragging
-      not self.drag_start_loc or
-      distance(self.drag_start_loc[1],self.drag_start_loc[2], x, y) > min_drag
-    )
-  then
-    self.drag_start_loc = nil
-
+  -- not sure we need to do this or if we better not
+  DocView.super.on_mouse_moved(self, x, y, ...)
+  if self.dnd_bDragging then
+    -- remove last caret showing insert location
+    self.doc:remove_selection(self.doc.last_selection)
+  else
+    self.dnd_bDragging = true
     -- show that we are dragging something
-    sCursor = 'hand'
-
-    -- calculate line and column for current mouse position
-    local iLine, iCol = self:resolve_screen_position(x, y)
-    local iSelLine1 = self.dragged_selection[1]
-    local iSelCol1  = self.dragged_selection[2]
-    local iSelLine2 = self.dragged_selection[3]
-    local iSelCol2  = self.dragged_selection[4]
-    self.doc:set_selection(iSelLine1, iSelCol1, iSelLine2, iSelCol2)
-    if not isInSelection(iLine, iCol, iSelLine1, iSelCol1, iSelLine2, iSelCol2) then
-      -- show cursor only if outside selection
-      self.doc:add_selection(iLine, iCol)
-    end
-    -- update scroll position
-    self:scroll_to_line(iLine, true)
-  end -- if previously clicked into selection
-
-  -- hand off to 'old' on_mouse_moved()
-  on_mouse_moved(self, x, y, ...)
-  -- override cursor as needed
-  if sCursor then self.cursor = sCursor end
-
+    self.cursor = 'hand'
+    -- make sure selection is marked
+    self.doc:set_selection(table.unpack(self.dnd_lSelection))
+  end
+  -- calculate line and column for current mouse position
+  local iLine, iCol = self:resolve_screen_position(x, y)
+  -- show insert location (unfortunately it doesn't always show, even when
+  -- calling draw_caret)
+  self.doc:add_selection(iLine, iCol)
+  -- update scroll position, if needed
+  self:scroll_to_line(iLine, true)
 end -- DocView:on_mouse_moved
 
--- override DocView:on_mouse_pressed
+
 local on_mouse_pressed = DocView.on_mouse_pressed
 function DocView:on_mouse_pressed(button, x, y, clicks)
   local caught = DocView.super.on_mouse_pressed(self, button, x, y, clicks)
   if caught then
       return caught
   end
-  -- no need to proceed if not left button or has no selection
-  if
-    ('left' ~= button)
-    or (not self.doc:has_selection())
-    or (1 < clicks)
+
+  -- no need to proceed if: not enabled, not left button, no selection
+  -- or if this is a multi-click event
+  if not config.plugins.dragdropselected.enabled
+    or 'left' ~= button
+    or not self.doc:has_selection()
+    or 1 < clicks
   then
       return on_mouse_pressed(self, button, x, y, clicks)
   end
+
   -- convert pixel coordinates to line and column coordinates
   local iLine, iCol = self:resolve_screen_position(x, y)
   -- get selection coordinates
   local iSelLine1, iSelCol1, iSelLine2, iSelCol2 = self.doc:get_selection(true)
-  -- set flag for on_mouse_released and on_mouse_moved() methods to detect dragging
-  self.bClickedIntoSelection = isInSelection(iLine, iCol, iSelLine1, iSelCol1,
-                                             iSelLine2, iSelCol2)
-  if self.bClickedIntoSelection then
-    self.drag_start_loc = { x, y }
-    -- stash selection for inserting later
-    self.sDraggedText = self.doc:get_text(self.doc:get_selection())
-    self.dragged_selection = { iSelLine1, iSelCol1, iSelLine2, iSelCol2 }
-  else
-    self.bClickedIntoSelection = nil
-    self.dragged_selection = nil
+  if not isInSelection(iLine, iCol, iSelLine1, iSelCol1, iSelLine2, iSelCol2)
+  then
     -- let 'old' on_mouse_pressed() do whatever it needs to do
-    on_mouse_pressed(self, button, x, y, clicks)
+    return on_mouse_pressed(self, button, x, y, clicks)
   end
+
+  -- stash selection for inserting later
+  self.dnd_sText = self.doc:get_text(self.doc:get_selection())
+  self.dnd_lSelection = { iSelLine1, iSelCol1, iSelLine2, iSelCol2 }
 end -- DocView:on_mouse_pressed
 
--- override DocView:on_mouse_released()
-local on_mouse_released = DocView.on_mouse_released
-function DocView:on_mouse_released(button, x, y)
-  local iLine, iCol = self:resolve_screen_position(x, y)
-  if self.bClickedIntoSelection then
-    local iSelLine1, iSelCol1, iSelLine2, iSelCol2 = table.unpack(self.dragged_selection)
-    if
-      not self.drag_start_loc
-      and
-      not isInSelection(iLine, iCol, iSelLine1, iSelCol1, iSelLine2, iSelCol2)
-    then
-      -- insert stashed selected text at current position
-      if iLine < iSelLine1 or (iLine == iSelLine1 and iCol < iSelCol1) then
-        -- delete first
-        self.doc:set_selection(iSelLine1, iSelCol1, iSelLine2, iSelCol2)
-        if not keymap.modkeys['ctrl'] then
-            self.doc:delete_to(0)
-        end
-        self.doc:set_selection(iLine, iCol)
-        self.doc:text_input(self.sDraggedText)
-      else
-        -- insert first
-        self.doc:set_selection(iLine, iCol)
-        self.doc:text_input(self.sDraggedText)
-        self.doc:set_selection(iSelLine1, iSelCol1, iSelLine2, iSelCol2)
-        if not keymap.modkeys['ctrl'] then
-            self.doc:delete_to(0)
-        end
-        self.doc:set_selection(iLine, iCol)
-      end
-    elseif self.drag_start_loc then
-      -- deselect only if the drag never happened
-      self.doc:set_selection(iLine, iCol)
-    end
-    -- unset stash and flag(s) TODO:
-    self.sDraggedText = ''
-    self.bClickedIntoSelection = nil
+
+-- unset stashes and flag, reset cursor
+-- helper for on_mouse_released and
+-- when escape is pressed during drag (or not, not worth checking)
+local function reset(oDocView)
+  if not oDocView then
+    oDocView = core.active_view
+    if not oDocView:is(DocView) then return end
   end
 
-  -- hand over to old handler
-  on_mouse_released(self, button, x, y)
+  oDocView.dnd_lSelection = nil
+  oDocView.dnd_bDragging = nil
+  oDocView.dnd_sText = nil
+  oDocView.cursor = 'ibeam'
+end -- reset
 
+
+local on_mouse_released = DocView.on_mouse_released
+function DocView:on_mouse_released(button, x, y)
+  -- nothing to do if: not enabled or never clicked into selection
+  if not config.plugins.dragdropselected.enabled or not self.dnd_sText then
+    return on_mouse_released(self, button, x, y)
+  end
+
+  local iLine, iCol = self:resolve_screen_position(x, y)
+  if not self.dnd_bDragging then
+    if not config.plugins.dragdropselected.useSticky then
+      -- not using sticky -> clear selection
+      self.doc:set_selection(iLine, iCol)
+      reset(self)
+    end
+    return on_mouse_released(self, button, x, y)
+  end
+
+  local bDuplicating = keymap.modkeys['ctrl']
+  local iSelLine1, iSelCol1, iSelLine2, iSelCol2
+      = table.unpack(self.dnd_lSelection)
+
+  -- adjust boundries for duplication actions
+  -- this allows users to duplicate selection adjacent to selection
+  local iLine1, iCol1, iLine2, iCol2 = iSelLine1, iSelCol1, iSelLine2, iSelCol2
+  if bDuplicating then
+    iCol1 = iCol1 + 1
+    if #self.doc.lines[iLine1] < iCol1 then
+      iCol1 = 1
+      iLine1 = iLine1 + 1
+    end
+    iCol2 = iCol2 - 1
+    if 0 == iCol2 then
+      iLine2 = iLine2 - 1
+      iCol2 = #self.doc.lines[iLine2]
+    end
+  end
+  if isInSelection(iLine, iCol, iLine1, iCol1, iLine2, iCol2) then
+    -- drag abborted or initiated drag without holding mouse button (sticky)
+      self.doc:set_selection(iLine, iCol)
+  else
+    -- insert stashed selected text at current position
+    if iLine < iSelLine1 or (iLine == iSelLine1 and iCol < iSelCol1) then
+      -- delete first
+      self.doc:set_selection(iSelLine1, iSelCol1, iSelLine2, iSelCol2)
+      if not bDuplicating then
+          self.doc:delete_to(0)
+      end
+      self.doc:set_selection(iLine, iCol)
+      self.doc:text_input(self.dnd_sText)
+    else
+      -- insert first
+      self.doc:set_selection(iLine, iCol)
+      self.doc:text_input(self.dnd_sText)
+      self.doc:set_selection(iSelLine1, iSelCol1, iSelLine2, iSelCol2)
+      if not bDuplicating then
+          self.doc:delete_to(0)
+      end
+      -- TODO: select inserted text
+      self.doc:set_selection(iLine, iCol)
+    end
+  end
+  -- unset stashes and flag
+  reset(self)
+  return on_mouse_released(self, button, x, y)
 end -- DocView:on_mouse_released
 
--- override DocView:draw_caret()
+
 local draw_caret = DocView.draw_caret
 function DocView:draw_caret(x, y)
-  if self.bClickedIntoSelection then
+  if self.dnd_sText and config.plugins.dragdropselected.enabled then
     local iLine, iCol = self:resolve_screen_position(x, y)
     -- don't show carets inside selections
-    if
-      isInSelection(
-        iLine, iCol,
-        self.dragged_selection[1], self.dragged_selection[2],
-        self.dragged_selection[3], self.dragged_selection[4]
-      )
-    then
+    if isInSelection(iLine, iCol, table.unpack(self.dnd_lSelection)) then
       return
     end
   end
   draw_caret(self, x, y)
 end -- DocView:draw_caret()
+
+
+-- catch escape-key presses
+local on_key_released = keymap.on_key_released
+function keymap.on_key_released(k)
+  if config.plugins.dragdropselected.enabled and 'escape' == k then
+    reset()
+  end
+  return on_key_released(k)
+end
+
