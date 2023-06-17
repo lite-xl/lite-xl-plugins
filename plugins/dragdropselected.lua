@@ -9,10 +9,9 @@
   version: 20230616_094245 by SwissalpS
   original: 20200627_133351 by SwissalpS
 
-  TODO: select moved/copied portion after release
-  TODO: use OS drag and drop events
-  TODO: change mouse cursor when duplicating
   TODO: add dragging image
+  TODO: use OS drag and drop events
+  TODO: change mouse cursor when duplicating (requires change in cpp/SDL2)
 --]]
 local core = require "core"
 local common = require "core.common"
@@ -107,7 +106,8 @@ function DocView:on_mouse_moved(x, y, ...)
   end
   -- calculate line and column for current mouse position
   local iLine, iCol = self:resolve_screen_position(x, y)
-  -- show insert location
+  -- show insert location (unfortunately it doesn't always show, even when
+  -- calling draw_caret)
   self.doc:add_selection(iLine, iCol)
   -- update scroll position, if needed
   self:scroll_to_line(iLine, true)
@@ -190,27 +190,47 @@ function DocView:on_mouse_released(button, x, y)
       iLine, iCol, iLine1, iCol1, iLine2, iCol2, bDuplicating)
   then
     -- drag abborted or initiated drag without holding mouse button (sticky)
-      self.doc:set_selection(iLine, iCol)
+    self.doc:set_selection(iLine, iCol)
   else
     -- insert stashed selected text at current position
     if iLine < iLine1 or (iLine == iLine1 and iCol < iCol1) then
       -- delete first
-      self.doc:set_selection(iLine1, iCol1, iLine2, iCol2)
       if not bDuplicating then
-          self.doc:delete_to(0)
+        self.doc:set_selection(iLine1, iCol1, iLine2, iCol2)
+        self.doc:delete_to(0)
       end
       self.doc:set_selection(iLine, iCol)
       self.doc:text_input(self.dnd_sText)
+      -- select inserted text
+      if iLine1 == iLine2 then
+        self.doc:set_selection(iLine, iCol, iLine, iCol + iCol2 - iCol1)
+      else
+        self.doc:set_selection(iLine, iCol, iLine + iLine2 - iLine1, iCol2)
+      end
     else
       -- insert first
       self.doc:set_selection(iLine, iCol)
       self.doc:text_input(self.dnd_sText)
-      self.doc:set_selection(iLine1, iCol1, iLine2, iCol2)
       if not bDuplicating then
-          self.doc:delete_to(0)
+        self.doc:set_selection(iLine1, iCol1, iLine2, iCol2)
+        self.doc:delete_to(0)
       end
-      -- TODO: select inserted text
-      self.doc:set_selection(iLine, iCol)
+      -- select inserted text
+      if iLine1 == iLine2 then
+        if iLine == iLine1 then
+          if not bDuplicating then
+            iCol = iCol - iCol2 + iCol1
+          end
+          self.doc:set_selection(iLine, iCol, iLine, iCol + iCol2 - iCol1)
+        else
+          self.doc:set_selection(iLine, iCol, iLine, iCol + iCol2 - iCol1)
+        end
+      else
+        if not bDuplicating then
+          iLine = iLine - iLine2 + iLine1
+        end
+        self.doc:set_selection(iLine, iCol, iLine + iLine2 - iLine1, iCol2)
+      end
     end
   end
   -- unset stashes and flag
