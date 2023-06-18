@@ -18,7 +18,7 @@
       "type": "meta",
       "version": "0.1",
       "mod_version": "3",
-      "description": "A package containing all publically accessible color themes.",
+      "description": "A metapackage containing all publically accessible color themes.",
       "dependencies": {
         "abyss": {},
         "betelgeuse": {},
@@ -62,7 +62,7 @@
       "type": "meta",
       "version": "0.1",
       "mod_version": "3",
-      "description": "A package containing all publically accessible language syntaxes.",
+      "description": "A metapackage containing all publically accessible language syntaxes.",
       "dependencies": {
         "language_angelscript": {},
         "language_assembly_riscv": {},
