@@ -1,21 +1,23 @@
 {
   "addons": [
     {
-      "id": "addons",
+      "id": "meta_addons",
       "type": "meta",
       "version": "0.1",
+      "mod_version": "3",
       "description": "A metapackage that contains a number of useful plugins to ship with an expanded default version of lite-xl.",
       "dependencies": {
-        "languages": {},
-        "colors": {},
+        "meta_languages": {},
+        "meta_colors": {},
         "open_ext": {},
         "settings": {}
       }
     },
     {
-      "id": "colors",
+      "id": "meta_colors",
       "type": "meta",
       "version": "0.1",
+      "mod_version": "3",
       "description": "A package containing all publically accessible color themes.",
       "dependencies": {
         "abyss": {},
@@ -56,9 +58,10 @@
       }
     },
     {
-      "id": "languages",
+      "id": "meta_languages",
       "type": "meta",
       "version": "0.1",
+      "mod_version": "3",
       "description": "A package containing all publically accessible language syntaxes.",
       "dependencies": {
         "language_angelscript": {},
@@ -90,7 +93,6 @@
         "language_go": {},
         "language_gravity": {},
         "language_haxe": {},
-        "language_hbs": {},
         "language_hlsl": {},
         "language_hs": {},
         "language_htaccess": {},
