@@ -420,7 +420,7 @@
       "description": "Syntax for [Containerfile](https://github.com/containers/common/blob/main/docs/Containerfile.5.md)/[Dockerfile](https://docs.docker.com/engine/reference/builder/)",
       "version": "0.1",
       "remote": "https://github.com/FilBot3/lite-xl-language-containerfile:2d5e46b1051c48d74f9b63f9844913c630d19b87",
-      "mod_version": "3",
+      "mod_version": "2",
       "id": "language_containerfile"
     },
     {
@@ -624,7 +624,7 @@
       "description": "Syntax for [Kaitai](http://kaitai.io/) struct files",
       "version": "0.1",
       "id": "language_ksy",
-      "mod_version": "3",
+      "mod_version": "1",
       "url": "https://raw.githubusercontent.com/whiteh0le/lite-plugins/main/plugins/language_ksy.lua?raw=1"
     },
     {
@@ -764,7 +764,7 @@
       "description": "Syntax for [Pony](https://www.ponylang.io/) programming language",
       "version": "0.1",
       "remote": "https://github.com/MrAnyx/lite-plugin-pony:34d9ec673eaa6c409bcef0febaa0a36cc3acdf4e",
-      "mod_version": "3",
+      "mod_version": "2",
       "id": "language_pony"
     },
     {
