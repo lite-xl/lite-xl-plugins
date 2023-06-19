@@ -10,8 +10,6 @@
   version: 20230616_094245 by SwissalpS
   original: 20200627_133351 by SwissalpS
 
-  TODO: discuss if ``Doc:get_selection_text()`` should return parts on same
-        lines separated by spaces instead of NL
   TODO: add dragging image
   TODO: use OS drag and drop events
   TODO: change mouse cursor when duplicating (requires change in cpp/SDL2)
@@ -21,6 +19,8 @@ local common = require "core.common"
 local config = require "core.config"
 local DocView = require "core.docview"
 local keymap = require "core.keymap"
+
+local dnd = {}
 
 config.plugins.dragdropselected = common.merge({
   enabled = true,
@@ -54,13 +54,13 @@ config.plugins.dragdropselected = common.merge({
 -- iCol1 is column where selection starts
 -- iLine2 is line number where selection ends
 -- iCol2 is column where selection ends
-local function isInSelection(iLine, iCol, iLine1, iCol1, iLine2, iCol2)
+function dnd.isInSelection(iLine, iCol, iLine1, iCol1, iLine2, iCol2)
   if iLine < iLine1 then return false end
   if iLine > iLine2 then return false end
   if (iLine == iLine1) and (iCol < iCol1) then return false end
   if (iLine == iLine2) and (iCol > iCol2) then return false end
   return true
-end -- isInSelection
+end -- dnd.isInSelection
 
 
 function DocView:dnd_collectSelections()
@@ -78,6 +78,28 @@ function DocView:dnd_collectSelections()
   end
   return self.dnd_lSelections
 end -- DocView:dnd_collectSelections
+
+
+function dnd.getSelectedText(doc)
+  local iPrevious = 0
+  local sOut, sPart
+  for _, iLine1, iCol1, iLine2, iCol2 in doc:get_selections(true) do
+    -- skip empty markers
+    if iLine1 ~= iLine2 or iCol1 ~= iCol2 then
+      sPart = doc:get_text(iLine1, iCol1, iLine2, iCol2)
+      -- double check that part is not empty
+      if '' ~= sPart then
+        if 0 == iPrevious then
+          sOut = sPart
+        else
+          sOut = sOut .. (iPrevious == iLine1 and ' ' or '\n') .. sPart
+        end
+        iPrevious = iLine2
+      end -- not empty
+    end -- not empty
+  end -- loop selections
+  return sOut
+end -- dnd.getSelectedText
 
 
 -- checks whether given coordinates are in a selection
@@ -106,7 +128,7 @@ function DocView:dnd_isInSelections(iLine, iCol, bDuplicating)
       end
     end -- if duplicating
 
-    if isInSelection(iLine, iCol, iLine1, iCol1, iLine2, iCol2) then
+    if dnd.isInSelection(iLine, iCol, iLine1, iCol1, iLine2, iCol2) then
       return self.dnd_lSelections
     end
 
@@ -138,7 +160,7 @@ end -- DocView:dnd_setSelections
 -- unset stashes and flag, reset cursor
 -- helper for on_mouse_released and
 -- when escape is pressed during drag (or not, not worth checking)
-local function reset(oDocView)
+function dnd.reset(oDocView)
   if not oDocView then
     oDocView = core.active_view
     if not oDocView:is(DocView) then return end
@@ -152,7 +174,7 @@ local function reset(oDocView)
   oDocView.dnd_bBlink = nil
   oDocView.cursor = 'ibeam'
   oDocView.dnd_sText = nil
-end -- reset
+end -- dnd.reset
 
 
 local on_mouse_moved = DocView.on_mouse_moved
@@ -204,13 +226,13 @@ function DocView:on_mouse_pressed(button, x, y, clicks)
     or 1 < clicks
     or not self:dnd_isInSelections(self:resolve_screen_position(x, y))
   then
-    reset(self)
+    dnd.reset(self)
     -- let 'old' on_mouse_pressed() do whatever it needs to do
     return on_mouse_pressed(self, button, x, y, clicks)
   end
 
   -- stash selection for inserting later
-  self.dnd_sText = self.doc:get_selection_text()
+  self.dnd_sText = dnd.getSelectedText(self.doc)
   -- disable blinking caret and stash user setting
   self.dnd_bBlink = config.disable_blink
   config.disable_blink = true
@@ -229,7 +251,7 @@ function DocView:on_mouse_released(button, x, y)
     if not config.plugins.dragdropselected.useSticky then
       -- not using sticky -> clear selection
       self.doc:set_selection(iLine, iCol)
-      reset(self)
+      dnd.reset(self)
     end
     return on_mouse_released(self, button, x, y)
   end
@@ -262,7 +284,7 @@ function DocView:on_mouse_released(button, x, y)
     self.doc:set_selection(iLine, iCol, iLine2, iCol2)
   end
   -- unset stashes and flag
-  reset(self)
+  dnd.reset(self)
   return on_mouse_released(self, button, x, y)
 end -- DocView:on_mouse_released
 
@@ -284,8 +306,11 @@ end -- DocView:draw_caret()
 local on_key_released = keymap.on_key_released
 function keymap.on_key_released(k)
   if config.plugins.dragdropselected.enabled and 'escape' == k then
-    reset()
+    dnd.reset()
   end
   return on_key_released(k)
 end
+
+
+return dnd
 
