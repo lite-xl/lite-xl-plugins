@@ -17,10 +17,9 @@ command.add("core.docview!", {
 })
 
 command.add(function()
-  return treeview.hovered_item ~= nil
+  return treeview.hovered_item ~= nil, treeview.hovered_item
 end, {
-  ["treeview:copy-file-location"] = function()
-    local item = core.active_view.hovered_item
+  ["treeview:copy-file-location"] = function(item)
     if not (item and item.abs_filename) then
       core.error "Cannot copy location of item"
       return
