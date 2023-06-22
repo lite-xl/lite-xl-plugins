@@ -65,11 +65,11 @@ end -- dnd.isInSelection
 
 function DocView:dnd_collectSelections()
   self.dnd_lSelections = {}
-  for _, iLine1, iCol1, iLine2, iCol2 in self.doc:get_selections(true) do
     -- skip empty selections (jic doc din't skip them)
+  for _, iLine1, iCol1, iLine2, iCol2, bSwap in self.doc:get_selections(true) do
     if iLine1 ~= iLine2 or iCol1 ~= iCol2 then
       self.dnd_lSelections[#self.dnd_lSelections + 1] =
-          { iLine1, iCol1, iLine2, iCol2 }
+          { iLine1, iCol1, iLine2, iCol2, bSwap }
 
     end
   end
@@ -109,10 +109,10 @@ function DocView:dnd_isInSelections(iLine, iCol, bDuplicating)
   self.dnd_lSelections = self.dnd_lSelections or self:dnd_collectSelections()
   if not self.dnd_lSelections then return nil end
 
-  local iLine1, iCol1, iLine2, iCol2
+  local iLine1, iCol1, iLine2, iCol2, bSwap
   local i = #self.dnd_lSelections
   repeat
-    iLine1, iCol1, iLine2, iCol2 = table.unpack(self.dnd_lSelections[i])
+    iLine1, iCol1, iLine2, iCol2, bSwap = table.unpack(self.dnd_lSelections[i])
     if bDuplicating then
       -- adjust boundries for duplication actions
       -- this allows users to duplicate selection adjacent to selection
