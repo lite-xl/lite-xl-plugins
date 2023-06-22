@@ -257,7 +257,9 @@ function DocView:on_mouse_released(button, x, y)
   end
 
   local bDuplicating = keymap.modkeys['ctrl']
-  if not self:dnd_isInSelections(iLine, iCol, bDuplicating) then
+  if self:dnd_isInSelections(iLine, iCol, bDuplicating) then
+    self.doc:remove_selection(self.doc.last_selection)
+  else
     -- do some calculations for selecting inserted text
     local iAdditionalLines, sLast = -1, ''
     for s in (self.dnd_sText .. "\n"):gmatch("(.-)\n") do
