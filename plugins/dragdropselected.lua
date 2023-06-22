@@ -65,8 +65,8 @@ end -- dnd.isInSelection
 
 function DocView:dnd_collectSelections()
   self.dnd_lSelections = {}
-    -- skip empty selections (jic doc din't skip them)
   for _, iLine1, iCol1, iLine2, iCol2, bSwap in self.doc:get_selections(true) do
+    -- skip empty selections (jic Doc didn't skip them)
     if iLine1 ~= iLine2 or iCol1 ~= iCol2 then
       self.dnd_lSelections[#self.dnd_lSelections + 1] =
           { iLine1, iCol1, iLine2, iCol2, bSwap }
@@ -258,6 +258,7 @@ function DocView:on_mouse_released(button, x, y)
 
   local bDuplicating = keymap.modkeys['ctrl']
   if self:dnd_isInSelections(iLine, iCol, bDuplicating) then
+    -- drag abborted by releasing mouse inside selection
     self.doc:remove_selection(self.doc.last_selection)
   else
     -- do some calculations for selecting inserted text
