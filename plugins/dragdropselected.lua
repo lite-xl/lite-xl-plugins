@@ -203,6 +203,7 @@ function DocView:on_mouse_moved(x, y, ...)
   self.doc:add_selection(iLine, iCol)
   -- update scroll position, if needed
   self:scroll_to_line(iLine, true)
+  return true
 end -- DocView:on_mouse_moved
 
 
@@ -236,6 +237,7 @@ function DocView:on_mouse_pressed(button, x, y, clicks)
   -- disable blinking caret and stash user setting
   self.dnd_bBlink = config.disable_blink
   config.disable_blink = true
+  return true
 end -- DocView:on_mouse_pressed
 
 
@@ -301,7 +303,7 @@ function DocView:draw_caret(x, y)
       return
     end
   end
-  draw_caret(self, x, y)
+  return draw_caret(self, x, y)
 end -- DocView:draw_caret()
 
 
