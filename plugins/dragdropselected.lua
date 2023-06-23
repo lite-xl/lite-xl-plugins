@@ -260,7 +260,7 @@ function DocView:on_mouse_released(button, x, y)
 
   local bDuplicating = keymap.modkeys['ctrl']
   if self:dnd_isInSelections(iLine, iCol, bDuplicating) then
-    -- drag abborted by releasing mouse inside selection
+    -- drag aborted by releasing mouse inside selection
     self.doc:remove_selection(self.doc.last_selection)
   else
     -- do some calculations for selecting inserted text
