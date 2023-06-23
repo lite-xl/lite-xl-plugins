@@ -307,6 +307,16 @@ function DocView:draw_caret(x, y)
 end -- DocView:draw_caret()
 
 
+-- disable text_input during drag operations
+local on_text_input = DocView.on_text_input
+function DocView:on_text_input(text)
+  if self.dnd_bDragging then
+    return true
+  end
+  return on_text_input(self, text)
+end -- DocView:on_text_input
+
+
 -- catch escape-key presses
 local on_key_released = keymap.on_key_released
 function keymap.on_key_released(k)
