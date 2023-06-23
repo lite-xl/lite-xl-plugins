@@ -19,6 +19,7 @@ local common = require "core.common"
 local config = require "core.config"
 local DocView = require "core.docview"
 local keymap = require "core.keymap"
+local command = require "core.command"
 
 local dnd = {}
 
@@ -317,18 +318,28 @@ function DocView:on_text_input(text)
 end -- DocView:on_text_input
 
 
--- catch escape-key presses
-local on_key_released = keymap.on_key_released
-function keymap.on_key_released(k)
-  if config.plugins.dragdropselected.enabled and 'escape' == k then
-    local oDocView = core.active_view
-    if oDocView:is(DocView) then
-      oDocView:dnd_setSelections()
-      dnd.reset(oDocView)
+function dnd.abort(oDocView)
+  if not config.plugins.dragdropselected.enabled then return end
+
+  if oDocView.dnd_bDragging then
+    -- ensure there are no stray markers by re-selecting
+    oDocView:dnd_setSelections()
+  else
+    -- clear selections if escape was pressed without any active drag operation
+    -- insert caret at last position
+    local iLine1, iCol1, iLine2, iCol2, bSwap = oDocView.doc:get_selection(true)
+    if bSwap then
+      oDocView.doc:set_selection(iLine2, iCol2)
+    else
+      oDocView.doc:set_selection(iLine1, iCol1)
     end
   end
-  return on_key_released(k)
-end
+  dnd.reset(oDocView)
+end -- dnd.abort
+
+
+command.add('core.docview', { ['dragdropselected:abort'] = dnd.abort })
+keymap.add({ ['escape'] = 'dragdropselected:abort' })
 
 
 return dnd
