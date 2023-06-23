@@ -2,6 +2,34 @@
 local core = require "core"
 local command = require "core.command"
 local keymap = require "core.keymap"
+local config = require "core.config"
+local common = require "core.common"
+
+
+config.plugins.ghmarkdown = common.merge({
+  -- string.format pattern to use for system.exec
+  exec_format = PLATFORM == "Windows" and "start %s" or "xdg-open %q",
+  -- the url to send POST request to
+  url = "https://api.github.com/markdown/raw",
+   -- The config specification used by the settings gui
+  config_spec = {
+    name = "Github Markdown Preview",
+    {
+      label = "Exec Pattern",
+      description = "The string.format() pattern to pass to system.exec.",
+      path = "exec_format",
+      type = "string",
+      default = PLATFORM == "Windows" and "start %s" or "xdg-open %q"
+    },
+    {
+      label = "URL",
+      description = "The URL to POST the request to for formatting.",
+      path = "url",
+      type = "string",
+      default = "https://api.github.com/markdown/raw"
+    }
+  }
+}, config.plugins.ghmarkdown)
 
 
 local html = [[
@@ -30,7 +58,7 @@ local html = [[
   <body>
     <script>
       var xhr = new XMLHttpRequest;
-      xhr.open("POST", "https://api.github.com/markdown/raw");
+      xhr.open("POST", "${url}");
       xhr.setRequestHeader("Content-Type", "text/plain");
       xhr.onload = function() { document.body.innerHTML = xhr.responseText; };
       xhr.send("${content}");
@@ -46,6 +74,7 @@ command.add("core.docview!", {
     local esc = { ['"'] = '\\"', ["\n"] = '\\n' }
     local text = html:gsub("${(.-)}", {
       title = dv:get_name(),
+      url = config.plugins.ghmarkdown.url,
       content = content:gsub(".", esc)
     })
 
@@ -55,11 +84,7 @@ command.add("core.docview!", {
     fp:close()
 
     core.log("Opening markdown preview for \"%s\"", dv:get_name())
-    if PLATFORM == "Windows" then
-      system.exec("start " .. htmlfile)
-    else
-      system.exec(string.format("xdg-open %q", htmlfile))
-    end
+    system.exec(string.format(config.plugins.ghmarkdown.exec_format, htmlfile))
 
     core.add_thread(function()
       coroutine.yield(5)

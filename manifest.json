@@ -267,7 +267,7 @@
     },
     {
       "description": "Opens a preview of the current markdown file in a browser window *([screenshot](https://user-images.githubusercontent.com/3920290/82754898-f7394600-9dc7-11ea-8278-2305363ed372.png))*",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/ghmarkdown.lua",
       "id": "ghmarkdown",
       "mod_version": "3"
