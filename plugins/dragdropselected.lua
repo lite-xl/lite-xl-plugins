@@ -321,7 +321,11 @@ end -- DocView:on_text_input
 local on_key_released = keymap.on_key_released
 function keymap.on_key_released(k)
   if config.plugins.dragdropselected.enabled and 'escape' == k then
-    dnd.reset()
+    local oDocView = core.active_view
+    if oDocView:is(DocView) then
+      oDocView:dnd_setSelections()
+      dnd.reset(oDocView)
+    end
   end
   return on_key_released(k)
 end
