@@ -195,7 +195,7 @@ function DocView:on_mouse_moved(x, y, ...)
     -- show that we are dragging something
     self.cursor = 'hand'
     -- make sure selections are marked
-    self:dnd_setSelections()
+    --self:dnd_setSelections()
   end
   -- calculate line and column for current mouse position
   local iLine, iCol = self:resolve_screen_position(x, y)
