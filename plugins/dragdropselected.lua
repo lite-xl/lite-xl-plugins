@@ -114,7 +114,7 @@ function DocView:dnd_isInSelections(iX, iY, bDuplicating)
   if config.plugins.dragdropselected.useSticky and not self.dnd_bDragging then
     -- allow user to clear selection in sticky mode by clicking in empty area
     -- to the right of selection
-    local iX2 = self:get_line_screen_position(iLine, #self.doc.lines[iLine])--:ulen())
+    local iX2 = self:get_line_screen_position(iLine, #self.doc.lines[iLine])
     -- this does not exactly corespond with the graphical selected area
     -- it means selection can't be grabbed by the "\n" at the end
     if iX2 < iX then return nil end
