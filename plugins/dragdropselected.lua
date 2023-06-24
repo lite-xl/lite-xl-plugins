@@ -15,11 +15,12 @@
   TODO: change mouse cursor when duplicating (requires change in cpp/SDL2)
 --]]
 local core = require "core"
+local command = require "core.command"
 local common = require "core.common"
 local config = require "core.config"
 local DocView = require "core.docview"
 local keymap = require "core.keymap"
-local command = require "core.command"
+local style = require "core.style"
 
 local dnd = {}
 
@@ -338,17 +339,52 @@ function dnd.abort(oDocView)
 end -- dnd.abort
 
 
-function dnd.predicate()
+function dnd.abortPredicate()
   if not config.plugins.dragdropselected.enabled
     or not core.active_view:is(DocView)
     or not core.active_view.dnd_bDragging
   then return false end
 
   return true, core.active_view
-end -- dnd.predicate
+end -- dnd.abortPredicate
 
 
-command.add(dnd.predicate, { ['dragdropselected:abort'] = dnd.abort })
+function dnd.showStatus(s)
+  if not core.status_view then return end
+
+  local tS = style.log['INFO']
+  core.status_view:show_message(tS.icon, tS.color, s)
+end -- dnd.showStatus
+
+
+function dnd.toggleEnabled()
+  config.plugins.dragdropselected.enabled =
+      not config.plugins.dragdropselected.enabled
+
+  dnd.showStatus("Drag n' Drop is "
+    .. (config.plugins.dragdropselected.enabled and 'en' or 'dis')
+    .. 'abled')
+
+end -- dnd.toggleEnabled
+
+
+function dnd.toggleSticky()
+  config.plugins.dragdropselected.useSticky =
+      not config.plugins.dragdropselected.useSticky
+
+  dnd.showStatus('Sticky mode is '
+      .. (config.plugins.dragdropselected.useSticky and 'en' or 'dis')
+      .. 'abled')
+
+end -- dnd.toggleSticky
+
+
+command.add(nil, {
+  ['dragdropselected:toggle-enabled'] = dnd.toggleEnabled,
+  ['dragdropselected:toggle-sticky'] =  dnd.toggleSticky
+})
+
+command.add(dnd.abortPredicate, { ['dragdropselected:abort'] = dnd.abort })
 keymap.add({ ['escape'] = 'dragdropselected:abort' })
 
 
