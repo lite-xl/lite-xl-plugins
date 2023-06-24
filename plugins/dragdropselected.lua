@@ -324,21 +324,22 @@ function dnd.abort(oDocView)
   if oDocView.dnd_bDragging then
     -- ensure there are no stray markers by re-selecting
     oDocView:dnd_setSelections()
-  else
-    -- clear selections if escape was pressed without any active drag operation
-    -- insert caret at last position
-    local iLine1, iCol1, iLine2, iCol2, bSwap = oDocView.doc:get_selection(true)
-    if bSwap then
-      oDocView.doc:set_selection(iLine2, iCol2)
-    else
-      oDocView.doc:set_selection(iLine1, iCol1)
-    end
   end
   dnd.reset(oDocView)
 end -- dnd.abort
 
 
-command.add('core.docview', { ['dragdropselected:abort'] = dnd.abort })
+function dnd.predicate()
+  if not config.plugins.dragdropselected.enabled
+    or not core.active_view:is(DocView)
+    or not core.active_view.dnd_bDragging
+  then return false end
+
+  return true, core.active_view
+end -- dnd.predicate
+
+
+command.add(dnd.predicate, { ['dragdropselected:abort'] = dnd.abort })
 keymap.add({ ['escape'] = 'dragdropselected:abort' })
 
 
