@@ -106,9 +106,19 @@ end -- dnd.getSelectedText
 -- checks whether given coordinates are in a selection
 -- iLine, iCol are position of mouse
 -- bDuplicating triggers 'exclusive' check making checked area smaller
-function DocView:dnd_isInSelections(iLine, iCol, bDuplicating)
+function DocView:dnd_isInSelections(iX, iY, bDuplicating)
   self.dnd_lSelections = self.dnd_lSelections or self:dnd_collectSelections()
   if not self.dnd_lSelections then return nil end
+
+  local iLine, iCol = self:resolve_screen_position(iX, iY)
+  if config.plugins.dragdropselected.useSticky and not self.dnd_bDragging then
+    -- allow user to clear selection in sticky mode by clicking in empty area
+    -- to the right of selection
+    local iX2 = self:get_line_screen_position(iLine, #self.doc.lines[iLine])--:ulen())
+    -- this does not exactly corespond with the graphical selected area
+    -- it means selection can't be grabbed by the "\n" at the end
+    if iX2 < iX then return nil end
+  end
 
   local iLine1, iCol1, iLine2, iCol2, bSwap
   local i = #self.dnd_lSelections
@@ -226,7 +236,7 @@ function DocView:on_mouse_pressed(button, x, y, clicks)
   if not config.plugins.dragdropselected.enabled
     or 'left' ~= button
     or 1 < clicks
-    or not self:dnd_isInSelections(self:resolve_screen_position(x, y))
+    or not self:dnd_isInSelections(x, y)
   then
     dnd.reset(self)
     -- let 'old' on_mouse_pressed() do whatever it needs to do
@@ -260,7 +270,7 @@ function DocView:on_mouse_released(button, x, y)
   end
 
   local bDuplicating = keymap.modkeys['ctrl']
-  if self:dnd_isInSelections(iLine, iCol, bDuplicating) then
+  if self:dnd_isInSelections(x, y, bDuplicating) then
     -- drag aborted by releasing mouse inside selection
     self.doc:remove_selection(self.doc.last_selection)
   else
@@ -298,9 +308,8 @@ end -- DocView:on_mouse_released
 local draw_caret = DocView.draw_caret
 function DocView:draw_caret(x, y)
   if self.dnd_sText and config.plugins.dragdropselected.enabled then
-    local iLine, iCol = self:resolve_screen_position(x, y)
     -- don't show carets inside selections
-    if self:dnd_isInSelections(iLine, iCol, true) then
+    if self:dnd_isInSelections(x, y, true) then
       return
     end
   end
