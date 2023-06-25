@@ -256,7 +256,10 @@ end -- DocView:on_mouse_pressed
 local on_mouse_released = DocView.on_mouse_released
 function DocView:on_mouse_released(button, x, y)
   -- nothing to do if: not enabled or never clicked into selection
-  if not config.plugins.dragdropselected.enabled or not self.dnd_sText then
+  if not config.plugins.dragdropselected.enabled
+    or 'left' ~= button
+    or not self.dnd_sText
+  then
     return on_mouse_released(self, button, x, y)
   end
 
