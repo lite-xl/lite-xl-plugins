@@ -277,13 +277,6 @@ function DocView:on_mouse_released(button, x, y)
     -- drag aborted by releasing mouse inside selection
     self.doc:remove_selection(self.doc.last_selection)
   else
-    -- do some calculations for selecting inserted text
-    local iAdditionalLines, sLast = -1, ''
-    for s in (self.dnd_sText .. "\n"):gmatch("(.-)\n") do
-      iAdditionalLines = iAdditionalLines + 1
-      sLast = s
-    end
-    local iLastLength = #sLast
     -- have doc handle selection updates
     self.doc:insert(iLine, iCol, self.dnd_sText)
     -- add a marker so we know where to start selecting pasted text
@@ -293,14 +286,9 @@ function DocView:on_mouse_released(button, x, y)
     end
     -- get new location of inserted text
     iLine, iCol = self.doc:get_selection_idx(self.doc.last_selection, true)
-    local iLine2, iCol2 = iLine + iAdditionalLines
-    if iLine == iLine2 then
-      iCol2 = iCol + iLastLength
-    else
-      iCol2 = iLastLength + 1
-    end
     -- finally select inserted text
-    self.doc:set_selection(iLine, iCol, iLine2, iCol2)
+    self.doc:set_selection(
+        iLine, iCol, self.doc:position_offset(iLine, iCol, #self.dnd_sText))
   end
   -- unset stashes and flag
   dnd.reset(self)
