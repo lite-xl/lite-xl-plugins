@@ -8,6 +8,9 @@
   - press escape to abort
   - supports multiple selections
   version: 20230616_094245 by SwissalpS
+  thanks to: github.com/Guldoman for his valuable inputs while I was re-writing
+             this plugin for lite-xl. The plugin turned out a lot better and
+             thus the backport for lite also turned out better.
   original: 20200627_133351 by SwissalpS
 
   TODO: add dragging image
