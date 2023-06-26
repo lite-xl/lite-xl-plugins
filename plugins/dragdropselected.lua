@@ -121,10 +121,10 @@ function DocView:dnd_isInSelections(iX, iY, bDuplicating)
     if iX2 < iX then return nil end
   end
 
-  local iLine1, iCol1, iLine2, iCol2, bSwap
+  local iLine1, iCol1, iLine2, iCol2
   local i = #self.dnd_lSelections
   repeat
-    iLine1, iCol1, iLine2, iCol2, bSwap = table.unpack(self.dnd_lSelections[i])
+    iLine1, iCol1, iLine2, iCol2 = table.unpack(self.dnd_lSelections[i])
     if bDuplicating then
       -- adjust boundries for duplication actions
       -- this allows users to duplicate selection adjacent to selection
