@@ -619,7 +619,7 @@ settings.add("Development",
       path = "max_log_items",
       type = settings.type.NUMBER,
       default = 800,
-      min = 50,
+      min = 150,
       max = 2000
     },
     {
