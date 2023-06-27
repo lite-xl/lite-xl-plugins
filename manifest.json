@@ -94,7 +94,7 @@
     },
     {
       "description": "Copy file location to clipboard",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/copyfilelocation.lua",
       "id": "copyfilelocation",
       "mod_version": "3"
