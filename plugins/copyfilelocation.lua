@@ -30,5 +30,5 @@ end, {
 })
 
 menu:register(nil, {
-  { text = "Copy file location", command = "treeview:copy-file-location" }
+  { text = "Copy File Location", command = "treeview:copy-file-location" }
 })
