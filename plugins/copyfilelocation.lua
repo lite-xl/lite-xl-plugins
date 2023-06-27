@@ -2,7 +2,8 @@
 local core = require "core"
 local command = require "core.command"
 local treeview = require 'plugins.treeview'
-local menu = treeview.contextmenu
+local treemenu = treeview.contextmenu
+local mainmenu = require 'plugins.contextmenu'
 
 command.add("core.docview!", {
   ["doc:copy-file-location"] = function(view)
@@ -29,6 +30,10 @@ end, {
   end
 })
 
-menu:register(nil, {
+treemenu:register(nil, {
   { text = "Copy File Location", command = "treeview:copy-file-location" }
+})
+
+mainmenu:register("core.docview!", {
+  { text = "Copy File Location", command = "doc:copy-file-location" }
 })
