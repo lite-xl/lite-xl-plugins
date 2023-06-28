@@ -6,7 +6,7 @@ local treemenu = treeview.contextmenu
 local mainmenu = require 'plugins.contextmenu'
 
 command.add("core.docview!", {
-  ["doc:copy-file-location"] = function(view)
+  ["copy-file-location:in-doc"] = function(view)
     local doc = view.doc
     if not doc.abs_filename then
       core.error "Cannot copy location of unsaved doc"
@@ -20,7 +20,7 @@ command.add("core.docview!", {
 command.add(function()
   return treeview.hovered_item ~= nil, treeview.hovered_item
 end, {
-  ["treeview:copy-file-location"] = function(item)
+  ["copy-file-location:in-tree-view"] = function(item)
     if not (item and item.abs_filename) then
       core.error "Cannot copy location of item"
       return
@@ -31,9 +31,9 @@ end, {
 })
 
 treemenu:register(nil, {
-  { text = "Copy File Location", command = "treeview:copy-file-location" }
+  { text = "Copy File Location", command = "copy-file-location:in-tree-view" }
 })
 
 mainmenu:register("core.docview!", {
-  { text = "Copy File Location", command = "doc:copy-file-location" }
+  { text = "Copy File Location", command = "copy-file-location:in-doc" }
 })
