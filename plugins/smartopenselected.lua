@@ -3,7 +3,11 @@ local core = require "core"
 local command = require "core.command"
 local keymap = require "core.keymap"
 local common = require "core.common"
-local contextmenu = require "plugins.contextmenu"
+local config = require "core.config"
+local contextmenu
+if false ~= config.plugins.contextmenu then
+  contextmenu = require "plugins.contextmenu"
+end
 
 
 command.add("core.docview!", {
@@ -16,10 +20,10 @@ command.add("core.docview!", {
 
     local text_orig = doc:get_text(doc:get_selection())
     text_orig = text_orig:match( "^%s*(.-)%s*$" )
-    
+
     -- transform java/python imports to paths
     local text_path, num = text_orig:gsub("[.]", PATHSEP)
-    
+
     -- keep the last . in case the path contains a file extension
     local text_keep_extension, num = text_orig:gsub("[.]", PATHSEP, num - 1)
 
@@ -40,9 +44,11 @@ command.add("core.docview!", {
 })
 
 
-contextmenu:register("core.docview", {
-  { text = "Smart Open Selection",  command = "smart-open-selected:smart-open-selected" }
-})
+if contextmenu then
+  contextmenu:register("core.docview", {
+    { text = "Smart Open Selection",  command = "smart-open-selected:smart-open-selected" }
+  })
+end
 
 
 keymap.add { ["ctrl+shift+alt+p"] = "smart-open-selected:smart-open-selected" }

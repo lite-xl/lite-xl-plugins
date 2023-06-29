@@ -321,9 +321,11 @@ command.add("core.docview", {
 
 })
 
-local contextmenu = require "plugins.contextmenu"
-contextmenu:register("core.docview", {
-  contextmenu.DIVIDER,
-  { text = "View Suggestions",  command = "spell-check:replace" },
-  { text = "Add to Dictionary", command = "spell-check:add-to-dictionary" }
-})
+if false ~= config.plugins.contextmenu then
+  local contextmenu = require "plugins.contextmenu"
+  contextmenu:register("core.docview", {
+    contextmenu.DIVIDER,
+    { text = "View Suggestions",  command = "spell-check:replace" },
+    { text = "Add to Dictionary", command = "spell-check:add-to-dictionary" }
+  })
+end

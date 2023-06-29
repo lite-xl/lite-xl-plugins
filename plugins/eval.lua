@@ -1,8 +1,12 @@
 -- mod-version:3
 local core = require "core"
 local command = require "core.command"
-local contextmenu = require "plugins.contextmenu"
 local keymap = require "core.keymap"
+local config = require "core.config"
+local contextmenu
+if false ~= config.plugins.contextmenu then
+  contextmenu = require "plugins.contextmenu"
+end
 
 
 local function eval(str)
@@ -45,9 +49,11 @@ command.add("core.docview", {
 })
 
 
-contextmenu:register("core.docview", {
-  { text = "Evaluate Selected",  command = "eval:selected" }
-})
+if contextmenu then
+  contextmenu:register("core.docview", {
+    { text = "Evaluate Selected",  command = "eval:selected" }
+  })
+end
 
 
 keymap.add { ["ctrl+alt+return"] = "eval:selected" }

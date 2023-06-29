@@ -4,7 +4,10 @@ local command = require "core.command"
 local keymap = require "core.keymap"
 local common = require "core.common"
 local config = require "core.config"
-local contextmenu = require "plugins.contextmenu"
+local contextmenu
+if false ~= config.plugins.contextmenu then
+  contextmenu = require "plugins.contextmenu"
+end
 
 
 local platform_filelauncher
@@ -56,10 +59,12 @@ command.add("core.docview!", {
 })
 
 
-contextmenu:register("core.docview", {
-  contextmenu.DIVIDER,
-  { text = "Open Selection",  command = "open-selected:open-selected" }
-})
+if contextmenu then
+  contextmenu:register("core.docview", {
+    contextmenu.DIVIDER,
+    { text = "Open Selection",  command = "open-selected:open-selected" }
+  })
+end
 
 
 keymap.add { ["ctrl+alt+o"] = "open-selected:open-selected" }
