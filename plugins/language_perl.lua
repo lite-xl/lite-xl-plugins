@@ -13,9 +13,9 @@ syntax.add {
     { pattern = { "qw%(", "%)", '\\' },     type = "string"   },
     { pattern = { "qw%[", "%]", '\\' },     type = "string"   },
     { pattern = { "qw%/", "%/", '\\' },     type = "string"   },
-    { pattern = { "q%(", "%)",  '\\' },     type = "string"   },
-    { pattern = { "q%[", "%]",  '\\' },     type = "string"   },
-    { pattern = { "q%/", "%/",  '\\' },     type = "string"   },
+    { pattern = { "qq?%(", "%)",  '\\' },     type = "string"   },
+    { pattern = { "qq?%[", "%]",  '\\' },     type = "string"   },
+    { pattern = { "qq?%/", "%/",  '\\' },     type = "string"   },
     { pattern = { "^=%w+", "=cut" },   type = "comment" },
     -- until we can get this workign with s///, just don't do any of them.
     -- { pattern = { '/', '/', '\\' },       type = "string"   },
@@ -25,7 +25,7 @@ syntax.add {
     { pattern = "[%@%$%*%%]+[%a_][%w_]*", type = "keyword2" },
     { pattern = "[%a_][%w_]*%s+()=>", type =  { "string", "operator" } },
     { pattern = "sub%s+()[%w_]+", type =  { "keyword", "operator" } },
-    { pattern = "[<=>%+%-%*%/:%&%|%!%?]+", type = "operator" },
+    { pattern = "[<=>%+%-%*%/:%&%|%!%?%~]+", type = "operator" },
     { pattern = "%--[%a_][%w_]*",         type = "symbol"   },
   },
   symbols = {
@@ -274,6 +274,7 @@ syntax.add {
     ["unless"] = "keyword",
     ["no"] = "keyword",
     ["new"] = "keyword",
+    ["do"] = "keyword",
     ["__PACKAGE__"] = "keyword",
     ["warnings"] = "keyword2",
     ["strict"] = "keyword2",
@@ -283,6 +284,8 @@ syntax.add {
     ["gt"] = "operator",
     ["le"] = "operator",
     ["ge"] = "operator",
-    ["cmp"] = "operator"
+    ["cmp"] = "operator",
+    ["STDERR"] = "keyword2",
+    ["STDOUT"] = "keyword2"
   }
 }
