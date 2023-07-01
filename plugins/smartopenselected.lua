@@ -4,10 +4,6 @@ local command = require "core.command"
 local keymap = require "core.keymap"
 local common = require "core.common"
 local config = require "core.config"
-local contextmenu
-if false ~= config.plugins.contextmenu then
-  contextmenu = require "plugins.contextmenu"
-end
 
 
 command.add("core.docview!", {
@@ -44,11 +40,28 @@ command.add("core.docview!", {
 })
 
 
-if contextmenu then
+-- defer adding context menu item until all plugins have had
+-- a chance to turn it off/on
+local function add_context_menu()
+  if false == config.plugins.contextmenu then return end
+
+  -- abort if contextmenu plugin isn't available
+  local found, contextmenu = pcall(require, "plugins.contextmenu")
+  if not found then
+    core.log("[smartopenselected] no plugin.contextmenu, " ..
+        "not adding context menu item.")
+    return
+  end
+
   contextmenu:register("core.docview", {
-    { text = "Smart Open Selection",  command = "smart-open-selected:smart-open-selected" }
+    {
+      text = "Smart Open Selection",
+      command = "smart-open-selected:smart-open-selected"
+    }
   })
 end
+-- Add context menu item after everything has been loaded
+core.add_thread(add_context_menu)
 
 
 keymap.add { ["ctrl+shift+alt+p"] = "smart-open-selected:smart-open-selected" }
