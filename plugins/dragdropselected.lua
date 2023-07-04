@@ -373,12 +373,12 @@ end -- dnd.toggleSticky
 
 
 command.add(nil, {
-  ['dragdropselected:toggle-enabled'] = dnd.toggleEnabled,
-  ['dragdropselected:toggle-sticky'] =  dnd.toggleSticky
+  ['drag-drop-selected:toggle-enabled'] = dnd.toggleEnabled,
+  ['drag-drop-selected:toggle-sticky'] =  dnd.toggleSticky
 })
 
-command.add(dnd.abortPredicate, { ['dragdropselected:abort'] = dnd.abort })
-keymap.add({ ['escape'] = 'dragdropselected:abort' })
+command.add(dnd.abortPredicate, { ['drag-drop-selected:abort'] = dnd.abort })
+keymap.add({ ['escape'] = 'drag-drop-selected:abort' })
 
 
 return dnd
