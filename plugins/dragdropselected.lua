@@ -13,8 +13,8 @@
              thus the backport for lite also turned out better.
   original: 20200627_133351 by SwissalpS
 
-  TODO: add dragging image
-  TODO: use OS drag and drop events
+  TODO: use OS drag and drop events (unlikely to happen, more important is
+        dragging between views of same instance.)
   TODO: change mouse cursor when duplicating (requires change in cpp/SDL2)
 --]]
 local core = require "core"
@@ -181,6 +181,7 @@ function dnd.reset(oDocView)
     if not oDocView:is(DocView) then return end
   end
 
+  if dnd.oGhost then dnd.oGhost:hide() end
   if nil ~= oDocView.dnd_bBlink then
     config.disable_blink = oDocView.dnd_bBlink
   end
@@ -204,12 +205,25 @@ function DocView:on_mouse_moved(x, y, ...)
   if self.dnd_bDragging then
     -- remove last caret showing insert location
     self.doc:remove_selection(self.doc.last_selection)
+    -- move ghost, if available and activated
+    if dnd.oGhost and config.plugins.dragdropselected.useGhost then
+      dnd.oGhost:set_position(x + 22, y + 11)
+      if self.dnd_bMouseLeft then
+        self.dnd_bMouseLeft = nil
+        dnd.oGhost:show()
+      end
+    end
   else
     self.dnd_bDragging = true
     -- show that we are dragging something
     self.cursor = 'hand'
     -- make sure selections are marked
     self:dnd_setSelections()
+    -- initiate ghost, if available and activated
+    if dnd.oGhost and config.plugins.dragdropselected.useGhost then
+      dnd.oGhost:set_position(x + 22, y + 11)
+      dnd.oGhost:show()
+    end
   end
   -- calculate line and column for current mouse position
   local iLine, iCol = self:resolve_screen_position(x, y)
@@ -247,6 +261,10 @@ function DocView:on_mouse_pressed(button, x, y, clicks)
 
   -- stash selection for inserting later
   self.dnd_sText = dnd.getSelectedText(self.doc)
+  -- prepare ghost, if available and used
+  if dnd.oGhost and config.plugins.dragdropselected.useGhost then
+    dnd.oGhost:set_label(dnd.split4ghost(self.dnd_sText))
+  end
   -- disable blinking caret and stash user setting
   self.dnd_bBlink = config.disable_blink
   config.disable_blink = true
@@ -380,6 +398,180 @@ command.add(nil, {
 command.add(dnd.abortPredicate, { ['drag-drop-selected:abort'] = dnd.abort })
 keymap.add({ ['escape'] = 'drag-drop-selected:abort' })
 
+
+local hasWidgets, Widget = pcall(require, "libraries.widget")
+if not hasWidgets then return dnd end
+
+
+-- add ghost settings and config
+config.plugins.dragdropselected = common.merge({
+  -- use ghost
+  useGhost = false,
+  -- maximum amount of lines to show in ghost
+  maxGhostLines = 1
+}, config.plugins.dragdropselected)
+-- we need to insert this way as common.merge can't handle this
+table.insert(config.plugins.dragdropselected.config_spec, {
+  label = "Use Ghost",
+  description = "Cursor has ghost of dragged selection attached.",
+  path = "useGhost",
+  type = "toggle",
+  default = true
+})
+table.insert(config.plugins.dragdropselected.config_spec, {
+  label = "Maximum Ghost Lines",
+  description = "Maximum amount of lines to show in ghost.",
+  path = "maxGhostLines",
+  type = "number",
+  default = 1,
+  min = 1,
+  step = 1
+})
+
+
+---Split string sIn for use with ghost. Depending on how many lines user wants,
+---return a string or a list of strings.
+---@param sIn? string
+---@return string | table
+function dnd.split4ghost(sIn)
+	if 'string' ~= type(sIn) then return '' end
+
+	local iMaxLines = math.max(1, config.plugins.dragdropselected.maxGhostLines)
+	if 1 == iMaxLines then return sIn end
+
+	local lLines = {}
+	local iLast, iNext = 0
+	repeat
+		iNext = string.find(sIn, '\n', iLast, true)
+		if not iNext then
+      lLines[#lLines + 1] = string.sub(sIn, iLast, -1)
+			break
+		end
+
+    lLines[#lLines + 1] = string.sub(sIn, iLast, iNext)
+		if #lLines >= iMaxLines then
+      -- indicate to user that there is more selected than can be seen
+      lLines[#lLines + 1] = '…'
+      break
+    end
+		iLast = iNext + 1
+	until false
+
+	return lLines
+end -- dnd.split4ghost
+
+
+local docView_on_mouse_left = DocView.on_mouse_left
+function DocView:on_mouse_left()
+  if dnd.oGhost and dnd.oGhost:is_visible() then
+    dnd.oGhost:hide()
+    self.dnd_bMouseLeft = true
+  end
+  return docView_on_mouse_left(self)
+end -- DocView:on_mouse_left
+
+
+---@class Ghost : widget
+local Ghost = Widget:extend()
+
+---Constructor
+function Ghost:new()
+  Ghost.super.new(self, nil, true)
+
+  self.border = { width = 0 }
+  self.clickable = false
+  self.custom_size = { x = 0, y = 0 }
+  self.draggable = false
+  self.font = 'code_font'
+  local r, g, b, a = table.unpack(style.text)
+  self.foreground_color = { r, g, b, math.floor(a * .77 + .5) }
+  self.render_background = false
+  self.scrollable = false
+  self.type_name = 'dragdropselected.ghostWidget'
+end -- Ghost:new
+
+
+-- Ignore mouse movements.
+function Ghost.on_mouse_moved() return false end
+
+
+---@param width? integer
+---@param height? integer
+function Ghost:set_size(width, height)
+  Ghost.super.set_size(self, width, height)
+  self.custom_size.x = self.size.x
+  self.custom_size.y = self.size.y
+end -- Ghost:set_size
+
+
+---Set the label text and recalculate the widget size.
+---@param text string | widget.styledtext
+function Ghost:set_label(text)
+  Ghost.super.set_label(self, text)
+
+  local font = self:get_font()
+
+  if self.custom_size.x <= 0 then
+    if type(text) == "table" then
+      self.size.x, self.size.y = self:draw_styled_text(text, 0, 0, true)
+    else
+      self.size.x = font:get_width(self.label)
+      self.size.y = font:get_height()
+    end
+  end
+end -- Ghost:set_label
+
+
+function Ghost:update()
+  if not Ghost.super.update(self) then return false end
+
+  if self.custom_size.x <= 0 then
+    -- update the size
+    self:set_label(self.label)
+  end
+
+  return true
+end -- Ghost:update
+
+
+function Ghost:draw()
+  if not self:is_visible() then return false end
+
+  if type(self.label) == "table" then
+    self:draw_styled_text(self.label, self.position.x, self.position.y)
+  else
+    renderer.draw_text(
+      self:get_font(),
+      self.label,
+      self.position.x,
+      self.position.y,
+      self.foreground_color or style.text
+    )
+  end
+
+  return true
+end -- Ghost:draw
+
+
+---@type Ghost
+dnd.oGhost = Ghost()
+
+
+-- Toggle ghost usage and show status.
+function dnd.toggleGhost()
+  config.plugins.dragdropselected.useGhost =
+      not config.plugins.dragdropselected.useGhost
+
+  dnd.showStatus('Ghost is '
+      .. (config.plugins.dragdropselected.useGhost and 'en' or 'dis')
+      .. 'abled')
+
+end -- dnd.toggleGhost
+
+
+command.add(nil, {
+  ['drag-drop-selected:toggle-ghost'] = dnd.toggleGhost
+})
 
 return dnd
 
