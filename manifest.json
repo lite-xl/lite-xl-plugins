@@ -727,7 +727,7 @@
     },
     {
       "description": "Syntax for the [Perl](https://perl.org) programming language",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_perl.lua",
       "id": "language_perl",
       "mod_version": "3"
