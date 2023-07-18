@@ -153,6 +153,7 @@
       "version": "1.0",
       "remote": "https://github.com/ThaCuber/lite-xl-easingpreview:ea349d12a9570264408dc1567af660b8d4568d3d",
       "id": "easingpreview",
+      "name": "Easing Previewer",
       "mod_version": "3"
     },
     {
