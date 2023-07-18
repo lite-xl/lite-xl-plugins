@@ -149,6 +149,14 @@
       "mod_version": "3"
     },
     {
+      "description": "Adds a popup that displays the curve of Penner-styled easing functions.",
+      "version": "1.0",
+      "remote": "https://github.com/ThaCuber/lite-xl-easingpreview:ea349d12a9570264408dc1567af660b8d4568d3d",
+      "id": "easingpreview",
+      "name": "Easing Previewer",
+      "mod_version": "3"
+    },
+    {
       "description": "[EditorConfig](https://editorconfig.org/) implementation for Lite XL",
       "version": "0.1",
       "path": "plugins/editorconfig",
