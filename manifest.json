@@ -142,11 +142,17 @@
       "id": "discord-presence"
     },
     {
-      "description": "Provides basic drag and drop of selected text (in same document)",
-      "version": "0.2",
+      "description": "Provides drag and drop of selected text (in same document)",
+      "version": "20230616.094245",
       "path": "plugins/dragdropselected.lua",
       "id": "dragdropselected",
-      "mod_version": "3"
+      "mod_version": "3",
+      "name": "Drag n' Drop Selected",
+      "tags": [ "DnD", "mouse", "copy", "duplicate", "move", "selection", "drag", "drop" ],
+      "extra": {
+        "author": "SwissalpS",
+        "license": "MIT"
+      }
     },
     {
       "description": "[EditorConfig](https://editorconfig.org/) implementation for Lite XL",
