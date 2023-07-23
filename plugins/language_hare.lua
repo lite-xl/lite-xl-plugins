@@ -48,7 +48,6 @@ syntax.add {
     ["offset"]   = "keyword",
     ["vaarg"]    = "keyword",
     ["vaend"]    = "keyword",
-    ["valist"]   = "keyword",
     ["vastart"]  = "keyword",
 
     ["nullable"] = "keyword2",
@@ -74,6 +73,9 @@ syntax.add {
     ["bool"]     = "keyword2",
     ["valist"]   = "keyword2",
     ["uintptr"]  = "keyword2",
+    ["rconst"]   = "keyword2",
+    ["fconst"]   = "keyword2",
+    ["iconst"]   = "keyword2",
     
     ["fmt"]      = "literal",
     ["true"]     = "literal",
