@@ -7,7 +7,7 @@ syntax.add {
   comment = "//",
   patterns = {
     { pattern = "//.-\n",               type = "comment"  },
-    { pattern = { "/%*", "%*/" },       type = "comment"  },
+    -- { pattern = { "/%*", "%*/" },       type = "comment"  },
     { pattern = { '"', '"', '\\' },     type = "string"   },
     { pattern = { "'", "'", '\\' },     type = "string"   },
     { pattern = "-?0x%x+",              type = "number"   },
@@ -16,6 +16,7 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
     { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
     { pattern = "[%a_][%w_]*",          type = "symbol"   },
+    { pattern = "^@",                   type = "keyword"  },
   },
   symbols = {
     ["export"]   = "keyword",
@@ -49,6 +50,9 @@ syntax.add {
     ["vaarg"]    = "keyword",
     ["vaend"]    = "keyword",
     ["vastart"]  = "keyword",
+    ["fini"]     = "keyword",
+    ["init"]     = "keyword",
+    ["test"]     = "keyword",
 
     ["nullable"] = "keyword2",
     ["str"]      = "keyword2",
