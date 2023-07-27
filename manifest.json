@@ -1284,10 +1284,10 @@
     },
     {
       "description": "An integrated terminal for lite-xl.",
-      "version": "0.3",
+      "version": "0.4",
       "id": "terminal",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-terminal.git:21b9145310059e008e619532adcd4bb1d3518ea1"
+      "remote": "https://github.com/adamharrison/lite-xl-terminal.git:36c0e38e1fc16aba8e2b14fd6ed7ee80fd523855"
     },
     {
       "description": "Compile Tex files into PDF",
