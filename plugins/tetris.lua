@@ -287,7 +287,7 @@ command.add(TetrisView, {
   ["tetris:down"] = function() core.active_view:down() end,
   ["tetris:quit"] = function()
     core.active_view.finished = true
-    core.active_view:close_view(core.root_view.root_node, core.active_view)
+    core.active_view.node:close_view(core.root_view.root_node, core.active_view)
   end
 })
 command.add(nil, {
@@ -305,6 +305,6 @@ keymap.add {
   ["right"] = "tetris:shift-right",
   ["down"] = "tetris:down",
   ["escape"] = "tetris:quit",
-  ["ctrl+e"] = "tetris:start"
+  ["ctrl+e"] = { "tetris:quit", "tetris:start" }
 }
 return { view = TetrisView }
