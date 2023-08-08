@@ -12,12 +12,11 @@ syntax.add {
     { pattern = { '`', '`', '\\' },     type = "string"   },
     { pattern = { '"', '"', '\\' },     type = "string"   },
     { pattern = { "'", "'", '\\' },     type = "string"   },
-    { pattern = "-?0x%x+",              type = "number"   },
-    { pattern = "-?%d+[%d%.eE]*f?",     type = "number"   },
+    { pattern = "-?0x[%x_]+",           type = "number"   },
+    { pattern = "-?[%d_]+[%d%.eE]*f?",  type = "number"   },
     { pattern = "-?%.?%d+f?",           type = "number"   },
     { pattern = "[%+%-=/%*%^%%<>!~|&%$]+", type = "operator" },
-    { pattern = "[%a_][%w_]*!",        type = "function" }, -- highlight templates
-    { pattern = "[%a_][%w_]*",          type = "symbol"   },
+    { pattern = "[%a_][%w_]*!?()[%(.]",        type = {"function", "normal"} }, -- highlight templates
     { pattern = "@safe",               type = "keyword"   },
     { pattern = "@trusted",            type = "keyword"   },
     { pattern = "@nogc",               type = "keyword"   },
@@ -134,4 +133,3 @@ syntax.add {
     ["__parameters"] = "keyword",
   },
 }
-

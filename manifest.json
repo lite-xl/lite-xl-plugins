@@ -447,7 +447,7 @@
     },
     {
       "description": "Syntax for the [D](https://dlang.org/) programming language",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_d.lua",
       "id": "language_d",
       "mod_version": "3"
