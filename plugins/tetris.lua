@@ -15,7 +15,8 @@ config.plugins.tetris = common.merge({
   height = 30, -- The amount of cells of height.
   width = 10, -- The amount of cells of width.
   cell_size = 18, -- The size in pixels of each cell.
-  cell_padding = 2 -- pixels between each cell
+  cell_padding = 2, -- pixels between each cell
+  down_amount = 1 -- the amount we move a tetronimo down when you hit the down key; change to math.huge for instant.
 }, config.plugins.tetris)
 
 function TetrisView:new(options)
@@ -288,11 +289,13 @@ end
 
 function TetrisView:down()
   if self.live_piece then
-    for y = self.live_piece.y, self.grid.y do
+    for y = self.live_piece.y, math.min(self.grid.y, self.live_piece.y + config.plugins.tetris.down_amount) do
       if self:does_collide(self.live_piece.x, y + 1, self.live_piece.tetronimo, self.live_piece.rot) then
         self.live_piece.y = y
         self:finalize_live_piece()
         break
+      else
+        self.live_piece.y = y
       end
     end
   end
