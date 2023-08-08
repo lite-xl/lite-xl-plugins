@@ -14,7 +14,7 @@ config.plugins.tetris = common.merge({
   tick = 0.5, -- The amount of time in seconds it takes for a piece to fall one line at 0 score.
   height = 30, -- The amount of cells of height.
   width = 10, -- The amount of cells of width.
-  cell_size = 12, -- The size in pixels of each cell.
+  cell_size = 18, -- The size in pixels of each cell.
   cell_padding = 2 -- pixels between each cell
 }, config.plugins.tetris)
 
