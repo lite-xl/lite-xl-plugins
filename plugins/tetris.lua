@@ -294,7 +294,7 @@ command.add(nil, {
   ["tetris:start"] = function()
     local view = TetrisView(config.plugins.tetris)
     local node = core.root_view:get_active_node()
-    view.node = node:split("right", view, { x = true }, true)
+    view.node = node:split("right", view, { x = true }, false)
     core.set_active_view(view)
   end
 })
