@@ -1309,6 +1309,7 @@
       "version": "0.1",
       "path": "plugins/tetris.lua",
       "id": "tetris",
+      "tags": ["game"],
       "mod_version": 3
     },
     {
