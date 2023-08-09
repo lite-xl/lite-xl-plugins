@@ -27,6 +27,7 @@ function TetrisView:new(options)
   self.size.x = self.grid.x * (self.cell_size + self.cell_padding) + style.padding.x * 2
   self.cells = { }
   self.score = 0
+  self.paused = false
   self.initial_tick = options.tick
   self.tick = self:calculate_tick(self.score)
   self.finished = false
@@ -42,8 +43,8 @@ function TetrisView:new(options)
     {
       color = { common.color "#ff0000" },
       shape = { {
-        1,1,0,0,
-        1,1,0,0,
+        0,1,1,0,
+        0,1,1,0,
         0,0,0,0,
         0,0,0,0
       } }
@@ -104,6 +105,16 @@ function TetrisView:new(options)
         0,0,0,0,
         0,0,0,0
       }, {
+        0,0,1,0,
+        0,1,1,0,
+        0,1,0,0,
+        0,0,0,0
+      }, {
+        0,  0,0,0,
+        1,1,0,0,
+        0,1,1,0,
+        0,0,0,0
+      }, {
         0,1,0,0,
         1,1,0,0,
         1,0,0,0,
@@ -118,6 +129,16 @@ function TetrisView:new(options)
         0,0,0,0,
         0,0,0,0
       }, {
+        0,1,0,0,
+        0,1,1,0,
+        0,0,1,0,
+        0,0,0,0
+      }, {
+        0,0,0,0,
+        0,1,1,0,
+        1,1,0,0,
+        0,0,0,0
+      }, {
         1,0,0,0,
         1,1,0,0,
         0,1,0,0,
@@ -127,14 +148,24 @@ function TetrisView:new(options)
     {
       color = { common.color "#ff00ff" },
       shape = { {
-        1,0,0,0,
-        1,0,0,0,
-        1,0,0,0,
-        1,0,0,0
+        0,1,0,0,
+        0,1,0,0,
+        0,1,0,0,
+        0,1,0,0
       }, {
+        0,0,0,0,
         1,1,1,1,
         0,0,0,0,
+        0,0,0,0
+      }, {
+        0,0,1,0,
+        0,0,1,0,
+        0,0,1,0,
+        0,0,1,0
+      }, {
         0,0,0,0,
+        0,0,0,0,
+        1,1,1,1,
         0,0,0,0
       } }
     },
@@ -164,6 +195,7 @@ function TetrisView:new(options)
     }
   }
   self.live_piece = nil
+  self.hold_piece = nil
 end
 
 function TetrisView:calculate_tick(score)
@@ -217,7 +249,7 @@ end
 
 
 function TetrisView:step()
-  if not self.finished then
+  if not self.finished and not self.paused then
     if not self.live_piece then
       local idx = self.next_piece or math.floor(math.random() * #self.tetronimos) + 1
       self.live_piece = { tetronimo = self.tetronimos[idx], idx = idx, x = math.floor(self.grid.x / 2), y = 0, rot = 1 }
@@ -254,10 +286,14 @@ function TetrisView:draw()
   local ty = self.position.y + style.padding.y
 
   renderer.draw_text(style.font, "Score: " .. self.score, tx, self.position.y + style.padding.y, style.normal)
-  renderer.draw_text(style.font, "Next Piece", tx, self.position.y + style.padding.y + lh, style.normal)
+  local w = renderer.draw_text(style.font, "Next Piece", tx, self.position.y + style.padding.y + lh, style.normal)
   if self.next_piece then
     self:draw_tetronimo(tx, self.position.y + style.padding.y + lh * 2, self.tetronimos[self.next_piece], 1)
   end
+  if self.held_piece then
+    self:draw_tetronimo(w + style.padding.x, self.position.y + style.padding.y + lh * 2, self.tetronimos[self.held_piece], 1)
+  end
+  renderer.draw_text(style.font, "Held Piece", w + style.padding.x, self.position.y + style.padding.y + lh, style.normal)
   ty = ty + lh * 2 + (self.cell_size + self.cell_padding) * 4 + style.padding.y
 
   renderer.draw_rect(tx, ty, (self.cell_size + self.cell_padding) * self.grid.x, (self.cell_size + self.cell_padding) * self.grid.y, style.background)
@@ -272,13 +308,13 @@ function TetrisView:draw()
   if self.live_piece then
     self:draw_tetronimo(tx + self.live_piece.x * (self.cell_size + self.cell_padding), ty + self.live_piece.y * (self.cell_size + self.cell_padding), self.live_piece.tetronimo, self.live_piece.rot)
   end
-  if self.finished then
-    common.draw_text(style.font, style.error, "GAME OVER", "center", tx, ty, self.grid.x * (self.cell_size + self.cell_padding), self.grid.y * (self.cell_size + self.cell_padding))
-  end
+  if self.finished or self.paused then renderer.draw_rect(tx, ty, self.grid.x * (self.cell_size + self.cell_padding), self.grid.y * (self.cell_size + self.cell_padding), { common.color "rgba(255, 255, 255, 0.5)" }) end
+  if self.finished then common.draw_text(style.font, style.error, "GAME OVER", "center", tx, ty, self.grid.x * (self.cell_size + self.cell_padding), self.grid.y * (self.cell_size + self.cell_padding)) end
+  if self.paused then common.draw_text(style.font, style.warn, "PAUSED", "center", tx, ty, self.grid.x * (self.cell_size + self.cell_padding), self.grid.y * (self.cell_size + self.cell_padding)) end
 end
 
 function TetrisView:rotate()
-  if self.live_piece then
+  if self.live_piece and not self.paused then
     local new_rot = (self.live_piece.rot % #self.live_piece.tetronimo.shape) + 1
     if not self:does_collide(self.live_piece.x, self.live_piece.y, self.live_piece.tetronimo, new_rot) then
       self.live_piece.rot = new_rot
@@ -286,10 +322,24 @@ function TetrisView:rotate()
   end
 end
 
+function TetrisView:hold()
+  if self.live_piece and not self.paused then
+    if self.held_piece then
+      if not self:does_collide(self.live_piece.x, self.live_piece.y, self.tetronimos[self.held_piece], 1) then
+        local live_piece = self.live_piece.idx
+        self.live_piece = { x = self.live_piece.x, y = self.live_piece.y, rot = 1, idx = self.held_piece, tetronimo = self.tetronimos[self.held_piece] }
+        self.held_piece = live_piece
+      end
+    else
+      self.held_piece = self.live_piece.idx
+      self.live_piece = nil
+    end
+  end
+end
 
-function TetrisView:down()
-  if self.live_piece then
-    for y = self.live_piece.y, math.min(self.grid.y, self.live_piece.y + config.plugins.tetris.down_amount) do
+function TetrisView:drop(amount)
+  if self.live_piece and not self.paused then
+    for y = self.live_piece.y, math.min(self.grid.y, self.live_piece.y + amount) do
       if self:does_collide(self.live_piece.x, y + 1, self.live_piece.tetronimo, self.live_piece.rot) then
         self.live_piece.y = y
         self:finalize_live_piece()
@@ -302,7 +352,7 @@ function TetrisView:down()
 end
 
 function TetrisView:shift(delta)
-  if self.live_piece and not self:does_collide(self.live_piece.x + delta, self.live_piece.y, self.live_piece.tetronimo, self.live_piece.rot) then
+  if self.live_piece and not self.paused and not self:does_collide(self.live_piece.x + delta, self.live_piece.y, self.live_piece.tetronimo, self.live_piece.rot) then
     self.live_piece.x = self.live_piece.x + delta
   end
 end
@@ -311,7 +361,10 @@ command.add(TetrisView, {
   ["tetris:rotate"] = function() core.active_view:rotate() end,
   ["tetris:shift-left"] = function() core.active_view:shift(-1) end,
   ["tetris:shift-right"] = function() core.active_view:shift(1) end,
-  ["tetris:down"] = function() core.active_view:down() end,
+  ["tetris:drop"] = function() core.active_view:drop(config.plugins.tetris.down_amount) end,
+  ["tetris:hard-drop"] = function() core.active_view:drop(math.huge) end,
+  ["tetris:hold"] = function() core.active_view:hold() end,
+  ["tetris:toggle-pause"] = function() core.active_view.paused = not core.active_view.paused end,
   ["tetris:quit"] = function()
     core.active_view.finished = true
     core.active_view.node:close_view(core.root_view.root_node, core.active_view)
@@ -330,8 +383,11 @@ keymap.add {
   ["up"] = "tetris:rotate",
   ["left"] = "tetris:shift-left",
   ["right"] = "tetris:shift-right",
-  ["down"] = "tetris:down",
+  ["down"] = "tetris:drop",
+  ["space"] = "tetris:hard-drop",
+  ["tab"] = "tetris:hold",
   ["escape"] = "tetris:quit",
-  ["ctrl+e"] = { "tetris:quit", "tetris:start" }
+  ["ctrl+e"] = { "tetris:quit", "tetris:start" },
+  ["p"] = "tetris:toggle-pause"
 }
 return { view = TetrisView }
