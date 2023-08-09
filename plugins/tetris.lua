@@ -16,6 +16,8 @@ config.plugins.tetris = common.merge({
   width = 10, -- The amount of cells of width.
   cell_size = 18, -- The size in pixels of each cell.
   cell_padding = 2, -- pixels between each cell
+  drop_shadow = true, -- Should cast a drop shadow.
+  lock_delay = 3, -- the multiplier for lock delay over a normal tick. set to 0 to disable
   down_amount = 1 -- the amount we move a tetronimo down when you hit the down key; change to math.huge for instant.
 }, config.plugins.tetris)
 
@@ -29,6 +31,8 @@ function TetrisView:new(options)
   self.score = 0
   self.paused = false
   self.initial_tick = options.tick
+  self.lock_delay = options.lock_delay
+  self.drop_shadow = options.drop_shadow
   self.tick = self:calculate_tick(self.score)
   self.finished = false
   self.thread = core.add_thread(function()
@@ -260,20 +264,24 @@ function TetrisView:step()
       end
     else
       if (self:does_collide(self.live_piece.x, self.live_piece.y + 1, self.live_piece.tetronimo, self.live_piece.rot)) then
-        self:finalize_live_piece()
+        self.live_piece.countup = (self.live_piece.countup or 0) + 1
+        if self.live_piece.countup > self.lock_delay then
+          self:finalize_live_piece()
+        end
       else
         self.live_piece.y = self.live_piece.y + 1
+        self.live_piece.countup = 0
       end
     end
   end
 end
 
-function TetrisView:draw_tetronimo(posx, posy, tetronimo, rot)
+function TetrisView:draw_tetronimo(posx, posy, tetronimo, rot, color)
   local shape = tetronimo.shape[rot]
   for y = 0, 3 do
     for x = 0, 3 do
       if shape[y * 4 + x + 1] == 1 then
-        renderer.draw_rect(posx + x * (self.cell_size + self.cell_padding), posy + y * (self.cell_size + self.cell_padding), self.cell_size, self.cell_size, tetronimo.color)
+        renderer.draw_rect(posx + x * (self.cell_size + self.cell_padding), posy + y * (self.cell_size + self.cell_padding), self.cell_size, self.cell_size, color or tetronimo.color)
       end
     end
   end
@@ -307,6 +315,12 @@ function TetrisView:draw()
   end
   if self.live_piece then
     self:draw_tetronimo(tx + self.live_piece.x * (self.cell_size + self.cell_padding), ty + self.live_piece.y * (self.cell_size + self.cell_padding), self.live_piece.tetronimo, self.live_piece.rot)
+    if self.drop_shadow then
+      local y = self:get_max_drop(math.huge)
+      if y ~= self.live_piece.y then
+        self:draw_tetronimo(tx + self.live_piece.x * (self.cell_size + self.cell_padding), ty + y * (self.cell_size + self.cell_padding), self.live_piece.tetronimo, self.live_piece.rot, { self.live_piece.tetronimo.color[1], self.live_piece.tetronimo.color[2], self.live_piece.tetronimo.color[3], 50 })
+      end
+    end
   end
   if self.finished or self.paused then renderer.draw_rect(tx, ty, self.grid.x * (self.cell_size + self.cell_padding), self.grid.y * (self.cell_size + self.cell_padding), { common.color "rgba(255, 255, 255, 0.5)" }) end
   if self.finished then common.draw_text(style.font, style.error, "GAME OVER", "center", tx, ty, self.grid.x * (self.cell_size + self.cell_padding), self.grid.y * (self.cell_size + self.cell_padding)) end
@@ -337,16 +351,23 @@ function TetrisView:hold()
   end
 end
 
-function TetrisView:drop(amount)
-  if self.live_piece and not self.paused then
+function TetrisView:get_max_drop(amount)
+  if self.live_piece then
     for y = self.live_piece.y, math.min(self.grid.y, self.live_piece.y + amount) do
       if self:does_collide(self.live_piece.x, y + 1, self.live_piece.tetronimo, self.live_piece.rot) then
-        self.live_piece.y = y
-        self:finalize_live_piece()
-        break
-      else
-        self.live_piece.y = y
+        return y, true
       end
+    end
+  end
+  return self.live_piece.y + amount, false
+end
+
+function TetrisView:drop(amount)
+  if self.live_piece and not self.paused then
+    local y, collides = self:get_max_drop(amount)
+    self.live_piece.y = y
+    if collides then
+      self:finalize_live_piece()
     end
   end
 end
