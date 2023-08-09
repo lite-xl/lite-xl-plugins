@@ -6,7 +6,9 @@ local config = require "core.config"
 local Doc = require "core.doc"
 
 
-local default_command = "pkexec --keep-cwd cp '%s' '%s'"
+-- When pkexec version >= 121 is more widespread,
+-- change to "pkexec --keep-cwd cp '%s' '%s'"
+local default_command = "pkexec sh -c \"cd $PWD; cp '%s' '%s'\""
 config.plugins.su_save = common.merge({
   enabled = true,
   save_command = default_command,
