@@ -447,7 +447,7 @@
     },
     {
       "description": "Syntax for the [D](https://dlang.org/) programming language",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_d.lua",
       "id": "language_d",
       "mod_version": "3"
@@ -1213,7 +1213,7 @@
     },
     {
       "description": "Provides a GUI to manage core and plugin settings, bindings and select color theme *([video](https://user-images.githubusercontent.com/1702572/169743674-ececae24-f6b7-4ff2-bfa2-c4762cd327d9.mp4))*. (depends on [`widget`](https://github.com/lite-xl/lite-xl-widgets))",
-      "version": "0.6",
+      "version": "0.7",
       "path": "plugins/settings.lua",
       "id": "settings",
       "mod_version": "3",
@@ -1277,6 +1277,14 @@
       "mod_version": "3"
     },
     {
+      "description": "Save files that require root permissions. Needs `pkexec`.",
+      "version": "1.0",
+      "path": "plugins/su_save.lua",
+      "id": "su_save",
+      "name": "Save as Super User",
+      "mod_version": "3"
+    },
+    {
       "description": "Takes an SVG screenshot. Only browsers seem to support the generated SVG properly.",
       "version": "0.1",
       "path": "plugins/svg_screenshot.lua",
@@ -1296,6 +1304,21 @@
       "path": "plugins/tabnumbers.lua",
       "id": "tabnumbers",
       "mod_version": "3"
+    },
+    {
+      "description": "An integrated terminal for lite-xl.",
+      "version": "0.9",
+      "id": "terminal",
+      "mod_version": "3",
+      "remote": "https://github.com/adamharrison/lite-xl-terminal.git:89788ede70768726cf60b5c3049f1fc67bea46cd"
+    },
+    {
+      "description": "Allows you to play tetris directly in the editor.",
+      "version": "0.1",
+      "path": "plugins/tetris.lua",
+      "id": "tetris",
+      "tags": ["game"],
+      "mod_version": 3
     },
     {
       "description": "Compile Tex files into PDF",
@@ -1417,6 +1440,13 @@
       "type": "library",
       "remote": "https://github.com/adamharrison/lite-xl-www.git:aecc866c33b0a954fbd41a5de2842bb97f4ac45e",
       "mod_version": "3"
+    },
+    {
+     "id": "codeplus",
+     "version": "1.0",
+     "description": "Offers improvements such as highlighted comments and autocomplete for brackets, quotes and more. ([demo](https://s12.gifyu.com/images/Sckre.gif))",
+     "remote": "https://github.com/chqs-git/code-plus.git:b336999b707709df2ddcb865f664623c5beceabb",
+     "mod_version": 3
     }
   ]
 }
