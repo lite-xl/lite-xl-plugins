@@ -1082,7 +1082,7 @@
     },
     {
       "description": "File icons set for TreeView. Download [font](https://github.com/yamatsum/nonicons/raw/6a2faf4fbdfbe353c5ae6a496740ac4bfb6d0e74/dist/nonicons.ttf) to your config/fonts folder",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/nonicons.lua",
       "id": "nonicons",
       "mod_version": "3"
