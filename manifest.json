@@ -1442,6 +1442,14 @@
       "mod_version": "3"
     },
     {
+      "description": "`pywal` integration with Lite XL.",
+      "version": "1.0",
+      "remote": "https://github.com/ThaCuber/wal.lxl:1c59b2378781ffb59ca8e27ccb5b50d4394a4c44",
+      "id": "wal.lxl",
+      "name": "wal.lxl",
+      "mod_version": "3"
+    },
+    {
      "id": "codeplus",
      "version": "1.0",
      "description": "Offers improvements such as highlighted comments and autocomplete for brackets, quotes and more. ([demo](https://s12.gifyu.com/images/Sckre.gif))",
