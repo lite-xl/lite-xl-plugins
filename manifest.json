@@ -1003,17 +1003,24 @@
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for C/C++ with clangd.",
-      "version": "0.1",
-      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:d8f85c5fb09d2a97594fead7cf495510e22502a9",
+      "version": "16.0.2",
+      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:2ffc061d1abb4b9ec4c0dd7d9752610cdffc3bd7",
       "mod_version": "3",
       "id": "lsp_c"
     },
     {
-      "description": "Automatic configuration/binary download for LSP completion for Lua with sumneko.",
-      "version": "0.1",
-      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:d8f85c5fb09d2a97594fead7cf495510e22502a9",
+      "description": "Automatic configuration/binary download for LSP completion for Lua with lua-language-server (sumneko).",
+      "version": "3.6.25",
+      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:2ffc061d1abb4b9ec4c0dd7d9752610cdffc3bd7",
       "mod_version": "3",
       "id": "lsp_lua"
+    },
+    {
+      "description": "Automatic configuration/binary download for LSP completion for Rust with rust-analyzer.",
+      "version": "20230814",
+      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:2ffc061d1abb4b9ec4c0dd7d9752610cdffc3bd7",
+      "mod_version": "3",
+      "id": "lsp_rust"
     },
     {
       "description": "Adds LSP snippets support to the snippets plugin",
