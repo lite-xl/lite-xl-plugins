@@ -827,7 +827,7 @@
     },
     {
       "description": "Syntax for the [Rust](https://rust-lang.org/) programming language",
-      "version": "0.2",
+      "version": "0.3",
       "path": "plugins/language_rust.lua",
       "id": "language_rust",
       "mod_version": "3"
