@@ -300,7 +300,6 @@ function MiniMap:new(dv)
                             force_status = "expanded",
                             expanded_size = cached_settings.width })
   self.dv = dv
-  self.minimum_thumb_size = 20
   self.enabled = nil
 end
 
@@ -328,29 +327,6 @@ function MiniMap:_overlaps_normal(x, y)
     end
   end
   return result
-end
-
-
--- FIXME: Until Scrollbar.minimum_thumb_size ships, we need this function.
---        When it ships just remove it and the variable in MiniMap:new
-function MiniMap:_get_thumb_rect_normal()
-  local nr = self.normal_rect
-  local sz = nr.scrollable
-  if sz == math.huge or sz <= nr.along_size
-  then
-    return 0, 0, 0, 0
-  end
-  local scrollbar_size = self.contracted_size or style.scrollbar_size
-  local expanded_scrollbar_size = self.expanded_size or style.expanded_scrollbar_size
-  --                          ↓ this is the reason we need this function
-  local along_size = math.max(self.minimum_thumb_size, nr.along_size * nr.along_size / sz)
-  local across_size = scrollbar_size
-  across_size = across_size + (expanded_scrollbar_size - scrollbar_size) * self.expand_percent
-  return
-    nr.across + nr.across_size - across_size,
-    nr.along + self.percent * (nr.along_size - along_size),
-    across_size,
-    along_size
 end
 
 
