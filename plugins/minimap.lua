@@ -308,7 +308,7 @@ function MiniMap:update()
   reset_cache_if_needed()
   self.expanded_size = cached_settings.width
   local lh = self.dv:get_line_height()
-  local nlines = self.dv.size.y // lh
+  local nlines = self.dv.size.y / lh
   self.minimum_thumb_size = nlines * line_spacing
   MiniMap.super.update(self)
 end
@@ -371,22 +371,27 @@ function MiniMap:_on_mouse_pressed_normal(button, x, y, clicks)
 end
 
 
+local function get_visible_minline(dv)
+  local _, y, _, _ = dv:get_content_bounds()
+  local lh = dv:get_line_height()
+  local minline = math.max(0, y / lh + 1)
+  return minline
+end
+
+
 function MiniMap:get_minimap_lines()
   local _, track_y, _, h = self:_get_track_rect_normal()
   local _, thumb_y, _, _ = self:_get_thumb_rect_normal()
 
-  local minline, _ = self.dv:get_visible_line_range()
-  local top_lines = math.ceil(thumb_y - track_y) // line_spacing
-
   local nlines = h // line_spacing
-  return math.max(1, minline - top_lines), math.max(1, nlines)
-end
 
-
-function MiniMap:draw_thumb()
-  local color = self.hovering.thumb and style.scrollbar2 or style.scrollbar
-  local x, y, w, h = self:get_thumb_rect()
-  renderer.draw_rect(x, y, w, h, color)
+  local minline = get_visible_minline(self.dv)
+  local top_lines = (thumb_y - track_y) / line_spacing
+  local lines_start, offset = math.modf(minline - top_lines)
+  if lines_start <= 1 and nlines >= #self.dv.doc.lines then
+    offset = 0
+  end
+  return common.clamp(lines_start, 1, #self.dv.doc.lines), common.clamp(nlines, 1, #self.dv.doc.lines), offset * line_spacing
 end
 
 
@@ -406,12 +411,14 @@ function MiniMap:draw()
   local highlight = dv.hovered_scrollbar or dv.dragging_scrollbar
   local visual_color = highlight and style.scrollbar2 or style.scrollbar
 
-  local minimap_lines_start, minimap_lines_count = self:get_minimap_lines()
 
   if config.plugins.minimap.draw_background then
     renderer.draw_rect(x, y, w, self.dv.size.y, style.minimap_background or style.background)
   end
   self:draw_thumb()
+
+  local minimap_lines_start, minimap_lines_count, y_offset = self:get_minimap_lines()
+  y = y - y_offset
 
   -- highlight the selected lines, and the line with the caret on it
   local selection_color = config.plugins.minimap.selection_color or style.dim
