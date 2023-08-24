@@ -418,19 +418,20 @@ function MiniMap:draw()
   self:draw_thumb()
 
   local minimap_lines_start, minimap_lines_count, y_offset = self:get_minimap_lines()
-  y = y - y_offset
+  local line_selection_offset = line_spacing - char_height
+  y = y - y_offset + line_selection_offset
 
   -- highlight the selected lines, and the line with the caret on it
   local selection_color = config.plugins.minimap.selection_color or style.dim
   local caret_color = config.plugins.minimap.caret_color or style.caret
 
-  for i, line1, col1, line2, col2 in dv.doc:get_selections() do
-    local selection1_y = y + (line1 - minimap_lines_start) * line_spacing
-    local selection2_y = y + (line2 - minimap_lines_start) * line_spacing
+  for _, line1, _, line2, _ in dv.doc:get_selections() do
+    local selection1_y = y + (line1 - minimap_lines_start) * line_spacing - line_selection_offset
+    local selection2_y = y + (line2 - minimap_lines_start) * line_spacing - line_selection_offset
     local selection_min_y = math.min(selection1_y, selection2_y)
-    local selection_h = math.abs(selection2_y - selection1_y)+1
+    local selection_h = math.abs(selection2_y - selection1_y) + 1 + line_selection_offset
     renderer.draw_rect(x, selection_min_y, w, selection_h, selection_color)
-    renderer.draw_rect(x, selection1_y, w, line_spacing, caret_color)
+    renderer.draw_rect(x, selection1_y, w, line_spacing + line_selection_offset, caret_color)
   end
 
   local highlight_align = config.plugins.minimap.highlight_align
@@ -499,7 +500,8 @@ function MiniMap:draw()
   local function render_highlight(idx, line_y)
     local highlight_color = self:line_highlight_color(idx)
     if highlight_color then
-      renderer.draw_rect(highlight_x, line_y, highlight_width, line_spacing, highlight_color)
+      renderer.draw_rect(highlight_x, line_y - line_selection_offset,
+                         highlight_width, line_spacing + line_selection_offset, highlight_color)
     end
   end
 
