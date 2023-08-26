@@ -595,22 +595,6 @@ function DocView:new(doc)
   end
 end
 
-local old_docview_scroll_to_make_visible = DocView.scroll_to_make_visible
-function DocView:scroll_to_make_visible(line, col, ...)
-  if
-    not self:is(DocView) or not self.v_scrollbar:is(MiniMap)
-    or
-    not self.v_scrollbar:is_minimap_enabled()
-  then
-    return old_docview_scroll_to_make_visible(self, line, col, ...)
-  end
-  local old_size = self.size.x
-  self.size.x = math.max(0, self.size.x - config.plugins.minimap.width)
-  local result = old_docview_scroll_to_make_visible(self, line, col, ...)
-  self.size.x = old_size
-  return result
-end
-
 
 local function get_all_docviews(node, t)
   t = t or {}
