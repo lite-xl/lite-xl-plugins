@@ -295,38 +295,46 @@ end
 local MiniMap = Scrollbar:extend()
 
 
-function MiniMap:new(dv)
+function MiniMap:new(dv, original_v_scrollbar)
   MiniMap.super.new(self, { direction = "v", alignment = "e",
                             force_status = "expanded",
-                            expanded_size = cached_settings.width })
+                            expanded_size = cached_settings.width,
+                            expanded_margin = 0 })
+  self.original_force_status = original_v_scrollbar.force_status
+  self.original_expanded_size = original_v_scrollbar.expanded_size
+  self.original_expanded_margin = original_v_scrollbar.expanded_margin
   self.dv = dv
   self.enabled = nil
+  self.was_enabled = true
+end
+
+
+function MiniMap:swap_to_status()
+  local enabled = self:is_minimap_enabled()
+  if not enabled and self.was_enabled then
+    self.force_status = self.original_force_status
+    self.expanded_size = self.original_expanded_size
+    self.expanded_margin = self.original_expanded_margin
+    self.was_enabled = false
+  elseif enabled and not self.was_enabled then
+    self.force_status = "expanded"
+    self.expanded_size = cached_settings.width
+    self.expanded_margin = 0
+    self.was_enabled = true
+  end
 end
 
 
 function MiniMap:update()
-  reset_cache_if_needed()
-  self.expanded_size = cached_settings.width
-  local lh = self.dv:get_line_height()
-  local nlines = self.dv.size.y / lh
-  self.minimum_thumb_size = nlines * line_spacing
-  MiniMap.super.update(self)
-end
-
-
--- This is needed to remove the scrollbar margin.
-function MiniMap:_overlaps_normal(x, y)
-  local sx, sy, sw, sh = self:_get_thumb_rect_normal()
-  local result
-  if x >= sx and x <= sx + sw and y >= sy and y <= sy + sh then
-    result = "thumb"
-  else
-    sx, sy, sw, sh = self:_get_track_rect_normal()
-    if x >= sx and x <= sx + sw and y >= sy and y <= sy + sh then
-      result = "track"
-    end
+  self:swap_to_status()
+  if self:is_minimap_enabled() then
+    reset_cache_if_needed()
+    self.expanded_size = cached_settings.width
+    local lh = self.dv:get_line_height()
+    local nlines = self.dv.size.y / lh
+    self.minimum_thumb_size = nlines * line_spacing
   end
-  return result
+  MiniMap.super.update(self)
 end
 
 
@@ -396,6 +404,7 @@ end
 
 
 function MiniMap:set_size(x, y, w, h, scrollable)
+  if not self:is_minimap_enabled() then return MiniMap.super.set_size(self, x, y, w, h, scrollable) end
   -- If possible, use the size needed to only manage the visible minimap lines.
   -- This allows us to let Scrollbar manage the thumb.
   h = math.min(h, line_spacing * (scrollable // self.dv:get_line_height()))
@@ -581,7 +590,9 @@ end
 local old_docview_new = DocView.new
 function DocView:new(doc)
   old_docview_new(self, doc)
-  if self:is(DocView) then self.v_scrollbar = MiniMap(self) end
+  if self:is(DocView) then
+    self.v_scrollbar = MiniMap(self, self.v_scrollbar)
+  end
 end
 
 local old_docview_scroll_to_make_visible = DocView.scroll_to_make_visible
