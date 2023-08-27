@@ -1306,14 +1306,14 @@
       "mod_version": "3"
     },
     {
-      "description": "Displays tab numbers from 1–9 next to their names \\*([screenshot](https://user-images.githubusercontent.com/16415678/101285362-007a8500-37e5-11eb-869b-c10eb9d9d902.png))",
+      "description": "Displays tab numbers from 1–9 next to their names *([screenshot](https://user-images.githubusercontent.com/16415678/101285362-007a8500-37e5-11eb-869b-c10eb9d9d902.png))*",
       "version": "0.1",
       "path": "plugins/tabnumbers.lua",
       "id": "tabnumbers",
       "mod_version": "3"
     },
     {
-      "description": "An integrated terminal for lite-xl. \\*([screenshot](https://github.com/adamharrison/lite-xl-terminal/assets/1034518/eb8a72a0-ff61-4b95-b009-364ac2725f70))",
+      "description": "An integrated terminal for lite-xl. *([screenshot](https://github.com/adamharrison/lite-xl-terminal/assets/1034518/eb8a72a0-ff61-4b95-b009-364ac2725f70))*",
       "version": "1.0",
       "id": "terminal",
       "mod_version": "3",
