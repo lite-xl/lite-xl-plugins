@@ -1454,7 +1454,8 @@
       "remote": "https://github.com/ThaCuber/wal.lxl:93bcf5dd64e9945fa88de22cd8b62a5467e80d6a",
       "id": "wal",
       "name": "wal.lxl",
-      "mod_version": "3"
+      "mod_version": "3",
+      "replaces": [ "wal_lxl" ]
     },
     {
      "id": "codeplus",
