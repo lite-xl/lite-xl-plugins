@@ -2,7 +2,7 @@
 local syntax = require "core.syntax"
 
 syntax.add {
-  files = { "Caddyfile" },
+  files = { PATHSEP .. "Caddyfile" },
   comment = "#",
   patterns = {
     { pattern = { "#", "\n"},          type = "comment"  },
