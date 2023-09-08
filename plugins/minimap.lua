@@ -236,13 +236,11 @@ function Highlighter:insert_notify(line, n, ...)
   if not highlighter_cache[self] then
     highlighter_cache[self] = {}
   else
-    local to = math.min(line + n, #self.doc.lines)
-    for i=#self.doc.lines+n,to,-1 do
-      highlighter_cache[self][i] = highlighter_cache[self][i - n]
+    local blanks = { }
+    for i = 1, n do
+      blanks[i] = false
     end
-    for i=line,to do
-      highlighter_cache[self][i] = nil
-    end
+    common.splice(highlighter_cache[self], line, 0, blanks)
   end
 end
 
@@ -254,10 +252,7 @@ function Highlighter:remove_notify(line, n, ...)
   if not highlighter_cache[self] then
     highlighter_cache[self] = {}
   else
-    local to = math.max(line + n, #self.doc.lines)
-    for i=line,to do
-      highlighter_cache[self][i] = highlighter_cache[self][i + n]
-    end
+    common.splice(highlighter_cache[self], line, n)
   end
 end
 
@@ -269,7 +264,7 @@ function Highlighter:tokenize_line(idx, state, ...)
   if not highlighter_cache[self] then
     highlighter_cache[self] = {}
   end
-  highlighter_cache[self][idx] = nil
+  highlighter_cache[self][idx] = false
   return res
 end
 
