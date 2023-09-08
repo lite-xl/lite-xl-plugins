@@ -333,7 +333,7 @@ function MiniMap:update()
 end
 
 
-function MiniMap:line_highlight_color(line_index)
+function MiniMap:line_highlight_color(line_index, docview)
   -- other plugins can override this, and return a color
 end
 
@@ -502,7 +502,7 @@ function MiniMap:draw()
     highlight_x = x + w - highlight_width
   end
   local function render_highlight(idx, line_y)
-    local highlight_color = self:line_highlight_color(idx)
+    local highlight_color = self:line_highlight_color(idx, self.dv)
     if highlight_color then
       renderer.draw_rect(highlight_x, line_y - line_selection_offset,
                          highlight_width, line_spacing + line_selection_offset, highlight_color)
