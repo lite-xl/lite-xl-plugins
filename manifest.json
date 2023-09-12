@@ -997,7 +997,7 @@
     {
       "description": "Completion menu kind/type icons for Lite XL LSP",
       "version": "0.2",
-      "remote": "https://github.com/TorchedSammy/lite-xl-lspkind:272ebd0010cd3e205cfb486b1bae889080fec437",
+      "remote": "https://github.com/TorchedSammy/lite-xl-lspkind:8fb5bb0947c96f04ab0430fc02bf081946bfb92e",
       "mod_version": "3",
       "id": "lspkind"
     },
