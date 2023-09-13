@@ -1465,7 +1465,7 @@
      "mod_version": 3
     },
     {
-      "description": "Theme manager with base16 color schemes for lite-xl",
+      "description": "Theme manager with base16 color schemes for Lite XL.",
       "version": "0.1",
       "remote": "https://github.com/SmileYzn/base16.git:latest",
       "mod_version": "3",
