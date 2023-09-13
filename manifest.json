@@ -1463,6 +1463,13 @@
      "description": "Offers improvements such as highlighted comments and autocomplete for brackets, quotes and more. ([demo](https://s12.gifyu.com/images/Sckre.gif))",
      "remote": "https://github.com/chqs-git/code-plus.git:b336999b707709df2ddcb865f664623c5beceabb",
      "mod_version": 3
+    },
+    {
+      "description": "Theme manager with base16 color schemes for Lite XL.",
+      "version": "0.1",
+      "remote": "https://github.com/SmileYzn/base16.git:3820a1bcc3e1b1747edace50bee87c316a936672",
+      "mod_version": "3",
+      "id": "base16"
     }
   ]
 }
