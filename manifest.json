@@ -848,7 +848,7 @@
     },
     {
       "description": "Syntax for shell scripting language",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_sh.lua",
       "id": "language_sh",
       "mod_version": "3"
