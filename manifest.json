@@ -36,6 +36,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Theme manager with base16 color schemes for Lite XL.",
+      "version": "0.2",
+      "remote": "https://github.com/SmileYzn/base16.git:10f6958c508809b79b366b129cf7f239a6f8e6ba",
+      "mod_version": "3",
+      "id": "base16"
+    },
+    {
       "description": "Shows the current time and date in a view with large text *([screenshot](https://user-images.githubusercontent.com/3920290/82752891-3318df00-9db9-11ea-803f-261d80d5cf53.png))*",
       "version": "0.1",
       "path": "plugins/bigclock.lua",
@@ -69,6 +76,13 @@
       "path": "plugins/centerdoc.lua",
       "id": "centerdoc",
       "mod_version": "3"
+    },
+    {
+     "id": "codeplus",
+     "version": "1.0",
+     "description": "Offers improvements such as highlighted comments and autocomplete for brackets, quotes and more. ([demo](https://s12.gifyu.com/images/Sckre.gif))",
+     "remote": "https://github.com/chqs-git/code-plus.git:b336999b707709df2ddcb865f664623c5beceabb",
+     "mod_version": 3
     },
     {
       "description": "Color picker dialog that supports html and rgb notations.",
@@ -1428,7 +1442,8 @@
     },
     {
       "description": "Plugin library that provides a set of re-usable components to more easily write UI elements for your plugins",
-      "version": "0.2",
+      "version": "0.2.1",
+      "type": "library",
       "remote": "https://github.com/lite-xl/lite-xl-widgets:b5e6e212c0516ec7b55f57c7efcfda9d791cdb0d",
       "mod_version": "3",
       "id": "widget"
@@ -1456,20 +1471,6 @@
       "name": "wal.lxl",
       "mod_version": "3",
       "replaces": [ "wal_lxl" ]
-    },
-    {
-     "id": "codeplus",
-     "version": "1.0",
-     "description": "Offers improvements such as highlighted comments and autocomplete for brackets, quotes and more. ([demo](https://s12.gifyu.com/images/Sckre.gif))",
-     "remote": "https://github.com/chqs-git/code-plus.git:b336999b707709df2ddcb865f664623c5beceabb",
-     "mod_version": 3
-    },
-    {
-      "description": "Theme manager with base16 color schemes for Lite XL.",
-      "version": "0.2",
-      "remote": "https://github.com/SmileYzn/base16.git:10f6958c508809b79b366b129cf7f239a6f8e6ba",
-      "mod_version": "3",
-      "id": "base16"
     }
   ]
 }
