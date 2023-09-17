@@ -12,6 +12,7 @@ jobs:
       - name: Generate table with `lpm`
         run: |
           wget https://github.com/lite-xl/lite-xl-plugin-manager/releases/download/latest/lpm.x86_64-linux -O lpm && chmod +x lpm
+          # Remove everything after the --- so we can regenerate it.
           perl -pi -e 'exit(0) if $_ =~ m/^\-\-\-/' README.md && echo -e "---\n" >> README.md
           ./lpm list --repository . --table url,description --header Plugin,Description >> README.md
           if ! git diff --exit-code -s README.md; then
