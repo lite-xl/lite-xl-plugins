@@ -572,7 +572,7 @@
       "mod_version": "3"
     },
     {
-      "description": "Syntax for the [Hare](https://haxelang.org) programming language",
+      "description": "Syntax for the [Hare](https://harelang.org) programming language",
       "version": "0.1",
       "path": "plugins/language_hare.lua",
       "id": "language_hare",
