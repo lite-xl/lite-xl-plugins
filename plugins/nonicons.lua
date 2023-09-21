@@ -91,6 +91,13 @@ local extension_icons = {
   [".awk"] = { "#4d5a5e", "" },
   [".nim"] = { "#F88A02", "" },
   [".zig"] = { "#cbcb41", "" },
+  -- START: Adding per https://github.com/lite-xl/lite-xl-plugins/issues/144
+  [".vim"] = { "#8f00ff", "" },
+  [".j2"] = { "#ffff00", "" },
+  [".ini"] = { "#ffffff", "" },
+  [".fish"] = { "#ca2c92", "" },
+  [".bash"] = { "#4169e1", "" },
+  -- END: Adding per https://github.com/lite-xl/lite-xl-plugins/issues/144
 }
 local known_names_icons = {
   ["changelog"] = { "#657175", "" }, ["changelog.txt"] = { "#4d5a5e", "" },

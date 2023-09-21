@@ -36,6 +36,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Theme manager with base16 color schemes for Lite XL.",
+      "version": "0.4",
+      "remote": "https://github.com/SmileYzn/base16.git:55b1c3fda3afe7dc2dd894f258389c64b9441da9",
+      "mod_version": "3",
+      "id": "base16"
+    },
+    {
       "description": "Shows the current time and date in a view with large text *([screenshot](https://user-images.githubusercontent.com/3920290/82752891-3318df00-9db9-11ea-803f-261d80d5cf53.png))*",
       "version": "0.1",
       "path": "plugins/bigclock.lua",
@@ -69,6 +76,13 @@
       "path": "plugins/centerdoc.lua",
       "id": "centerdoc",
       "mod_version": "3"
+    },
+    {
+     "id": "codeplus",
+     "version": "1.0",
+     "description": "Offers improvements such as highlighted comments and autocomplete for brackets, quotes and more. ([demo](https://s12.gifyu.com/images/Sckre.gif))",
+     "remote": "https://github.com/chqs-git/code-plus.git:b336999b707709df2ddcb865f664623c5beceabb",
+     "mod_version": 3
     },
     {
       "description": "Color picker dialog that supports html and rgb notations.",
@@ -827,7 +841,7 @@
     },
     {
       "description": "Syntax for the [Rust](https://rust-lang.org/) programming language",
-      "version": "0.2",
+      "version": "0.3",
       "path": "plugins/language_rust.lua",
       "id": "language_rust",
       "mod_version": "3"
@@ -848,7 +862,7 @@
     },
     {
       "description": "Syntax for shell scripting language",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_sh.lua",
       "id": "language_sh",
       "mod_version": "3"
@@ -1003,17 +1017,24 @@
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for C/C++ with clangd.",
-      "version": "0.1",
-      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:d8f85c5fb09d2a97594fead7cf495510e22502a9",
+      "version": "16.0.2",
+      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:e08f5f0b8375ec30964fdfc0d9e340e2d2c59583",
       "mod_version": "3",
       "id": "lsp_c"
     },
     {
-      "description": "Automatic configuration/binary download for LSP completion for Lua with sumneko.",
-      "version": "0.1",
-      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:d8f85c5fb09d2a97594fead7cf495510e22502a9",
+      "description": "Automatic configuration/binary download for LSP completion for Lua with lua-language-server (sumneko).",
+      "version": "3.6.25",
+      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:e08f5f0b8375ec30964fdfc0d9e340e2d2c59583",
       "mod_version": "3",
       "id": "lsp_lua"
+    },
+    {
+      "description": "Automatic configuration/binary download for LSP completion for Rust with rust-analyzer.",
+      "version": "20230814",
+      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:e08f5f0b8375ec30964fdfc0d9e340e2d2c59583",
+      "mod_version": "3",
+      "id": "lsp_rust"
     },
     {
       "description": "Adds LSP snippets support to the snippets plugin",
@@ -1082,7 +1103,7 @@
     },
     {
       "description": "File icons set for TreeView. Download [font](https://github.com/yamatsum/nonicons/raw/6a2faf4fbdfbe353c5ae6a496740ac4bfb6d0e74/dist/nonicons.ttf) to your config/fonts folder",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/nonicons.lua",
       "id": "nonicons",
       "mod_version": "3"
@@ -1299,18 +1320,18 @@
       "mod_version": "3"
     },
     {
-      "description": "Displays tab numbers from 1–9 next to their names \\*([screenshot](https://user-images.githubusercontent.com/16415678/101285362-007a8500-37e5-11eb-869b-c10eb9d9d902.png))",
+      "description": "Displays tab numbers from 1–9 next to their names *([screenshot](https://user-images.githubusercontent.com/16415678/101285362-007a8500-37e5-11eb-869b-c10eb9d9d902.png))*",
       "version": "0.1",
       "path": "plugins/tabnumbers.lua",
       "id": "tabnumbers",
       "mod_version": "3"
     },
     {
-      "description": "An integrated terminal for lite-xl.",
-      "version": "0.9",
+      "description": "An integrated terminal for lite-xl. *([screenshot](https://github.com/adamharrison/lite-xl-terminal/assets/1034518/eb8a72a0-ff61-4b95-b009-364ac2725f70))*",
+      "version": "1.0",
       "id": "terminal",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-terminal.git:89788ede70768726cf60b5c3049f1fc67bea46cd"
+      "remote": "https://github.com/adamharrison/lite-xl-terminal.git:0cbd63583876a3653e613e0489d9339bc05e9a6a"
     },
     {
       "description": "Allows you to play tetris directly in the editor.",
@@ -1421,7 +1442,8 @@
     },
     {
       "description": "Plugin library that provides a set of re-usable components to more easily write UI elements for your plugins",
-      "version": "0.2",
+      "version": "0.2.1",
+      "type": "library",
       "remote": "https://github.com/lite-xl/lite-xl-widgets:b5e6e212c0516ec7b55f57c7efcfda9d791cdb0d",
       "mod_version": "3",
       "id": "widget"
@@ -1442,11 +1464,13 @@
       "mod_version": "3"
     },
     {
-     "id": "codeplus",
-     "version": "1.0",
-     "description": "Offers improvements such as highlighted comments and autocomplete for brackets, quotes and more. ([demo](https://s12.gifyu.com/images/Sckre.gif))",
-     "remote": "https://github.com/chqs-git/code-plus.git:b336999b707709df2ddcb865f664623c5beceabb",
-     "mod_version": 3
+      "description": "`pywal` integration with Lite XL.",
+      "version": "1.1",
+      "remote": "https://github.com/ThaCuber/wal.lxl:93bcf5dd64e9945fa88de22cd8b62a5467e80d6a",
+      "id": "wal",
+      "name": "wal.lxl",
+      "mod_version": "3",
+      "replaces": [ "wal_lxl" ]
     }
   ]
 }
