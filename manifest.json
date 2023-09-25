@@ -351,7 +351,7 @@
       "mod_version": "3"
     },
     {
-      "description": "Adds inter-process communication support",
+      "description": "Adds inter-process communication support, single-instance mode and tab drag and drop between instances.",
       "version": "0.3",
       "path": "plugins/ipc.lua",
       "id": "ipc",
