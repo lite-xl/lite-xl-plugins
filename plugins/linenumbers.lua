@@ -8,6 +8,7 @@ local command = require "core.command"
 config.plugins.linenumbers = common.merge({
   show = true,
   relative = false,
+  hybrid = false,
   -- The config specification used by the settings gui
   config_spec = {
     name = "Line Numbers",
@@ -24,12 +25,21 @@ config.plugins.linenumbers = common.merge({
       path = "relative",
       type = "toggle",
       default = false
+    },
+    {
+      label = "Hybrid Line Numbers",
+      description = "Display hybrid line numbers starting from active line (Overpowers relative line-numbers).",
+      path = "hybrid",
+      type = "toggle",
+      default = false
     }
   }
 }, config.plugins.linenumbers)
 
 local draw_line_gutter = DocView.draw_line_gutter
 local get_gutter_width = DocView.get_gutter_width
+local isHybridEnabled = false  -- Added flag to track hybrid mode
+
 
 function DocView:draw_line_gutter(line, x, y, width)
   local lh = self:get_line_height()
@@ -37,28 +47,41 @@ function DocView:draw_line_gutter(line, x, y, width)
     return lh
   end
 
-  if config.plugins.linenumbers.relative then
-    local color = style.line_number
-    local local_idx = line
+  local color = style.line_number
 
-    for _, line1, _, line2 in self.doc:get_selections(true) do
-      if line >= line1 and line <= line2 then
-        color = style.line_number2
-        break
-      end
-    end
-
-    local l1 = self.doc:get_selection(false)
-    if line == l1 then
+  for _, line1, _, line2 in self.doc:get_selections(true) do
+    if line == line1 then
       color = style.line_number2
-      local_idx = 0
-    else
-      local_idx = math.abs(line - l1)
+      break
     end
+  end
 
+  local l1 = self.doc:get_selection(false)
+
+  if config.plugins.linenumbers.hybrid then
+    if line == l1 then
+      common.draw_text(
+        self:get_font(),
+        color, l1, "left",  -- Use absolute line number for the current line
+        x,
+        y,
+        width, lh
+      )
+    else
+      local local_idx = math.abs(line - l1)
+      common.draw_text(
+        self:get_font(),
+        color, local_idx, "right",  -- Use relative line number for other lines
+        x + style.padding.x,
+        y,
+        width, lh
+      )
+    end
+  elseif config.plugins.linenumbers.relative then
+    local local_idx = math.abs(line - l1)
     common.draw_text(
       self:get_font(),
-      color, local_idx, "right",
+      color, local_idx, "right",  -- Use relative line number for all lines
       x + style.padding.x,
       y,
       width, lh
@@ -66,6 +89,7 @@ function DocView:draw_line_gutter(line, x, y, width)
   else
     return draw_line_gutter(self, line, x, y, width)
   end
+
   return lh
 end
 
@@ -112,5 +136,21 @@ command.add(nil, {
 
   ["relative-line-numbers:disable"]  = function()
     config.plugins.linenumbers.relative = false
+  end,
+
+  ["hybrid-line-numbers:toggle"]  = function()
+    config.plugins.linenumbers.hybrid = not config.plugins.linenumbers.hybrid
+    if config.plugins.linenumbers.hybrid then
+      config.plugins.linenumbers.relative = false  -- Disable relative mode when enabling hybrid mode
+    end -- Update hybrid flag
+  end,
+
+  ["hybrid-line-numbers:enable"]  = function()
+    config.plugins.linenumbers.hybrid = true
+    config.plugins.linenumbers.relative = false
+  end,
+
+  ["hybrid-line-numbers:disable"]  = function()
+    config.plugins.linenumbers.hybrid = false
   end
 })
