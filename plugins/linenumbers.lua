@@ -45,6 +45,10 @@ function DocView:draw_line_gutter(line, x, y, width)
     return lh
   end
 
+  if not (config.plugins.linenumbers.relative or config.plugins.linenumbers.hybrid) then
+    return draw_line_gutter(self, line, x, y, width)
+  end
+
   local color = style.line_number
 
   for _, line1, _, line2 in self.doc:get_selections(true) do
@@ -63,10 +67,6 @@ function DocView:draw_line_gutter(line, x, y, width)
     local_idx = line
     alignment = "left"
     x_offset = 0
-  elseif config.plugins.linenumbers.relative then
-    -- do nothing
-  else
-    return draw_line_gutter(self, line, x, y, width)
   end
 
   common.draw_text(
