@@ -63,8 +63,10 @@ function DocView:draw_line_gutter(line, x, y, width)
     local_idx = line
     alignment = "left"
     x_offset = 0
-  elseif not config.plugins.linenumbers.relative then
-    local_idx = line
+  elseif config.plugins.linenumbers.relative then
+    -- do nothing
+  else
+    return draw_line_gutter(self, line, x, y, width)
   end
 
   common.draw_text(
