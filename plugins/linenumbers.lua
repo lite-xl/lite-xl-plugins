@@ -129,7 +129,7 @@ command.add(nil, {
     config.plugins.linenumbers.hybrid = not config.plugins.linenumbers.hybrid
     if config.plugins.linenumbers.hybrid then
       config.plugins.linenumbers.relative = false -- Disable relative mode when enabling hybrid mode
-    end                                           -- Update hybrid flag
+    end
   end,
 
   ["hybrid-line-numbers:enable"]    = function()
