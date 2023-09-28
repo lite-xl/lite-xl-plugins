@@ -39,48 +39,6 @@ config.plugins.linenumbers = common.merge({
 local draw_line_gutter = DocView.draw_line_gutter
 local get_gutter_width = DocView.get_gutter_width
 
-
--- function DocView:draw_line_gutter(line, x, y, width)
---   local lh = self:get_line_height()
---   if not config.plugins.linenumbers.show then
---     return lh
---   end
-
---   local color = style.line_number
-
---   for _, line1, _, line2 in self.doc:get_selections(true) do
---     if line == line1 then
---       color = style.line_number2
---       break
---     end
---   end
-
---   local l1 = self.doc:get_selection(false)
---   local local_idx = math.abs(line - l1)
---   local alignment = "right"
---   local x_offset = style.padding.x
-
---   if config.plugins.linenumbers.hybrid and line == l1 then
---     local_idx = line
---     alignment = "left"
---     x_offset = 0
---   elseif config.plugins.linenumbers.relative then
---     alignment = "right"
---   else
---     return draw_line_gutter(self, line, x, y, width)
---   end
-
---   common.draw_text(
---     self:get_font(),
---     color, local_idx, alignment,
---     x + x_offset,
---     y,
---     width, lh
---   )
-
---   return lh
--- end
-
 function DocView:draw_line_gutter(line, x, y, width)
   local lh = self:get_line_height()
   if not config.plugins.linenumbers.show then
