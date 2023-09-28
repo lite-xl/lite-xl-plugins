@@ -1479,7 +1479,7 @@
     },
     {
       "name": "Threads",
-      "description": "Adds the missing multithreading functionality.",
+      "description": "Supports spawning true os-threads.",
       "version": "1.3",
       "type": "library",
       "remote": "https://github.com/jgmdev/lite-xl-threads:9299a9a6b778cb34b12f0286b9162779920a9197",

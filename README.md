@@ -265,6 +265,6 @@ but only with a `url` must provide a `checksum` that matches the existing plugin
 | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | [`encoding`](https://github.com/jgmdev/lite-xl-encoding)\* | Add support for detecting file and string encodings as converting between them.                              |
 | [`net`](https://github.com/jgmdev/lite-xl-net)\*           | Add support for TCP and UDP sockets using SDL_net.                                                           |
-| [`Threads`](https://github.com/jgmdev/lite-xl-threads)\*   | Adds the missing multithreading functionality.                                                               |
+| [`Threads`](https://github.com/jgmdev/lite-xl-threads)\*   | Supports spawning true os-threads.                                                                           |
 | [`widget`](https://github.com/lite-xl/lite-xl-widgets)\*   | Plugin library that provides a set of re-usable components to more easily write UI elements for your plugins |
 | [`www`](https://github.com/adamharrison/lite-xl-www.git)\* | A simple library that provides a web client to fetch, and submit data via HTTP requests.                     |
