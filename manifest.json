@@ -967,7 +967,7 @@
     },
     {
       "description": "The ability to change the display of the line number *([screenshot](https://user-images.githubusercontent.com/5556081/129493788-6a4cbd7a-9074-4133-bab7-110ed55f18f7.png))*",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/linenumbers.lua",
       "id": "linenumbers",
       "mod_version": "3"
