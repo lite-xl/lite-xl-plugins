@@ -72,11 +72,22 @@ command.add("core.docview!", {
     local indent_type, soft_size = doc:get_indent_info()
     local indent_string = indent_type == "hard" and "\t" or string.rep(" ", soft_size)
 
-    for idx, line, col, line2, col2 in doc:get_selections(true, true) do
+    for idx, line, col, _, _ in doc:get_selections(true, true) do
       -- We need to add `\n` to keep compatibility with the patterns
       -- that expected a newline to be placed where the caret is.
       local text = doc.lines[line]:sub(1, col - 1) .. '\n'
       local remainder = doc.lines[line]:sub(col, -1)
+      local line_indent_size = indent_size(doc, line)
+      -- Add more lines to remainder to detect `close`
+      for i=line+1,#doc.lines do
+        -- Stop adding when we find a line with a different indent level
+        if #doc.lines[i] > 1 and indent_size(doc, i) ~= line_indent_size then break end
+        remainder = remainder .. doc.lines[i]
+        -- Continue adding until the first non-empty line
+        if string.find(doc.lines[i], "%S") then
+          break
+        end
+      end
       local current_indent = text:match("^[\t ]*")
 
       local pre, post
@@ -84,18 +95,22 @@ command.add("core.docview!", {
         local s, _, str = text:find(ptn)
         if s then
           pre = string.format("\n%s%s", current_indent, indent_string)
-          if  close
-          and col == #doc.lines[line]
-          and indent_size(doc, line + 1) <= indent_size(doc, line)
+          if not close then break end
+          close = str and close:gsub("$TEXT", str) or close
+          if (col == #doc.lines[line] and indent_size(doc, line + 1) <= line_indent_size) or
+             (col < #doc.lines[line])
           then
-            close = str and close:gsub("$TEXT", str) or close
+            local clean_remainder = remainder:match("%s*(.*)")
             -- Avoid inserting `close` if it's already present
-            if remainder:find(close, 1, true) == 1 then
-              close = ""
+            local already_closed = clean_remainder:find(close, 1, true) == 1
+            if not already_closed and col == #doc.lines[line] then
+              -- Add the `close` only if we're at the end of the line
+              post = string.format("\n%s%s", current_indent, close)
+            elseif already_closed and col < #doc.lines[line] then
+              -- Indent the already present `close`
+              -- TODO: cleanup the spaces between the caret and the `close`
+              post = string.format("\n%s", current_indent)
             end
-            post = string.format("\n%s%s", current_indent, close)
-          elseif col < #doc.lines[line] then
-            post = string.format("\n%s", current_indent)
           end
           break
         end
