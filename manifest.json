@@ -1471,6 +1471,13 @@
       "name": "wal.lxl",
       "mod_version": "3",
       "replaces": [ "wal_lxl" ]
-    }
+    },
+        {
+      "description": "Graphical filepicker using zenity.",
+      "version": "0.1",
+      "path": "plugins/zenity.lua",
+      "id": "zenity",
+      "mod_version": "3"
+    },
   ]
 }
