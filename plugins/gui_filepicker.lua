@@ -7,7 +7,7 @@ local keymap = require("core.keymap")
 
 command.add(nil, {
 
-	["zenity:open-file"] = function()
+	["gui-filepicker:open-file"] = function()
 		local zen, proc_err = process.start({
 			"zenity",
 			"--file-selection",
@@ -38,7 +38,7 @@ command.add(nil, {
 		end)
 	end,
 
-	["zenity:open-project-folder"] = function()
+	["gui-filepicker:open-project-folder"] = function()
 		local zen, proc_err = process.start({
 			"zenity",
 			"--file-selection",
@@ -74,7 +74,7 @@ command.add(nil, {
 		end)
 	end,
 
-	["zenity:change-project-folder"] = function()
+	["gui-filepicker:change-project-folder"] = function()
 		local zen, proc_err = process.start({
 			"zenity",
 			"--file-selection",
@@ -112,7 +112,7 @@ command.add(nil, {
 		end)
 	end,
 
-	["zenity:add-directory"] = function()
+	["gui-filepicker:add-directory"] = function()
 		local zen, proc_err = process.start({
 			"zenity",
 			"--file-selection",
@@ -151,7 +151,7 @@ command.add(nil, {
 
 command.add("core.docview", {
 
-	["zenity:save-as"] = function(dv)
+	["gui-filepicker:save-as"] = function(dv)
 		local text
 		text = text or "new_file"
 		local doc = dv.doc
@@ -188,25 +188,23 @@ command.add("core.docview", {
 				return
 			end
 			doc:save(abs_path, abs_path)
-			core.log("Saved as " .. '"' .. dv.doc.filename  .. '"')
+			core.log('Saved as "%s"', dv.doc.filename)
 		end)
 	end,
 
-	["zenity:save"] = function(dv)
-		local doc = dv.doc
+	["gui-filepicker:save"] = function(dv)
 		if dv.doc.filename then
-			doc:save()
-			core.log("Saved " .. '"' .. dv.doc.filename  .. '"')
+			command.perform("doc:save")
 		else
-			command.perform("zenity:save-as")
+			command.perform("gui-filepicker:save-as")
 		end
 	end,
 })
 
 keymap.add({
-	["ctrl+s"] = "zenity:save",
-	["ctrl+shift+s"] = "zenity:save-as",
-	["ctrl+shift+c"] = "zenity:change-project-folder",
-	["ctrl+o"] = "zenity:open-file",
-	["ctrl+shift+o"] = "zenity:open-project-folder",
+	["ctrl+s"] = "gui-filepicker:save",
+	["ctrl+shift+s"] = "gui-filepicker:save-as",
+	["ctrl+shift+c"] = "gui-filepicker:change-project-folder",
+	["ctrl+o"] = "gui-filepicker:open-file",
+	["ctrl+shift+o"] = "gui-filepicker:open-project-folder",
 })
