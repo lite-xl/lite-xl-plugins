@@ -303,8 +303,8 @@
     },
     {
       "description": "highlight changed lines from git *([screenshot](https://raw.githubusercontent.com/vincens2005/lite-xl-gitdiff-highlight/master/screenshot.png))*",
-      "version": "0.1",
-      "remote": "https://github.com/vincens2005/lite-xl-gitdiff-highlight:12ddfa619054dfdd1ed86426d60b569dc536c43e",
+      "version": "0.2",
+      "remote": "https://github.com/vincens2005/lite-xl-gitdiff-highlight:f0e02b6a7299acbeb4a5f137b26830a6cca96cc8",
       "mod_version": "3",
       "id": "gitdiff_highlight"
     },
