@@ -330,6 +330,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Graphical filepicker using zenity.",
+      "version": "0.1",
+      "path": "plugins/gui_filepicker.lua",
+      "id": "gui_filepicker",
+      "mod_version": "3"
+    },
+    {
       "description": "Dark (or even Mica!) title bar for Lite XL",
       "version": "0.1",
       "remote": "https://github.com/takase1121/lite-xl-immersive-title:cf3a8029ac7154ea53ac819a95d44a6ff102f051",
