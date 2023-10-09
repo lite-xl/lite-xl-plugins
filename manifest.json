@@ -149,11 +149,12 @@
       "mod_version": "3"
     },
     {
-      "description": "Adds the current workspace and file to your Discord Rich Presence",
-      "version": "0.1",
-      "remote": "https://github.com/vincens2005/lite-xl-discord:93ac3abb7381fe6d5c9734e40c008cd26713f1a8",
+      "description": "Adds the current workspace and file to your Discord rich presence. Linux-only.",
+      "version": "0.2",
+      "remote": "https://github.com/vincens2005/lite-xl-discord2:71648e55ad812dc1029a3df70c17656ec7cb63bf",
       "mod_version": "3",
-      "id": "discord-presence"
+      "id": "discord-presence",
+      "name": "Discord RPC"
     },
     {
       "description": "Provides basic drag and drop of selected text (in same document)",
