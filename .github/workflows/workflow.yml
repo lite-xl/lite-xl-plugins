@@ -11,17 +11,17 @@ jobs:
       - uses: actions/checkout@v2
       - name: Generate table with `lpm`
         run: |
-          wget https://github.com/lite-xl/lite-xl-plugin-manager/releases/download/latest/lpm.x86_64-linux -O lpm && chmod +x lpm
+          wget https://github.com/lite-xl/lite-xl-plugin-manager/releases/download/latest/lpm.x86_64-linux -O lpm-latest && chmod +x lpm-latest
           # Remove everything after the --- so we can regenerate it.
           perl -pi -e 'exit(0) if $_ =~ m/^\-\-\-/' README.md && echo -e "---" >> README.md
           echo -e "\n## Plugins\n" >> README.md
-          ./lpm init . --userdir .
-          ./lpm list --table url,description --header Plugin,Description --type plugin --tag '!language' --status '!core' --userdir . >> README.md
+          ./lpm-latest init . --userdir .
+          ./lpm-latest list --table url,description --header Plugin,Description --type plugin --tag '!language' --status '!core' --userdir . >> README.md
           echo -e "\n## Languages\n" >> README.md
-          ./lpm list --table url,description --header Language,Description --type plugin --tag 'language' --userdir .  >> README.md
+          ./lpm-latest list --table url,description --header Language,Description --type plugin --tag 'language' --userdir .  >> README.md
           echo -e "\n## Libraries\n" >> README.md
-          ./lpm list --table url,description --header Library,Description --type library --userdir .  >> README.md
-          ./lpm purge --userdir .
+          ./lpm-latest list --table url,description --header Library,Description --type library --userdir .  >> README.md
+          ./lpm-latest purge --userdir .
           if ! git diff --exit-code -s README.md; then
             git config --global user.name "Github Actions" && git config --global user.email "<>"
             git add README.md
