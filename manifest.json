@@ -1314,7 +1314,7 @@
     },
     {
       "description": "Adds a motion-trail to the caret *([gif](https://user-images.githubusercontent.com/3920290/83256814-085ccb00-a1ab-11ea-9e35-e6633cbed1a9.gif))*",
-      "version": "0.2",
+      "version": "0.2.1",
       "path": "plugins/motiontrail.lua",
       "id": "motiontrail",
       "mod_version": "3"
