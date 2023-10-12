@@ -90,7 +90,7 @@ function DocView:draw_caret(x, y)
   self.last_doc_pos[caret_idx] = self.last_doc_pos[caret_idx] or {}
   local line, col = self.doc:get_selection_idx(caret_idx)
 
-  if self.draws <= 1 then
+  if (self.draws or 0) <= 1 then
     local lsx, lsy = self.last_pos[caret_idx][1] or x, self.last_pos[caret_idx][2] or y
     local lsl, lsc = self.last_doc_pos[caret_idx][1], self.last_doc_pos[caret_idx][2]
     local w, h = get_caret_size(self, caret_idx)
