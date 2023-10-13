@@ -4,6 +4,7 @@ local core = require("core")
 local command = require("core.command")
 local common = require("core.common")
 local keymap = require("core.keymap")
+local TreeView = require("plugins.treeview")
 
 local function run_zenity(options, callback)
 	local zen, proc_err = process.start({
@@ -129,3 +130,14 @@ keymap.add({
 	["ctrl+o"] = "gui-filepicker:open-file",
 	["ctrl+shift+o"] = "gui-filepicker:open-project-folder",
 })
+
+local replacements = {
+	["core:open-file"] = "gui-filepicker:open-file",
+	["doc:save"] = "gui-filepicker:save",
+}
+for _, v in ipairs(TreeView.toolbar.toolbar_commands) do
+	if replacements[v.command] then
+		v.command = replacements[v.command]
+	end
+end
+
