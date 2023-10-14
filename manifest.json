@@ -1259,21 +1259,21 @@
     {
       "description": "Automatic configuration/binary download for LSP completion for C/C++ with clangd.",
       "version": "16.0.2",
-      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:e08f5f0b8375ec30964fdfc0d9e340e2d2c59583",
+      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:58e1192b7abe9cff60c59b1c8b098fde88f03ecc",
       "mod_version": "3",
       "id": "lsp_c"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Lua with lua-language-server (sumneko).",
-      "version": "3.6.25",
-      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:e08f5f0b8375ec30964fdfc0d9e340e2d2c59583",
+      "version": "3.7.0",
+      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:58e1192b7abe9cff60c59b1c8b098fde88f03ecc",
       "mod_version": "3",
       "id": "lsp_lua"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Rust with rust-analyzer.",
-      "version": "20230814",
-      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:e08f5f0b8375ec30964fdfc0d9e340e2d2c59583",
+      "version": "20231009",
+      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:58e1192b7abe9cff60c59b1c8b098fde88f03ecc",
       "mod_version": "3",
       "id": "lsp_rust"
     },
