@@ -228,6 +228,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Hides the treeview at start if no arguments passed to the executable are directories. Compatible with lite.",
+      "version": "0.1",
+      "path": "plugins/cleanstart.lua",
+      "id": "cleanstart",
+      "mod_version": "3"
+    },
+    {
      "id": "codeplus",
      "version": "1.0",
      "description": "Offers improvements such as highlighted comments and autocomplete for brackets, quotes and more. ([demo](https://s12.gifyu.com/images/Sckre.gif))",
