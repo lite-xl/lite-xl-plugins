@@ -165,12 +165,12 @@ function DocView:draw_line_text(idx, x, y)
       if not s then break end
       local word = text:sub(s, e):lower()
       if not words[word] and not active_word(self.doc, idx, e + 1) then
-        local x,y = self:get_line_screen_position(idx, s)
-        table.insert(calculated, x + self.scroll.x)
-        table.insert(calculated, y + self.scroll.y)
-        x,y = self:get_line_screen_position(idx, e + 1)
-        table.insert(calculated, x + self.scroll.x)
-        table.insert(calculated, y + self.scroll.y)
+        local x1,y1 = self:get_line_screen_position(idx, s)
+        table.insert(calculated, x1 - x)
+        table.insert(calculated, y1 - y)
+        local x2,y2 = self:get_line_screen_position(idx, e + 1)
+        table.insert(calculated, x2 - x)
+        table.insert(calculated, y2 - y)
       end
     end
 
@@ -183,7 +183,7 @@ function DocView:draw_line_text(idx, x, y)
   local calculated = spell_cache[self.doc.highlighter][idx]
   for i=1,#calculated,4 do
     local x1, y1, x2, y2 = calculated[i], calculated[i+1], calculated[i+2], calculated[i+3]
-    renderer.draw_rect(x1 - self.scroll.x, y1 + slh - self.scroll.y, x2 - x1, h, color)
+    renderer.draw_rect(x + x1, y + y1 + slh - h, x2 - x1, h, color)
   end
   return lh
 end
