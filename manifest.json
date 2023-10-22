@@ -489,7 +489,7 @@
     },
     {
       "description": "Graphical filepicker using zenity.",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/gui_filepicker.lua",
       "id": "gui_filepicker",
       "mod_version": "3"

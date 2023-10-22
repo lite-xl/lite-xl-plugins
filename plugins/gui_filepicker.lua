@@ -4,192 +4,114 @@ local core = require("core")
 local command = require("core.command")
 local common = require("core.common")
 local keymap = require("core.keymap")
+local TreeView = require("plugins.treeview")
 
-command.add(nil, {
+local function run_zenity(options, callback)
+	local zen, proc_err = process.start({
+		"zenity",
+		table.unpack(options)
+	})
+	if not zen then
+		core.error("Unable to run zenity: %s", proc_err)
+		return
+	end
 
-	["gui-filepicker:open-file"] = function()
-		local zen, proc_err = process.start({
-			"zenity",
-			"--file-selection",
-		}, { stdout = process.REDIRECT_PIPE })
-		if not zen then
-			core.error("Unable to run zenity: %s", proc_err)
+	-- Run this in a coroutine, so we don't block the UI
+	core.add_thread(function()
+		local buffer = {}
+		repeat
+			local buf = zen:read_stdout()
+			if buf and #buf > 0 then
+				table.insert(buffer, buf)
+			end
+			coroutine.yield()
+		until not buf
+		local abs_path = table.concat(buffer) or ""
+
+		-- Remove final newline zenity adds
+		abs_path = string.match(abs_path, "^[^\n]+") or ""
+		if #abs_path == 0 then
 			return
 		end
 
-		-- Run this in a coroutine, so we don't block the UI
-		core.add_thread(function()
-			local buffer = {}
-			while zen:running() do
-				local buf = zen:read_stdout()
-				if buf and #buf > 0 then
-					table.insert(buffer, buf)
-				end
-				coroutine.yield()
-			end
-			local abs_path = table.concat(buffer) or ""
+		callback(abs_path)
+	end)
+end
 
-			-- Remove final newline zenity adds
-			abs_path = string.match(abs_path, "^[^\n]+") or ""
-			if #abs_path == 0 then
-				return
+command.add(nil, {
+	["gui-filepicker:open-file"] = function()
+		run_zenity(
+			{
+				"--file-selection"
+			},
+			function(abs_path)
+				core.root_view:open_doc(core.open_doc(common.home_expand(abs_path)))
 			end
-			core.root_view:open_doc(core.open_doc(common.home_expand(abs_path)))
-		end)
+		)
 	end,
 
 	["gui-filepicker:open-project-folder"] = function()
-		local zen, proc_err = process.start({
-			"zenity",
-			"--file-selection",
-			"--directory",
-		}, { stdout = process.REDIRECT_PIPE })
-		if not zen then
-			core.error("Unable to run zenity: %s", proc_err)
-			return
-		end
-
-		-- Run this in a coroutine, so we don't block the UI
-		core.add_thread(function()
-			local buffer = {}
-			while zen:running() do
-				local buf = zen:read_stdout()
-				if buf and #buf > 0 then
-					table.insert(buffer, buf)
+		run_zenity(
+			{
+				"--file-selection",
+				"--directory",
+			},
+			function(abs_path)
+				if abs_path == core.project_dir then
+					return
 				end
-				coroutine.yield()
+				os.execute(string.format("%q %q", EXEFILE, abs_path))
 			end
-			local abs_path = table.concat(buffer) or ""
-
-			-- Remove final newline zenity adds
-			abs_path = string.match(abs_path, "^[^\n]+") or ""
-			if #abs_path == 0 then
-				return
-			end
-
-			if abs_path == core.project_dir then
-				return
-			end
-			os.execute(string.format("%q %q", EXEFILE, abs_path))
-		end)
+		)
 	end,
 
 	["gui-filepicker:change-project-folder"] = function()
-		local zen, proc_err = process.start({
-			"zenity",
-			"--file-selection",
-			"--directory",
-		}, { stdout = process.REDIRECT_PIPE })
-		if not zen then
-			core.error("Unable to run zenity: %s", proc_err)
-			return
-		end
-
-		-- Run this in a coroutine, so we don't block the UI
-		core.add_thread(function()
-			local buffer = {}
-			while zen:running() do
-				local buf = zen:read_stdout()
-				if buf and #buf > 0 then
-					table.insert(buffer, buf)
+		run_zenity(
+			{
+				"--file-selection",
+				"--directory",
+			},
+			function(abs_path)
+				if abs_path == core.project_dir then
+					return
 				end
-				coroutine.yield()
+				core.confirm_close_docs(core.docs, function(dirpath)
+					core.open_folder_project(dirpath)
+				end, abs_path)
 			end
-			local abs_path = table.concat(buffer) or ""
-
-			-- Remove final newline zenity adds
-			abs_path = string.match(abs_path, "^[^\n]+") or ""
-			if #abs_path == 0 then
-				return
-			end
-
-			if abs_path == core.project_dir then
-				return
-			end
-			core.confirm_close_docs(core.docs, function(dirpath)
-				core.open_folder_project(dirpath)
-			end, abs_path)
-		end)
+		)
 	end,
 
 	["gui-filepicker:add-directory"] = function()
-		local zen, proc_err = process.start({
-			"zenity",
-			"--file-selection",
-			"--directory",
-		}, { stdout = process.REDIRECT_PIPE })
-		if not zen then
-			core.error("Unable to run zenity: %s", proc_err)
-			return
-		end
-
-		-- Run this in a coroutine, so we don't block the UI
-		core.add_thread(function()
-			local buffer = {}
-			while zen:running() do
-				local buf = zen:read_stdout()
-				if buf and #buf > 0 then
-					table.insert(buffer, buf)
+		run_zenity(
+			{
+				"--file-selection",
+				"--directory",
+			},
+			function(abs_path)
+				if abs_path == core.project_dir then
+					return
 				end
-				coroutine.yield()
+				core.add_project_directory(system.absolute_path(abs_path))
 			end
-			local abs_path = table.concat(buffer) or ""
-
-			-- Remove final newline zenity adds
-			abs_path = string.match(abs_path, "^[^\n]+") or ""
-			if #abs_path == 0 then
-				return
-			end
-
-			if abs_path == core.project_dir then
-				return
-			end
-			core.add_project_directory(system.absolute_path(abs_path))
-		end)
+		)
 	end,
 })
 
 command.add("core.docview", {
-
 	["gui-filepicker:save-as"] = function(dv)
-		local text
-		text = text or "new_file"
-		local doc = dv.doc
-		if dv.doc.filename then
-			text = dv.doc.filename
-		end
-		local zen, proc_err = process.start({
-			"zenity",
-			"--file-selection",
-			"--save",
-			"--filename",
-			text,
-		}, { stdout = process.REDIRECT_PIPE })
-		if not zen then
-			core.error("Unable to run zenity: %s", proc_err)
-			return
-		end
-
-		-- Run this in a coroutine, so we don't block the UI
-		core.add_thread(function()
-			local buffer = {}
-			while zen:running() do
-				local buf = zen:read_stdout()
-				if buf and #buf > 0 then
-					table.insert(buffer, buf)
-				end
-				coroutine.yield()
+		run_zenity(
+			{
+				"--file-selection",
+				"--save",
+				"--filename",
+				dv.doc.filename or "new_file",
+			},
+			function(abs_path)
+				dv.doc:save(abs_path, abs_path)
+				core.log('Saved as "%s"', dv.doc.filename)
 			end
-			local abs_path = table.concat(buffer) or ""
-
-			-- Remove final newline zenity adds
-			abs_path = string.match(abs_path, "^[^\n]+") or ""
-			if #abs_path == 0 then
-				return
-			end
-			doc:save(abs_path, abs_path)
-			core.log('Saved as "%s"', dv.doc.filename)
-		end)
+		)
 	end,
 
 	["gui-filepicker:save"] = function(dv)
@@ -208,3 +130,14 @@ keymap.add({
 	["ctrl+o"] = "gui-filepicker:open-file",
 	["ctrl+shift+o"] = "gui-filepicker:open-project-folder",
 })
+
+local replacements = {
+	["core:open-file"] = "gui-filepicker:open-file",
+	["doc:save"] = "gui-filepicker:save",
+}
+for _, v in ipairs(TreeView.toolbar.toolbar_commands) do
+	if replacements[v.command] then
+		v.command = replacements[v.command]
+	end
+end
+
