@@ -63,15 +63,16 @@ syntax.add {
         ["or"] = "keyword",
         ["public"] = "keyword",
         ["return"] = "keyword",
+        ["static"] = "keyword",
         ["self"] = "literal",
         ["struct"] = "keyword",
         ["switch"] = "keyword",
         ["test"] = "keyword",
+        ["throw"] = "keyword",
         ["trait"] = "keyword",
         ["true"] = "literal",
-        ["undefined"] = "keyword",
+        ["undefined"] = "literal",
         ["unsafe"] = "keyword",
-        ["var"] = "keyword",
         ["while"] = "keyword",
 
         -- types
