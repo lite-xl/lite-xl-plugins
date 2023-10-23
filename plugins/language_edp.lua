@@ -628,6 +628,5 @@ syntax.add {
     ["mpiReduce"] = "function",
     ["mpiAllReduce"] = "function",
     ["mpiReduceScatter"] = "function",
-
   },
 }
