@@ -3,7 +3,7 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "MARTe",
-  files = { "%.cfg$", "%.marte$" },
+  files = { "%.mrt$", "%.marte$" },
   comment = "//",
   block_comment = { "/*", "*/" },
   patterns = {
