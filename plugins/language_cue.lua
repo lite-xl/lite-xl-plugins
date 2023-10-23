@@ -6,7 +6,7 @@ syntax.add {
   files = "%.cue$",
   comment = "//",
   patterns = {
-    { pattern = "//*",                       type = "comment" },
+    { pattern = "//.*",                      type = "comment" },
     { pattern = { '"', '"', '\\' },          type = "string" },
     { pattern = { "`", "`", '\\' },          type = "string" },
     { pattern = { "'", "'", '\\' },          type = "string" },
