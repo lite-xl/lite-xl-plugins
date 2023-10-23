@@ -1,5 +1,4 @@
 -- mod-version:3
--- lite-xl 2.0
 local syntax = require "core.syntax"
 
 syntax.add {
@@ -16,7 +15,7 @@ syntax.add {
     { pattern = "-?%d+_%di?",                type = "number" },
     { pattern = "-?%d+[%d%.eE]*f?i?",        type = "number" },
     { pattern = "-?%.?%d+f?i?",              type = "number" },
-    { pattern = "[%a_][%w_]*%.",        type = "literal" },
+    { pattern = "[%a_][%w_]*%.",             type = "literal" },
     { pattern = "[%a_][%w_]*",               type = "symbol" },
     { pattern = "#[%a][%w_]*",               type = "keyword2" },
     -- operators
