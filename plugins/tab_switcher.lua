@@ -7,6 +7,42 @@ local DocView = require "core.docview"
 
 local nodes_visit_order = setmetatable({}, {__mode = "k"})
 
+---When true, releasing all the modifier keys will accept the selection
+local hold_mode = false
+---Whether or not the CommandView relative to this plugin is active
+local in_switcher = false
+
+---@param t table<any, boolean?>
+---@return boolean
+local function any_true(t)
+  for _, v in pairs(t) do
+    if v then return true end
+  end
+  return false
+end
+
+-- We need to override keymap.on_key_released to detect that all the modifier
+-- keys were released while in "hold" mode, to accept the current selection.
+local old_keymap_on_key_released = keymap.on_key_released
+function keymap.on_key_released(k)
+  -- Check if hold_mode has been triggered erroneously
+  if hold_mode and not in_switcher then
+    hold_mode = false
+    core.warning("Something went wrong with the tab_switcher plugin. " ..
+                 "Please open an issue about it in the plugins repository on Github.")
+  end
+
+  local was_pressed = any_true(keymap.modkeys)
+  old_keymap_on_key_released(k)
+  local still_pressed = any_true(keymap.modkeys)
+
+  if hold_mode and was_pressed and not still_pressed then
+    hold_mode = false
+    command.perform("command:submit")
+  end
+end
+
+
 local order_counter = 0
 
 local core_set_active_view = core.set_active_view
@@ -17,6 +53,14 @@ function core.set_active_view(view)
 end
 
 local tab_switcher = {}
+
+---@class tab_switcher.tab_item
+---@field text string The tab name
+---@field view core.view
+
+---Returns the list of DocView tabs under a specific node tree.
+---@param base_node core.node Where to start the search from
+---@return tab_switcher.tab_item[]
 function tab_switcher.get_tab_list(base_node)
   local raw_list = base_node:get_children()
   local list = {}
@@ -35,13 +79,6 @@ function tab_switcher.get_tab_list(base_node)
   table.sort(list, function(a, b)
     return (nodes_visit_order[a.view] or -1) > (nodes_visit_order[b.view] or -1)
   end)
-  if #list > 1 then
-    -- Set last element to be the previously focused tab,
-    -- so that pressing enter is enough to switch to it.
-    local last = list[1]
-    list[1] = list[2]
-    list[2] = last
-  end
   return list
 end
 
@@ -50,9 +87,13 @@ local function set_active_view(view)
   if n then n:set_active_view(view) end
 end
 
+---@param label string
+---@param items tab_switcher.tab_item[]
 local function ask_selection(label, items)
+  in_switcher = true
   core.command_view:enter(label, {
     submit = function(_, item)
+      in_switcher = false
       set_active_view(item.view)
     end,
     suggest = function(text)
@@ -64,37 +105,55 @@ local function ask_selection(label, items)
     end,
     validate = function(_, item)
       return item
-    end
+    end,
+    cancel = function()
+      in_switcher = false
+    end,
   })
 end
 
-command.add(function()
-    local items = tab_switcher.get_tab_list(core.root_view.root_node)
+command.add(function(items)
+    items = items or tab_switcher.get_tab_list(core.root_view.root_node)
     return #items > 0, items
   end, {
   ["tab-switcher:tab-list"] = function(items)
     ask_selection("Switch to tab", items)
   end,
   ["tab-switcher:switch-to-last-tab"] = function(items)
-    set_active_view(items[1].view)
+    command.perform("tab-switcher:tab-list", items)
+    command.perform("tab-switcher:previous-tab")
   end,
 })
 
-command.add(function()
-    local items = tab_switcher.get_tab_list(core.root_view:get_active_node())
+command.add(function(items)
+    items = items or tab_switcher.get_tab_list(core.root_view:get_active_node())
     return #items > 0, items
   end, {
   ["tab-switcher:tab-list-current-split"] = function(items)
     ask_selection("Switch to tab in current split", items)
   end,
   ["tab-switcher:switch-to-last-tab-in-current-split"] = function(items)
-    set_active_view(items[1].view)
+    command.perform("tab-switcher:tab-list-current-split", items)
+    command.perform("tab-switcher:previous-tab")
+  end,
+})
+
+command.add(function() return in_switcher end, {
+  ["tab-switcher:next-tab"] = function()
+    hold_mode = true
+    command.perform("command:select-next")
+  end,
+  ["tab-switcher:previous-tab"] = function()
+    hold_mode = true
+    command.perform("command:select-previous")
   end,
 })
 
 keymap.add({
-  ["alt+p"]       = "tab-switcher:tab-list",
-  ["alt+shift+p"] = "tab-switcher:tab-list-current-split"
+  ["alt+p"]             = { "tab-switcher:previous-tab", "tab-switcher:tab-list" },
+  ["ctrl+alt+p"]        = { "tab-switcher:previous-tab", "tab-switcher:switch-to-last-tab" },
+  ["alt+shift+p"]       = { "tab-switcher:next-tab", "tab-switcher:tab-list-current-split" },
+  ["ctrl+alt+shift+p"]  = { "tab-switcher:next-tab", "tab-switcher:switch-to-last-tab-in-current-split" },
 })
 
 return tab_switcher
