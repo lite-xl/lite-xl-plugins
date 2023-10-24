@@ -61,7 +61,7 @@
     {
       "id": "meta_languages",
       "type": "meta",
-      "version": "0.1",
+      "version": "0.1.1",
       "mod_version": "3",
       "description": "A metapackage containing all publically accessible language syntaxes.",
       "dependencies": {
@@ -77,9 +77,11 @@
         "language_containerfile": {},
         "language_crystal": {},
         "language_csharp": {},
+        "language_cue": {},
         "language_d": {},
         "language_dart": {},
         "language_diff": {},
+        "language_edp": {},
         "language_elixir": {},
         "language_elm": {},
         "language_env": {},
@@ -110,6 +112,7 @@
         "language_lobster": {},
         "language_lox": {},
         "language_make": {},
+        "language_marte": {},
         "language_meson": {},
         "language_miniscript": {},
         "language_moon": {},
