@@ -38,12 +38,12 @@ function tokenizer.extract_subsyntaxes(base_syntax, state)
   return extract_subsyntaxes(base_syntax, state.istate)
 end
 
-function tokenizer.tokenize(syntax, text, state)
+function tokenizer.tokenize(syntax, text, state, resume)
   if not config.plugins.rainbowparen.enabled then
-    return tokenize(syntax, text, state)
+    return tokenize(syntax, text, state, resume)
   end
   state = state or {}
-  local res, istate = tokenize(syntax, text, state.istate)
+  local res, istate, resume = tokenize(syntax, text, state.istate, resume)
   local parenstack = state.parenstack or ""
   local newres = {}
   -- split parens out
@@ -77,7 +77,7 @@ function tokenizer.tokenize(syntax, text, state)
       table.insert(newres, text)
     end
   end
-  return newres, { parenstack = parenstack, istate = istate }
+  return newres, { parenstack = parenstack, istate = istate }, resume
 end
 
 local function toggle_rainbowparen(enabled)
