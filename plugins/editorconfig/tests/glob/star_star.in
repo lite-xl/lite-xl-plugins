@@ -1,0 +1,15 @@
+; test **
+
+root=true
+
+[a**z.c]
+key1=value1
+
+[b/**z.c]
+key2=value2
+
+[c**/z.c]
+key3=value3
+
+[d/**/z.c]
+key4=value4

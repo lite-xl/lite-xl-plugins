@@ -14,18 +14,6 @@ local core = require "core"
 local keymap = require "core.keymap"
 local style = require "core.style"
 
--- Workaround for bug in Lite XL 2.1
--- Remove this when b029f5993edb7dee5ccd2ba55faac1ec22e24609 is in a release
-local function get_selection(doc, sort)
-  local line1, col1, line2, col2 = doc:get_selection_idx(doc.last_selection)
-  if line1 then
-    return doc:get_selection_idx(doc.last_selection, sort)
-  else
-    return doc:get_selection_idx(1, sort)
-  end
-end
-
-
 -- helper function for on_mouse_pressed to determine if mouse down is in selection
 -- iLine is line number where mouse down happened
 -- iCol is column where mouse down happened
@@ -43,7 +31,7 @@ end -- isInSelection
 
 -- distance between two points
 local function distance(x1, y1, x2, y2)
-  return math.sqrt(math.pow(x2-x1, 2)+math.pow(y2-y1, 2))
+  return math.sqrt((x2-x1)^2+(y2-y1)^2)
 end
 
 local min_drag = style.code_font:get_width(" ")
@@ -108,7 +96,7 @@ function DocView:on_mouse_pressed(button, x, y, clicks)
   -- convert pixel coordinates to line and column coordinates
   local iLine, iCol = self:resolve_screen_position(x, y)
   -- get selection coordinates
-  local iSelLine1, iSelCol1, iSelLine2, iSelCol2 = get_selection(self.doc, true)
+  local iSelLine1, iSelCol1, iSelLine2, iSelCol2 = self.doc:get_selection(true)
   -- set flag for on_mouse_released and on_mouse_moved() methods to detect dragging
   self.bClickedIntoSelection = isInSelection(iLine, iCol, iSelLine1, iSelCol1,
                                              iSelLine2, iSelCol2)

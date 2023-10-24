@@ -828,12 +828,12 @@ system.wait_event = function(timeout)
       local h = 0.5 / 2
       local dt = math.ceil(t / h) * h - t
 
-      system_wait_event(dt + 1 / config.fps)
+      return system_wait_event(dt + 1 / config.fps)
     else
-      system_wait_event()
+      return system_wait_event()
     end
   else
-    system_wait_event(timeout)
+    return system_wait_event(timeout)
   end
 end
 
@@ -866,7 +866,7 @@ end
 local system_get_time = system.get_time
 
 system.get_time = function()
-  if settings_found and not settings.ui then
+  if settings_found and settings and not settings.ui then
     return system_get_time()
   end
 

@@ -4,17 +4,6 @@ local DocView = require "core.docview"
 
 -- originally written by luveti
 
--- Workaround for bug in Lite XL 2.1
--- Remove this when b029f5993edb7dee5ccd2ba55faac1ec22e24609 is in a release
-local function get_selection(doc, sort)
-  local line1, col1, line2, col2 = doc:get_selection_idx(doc.last_selection)
-  if line1 then
-    return doc:get_selection_idx(doc.last_selection, sort)
-  else
-    return doc:get_selection_idx(1, sort)
-  end
-end
-
 local function draw_box(x, y, w, h, color)
   local r = renderer.draw_rect
   local s = math.ceil(SCALE)
@@ -29,7 +18,7 @@ local draw_line_body = DocView.draw_line_body
 
 function DocView:draw_line_body(line, x, y)
   local line_height = draw_line_body(self, line, x, y)
-  local line1, col1, line2, col2 = get_selection(self.doc, true)
+  local line1, col1, line2, col2 = self.doc:get_selection(true)
   if line1 == line2 and col1 ~= col2 then
     local selection = self.doc:get_text(line1, col1, line2, col2)
     if not selection:match("^%s+$") then
