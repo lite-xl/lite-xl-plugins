@@ -7,6 +7,7 @@ local StatusView = require "core.statusview"
 local TreeView = require "plugins.treeview"
 
 config.plugins.gitstatus = common.merge({
+  color_icons = true,
   recurse_submodules = true,
   -- The config specification used by the settings gui
   config_spec = {
@@ -39,16 +40,17 @@ function TreeView:get_item_text(item, active, hovered)
   return text, font, color
 end
 
--- Override TreeView's get_item_icon to add modification color
-local treeview_get_item_icon = TreeView.get_item_icon
-function TreeView:get_item_icon(item, active, hovered)
-  local character, font, color = treeview_get_item_icon(self, item, active, hovered)
-  if cached_color_for_item[item.abs_filename] then
-    color = cached_color_for_item[item.abs_filename]
+if config.plugins.gitstatus.color_icons then
+  -- Override TreeView's get_item_icon to add modification color
+  local treeview_get_item_icon = TreeView.get_item_icon
+  function TreeView:get_item_icon(item, active, hovered)
+    local character, font, color = treeview_get_item_icon(self, item, active, hovered)
+    if cached_color_for_item[item.abs_filename] then
+      color = cached_color_for_item[item.abs_filename]
+    end
+    return character, font, color
   end
-  return character, font, color
 end
-
 
 local git = {
   branch = nil,
