@@ -13,6 +13,13 @@ config.plugins.gitstatus = common.merge({
   config_spec = {
     name = "Git Status",
     {
+      label = "Colorize icons",
+      description = "Colorize the icons as well",
+      path = "color_icons",
+      type = "toggle",
+      default = true
+    },
+    {
       label = "Recurse Submodules",
       description = "Also retrieve git stats from submodules.",
       path = "recurse_submodules",
