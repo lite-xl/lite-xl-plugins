@@ -478,7 +478,7 @@
     },
     {
       "description": "Displays git branch and insert/delete count in status bar *([screenshot](https://user-images.githubusercontent.com/3920290/81107223-bcea3080-8f0e-11ea-8fc7-d03173f42e33.png))*",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/gitstatus.lua",
       "id": "gitstatus",
       "mod_version": "3"
