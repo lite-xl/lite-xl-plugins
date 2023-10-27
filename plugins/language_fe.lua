@@ -2,8 +2,8 @@
 local syntax = require "core.syntax"
 
 syntax.add {
-  name = "cel7",
-  files = "%.c7$",
+  name = "fe",
+  files = "%.fe$",
   comment = ";",
   patterns = {
     { pattern = ";.-\n",              type = "comment"  },
