@@ -61,7 +61,7 @@
     {
       "id": "meta_languages",
       "type": "meta",
-      "version": "0.1.1",
+      "version": " 0.1.2",
       "mod_version": "3",
       "description": "A metapackage containing all publically accessible language syntaxes.",
       "dependencies": {
@@ -72,6 +72,7 @@
         "language_batch": {},
         "language_bib": {},
         "language_blade": {},
+        "language_c7": {},
         "language_caddyfile": {},
         "language_cmake": {},
         "language_containerfile": {},
