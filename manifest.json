@@ -1450,7 +1450,7 @@
     },
     {
       "description": "Show nesting of parentheses with rainbow colours",
-      "version": "0.1",
+      "version": "0.1.1",
       "path": "plugins/rainbowparen.lua",
       "id": "rainbowparen",
       "mod_version": "3"
