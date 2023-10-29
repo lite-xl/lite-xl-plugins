@@ -61,7 +61,7 @@
     {
       "id": "meta_languages",
       "type": "meta",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "mod_version": "3",
       "description": "A metapackage containing all publically accessible language syntaxes.",
       "dependencies": {
@@ -72,6 +72,7 @@
         "language_batch": {},
         "language_bib": {},
         "language_blade": {},
+        "language_c7": {},
         "language_caddyfile": {},
         "language_cmake": {},
         "language_containerfile": {},
@@ -600,6 +601,14 @@
       "tags": ["language"]
     },
     {
+      "description": "Syntax for the modifications to [fe](https://github.com/rxi/fe/) used in [cel7](https://rxi.itch.io/cel7)",
+      "version": "0.1",
+      "path": "plugins/language_c7.lua",
+      "id": "language_c7",
+      "mod_version": "3",
+      "tags": ["language"]
+    },
+    {
       "description": "Syntax for the Caddyfile used on the [Caddy](https://caddyserver.com/) web server",
       "version": "0.1",
       "path": "plugins/language_caddyfile.lua",
@@ -713,7 +722,7 @@
     },
     {
       "description": "Syntax for the [fe](https://github.com/rxi/fe) programming language",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_fe.lua",
       "id": "language_fe",
       "mod_version": "3",
