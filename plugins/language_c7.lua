@@ -6,7 +6,7 @@ syntax.add {
   files = "%.c7$",
   comment = ";",
   patterns = {
-    { pattern = ";.-\n",              type = "comment"  },
+    { pattern = ";.*",                type = "comment"  },
     { pattern = { '"', '"', '\\' },   type = "string"   },
     { pattern = "0x4000",             type = "literal"  },
     { pattern = "0x4040",             type = "literal"  },

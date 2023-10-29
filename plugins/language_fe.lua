@@ -6,7 +6,7 @@ syntax.add {
   files = "%.fe$",
   comment = ";",
   patterns = {
-    { pattern = ";.-\n",              type = "comment"  },
+    { pattern = ";.*",                type = "comment"  },
     { pattern = { '"', '"', '\\' },   type = "string"   },
     { pattern = "0x[%da-fA-F]+",      type = "number"   },
     { pattern = "-?%d+[%d%.]*",       type = "number"   },
