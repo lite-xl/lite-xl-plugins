@@ -1,7 +1,7 @@
 -- mod-version:3
 
 -- Syntax highlighting for the Rivet programming language.
--- by StunxFS :)
+-- By StunxFS.
 
 local syntax = require "core.syntax"
 
@@ -38,7 +38,6 @@ syntax.add {
         ["and"] = "keyword",
         ["as"] = "keyword",
         ["break"] = "keyword",
-        ["c_import"] = "keyword",
         ["catch"] = "keyword",
         ["comptime"] = "keyword",
         ["const"] = "keyword",
@@ -49,8 +48,6 @@ syntax.add {
         ["errdefer"] = "keyword",
         ["extend"] = "keyword",
         ["extern"] = "keyword",
-        ["export"] = "keyword",
-        ["false"] = "literal",
         ["func"] = "keyword",
         ["for"] = "keyword",
         ["from"] = "keyword",
@@ -59,21 +56,24 @@ syntax.add {
         ["in"] = "keyword",
         ["is"] = "keyword",
         ["mut"] = "keyword",
-        ["none"] = "literal",
         ["or"] = "keyword",
         ["public"] = "keyword",
         ["return"] = "keyword",
         ["static"] = "keyword",
-        ["self"] = "literal",
         ["struct"] = "keyword",
         ["switch"] = "keyword",
         ["test"] = "keyword",
         ["throw"] = "keyword",
         ["trait"] = "keyword",
-        ["true"] = "literal",
-        ["undefined"] = "literal",
         ["unsafe"] = "keyword",
         ["while"] = "keyword",
+
+        -- literals
+        ["false"] = "literal",
+        ["none"] = "literal",
+        ["self"] = "literal",
+        ["true"] = "literal",
+        ["undefined"] = "literal",
 
         -- types
         ["never"] = "keyword2",
