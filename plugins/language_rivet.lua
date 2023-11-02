@@ -1,7 +1,7 @@
 -- mod-version:3
 
 -- Syntax highlighting for the Rivet programming language.
--- by StunxFS :)
+-- By StunxFS.
 
 local syntax = require "core.syntax"
 
@@ -38,7 +38,6 @@ syntax.add {
         ["and"] = "keyword",
         ["as"] = "keyword",
         ["break"] = "keyword",
-        ["c_import"] = "keyword",
         ["catch"] = "keyword",
         ["comptime"] = "keyword",
         ["const"] = "keyword",
@@ -49,7 +48,6 @@ syntax.add {
         ["errdefer"] = "keyword",
         ["extend"] = "keyword",
         ["extern"] = "keyword",
-        ["export"] = "keyword",
         ["false"] = "literal",
         ["func"] = "keyword",
         ["for"] = "keyword",
