@@ -874,6 +874,14 @@
       "tags": ["language"]
     },
     {
+      "description": "Syntax for the [JSON](https://www.json.org/json-en.html) language",
+      "version": "0.1",
+      "path": "plugins/language_json.lua",
+      "id": "language_json",
+      "mod_version": "3",
+      "tags": ["language"]
+    },
+    {
       "description": "Syntax for the [Julia](https://julialang.org/) programming language",
       "version": "0.1",
       "path": "plugins/language_julia.lua",
