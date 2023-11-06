@@ -8,8 +8,7 @@ syntax.add {
   comment = nil,
   patterns = {
 
-    { pattern = '\"[a-zA-Z0-9_]*\":', type = "keyword" }, -- key (string)
-    { pattern = '[0-9_]*:', type = "keyword" }, -- key (int)
+    { pattern = '\"[a-zA-Z0-9_]*\":', type = "keyword" }, -- key
     { pattern = { '"', '"', "\\"}, type = "string" }, -- value
 
     -- numbers
@@ -18,11 +17,10 @@ syntax.add {
     { pattern = "-?%.?%d+", type = "number" },
 
     -- literals
-    { pattern = "NaN", type = "literal" },
-    { pattern = "Infinity", type = "literal" },
     { pattern = "null", type = "literal" },
     { pattern = "true", type = "literal" },
     { pattern = "false", type = "literal" }
   },
   symbols = { }
 }
+
