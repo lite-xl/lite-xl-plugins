@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:3 priority:90
 
 local syntax = require "core.syntax"
 
