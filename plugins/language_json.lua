@@ -1,4 +1,4 @@
--- mod-version:3 priority:90
+-- mod-version:3 priority:110
 
 local syntax = require "core.syntax"
 
@@ -7,8 +7,8 @@ syntax.add {
   files = { "%.json$" },
   comment = nil,
   patterns = {
-    { pattern = '\"[a-zA-Z0-9_ -]*\":', type = "keyword" }, -- key
-    { pattern = '\"[^\n]*"', type = "string" }, -- value
+    { pattern = '"[^\n]*"%s*:', type = "keyword" }, -- key
+    { pattern = '"[^\n]*"', type = "string" }, -- value
     { pattern = "0x[%da-fA-F]+", type = "number" },
     { pattern = "-?%d+[%d%.eE]*",  type = "number" },
     { pattern = "-?%.?%d+", type = "number" },
