@@ -1,4 +1,4 @@
--- mod-version:3 priority:90
+-- mod-version:3
 
 local syntax = require "core.syntax"
 
@@ -8,8 +8,8 @@ syntax.add {
   comment = nil,
   patterns = {
 
-    { pattern = '\"[a-zA-Z0-9_]*\":', type = "keyword" }, -- key
-    { pattern = { '"', '"', "\\"}, type = "string" }, -- value
+    { pattern = '\"[a-zA-Z0-9_ -]*\":', type = "keyword" }, -- key
+    { pattern = '\"[^\n]*"', type = "keyword" }, -- value
 
     -- numbers
     { pattern = "0x[%da-fA-F]+", type = "number" },
