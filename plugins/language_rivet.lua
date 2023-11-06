@@ -1,7 +1,8 @@
 -- mod-version:3
 
 -- Syntax highlighting for the Rivet programming language.
--- By StunxFS.
+-- This plugin is always updated to the latest Rivet syntax.
+-- By StunxFS =).
 
 local syntax = require "core.syntax"
 
@@ -31,6 +32,7 @@ syntax.add {
         {pattern = "%@%s?[%a_][%w_]*", type = "literal"}, -- builtin func/var
         {pattern = "[%a_][%w_]*%f[(]", type = "function"},
         {pattern = "#%s?[%a_][%w_]*", type = "comment"}, -- if/else_if/else/endif
+        {pattern = "#%s?.*", type = "comment"}, -- attributes
         {pattern = "[%a_][%w_]*", type = "symbol"}
     },
     symbols = {
@@ -92,8 +94,7 @@ syntax.add {
         ["usize"] = "keyword2",
         ["float32"] = "keyword2",
         ["float64"] = "keyword2",
-        ["anyptr"] = "keyword2",
-        ["mut_anyptr"] = "keyword2",
+        ["rawptr"] = "keyword2",
         ["rune"] = "keyword2",
         ["string"] = "keyword2",
         ["Self"] = "keyword2"
