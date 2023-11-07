@@ -5,7 +5,8 @@ local syntax = require "core.syntax"
 syntax.add {
   name = "JSON",
   files = { "%.json$", "%.cjson$" },
-  comment = nil,
+  comment = "//",
+  block_comment = {"/*", "*/"},
   patterns = {
   
     -- cjson support
