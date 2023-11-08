@@ -4,7 +4,7 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "JSON",
-  files = { "%.json$", "%.cjson$" },
+  files = { "%.json$", "%.cjson$", "%.jsonc$" },
   comment = "//",
   block_comment = {"/*", "*/"},
   patterns = {
