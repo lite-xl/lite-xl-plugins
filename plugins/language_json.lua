@@ -13,8 +13,8 @@ syntax.add {
     { pattern = "//.*", type = "comment" },
     { pattern = { "/%*", "%*/" }, type = "comment" },
     
-    { pattern = '"[^\n]-"()%s*:', type = "normal" }, -- key
-    { pattern = '"[^\n]-"', type = "string" }, -- value
+    { regex = [["(?:[^"\\]|\\.)*"()\s*:]], type = { "keyword", "normal" } }, -- key
+    { regex = [["(?:[^"\\]|\\.)*"]], type = "string" }, -- value
     { pattern = "0x[%da-fA-F]+", type = "number" },
     { pattern = "-?%d+[%d%.eE]*",  type = "number" },
     { pattern = "-?%.?%d+", type = "number" },
