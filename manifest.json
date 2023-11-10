@@ -106,6 +106,7 @@
         "language_java": {},
         "language_jiyu": {},
         "language_jsx": {},
+        "language_json": {},
         "language_julia": {},
         "language_ksy": {},
         "language_lilypond": {},
@@ -869,6 +870,14 @@
       "version": "0.1",
       "path": "plugins/language_jsx.lua",
       "id": "language_jsx",
+      "mod_version": "3",
+      "tags": ["language"]
+    },
+    {
+      "description": "Syntax for the [JSON](https://www.json.org/json-en.html) language",
+      "version": "0.1",
+      "path": "plugins/language_json.lua",
+      "id": "language_json",
       "mod_version": "3",
       "tags": ["language"]
     },
