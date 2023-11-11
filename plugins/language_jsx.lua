@@ -7,6 +7,7 @@ syntax.add {
   files = { "%.jsx$", "%.astro$" },
   comment = "//",
   block_comment = { "/*", "*/" },
+  block_comment = { "/*", "*/" },
   patterns = {
     { pattern = "//.*",                 type = "comment"  },
     { pattern = { "/%*", "%*/" },       type = "comment"  },
