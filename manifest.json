@@ -1213,7 +1213,7 @@
     },
     {
       "description": "Syntax for [TSX](https://www.typescriptlang.org/docs/handbook/jsx.html) language",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_tsx.lua",
       "id": "language_tsx",
       "mod_version": "3",
