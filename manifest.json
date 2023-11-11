@@ -61,7 +61,7 @@
     {
       "id": "meta_languages",
       "type": "meta",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "mod_version": "3",
       "description": "A metapackage containing all publically accessible language syntaxes.",
       "dependencies": {
@@ -867,7 +867,7 @@
     },
     {
       "description": "Syntax for the [JSX](https://reactjs.org/docs/introducing-jsx.html) language for the React framework in JavaScript",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_jsx.lua",
       "id": "language_jsx",
       "mod_version": "3",
