@@ -4,10 +4,11 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "JSX",
-  files = { "%.jsx$" },
+  files = { "%.jsx$", "%.astro$" },
   comment = "//",
+  block_comment = { "/*", "*/" },
   patterns = {
-    { pattern = "//.-\n",               type = "comment"  },
+    { pattern = "//.*",                 type = "comment"  },
     { pattern = { "/%*", "%*/" },       type = "comment"  },
     { pattern = { '"', '"', '\\' },     type = "string"   },
     { pattern = { "'", "'", '\\' },     type = "string"   },

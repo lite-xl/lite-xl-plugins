@@ -32,7 +32,7 @@ syntax.add {
         {pattern = "%@%s?[%a_][%w_]*", type = "literal"}, -- builtin func/var
         {pattern = "[%a_][%w_]*%f[(]", type = "function"},
         {pattern = "#%s?[%a_][%w_]*", type = "comment"}, -- if/else_if/else/endif
-        {pattern = "#%s?.*", type = "comment"}, -- attributes
+        {pattern = "#%s?.*", type = "keyword2"}, -- attributes
         {pattern = "[%a_][%w_]*", type = "symbol"}
     },
     symbols = {
