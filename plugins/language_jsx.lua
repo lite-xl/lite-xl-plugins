@@ -4,7 +4,7 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "JSX",
-  files = { "%.jsx$" },
+  files = { "%.jsx$", "%.astro$" },
   comment = "//",
   patterns = {
     { pattern = "//.-\n",               type = "comment"  },
