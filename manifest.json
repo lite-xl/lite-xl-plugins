@@ -619,7 +619,7 @@
     },
     {
       "description": "Syntax for the CMake build system language",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_cmake.lua",
       "id": "language_cmake",
       "mod_version": "3",
