@@ -31,7 +31,7 @@ syntax.add {
         {pattern = "[A-Z][%w_]*", type = "keyword2"}, -- types
         {pattern = "%@%s?[%a_][%w_]*", type = "literal"}, -- builtin func/var
         -- `defer` modes
-        {pattern = "defer%s?%(%s?()[%a_][%w_]*()%s?%)", type = {"keyword", "comment"} },
+        {pattern = "defer%s?%(%s?()[%a_][%w_]*()%s?%)", type = {"keyword", "comment", "normal"} },
         {pattern = "[%a_][%w_]*%f[(]", type = "function"},
         {pattern = "#%s?[%a_][%w_]*", type = "comment"}, -- if/else_if/else/endif
         {pattern = "#%s?%[.*%]", type = "keyword2"}, -- attributes
