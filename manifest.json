@@ -1571,7 +1571,7 @@
     {
       "description": "Sort selected CSS properties alphabetically or using the concentric model. *([demo](https://raw.githubusercontent.com/felixsanz/lite-xl-sortcss/master/demo.gif))*",
       "version": "0.1",
-      "remote": "https://github.com/felixsanz/lite-xl-sortcss:f3429f9c28a0858203c22cc2d1f033d46e40656b",
+      "remote": "https://github.com/felixsanz/lite-xl-sortcss:478f8d73649a616a6ce2eecbaca0c503a074c3f9",
       "mod_version": "3",
       "id": "sortcss"
     },
