@@ -1569,6 +1569,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Sort selected CSS properties alphabetically or using the concentric model. *([demo](https://raw.githubusercontent.com/felixsanz/lite-xl-sortcss/master/demo.gif))*",
+      "version": "0.1",
+      "remote": "https://github.com/felixsanz/lite-xl-sortcss:ee4552148b38663e24dedcf4bc80ba8221dd54e0",
+      "mod_version": "3",
+      "id": "sortcss"
+    },
+    {
       "description": "Underlines misspelt words *([screenshot](https://user-images.githubusercontent.com/3920290/79923973-9caa7400-842e-11ea-85d4-7a196a91ca50.png))* *-- note: on Windows a [`words.txt`](https://github.com/dwyl/english-words/blob/master/words.txt) dictionary file must be placed beside the exe*",
       "version": "0.2",
       "path": "plugins/spellcheck.lua",
