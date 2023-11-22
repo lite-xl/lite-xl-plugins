@@ -1,6 +1,6 @@
 -- mod-version:3
 -- Orginal Author: Jipok
--- Modified by: techie-guy
+-- Modified by: techie-guy and thacuber2a03
 -- Doesn't work well with scaling mode == "ui"
 
 -- This is an extension/modification of the nonicons plugin, https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/nonicons.lua
@@ -14,7 +14,6 @@
 -- 4. Copy the font file to the .config/lite-xl/fonts and rename it to "icon-nerd-font.ttf".
 -- 5. Restart lite-xl, the icons should appear.
 
-local core = require "core"
 local common = require "core.common"
 local config = require "core.config"
 local style = require "core.style"
@@ -62,31 +61,31 @@ config.plugins.nerdicons = common.merge({
 }, config.plugins.nerdicons)
 
 local icon_font = renderer.font.load(USERDIR .. "/fonts/icon-nerd-font.ttf", 18.5 * SCALE)
-local chevron_width = icon_font:get_width("")
+local chevron_width = icon_font:get_width ""
 local previous_scale = SCALE
 
-local extension_icons = {
+local extension_icons = common.merge({
   [".lua"] = { "#405af0", ""},
   [".md"]  = { "#519aba", "" }, -- Markdown
   [".powershell"] = { "#519aba", "" },
   [".bat"] = { "#cbcb41", "" },
   [".txt"] = { "#ffffff", "" },
-  [".cpp"] = { "#519aba", "ﭱ" },
+  [".cpp"] = { "#519aba", "" },
   [".c"]   = { "#599eff", "" },
-  [".h"]   = { "#79029b", "h" },
-  [".hpp"] = { "#79029b", "h" },
-  [".py"]  = { "#3572A5", "" }, -- Python
-  [".pyc"]  = { "#519aba", "" },
-  [".pyd"]  = { "#519aba", "" },
-  [".php"] = { "#a074c4", "" },
-  [".cs"] = { "#596706", "" },  -- C#
+  [".h"]   = { "#79029b", "" },
+  [".hpp"] = { "#79029b", "" },
+  [".py"]  = { "#3572A5", "" }, -- Python
+  [".pyc"]  = { "#519aba", "" },
+  [".pyd"]  = { "#519aba", "" },
+  [".php"] = { "#a074c4", "" },
+  [".cs"] = { "#596706", "󰌛" },  -- C#
   [".conf"] = { "#6d8086", "" }, [".cfg"] = { "#6d8086", "" },
   [".toml"] = { "#6d8086", "" },
   [".yaml"] = { "#6d8086", "" }, [".yml"] = { "#6d8086", "" },
-  [".json"] = { "#854CC7", "" },
+  [".json"] = { "#854CC7", "" },
   [".css"] = { "#519abc", "" },
   [".html"] = { "#e34c26", "" },
-  [".js"] = { "#cbcb41", "" },  -- JavaScript
+  [".js"] = { "#cbcb41", "󰌞" },  -- JavaScript
   [".go"] = { "#519aba", "" },
   [".jpg"] = { "#a074c4", "" }, [".png"] = { "#a074c4", "" },
   [".sh"] = { "#4d5a5e", "" }, [".bash"] = { "#4d5a5e", "" },  -- Shell
@@ -94,28 +93,28 @@ local extension_icons = {
   [".scala"] = { "#cc3e44", "" },
   [".kt"] = { "#F88A02", "" },  -- Kotlin
   [".pl"] = { "#519aba", "" },  -- Perl
-  [".rb"] = { "#701516", "" },  -- Ruby
+  [".rb"] = { "#701516", "" },  -- Ruby
   [".rs"] = { "#c95625", "" },  -- Rust
   [".rss"] = { "#cc3e44", "" },
   [".sql"] = { "#dad8d8", "" },
-  [".swift"] = { "#e37933", "ﯣ" },
-  [".ts"] = { "#519aba", "ﯤ" },  -- TypeScript
+  [".swift"] = { "#e37933", "" },
+  [".ts"] = { "#519aba", "󰛦" },  -- TypeScript
   [".diff"] = { "#41535b", "" },
   [".exe"] = {"#cc3e55", ""},
-  [".make"] = { "#d0bf41", "" },
-  [".svg"] = { "#f7ca39", "ﰟ" },
+  [".make"] = { "#d0bf41", "" },
+  [".svg"] = { "#f7ca39", "󰜡" },
   [".ttf"] = {"#dad8d4", ""}, [".otf"] = {"#dad8d4", ""}
-}
+}, config.plugins.nerdicons.extension_icons)
 
-local known_filenames_icons = {
-  ["dockerfile"] = { "#296478", "" },
+local known_filenames_icons = common.merge({
+  ["dockerfile"] = { "#296478", "" },
   [".gitignore"] = { "#cc3e55", "" },
   [".gitmodules"] = { "#cc3e56", "" },
-  ["PKGBUILD"] = { "#6d8ccc", "" },
-  ["license"] = { "#d0bf41", "" },
-  ["makefile"] = { "#d0bf41", "" },
-  ["cmakelists.txt"] = { "#cc3e55", "喝" },
-}
+  ["PKGBUILD"] = { "#6d8ccc", "󰏓" },
+  ["license"] = { "#d0bf41", "󰿃" },
+  ["makefile"] = { "#d0bf41", "" },
+  ["cmakelists.txt"] = { "#cc3e55", "󰔷" },
+}, config.plugins.nerdicons.known_filenames_icons)
 
 -- Preparing colors
 for k, v in pairs(extension_icons) do
@@ -141,7 +140,7 @@ function TreeView:get_item_icon(item, active, hovered)
     font = icon_font
     color = style.text
     if item.type == "dir" then
-      icon = item.expanded and "ﱮ" or "" -- hex f07c and f07b
+      icon = item.expanded and "" or "" -- hex f07c and f07b
     end
   end
   if config.plugins.nerdicons.draw_treeview_icons then
@@ -166,7 +165,7 @@ local TreeView_draw_item_chevron = TreeView.draw_item_chevron
 function TreeView:draw_item_chevron(item, active, hovered, x, y, w, h)
   if not config.plugins.nerdicons.use_default_chevrons then
     if item.type == "dir" then
-      local chevron_icon = item.expanded and "" or ""
+      local chevron_icon = item.expanded and "" or ""
       local chevron_color = hovered and style.accent or style.text
       common.draw_text(icon_font, chevron_color, chevron_icon, nil, x+8, y, 0, h) -- added 8 to x to draw the chevron closer to the icon
     end
