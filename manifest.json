@@ -61,7 +61,7 @@
     {
       "id": "meta_languages",
       "type": "meta",
-      "version": "0.1.4",
+      "version": "0.1.3",
       "mod_version": "3",
       "description": "A metapackage containing all publically accessible language syntaxes.",
       "dependencies": {
@@ -1020,7 +1020,7 @@
     },
     {
       "description": "Syntax for the [Perl](https://perl.org) programming language",
-      "version": "0.2",
+      "version": "0.3",
       "path": "plugins/language_perl.lua",
       "id": "language_perl",
       "mod_version": "3",
