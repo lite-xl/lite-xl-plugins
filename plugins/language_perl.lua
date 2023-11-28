@@ -10,6 +10,7 @@ syntax.add {
     { pattern = "%#.*",                              type = "comment" },
     { pattern = { '"', '"', '\\' },                  type = "string"  },
     { pattern = { "'", "'", '\\' },                  type = "string"  },
+    { pattern = { "^=%w+", "=cut" },                 type = "comment" },
     -- hash
     { pattern = "[%$][%a_][%w_]*[{]()[%a%d_]+()[}]", type = { "normal", "string", "normal" } },
     { pattern = "->{()[%a%d_]+()}",                  type = { "normal", "string", "normal" } },
@@ -28,6 +29,9 @@ syntax.add {
     { pattern = "[%a_][%w_]*%f[(]",                  type = "function"  },
     { pattern = "[%@%$%*%%]+[%a_][%w_]*",            type = "keyword2"  },
     { pattern = "%--[%a_][%w_]*",                    type = "symbol"    },
+    { pattern = "[%a_][%w_]*%s+()=>",                type = { "string", "operator" } },
+    { pattern = "sub%s+()[%w_]+",                    type = { "keyword", "operator" } },
+    { pattern = "[<=>%+%-%*%/:%&%|%!%?%~]+",         type = "operator" }
   },
   symbols = {
     ["-A"] = "keyword",
