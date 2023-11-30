@@ -627,9 +627,9 @@
     },
     {
       "description": "Syntax for [Containerfile](https://github.com/containers/common/blob/main/docs/Containerfile.5.md)/[Dockerfile](https://docs.docker.com/engine/reference/builder/)",
-      "version": "0.1",
-      "remote": "https://github.com/FilBot3/lite-xl-language-containerfile:2d5e46b1051c48d74f9b63f9844913c630d19b87",
-      "mod_version": "2",
+      "version": "0.2",
+      "remote": "https://github.com/FilBot3/lite-xl-language-containerfile:ae4eddc3f3fa1a0db56344b3b6db0ec0f2283880",
+      "mod_version": "3",
       "id": "language_containerfile",
       "tags": ["language"]
     },
