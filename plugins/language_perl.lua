@@ -15,13 +15,13 @@ syntax.add {
     { pattern = "[%$][%a_][%w_]*[{]()[%a%d_]+()[}]", type = { "normal", "string", "normal" } },
     { pattern = "->{()[%a%d_]+()}",                  type = { "normal", "string", "normal" } },
     -- q syntax
-    { pattern = "q[qrxw]?()[%[]()[%a%d%s-_]+()[%]]", type = { "keyword", "normal", "string", "normal" } },
-    { pattern = "q[qrxw]?()[(]()[%a%d%s-_]+()[)]",   type = { "keyword", "normal", "string", "normal" } },
-    { pattern = "q[qrxw]?()[!]()[%a%d%s-_]+()[!]",   type = { "keyword", "normal", "string", "normal" }  },
-    { pattern = "q[qrxw]?()[|]()[%a%d%s-_]+()[|]",   type = { "keyword", "normal", "string", "normal" }  },
-    { pattern = "q[qrxw]?()[/]()[%a%d%s-_]+()[/]",   type = { "keyword", "normal", "string", "normal" }  },
-    { pattern = "q[qrxw]?()[{]()[%a%d%s-_]+()[}]",   type = { "keyword", "normal", "string", "normal" }  },
-    { pattern = "q[qrxw]?()[%%]()[%a%d%s-_]+()[%%]", type = { "keyword", "normal", "string", "normal" }  },
+    { pattern = "q[qrxw]?()[%[]()[^%]]+()[%]]",      type = { "keyword", "normal", "string", "normal" } },
+    { pattern = "q[qrxw]?()[(]()[^(]+()[)]",         type = { "keyword", "normal", "string", "normal" } },
+    { pattern = "q[qrxw]?()[!]()[^!]+()[!]",         type = { "keyword", "normal", "string", "normal" }  },
+    { pattern = "q[qrxw]?()[|]()[^|]+()[|]",         type = { "keyword", "normal", "string", "normal" }  },
+    { pattern = "q[qrxw]?()[/]()[^/]+()[/]",         type = { "keyword", "normal", "string", "normal" }  },
+    { pattern = "q[qrxw]?()[{]()[^{]+()[}]",         type = { "keyword", "normal", "string", "normal" }  },
+    { pattern = "q[qrxw]?()[%%]()[^%%]+()[%%]",      type = { "keyword", "normal", "string", "normal" }  },
     -- until we can get this workign with s///, just don't do any of them.
     -- { pattern = { '/', '/', '\\' },       type = "string"   },
     { pattern = "-?%d+[%d%.eE]*",                    type = "number"    },
@@ -29,7 +29,6 @@ syntax.add {
     { pattern = "[%a_][%w_]*%f[(]",                  type = "function"  },
     { pattern = "[%@%$%*%%]+[%a_][%w_]*",            type = "keyword2"  },
     { pattern = "%--[%a_][%w_]*",                    type = "symbol"    },
-    { pattern = "[%a_][%w_]*%s+()=>",                type = { "string", "operator" } },
     { pattern = "sub%s+()[%w_]+",                    type = { "keyword", "operator" } },
     { pattern = "[<=>%+%-%*%/:%&%|%!%?%~]+",         type = "operator" }
   },
