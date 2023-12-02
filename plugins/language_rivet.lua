@@ -61,14 +61,14 @@ syntax.add {
         ["match"] = "keyword",
         ["mut"] = "keyword",
         ["or"] = "keyword",
-        ["public"] = "keyword",
+        ["pub"] = "keyword",
         ["return"] = "keyword",
-        ["static"] = "keyword",
         ["struct"] = "keyword",
         ["test"] = "keyword",
         ["throw"] = "keyword",
         ["trait"] = "keyword",
         ["unsafe"] = "keyword",
+        ["var"] = "keyword",
         ["while"] = "keyword",
 
         -- literals
@@ -76,7 +76,6 @@ syntax.add {
         ["none"] = "literal",
         ["self"] = "literal",
         ["true"] = "literal",
-        ["undefined"] = "literal",
 
         -- types
         ["never"] = "keyword2",
