@@ -108,7 +108,6 @@
         "language_jsx": {},
         "language_json": {},
         "language_julia": {},
-        "language_ksy": {},
         "language_lilypond": {},
         "language_liquid": {},
         "language_lobster": {},
@@ -129,7 +128,6 @@
         "language_pico8": {},
         "language_pkgbuild": {},
         "language_po": {},
-        "language_pony": {},
         "language_powershell": {},
         "language_psql": {},
         "language_r": {},
@@ -619,7 +617,7 @@
     },
     {
       "description": "Syntax for the CMake build system language",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_cmake.lua",
       "id": "language_cmake",
       "mod_version": "3",
@@ -627,9 +625,9 @@
     },
     {
       "description": "Syntax for [Containerfile](https://github.com/containers/common/blob/main/docs/Containerfile.5.md)/[Dockerfile](https://docs.docker.com/engine/reference/builder/)",
-      "version": "0.1",
-      "remote": "https://github.com/FilBot3/lite-xl-language-containerfile:2d5e46b1051c48d74f9b63f9844913c630d19b87",
-      "mod_version": "2",
+      "version": "0.2",
+      "remote": "https://github.com/FilBot3/lite-xl-language-containerfile:ae4eddc3f3fa1a0db56344b3b6db0ec0f2283880",
+      "mod_version": "3",
       "id": "language_containerfile",
       "tags": ["language"]
     },
@@ -1101,7 +1099,7 @@
     },
     {
       "description": "Syntax for the [Rivet](https://github.com/rivet-lang/rivet) programming language",
-      "version": "0.4.2",
+      "version": "0.4.3",
       "path": "plugins/language_rivet.lua",
       "id": "language_rivet",
       "mod_version": "3",
@@ -1388,7 +1386,7 @@
     },
     {
       "description": "File icons set for TreeView. Download font from nerdfonts.com. Modification of the [nonicons](plugins/nonicons.lua) plugin",
-      "version": "1.0",
+      "version": "1.0.1",
       "type": "plugin",
       "path": "plugins/nerdicons.lua",
       "id": "nerdicons",
@@ -1396,7 +1394,7 @@
     },
     {
       "description": "File icons set for TreeView. Download [font](https://github.com/yamatsum/nonicons/raw/6a2faf4fbdfbe353c5ae6a496740ac4bfb6d0e74/dist/nonicons.ttf) to your config/fonts folder",
-      "version": "0.2",
+      "version": "0.2.1",
       "path": "plugins/nonicons.lua",
       "id": "nonicons",
       "mod_version": "3"
@@ -1569,6 +1567,13 @@
       "mod_version": "3"
     },
     {
+      "description": "Sort selected CSS properties alphabetically or using the concentric model. *([demo](https://raw.githubusercontent.com/felixsanz/lite-xl-sortcss/master/demo.gif))*",
+      "version": "0.1",
+      "remote": "https://github.com/felixsanz/lite-xl-sortcss:ee4552148b38663e24dedcf4bc80ba8221dd54e0",
+      "mod_version": "3",
+      "id": "sortcss"
+    },
+    {
       "description": "Underlines misspelt words *([screenshot](https://user-images.githubusercontent.com/3920290/79923973-9caa7400-842e-11ea-85d4-7a196a91ca50.png))* *-- note: on Windows a [`words.txt`](https://github.com/dwyl/english-words/blob/master/words.txt) dictionary file must be placed beside the exe*",
       "version": "0.2",
       "path": "plugins/spellcheck.lua",
@@ -1621,10 +1626,10 @@
     },
     {
       "description": "An integrated terminal for lite-xl. *([screenshot](https://github.com/adamharrison/lite-xl-terminal/assets/1034518/eb8a72a0-ff61-4b95-b009-364ac2725f70))*",
-      "version": "1.0",
+      "version": "1.01",
       "id": "terminal",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-terminal.git:0cbd63583876a3653e613e0489d9339bc05e9a6a"
+      "remote": "https://github.com/adamharrison/lite-xl-terminal.git:394b577caa1491d2a8fb92b1b4acd93b2feb6b9a"
     },
     {
       "description": "Allows you to play tetris directly in the editor.",
