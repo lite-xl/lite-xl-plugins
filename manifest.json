@@ -385,8 +385,8 @@
     },
     {
       "description": "Adds Treesitter syntax highlighting support",
-      "version": "0.1",
-      "remote": "https://github.com/TorchedSammy/Evergreen.lxl:c4058bfdedd27aee3b23319905b5df7b4ca52ef8",
+      "version": "0.2",
+      "remote": "https://github.com/TorchedSammy/Evergreen.lxl:e5e6ade897a6316fbe6fc610520d195e27737912",
       "mod_version": "3",
       "id": "evergreen"
     },
