@@ -1,8 +1,10 @@
 --mod-version:3
 
+local syntax = require 'core.syntax'
+
 local label, sublabel = "function", "keyword2"
 
-require 'core.syntax'.add {
+syntax.add {
 	name = "Uxntal",
 	files = { "%.tal$" },
 	block_comment = { '(', ')' },
