@@ -1099,7 +1099,7 @@
     },
     {
       "description": "Syntax for the [Rivet](https://github.com/rivet-lang/rivet) programming language",
-      "version": "0.4.4",
+      "version": "0.4.5",
       "path": "plugins/language_rivet.lua",
       "id": "language_rivet",
       "mod_version": "3",

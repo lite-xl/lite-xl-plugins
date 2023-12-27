@@ -28,22 +28,24 @@ syntax.add {
             pattern = "_?%u[%u_][%u%d_]*%f[%s%+%*%-%.%)%]}%?%^%%=/<>~|&;:,!]",
             type = "literal"
         },
-        {pattern = "[A-Z][%w_]*", type = "keyword2"}, -- types
-        {pattern = "%@%s?[%a_][%w_]*", type = "literal"}, -- builtin func/var
+        -- types
+        {pattern = "[A-Z][%w_]*", type = "keyword2"},
+        -- builtin func/var
+        {pattern = "%@%s?[%a_][%w_]*", type = "literal"},
         -- `defer` modes
         {pattern = "defer%s?%(%s?()[%a_][%w_]*()%s?%)", type = {"keyword", "comment", "normal"} },
+        -- functions
         {pattern = "[%a_][%w_]*%f[(]", type = "function"},
-        {pattern = "#%s?[%a_][%w_]*", type = "comment"}, -- if/else_if/else/endif
-        {pattern = "#%s?%[.*%]", type = "keyword2"}, -- attributes
+        -- attributes
+        {pattern = "#%s?%[.*%]", type = "keyword2"},
+        -- symbols
         {pattern = "[%a_][%w_]*", type = "symbol"}
     },
     symbols = {
         ["alias"] = "keyword",
-        ["and"] = "keyword",
         ["as"] = "keyword",
         ["break"] = "keyword",
         ["catch"] = "keyword",
-        ["comptime"] = "keyword",
         ["const"] = "keyword",
         ["continue"] = "keyword",
         ["defer"] = "keyword",
@@ -53,14 +55,12 @@ syntax.add {
         ["extern"] = "keyword",
         ["func"] = "keyword",
         ["for"] = "keyword",
-        ["from"] = "keyword",
         ["if"] = "keyword",
         ["import"] = "keyword",
         ["in"] = "keyword",
         ["is"] = "keyword",
         ["match"] = "keyword",
         ["mut"] = "keyword",
-        ["or"] = "keyword",
         ["pub"] = "keyword",
         ["return"] = "keyword",
         ["struct"] = "keyword",
