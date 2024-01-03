@@ -1336,7 +1336,7 @@
     },
     {
       "description": "LSP support for Zig via zls.",
-      "version": "0.11.0",
+      "version": "0.11.1",
       "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:f872f65e30360b3add7b33122fec52fe6b5119bb",
       "mod_version": "3",
       "id": "lsp_zig"
