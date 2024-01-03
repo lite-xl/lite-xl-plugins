@@ -1392,8 +1392,8 @@
       "id": "net"
     },
     {
-      "description": "File icons set for TreeView. Download font from nerdfonts.com. Modification of the [nonicons](plugins/nonicons.lua) plugin",
-      "version": "1.0.1",
+      "description": "File icons set for TreeView. Download font from nerdfonts.com. Modification of the [nonicons](plugins/nonicons.lua) plugin. File icons set for TreeView. Download font from nerdfonts.com. Modification of the nonicons plugin. Download the font and copy it to config/fonts folder. Make sure to rename it to icon-nerd-font.ttf.",
+      "version": "2.0.0",
       "type": "plugin",
       "path": "plugins/nerdicons.lua",
       "id": "nerdicons",
