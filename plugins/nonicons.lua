@@ -105,7 +105,7 @@ local known_names_icons = {
   ["makefile"] = { "#6d8086", "" },
   ["dockerfile"] = { "#296478", "" },
   ["docker-compose.yml"] = { "#4289a1", "" },
-  ["license"] = { "#d0bf41", "" },
+  ["license"] = { "#d0bf41", "" }, ["copying"] = { "#d0bf41", "" },
   ["cmakelists.txt"] = { "#6d8086", "" },
   ["readme.md"] = { "#72b886", "" }, ["readme"] = { "#72b886", "" },
   ["init.lua"] = { "#2d6496", "" },

@@ -112,7 +112,7 @@ local known_filenames_icons = {
   [".gitignore"] = { "#cc3e55", "" },
   [".gitmodules"] = { "#cc3e56", "" },
   ["PKGBUILD"] = { "#6d8ccc", "" },
-  ["license"] = { "#d0bf41", "" },
+  ["license"] = { "#d0bf41", "" }, ["copying"] = { "#d0bf41", "" },
   ["makefile"] = { "#d0bf41", "" },
   ["cmakelists.txt"] = { "#cc3e55", "喝" },
 }
