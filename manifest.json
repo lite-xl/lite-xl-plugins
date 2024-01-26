@@ -355,7 +355,7 @@
       "dependencies": { "encoding": { } }
     },
     {
-      "checksum": "e3607f5107f4e42fd99006289b8214a473824c6973b8e9c637b4657eba763650",
+      "checksum": "80c07430455e665b5f5009667fe76458603af505ce411a38b38e82e7604d95f0",
       "description": "Make sure the file ends with one blank line.",
       "version": "0.1",
       "id": "eofnewline",
