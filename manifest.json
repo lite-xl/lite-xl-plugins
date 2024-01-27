@@ -61,7 +61,7 @@
     {
       "id": "meta_languages",
       "type": "meta",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "mod_version": "3",
       "description": "A metapackage containing all publically accessible language syntaxes.",
       "dependencies": {
