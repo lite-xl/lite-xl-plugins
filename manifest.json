@@ -61,7 +61,7 @@
     {
       "id": "meta_languages",
       "type": "meta",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "mod_version": "3",
       "description": "A metapackage containing all publically accessible language syntaxes.",
       "dependencies": {
@@ -72,6 +72,7 @@
         "language_batch": {},
         "language_bib": {},
         "language_blade": {},
+        "language_blueprint": {},
         "language_c7": {},
         "language_caddyfile": {},
         "language_cmake": {},
@@ -596,6 +597,14 @@
       "version": "0.1",
       "path": "plugins/language_blade.lua",
       "id": "language_blade",
+      "mod_version": "3",
+      "tags": ["language"]
+    },
+    {
+    "description": "Syntax for the [Blueprint](https://jwestman.pages.gitlab.gnome.org/blueprint-compiler/) markup language",
+      "version": "0.1",
+      "path": "plugins/language_blueprint.lua",
+      "id": "language_blueprint",
       "mod_version": "3",
       "tags": ["language"]
     },
