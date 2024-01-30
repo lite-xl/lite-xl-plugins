@@ -1,4 +1,5 @@
 -- mod-version:3
+local common = require "core.common"
 local style = require "core.style"
 local DocView = require "core.docview"
 
@@ -43,5 +44,45 @@ function DocView:draw_line_body(line, x, y)
     end
   end
   return line_height
+end
+
+-- Special thanks to Adam(aethy)
+-- for writing code which served as a guide
+
+--- This added feature displays selection highlights in/on the scrollbar
+
+local old_draw_docview_scrollbar = DocView.draw_scrollbar
+
+function DocView:draw_scrollbar()
+  old_draw_docview_scrollbar(self)
+  local scrollbar = self.v_scrollbar
+
+  local mw = 5  --marker width
+  local mh = 8  -- marker height
+  local cmh = 4  --current selection marker height
+  local cm_color =  {common.color "#DA70D6"} --current selection marker color
+  
+  local line1, col1, line2, col2 = get_selection(self.doc, true)
+  
+  if line1 == line2 and col1 ~= col2 then
+    local selection = self.doc:get_text(line1, col1, line2, col2)
+    
+    if self.doc and scrollbar then
+      local x,y,w,h = scrollbar:get_track_rect()
+      
+      for line, line_text in pairs(self.doc.lines) do 
+        --draw this marker to show current selection
+        if line == line1 then
+          local percentage_start = line / #self.doc.lines
+          renderer.draw_rect(x, percentage_start * h, w, cmh, cm_color)
+        end
+        --draw this marker to show occurrences of selection
+        if line_text:match(selection) and line ~= line1 then 
+          local percentage_start = line / #self.doc.lines
+          renderer.draw_rect(x+(w*0.5)-mw*0.5, percentage_start * h, mw, mh, style.accent)
+        end  
+      end
+    end
+   end
 end
 
