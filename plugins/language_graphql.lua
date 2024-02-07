@@ -9,15 +9,15 @@ syntax.add {
   patterns = {
     { pattern = { '"', '"', "\\" },                        type = "string"   },
     { pattern = { '"""', '"""' },                          type = "comment"  },
-    { pattern = "#.-\n",                                   type = "comment"  },
+    { pattern = "#.*",                                     type = "comment"  },
     { pattern = "-?%.?%d+",                                type = "number"   },
     { pattern = "%s*[@]%s*[%a_][%w_]*",                    type = "function" },
     { pattern = "!",                                       type = "operator" },
     { pattern = "%s*=%s*",                                 type = "operator" },
-    { pattern = "%s*%$[%a_][%w_]*:*",                      type = "literal" },
+    { pattern = "%s*%$[%a_][%w_]*:*",                      type = "literal"  },
     { pattern = "query%s*()[%a_][%w_]*[(]",                type = { "keyword", "function" } },
     { pattern = "mutation%s*()[%a_][%w_]*[(]",             type = { "keyword", "function" } },
-    { pattern = ":%s*%[*()[%a_,%s][%w_,%s]*()%]*()[!]*",   type ={ "symbol", "literal", "symbol", "operator" } },
+    { pattern = ":%s*%[*()[%a_,%s][%w_,%s]*()%]*()[!]*",   type = { "symbol", "literal", "symbol", "operator" } },
   },
   symbols = {
     ["query"]         = "keyword",
