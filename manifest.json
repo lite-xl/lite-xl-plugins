@@ -61,7 +61,7 @@
     {
       "id": "meta_languages",
       "type": "meta",
-      "version": "0.1.4",
+      "version": "0.1.5",
       "mod_version": "3",
       "description": "A metapackage containing all publically accessible language syntaxes.",
       "dependencies": {
@@ -96,6 +96,7 @@
         "language_glsl": {},
         "language_gmi": {},
         "language_go": {},
+        "language_graphql": {},
         "language_gravity": {},
         "language_hare": {},
         "language_haxe": {},
@@ -789,6 +790,14 @@
       "version": "0.1",
       "path": "plugins/language_go.lua",
       "id": "language_go",
+      "mod_version": "3",
+      "tags": ["language"]
+    },
+    {
+      "description": "Syntax for the [GraphQL](https://graphql.org/) query language, and server-side runtime for executing queries using a type system.",
+      "version": "0.1",
+      "path": "plugins/language_graphql.lua",
+      "id": "language_graphql",
       "mod_version": "3",
       "tags": ["language"]
     },
