@@ -2,9 +2,9 @@
 local syntax = require "core.syntax"
 local style = require "core.style"
 
--- This syntax is probably very borken, so feel free to improve it.
 
 --region add other styles
+--[[
 local new_styles = {"bold", "italic", "bold_italic", "underline"}
 
 local code_font_size = style.code_font:get_size()
@@ -29,15 +29,11 @@ for _, attr in pairs(new_styles) do
     attributes
   )
 end
-
+]]
 --#endregion
 
 
-syntax.add {
-    name = "Typst_math",
-    files = { "%.typmath$" }, --No file is actualy supposed to have this extension
-    comment = "//",
-    block_comment = { "/*", "*/" },
+local typst_math = {
 
     patterns = {
 
@@ -115,11 +111,7 @@ syntax.add {
 }
 
 
-syntax.add {
-    name = "Typst_header",
-    files = { "%.typheader$" }, --No file is actualy supposed to have this extension
-    comment = "//",
-    block_comment = { "/*", "*/" },
+local typst_script = {
 
     patterns = {
 
@@ -162,10 +154,9 @@ syntax.add {
     patterns = {
 
 
-
-        { pattern = {"%$", "%$", "\\"},            type = "literal", syntax = ".typmath" },
+        { pattern = {"%$", "%$", "\\"},            type = "literal", syntax = typst_math },
         { pattern = {"```js", "```", "\\"},        type = "literal", syntax = ".js" },
-        { pattern = {"#", "[^,%(%[{]\n"},                   type = "literal", syntax = ".typheader" },
+        { pattern = {"#", "[^,%(%[{]\n"},                   type = "literal", syntax = typst_script },
         { pattern = {"`", "`", "\\"},              type = "normal"},
 
         { pattern = { '"', '"', '\\' },            type = "string"  },
@@ -174,14 +165,14 @@ syntax.add {
         { pattern = "//.*",                        type = "comment" },
         { pattern = { "/%*", "%*/" },              type = "comment" },
 
-   --     { pattern = {"link"},                    type = "typst_underline"}, -- add underline text later (keeps crashing)
+   --     { pattern = {"link"},                    type = "typst_underline"}, -- add underline text later
 
-        { pattern = "^=+ ().+%f[\n]",                type ={"operator", "typst_bold"}},
+        { pattern = "^=+ ().+%f[\n]",                type ={"operator", "bold"}},
 
-        { pattern = {"%*_", "_%*[%s,%.]"},     type = "typst_bold_italic"},
-        { pattern = {"_%*", "%*_[%s,%.]"},     type = "typst_bold_italic"},
-        { pattern = {"_", "_[%s,%.]"},         type = "typst_italic"},
-        { pattern = {"%*[^%/]", "%*[%s,%.]"},  type = "typst_bold"},
+        { pattern = {"%*_", "_%*[%s,%.]"},     type = "bold_italic"},
+        { pattern = {"_%*", "%*_[%s,%.]"},     type = "bold_italic"},
+        { pattern = {"_", "_[%s,%.]"},         type = "italic"},
+        { pattern = {"%*[^%/]", "%*[%s,%.]"},  type = "bold"},
 
         { pattern = "[%+%-\\]",    type = "operator" },
 
