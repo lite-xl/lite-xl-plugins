@@ -7,9 +7,9 @@ syntax.add {
   comment = "#",
   block_comment = { '"""', '"""' },
   patterns = {
-    { pattern = { '"', '"', "\\" },                        type = "string"   },
     { pattern = { '"""', '"""' },                          type = "comment"  },
     { pattern = "#.*",                                     type = "comment"  },
+    { pattern = { '"', '"', "\\" },                        type = "string"   },
     { pattern = "-?%.?%d+",                                type = "number"   },
     { pattern = "%s*[@]%s*[%a_][%w_]*",                    type = "function" },
     { pattern = "!",                                       type = "operator" },

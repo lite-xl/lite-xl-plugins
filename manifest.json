@@ -795,7 +795,7 @@
     },
     {
       "description": "Syntax for the [GraphQL](https://graphql.org/) query language, and server-side runtime for executing queries using a type system.",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_graphql.lua",
       "id": "language_graphql",
       "mod_version": "3",
