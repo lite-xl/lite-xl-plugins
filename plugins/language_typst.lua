@@ -23,7 +23,7 @@ local typst_math = {
         { pattern = "%d",                          type = "number" },
 
         {pattern = "&",                            type = "literal"},
-        { pattern = "[%+%-=/%*%^%%<>~|#_^]",       type = "operator" },
+        { pattern = "[%+%-=/%*%^%%<>~|#_^\\]",     type = "operator" },
 
     },
 
@@ -76,7 +76,7 @@ local typst_math = {
         ["Phi"]      = "keyword2",
         ["Chi"]      = "keyword2",
         ["Psi"]      = "keyword2",
-        ["Omega"]    = "keyword2"
+        ["Omega"]    = "keyword2",
     }
 }
 
@@ -137,13 +137,13 @@ syntax.add {
 
    --     { pattern = {"link"},                    type = "typst_underline"}, -- add underline text later
 
-        { pattern = "^=+ ().+%f[\n]",              type ={"operator", "normal"}}, -- Supposed to be bold
+        { pattern = "^=+ ().+%f[\n]",              type ={"operator", "literal"}}, -- Supposed to be bold
 
     -- Finish later
-    --    { pattern = {"%*_", "_%*[%s,%.]"},     type = "bold_italic"},
-    --    { pattern = {"_%*", "%*_[%s,%.]"},     type = "bold_italic"},
-    --    { pattern = {"_", "_[%s,%.]"},         type = "italic"},
-    --    { pattern = {"%*[^%/]", "%*[%s,%.]"},  type = "bold"},
+        { pattern = {"%*_", "_%*[%s,%.]"},         type = "keyword2"}, -- Bold Italic
+        { pattern = {"_%*", "%*_[%s,%.]"},         type = "keyword2"}, -- Bold Italic
+        { pattern = {"_", "_[%s,%.]"},             type = "keyword"}, -- Italic
+        { pattern = {"%*[^%/]", "%*[%s,%.]"},      type = "literal"}, -- Bold
 
         { pattern = "[%+%-\\]",    type = "operator" },
 
