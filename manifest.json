@@ -61,7 +61,7 @@
     {
       "id": "meta_languages",
       "type": "meta",
-      "version": "0.1.5",
+      "version": "0.1.6",
       "mod_version": "3",
       "description": "A metapackage containing all publically accessible language syntaxes.",
       "dependencies": {
@@ -148,6 +148,7 @@
         "language_toml": {},
         "language_ts": {},
         "language_tsx": {},
+        "language_typst": {},
         "language_umka": {},
         "language_v": {},
         "language_wren": {},
@@ -1232,6 +1233,14 @@
       "version": "0.2",
       "path": "plugins/language_tsx.lua",
       "id": "language_tsx",
+      "mod_version": "3",
+      "tags": ["language"]
+    },
+    {
+      "description": "Syntax for [Typst](https://typst.app/) markup language",
+      "version": "0.1",
+      "path": "plugins/language_typst.lua",
+      "id": "language_typst",
       "mod_version": "3",
       "tags": ["language"]
     },
