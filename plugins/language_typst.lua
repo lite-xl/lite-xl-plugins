@@ -1,36 +1,6 @@
 -- mod-version:3
 local syntax = require "core.syntax"
-local style = require "core.style"
 
-
---region add other styles
---[[
-local new_styles = {"bold", "italic", "bold_italic", "underline"}
-
-local code_font_size = style.code_font:get_size()
-local code_font_path = style.code_font:get_path()
-
-if type(code_font_path) == "table" then
-    code_font_path = code_font_path[1]
-end
-
-for _, attr in pairs(new_styles) do
-  local attributes = {}
-  if attr ~= "bold_italic" then
-    attributes[attr] = true
-  else
-    attributes["bold"] = true
-    attributes["italic"] = true
-  end
-  -- yes way to copy user custom font with additional attributes :)
-  style.syntax_fonts["typst_"..attr] = renderer.font.load(
-    code_font_path,
-    code_font_size,
-    attributes
-  )
-end
-]]
---#endregion
 
 
 local typst_math = {
@@ -119,7 +89,7 @@ local typst_script = {
         { pattern = "//.*",                        type = "comment" },
 
         { pattern = { '"', '"', '\\' },            type = "string"  },
-        { pattern = {"%[", "%]"},                   type = "normal", syntax = ".typ" },
+        { pattern = {"%[", "%]"},                  type = "normal", syntax = ".typ" },
 
         { pattern = "[%a_][%w_%-]*%f[(]",          type = "function" },
 
@@ -156,7 +126,7 @@ syntax.add {
 
         { pattern = {"%$", "%$", "\\"},            type = "literal", syntax = typst_math },
         { pattern = {"```js", "```", "\\"},        type = "literal", syntax = ".js" },
-        { pattern = {"#", "[^,%(%[{]\n"},                   type = "literal", syntax = typst_script },
+        { pattern = {"#", "[^,%(%[{]\n"},          type = "literal", syntax = typst_script },
         { pattern = {"`", "`", "\\"},              type = "normal"},
 
         { pattern = { '"', '"', '\\' },            type = "string"  },
@@ -167,15 +137,15 @@ syntax.add {
 
    --     { pattern = {"link"},                    type = "typst_underline"}, -- add underline text later
 
-        { pattern = "^=+ ().+%f[\n]",                type ={"operator", "bold"}},
+        { pattern = "^=+ ().+%f[\n]",              type ={"operator", "normal"}}, -- Supposed to be bold
 
-        { pattern = {"%*_", "_%*[%s,%.]"},     type = "bold_italic"},
-        { pattern = {"_%*", "%*_[%s,%.]"},     type = "bold_italic"},
-        { pattern = {"_", "_[%s,%.]"},         type = "italic"},
-        { pattern = {"%*[^%/]", "%*[%s,%.]"},  type = "bold"},
+    -- Finish later
+    --    { pattern = {"%*_", "_%*[%s,%.]"},     type = "bold_italic"},
+    --    { pattern = {"_%*", "%*_[%s,%.]"},     type = "bold_italic"},
+    --    { pattern = {"_", "_[%s,%.]"},         type = "italic"},
+    --    { pattern = {"%*[^%/]", "%*[%s,%.]"},  type = "bold"},
 
         { pattern = "[%+%-\\]",    type = "operator" },
-
 
     },
 
