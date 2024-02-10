@@ -136,7 +136,7 @@ syntax.add {
 
    --     { pattern = {"link"},                    type = "typst_underline"}, -- add underline text later
 
-        { pattern = "^ *=+ ().+%f[\n]",              type ={"operator", "literal"}}, -- Supposed to be bold
+        { pattern = "^%s*=+ ().+%f[\n]",             type ={"operator", "literal"}}, -- Supposed to be bold
 
     -- Finish later
         { pattern = {"%*_", "_%*[%s,%.]"},         type = "keyword2"}, -- Bold Italic
