@@ -153,7 +153,8 @@
         "language_v": {},
         "language_wren": {},
         "language_yaml": {},
-        "language_zig": {}
+        "language_zig": {},
+        "language_ejs": {}
       }
     },
     {
@@ -1273,6 +1274,14 @@
       "version": "0.1",
       "path": "plugins/language_zig.lua",
       "id": "language_zig",
+      "mod_version": "3",
+      "tags": ["language"]
+    },
+    {
+      "description": "Syntax for the [EJS](https://ejs.co/) javascript template engine",
+      "version": "0.1",
+      "path": "plugins/language_ejs.lua",
+      "id": "language_ejs",
       "mod_version": "3",
       "tags": ["language"]
     },
