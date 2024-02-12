@@ -16,7 +16,7 @@ syntax.add {
         "%%>"
       },
       syntax = '.js',
-      type = "operator"
+      type = "function"
     },
     {
       pattern = {
