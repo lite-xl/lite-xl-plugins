@@ -84,6 +84,7 @@
         "language_dart": {},
         "language_diff": {},
         "language_edp": {},
+        "language_ejs": {},
         "language_elixir": {},
         "language_elm": {},
         "language_env": {},
@@ -153,8 +154,7 @@
         "language_v": {},
         "language_wren": {},
         "language_yaml": {},
-        "language_zig": {},
-        "language_ejs": {}
+        "language_zig": {}
       }
     },
     {
@@ -696,6 +696,14 @@
       "version": "0.1",
       "path": "plugins/language_edp.lua",
       "id": "language_edp",
+      "mod_version": "3",
+      "tags": ["language"]
+    },
+    {
+      "description": "Syntax for the [EJS](https://ejs.co/) javascript template engine",
+      "version": "0.1",
+      "path": "plugins/language_ejs.lua",
+      "id": "language_ejs",
       "mod_version": "3",
       "tags": ["language"]
     },
@@ -1274,14 +1282,6 @@
       "version": "0.1",
       "path": "plugins/language_zig.lua",
       "id": "language_zig",
-      "mod_version": "3",
-      "tags": ["language"]
-    },
-    {
-      "description": "Syntax for the [EJS](https://ejs.co/) javascript template engine",
-      "version": "0.1",
-      "path": "plugins/language_ejs.lua",
-      "id": "language_ejs",
       "mod_version": "3",
       "tags": ["language"]
     },
