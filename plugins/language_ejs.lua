@@ -47,7 +47,5 @@ syntax.add {
     { pattern = "[%a_][%w_]*",             type = "keyword"  },
     { pattern = "[/<>=]",                  type = "operator" },
   },
-  symbols = {
-        ["<%-"]    = "keyword",
-  },
+  symbols = {},
 }
