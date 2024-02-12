@@ -267,6 +267,7 @@ but only with a `url` must provide a `checksum` that matches the existing plugin
 | [`language_wren`](plugins/language_wren.lua?raw=1)                                                               | Syntax for the [Wren](http://wren.io/) programming language                                                                                                                         |
 | [`language_yaml`](plugins/language_yaml.lua?raw=1)                                                               | Syntax for [YAML](https://yaml.org/) serialization language                                                                                                                         |
 | [`language_zig`](plugins/language_zig.lua?raw=1)                                                                 | Syntax for the [Zig](https://ziglang.org/) programming language                                                                                                                     |
+| [`language_ejs`](plugins/language_ejs.lua?raw=1)                                                                 | Syntax for the [EJS](https://ejs.co/)  javascript template engine                                                                                                                     |
 
 ## Libraries
 
