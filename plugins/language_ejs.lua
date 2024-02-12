@@ -12,6 +12,14 @@ syntax.add {
   patterns = {
     {
       pattern = {
+        "<%%",
+        "%%>"
+      },
+      syntax = '.js',
+      type = "operator"
+    },
+    {
+      pattern = {
         "<%s*[sS][cC][rR][iI][pP][tT]%f[%s>].->",
         "<%s*/%s*[sS][cC][rR][iI][pP][tT]%s*>"
       },
@@ -39,5 +47,7 @@ syntax.add {
     { pattern = "[%a_][%w_]*",             type = "keyword"  },
     { pattern = "[/<>=]",                  type = "operator" },
   },
-  symbols = {},
+  symbols = {
+        ["<%-"]    = "keyword",
+  },
 }
