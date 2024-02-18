@@ -270,9 +270,15 @@ local unpack = table.unpack
 local pack = function(...) return {n = select("#", ...), ...} end
 
 local break_funcs = {}
+local breakpoint_idx = 1
+local line_breakpoints = 0
+local debug_hook
 
 local function cmd_break(func_name)
+   if func_name:find(":%d+$") ~= nil then line_breakpoints = line_breakpoints + 1 end
    table.insert(break_funcs, func_name)
+   break_funcs[func_name] = true
+   debug.sethook(debug_hook(0), "crl")
    return false
 end
 
@@ -281,7 +287,10 @@ local function cmd_delete(index)
    if index > #break_funcs then
       dbg_writeln(COLOR_RED.."Error:"..COLOR_RESET.." no breakpoint "..index)
    else
-      table.remove(break_funcs, index)
+      local func_name = table.remove(break_funcs, index)
+      break_funcs[func_name] = nil
+      if func_name:find(":%d+$") then line_breakpoints = line_breakpoints - 1 end
+      if #break_funcs == 0 then debug.sethook() end
    end
    return false
 end
@@ -489,9 +498,9 @@ local function split(inputstr, sep)
    return t
 end
 
-local function debug_hook(offset, reason)
+function debug_hook(offset, reason)
    local function trace (event, line)
-      if event == "line" then
+      if line_breakpoints == 0 and event == "line" then
          return
       end
 
@@ -509,11 +518,10 @@ local function debug_hook(offset, reason)
    end
    return trace
 end
-debug.sethook(debug_hook(0), "crl")
 
 local function cmd_continue()
 
-   return true, debug_hook
+   return true, #break_funcs > 0 and debug_hook or nil
 end
 
 local commands = {
