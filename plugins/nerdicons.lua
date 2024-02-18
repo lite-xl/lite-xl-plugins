@@ -86,7 +86,7 @@ local extension_icons = {
   [".json"] = { "#854CC7", "" },
   [".css"] = { "#519abc", "" },
   [".html"] = { "#e34c26", "" },
-  [".js"] = { "#cbcb41", "" },  -- JavaScript
+  [".js"] = { "#cbcb41", "" }, [".cjs"] = { "#cbcb41", "" }, [".mjs"] = { "#cbcb41", "" },  -- JavaScript
   [".go"] = { "#519aba", "" },
   [".jpg"] = { "#a074c4", "" }, [".png"] = { "#a074c4", "" },
   [".sh"] = { "#4d5a5e", "" }, [".bash"] = { "#4d5a5e", "" },  -- Shell
