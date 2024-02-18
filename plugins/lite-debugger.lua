@@ -520,6 +520,7 @@ local commands = {
 }
 
 local function match_command(line)
+   line = line:gsub("^%s+", ""):gsub("%s*$", "")
    for pat, func in pairs(commands) do
       -- Return the matching command and capture argument.
       if line:find(pat) then return func, line:match(pat) end
