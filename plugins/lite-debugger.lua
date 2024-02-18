@@ -1,6 +1,7 @@
 -- mod-version:3
 
 local command = require "core.command"
+local common = require "core.common"
 local core = require "core"
 
 --[[
@@ -275,8 +276,12 @@ local line_breakpoints = 0
 local debug_hook
 
 local function cmd_break(func_name)
-   func_name = func_name:gsub("[\\/]", package.config:sub(1, 1))
-   if func_name:find(":%d+$") ~= nil then line_breakpoints = line_breakpoints + 1 end
+   if func_name:find(":") then
+      local filename, linenum = func_name:match("^(.+):(.+)$")
+      filename = common.normalize_path(system.absolute_path(common.home_expand(filename)))
+      func_name = filename..":"..linenum
+      if tonumber(linenum) then line_breakpoints = line_breakpoints + 1 end
+   end
    table.insert(break_funcs, func_name)
    break_funcs[func_name] = true
    debug.sethook(debug_hook(0), "crl")
