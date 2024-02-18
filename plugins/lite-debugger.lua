@@ -286,6 +286,20 @@ local function cmd_delete(index)
    return false
 end
 
+local function cmd_list_breakpoint()
+   for i, func_name in ipairs(break_funcs) do
+      local pretty_name
+      if func_name:find(":") then
+         local filename, linenum = func_name:match("^(.+):(.+)$")
+         local linenum_color = tonumber(linenum) and COLOR_YELLOW or COLOR_BLUE
+         pretty_name = COLOR_BLUE..filename..COLOR_RESET..":"..linenum_color..linenum
+      else
+         pretty_name = COLOR_BLUE..func_name
+      end
+      dbg.writeln("%s % 4d: %s", COLOR_RESET, i, pretty_name)
+   end
+end
+
 local function cmd_step()
    stack_inspect_offset = stack_top
    return true, hook_step
@@ -434,6 +448,7 @@ local function cmd_help()
       .. COLOR_BLUE.."  c"..COLOR_YELLOW.."(ontinue)"..GREEN_CARET.."continue execution\n"
       .. COLOR_BLUE.."  b"..COLOR_YELLOW.."(reak) "..COLOR_BLUE.."[[file:]function]"..GREEN_CARET.."set breakpoint at specified function\n"
       .. COLOR_BLUE.."  d"..COLOR_YELLOW.."(elete) "..COLOR_BLUE.."[index]"..GREEN_CARET.."remove breakpoint\n"
+      .. COLOR_BLUE.."  r"..COLOR_YELLOW.."(list)"..GREEN_CARET.."list all breakpoints\n"
       .. COLOR_BLUE.."  s"..COLOR_YELLOW.."(tep)"..GREEN_CARET.."step forward by one line (into functions)\n"
       .. COLOR_BLUE.."  n"..COLOR_YELLOW.."(ext)"..GREEN_CARET.."step forward by one line (skipping over functions)\n"
       .. COLOR_BLUE.."  f"..COLOR_YELLOW.."(inish)"..GREEN_CARET.."step forward until exiting the current function\n"
@@ -505,6 +520,7 @@ local commands = {
    ["^c$"] = cmd_continue,
    ["^b%s+(.*)$"] = cmd_break,
    ["^d%s+(%d*)$"] = cmd_delete,
+   ["^r$"] = cmd_list_breakpoint,
    ["^s$"] = cmd_step,
    ["^n$"] = cmd_next,
    ["^f$"] = cmd_finish,
