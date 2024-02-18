@@ -275,6 +275,7 @@ local line_breakpoints = 0
 local debug_hook
 
 local function cmd_break(func_name)
+   func_name = func_name:gsub("[\\/]", package.config:sub(1, 1))
    if func_name:find(":%d+$") ~= nil then line_breakpoints = line_breakpoints + 1 end
    table.insert(break_funcs, func_name)
    break_funcs[func_name] = true
@@ -509,8 +510,13 @@ function debug_hook(offset, reason)
       if #s.namewhat > 0 then
          local i = split(s.short_src, "/")
          local long_name = i[#i]..":"..s.name
+         local longer_name = s.short_src..":"..s.name
+         local long_linenum = i[#i]..":"..s.currentline
+         local longer_linenum = s.short_src..":"..s.currentline
 
-         if in_array(break_funcs, long_name) or in_array(break_funcs, s.name) then
+         if break_funcs[longer_name] or break_funcs[longer_linenum]
+            or break_funcs[long_name] or break_funcs[long_linenum]
+            or break_funcs[s.name] then
             offset = offset - 1
             repl(reason)
          end
