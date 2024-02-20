@@ -1357,6 +1357,13 @@
       "id": "lsp_lua"
     },
     {
+      "description": "Automatic configuration/binary download for LSP linting for Javascript with quick-lint-js.",
+      "version": "3.1.0",
+      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:69c85033c8a62214d1e758d986cb2eea7a66728e",
+      "mod_version": "3",
+      "id": "lsp_quicklintjs"
+    },
+    {
       "description": "Automatic configuration/binary download for LSP completion for Rust with rust-analyzer.",
       "version": "20231009",
       "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:58e1192b7abe9cff60c59b1c8b098fde88f03ecc",
