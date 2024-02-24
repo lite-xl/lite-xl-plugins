@@ -43,7 +43,7 @@ local function dialog(kdialogFlags, zenityFlags, callback)
 	})
 
 	if not proc then
-		core.error("Unable to run " .. utility .. ": %s", proc_err)
+		core.error("Unable to run %s: %s", utility, proc_err)
 		return
 	end
 
