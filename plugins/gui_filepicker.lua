@@ -18,7 +18,7 @@ config.plugins.gui_filepicker = common.merge({
 		{
 			label = "Dialog Utility",
 			description = "The Default Filepicker Dialog Boxes Utility",
-			path = "dialogUtility",
+			path = "dialog_utility",
 			type = "selection",
 			default = "zenity",
 			values = {
@@ -30,7 +30,7 @@ config.plugins.gui_filepicker = common.merge({
 }, config.plugins.gui_filepicker)
 
 local function dialog(kdialogFlags, zenityFlags, callback)
-	local utility = config.plugins.gui_filepicker.dialogUtility
+	local utility = config.plugins.gui_filepicker.dialog_utility
 	local flags = zenityFlags -- The Default
 
 	if utility == "kdialog" then
