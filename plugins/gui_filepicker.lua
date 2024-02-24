@@ -12,7 +12,7 @@ local config = require("core.config")
 local TreeView = require("plugins.treeview")
 
 config.plugins.gui_filepicker = common.merge({
-	dialogUtility = "zenity",
+	dialog_utility = "zenity",
 	config_spec = {
 		name = "GUI Filepicker",
 		{
