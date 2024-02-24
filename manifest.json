@@ -495,8 +495,8 @@
       "mod_version": "3"
     },
     {
-      "description": "Graphical filepicker using zenity.",
-      "version": "0.2",
+      "description": "Graphical filepicker using zenity or kdialog.",
+      "version": "1.0",
       "path": "plugins/gui_filepicker.lua",
       "id": "gui_filepicker",
       "mod_version": "3"
