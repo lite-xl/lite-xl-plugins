@@ -62,7 +62,7 @@ config.plugins.nerdicons = common.merge({
 }, config.plugins.nerdicons)
 
 local icon_font = renderer.font.load(USERDIR .. "/fonts/icon-nerd-font.ttf", 18.5 * SCALE)
-local chevron_width = icon_font:get_width("")
+local chevron_width = icon_font:get_width("")
 local previous_scale = SCALE
 
 local extension_icons = {
@@ -71,50 +71,63 @@ local extension_icons = {
   [".powershell"] = { "#519aba", "" },
   [".bat"] = { "#cbcb41", "" },
   [".txt"] = { "#ffffff", "" },
-  [".cpp"] = { "#519aba", "ﭱ" },
+  [".asm"] = { "#795548", "" }, [".s"] = { "#795548", "" }, -- ASM
+  [".cpp"] = { "#519aba", "" },
   [".c"]   = { "#599eff", "" },
-  [".h"]   = { "#79029b", "h" },
-  [".hpp"] = { "#79029b", "h" },
-  [".py"]  = { "#3572A5", "" }, -- Python
-  [".pyc"]  = { "#519aba", "" },
-  [".pyd"]  = { "#519aba", "" },
-  [".php"] = { "#a074c4", "" },
-  [".cs"] = { "#596706", "" },  -- C#
+  [".cmake"] = { "#1cb1f5", "" },
+  [".dart"]   = { "#03a9f4", "" }, -- Dart
+  [".h"]   = { "#79029b", "" },
+  [".hpp"] = { "#79029b", "" },
+  [".py"]  = { "#3572A5", "" }, -- Python
+  [".pyc"]  = { "#519aba", "" },
+  [".pyd"]  = { "#519aba", "" },
+  [".php"] = { "#a074c4", "󰌟" },
+  [".cs"] = { "#596706", "󰌛" },  -- C#
   [".conf"] = { "#6d8086", "" }, [".cfg"] = { "#6d8086", "" },
-  [".toml"] = { "#6d8086", "" },
-  [".yaml"] = { "#6d8086", "" }, [".yml"] = { "#6d8086", "" },
-  [".json"] = { "#854CC7", "" },
+  [".yaml"] = { "#6d8086", "" }, [".yml"] = { "#6d8086", "" },
+  [".ld"] = { "#6d8086", "󰌷" }, -- Ld
+  [".json"] = { "#cbcb41", "" },
   [".css"] = { "#519abc", "" },
   [".html"] = { "#e34c26", "" },
   [".js"] = { "#cbcb41", "" },  -- JavaScript
+  [".jl"] = { "#a26fba", "" },  -- Julia
   [".go"] = { "#519aba", "" },
-  [".jpg"] = { "#a074c4", "" }, [".png"] = { "#a074c4", "" },
-  [".sh"] = { "#4d5a5e", "" }, [".bash"] = { "#4d5a5e", "" },  -- Shell
-  [".java"] = { "#cc3e44", "" },
+  [".jpg"] = { "#a074c4", "" }, [".png"] = { "#a074c4", "" }, [".bmp"] = { "#a074c4", "" },
+  [".sh"] = { "#4d5a5e", "" }, [".bash"] = { "#4d5a5e", "" },  -- Shell
+  [".java"] = { "#af7219", "" },
   [".scala"] = { "#cc3e44", "" },
   [".kt"] = { "#F88A02", "" },  -- Kotlin
   [".pl"] = { "#519aba", "" }, [".pm"] = { "#519aba", "" },  -- Perl
+  [".r"] = { "#198ce7", "" },  -- R
   [".rb"] = { "#701516", "" },  -- Ruby
   [".rs"] = { "#c95625", "" },  -- Rust
   [".rss"] = { "#cc3e44", "" },
   [".sql"] = { "#dad8d8", "" },
-  [".swift"] = { "#e37933", "ﯣ" },
-  [".ts"] = { "#519aba", "ﯤ" },  -- TypeScript
-  [".diff"] = { "#41535b", "" },
+  [".swift"] = { "#e37933", "" },
+  [".ts"] = { "#519aba", "󰛦" },  -- TypeScript
+  [".toml"] = { "#ffffff", "" },  -- Toml
+  [".wrap"] = { "#381f7b", "󰖶" },  -- Wrap
+  [".zig"] = { "#f6a41c", "" },  -- Zig
+  [".zon"] = { "#86665a", "" },  -- Zon
+  [".build"] = { "#4caf50", "󰣐" },
+  [".diff"] = { "#41535b", "" },
   [".exe"] = {"#cc3e55", ""},
   [".make"] = { "#d0bf41", "" },
-  [".svg"] = { "#f7ca39", "ﰟ" },
-  [".ttf"] = {"#dad8d4", ""}, [".otf"] = {"#dad8d4", ""}
+  [".svg"] = { "#f7ca39", "󰜡" },
+  [".ttf"] = {"#dad8d4", ""}, [".otf"] = {"#dad8d4", ""},
+  [".gb"] = {"#7daf42","󱎓"}
 }
 
 local known_filenames_icons = {
   ["dockerfile"] = { "#296478", "" },
   [".gitignore"] = { "#cc3e55", "" },
   [".gitmodules"] = { "#cc3e56", "" },
+  [".gitattributes"] = { "#cc3e56", "" },
   ["PKGBUILD"] = { "#6d8ccc", "" },
   ["license"] = { "#d0bf41", "" },
-  ["makefile"] = { "#d0bf41", "" },
-  ["cmakelists.txt"] = { "#cc3e55", "喝" },
+  ["makefile"] = { "#b2b2b2", "" },
+  ["cmakelists.txt"] = { "#1cb1f5", "" },
+  [".editorconfig"] = { "#ffffff", "" },
 }
 
 -- Preparing colors
@@ -141,7 +154,7 @@ function TreeView:get_item_icon(item, active, hovered)
     font = icon_font
     color = style.text
     if item.type == "dir" then
-      icon = item.expanded and "ﱮ" or "" -- hex f07c and f07b
+      icon = item.expanded and "" or "" -- hex f07c and f07b
     end
   end
   if config.plugins.nerdicons.draw_treeview_icons then
