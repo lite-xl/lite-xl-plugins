@@ -1305,14 +1305,8 @@
       "remote": "https://github.com/liquid600pgm/lintplus:771b1fe6cddb7897cd034ed5ee96201d6a2831c2",
       "mod_version": "3",
       "id": "lintplus",
-      "name": "lint+"
-    },
-    {
-      "description": "Linters for multiple languages",
-      "version": "0.1",
-      "remote": "https://github.com/drmargarido/linters:eb1611eaade6e5328df5172bd3f759d853c33a31",
-      "mod_version": "3",
-      "id": "linter"
+      "name": "lint+",
+      "replaces": ["linter"]
     },
     {
       "description": "Discord rich presence for Lite XL (display file editing in Discord)",
