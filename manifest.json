@@ -691,6 +691,14 @@
       "mod_version": "3",
       "tags": ["language"]
     },
+     {
+      "description": "Syntax for the [Djot](https://djot.net/) markup languiage",
+      "version": "0.1",
+      "path": "https://github.com/Tamnac/lite-xl-djot.git",
+      "id": "language_djot",
+      "mod_version": "3",
+      "tags": ["language"]
+    },
     {
       "description": "Syntax for [FreeFEM++](http://freefem.org) programming language",
       "version": "0.1",
