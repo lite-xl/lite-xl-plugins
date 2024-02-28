@@ -694,7 +694,7 @@
      {
       "description": "Syntax for the [Djot](https://djot.net/) markup languiage",
       "version": "0.1",
-      "path": "https://github.com/Tamnac/lite-xl-djot.git",
+      "remote": "https://github.com/Tamnac/lite-xl-djot:46e643913dd075c5a12f08e8657f99686948d2cf",
       "id": "language_djot",
       "mod_version": "3",
       "tags": ["language"]
