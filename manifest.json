@@ -446,6 +446,20 @@
       ]
     },
     {
+      "name": "Nerd Font Symbols Mono Regular",
+      "description": "[Nerd Font Symbols](https://github.com/ryanoasis/nerd-fonts/) font with mapping",
+      "version": "3.1.1",
+      "type": "library",
+      "path": "plugins/font_symbols_nerdfont_mono_regular.lua",
+      "id": "font_symbols_nerdfont_mono_regular",
+      "files": [
+        {
+          "url": "https://github.com/ryanoasis/nerd-fonts/raw/cf3561b1a51f70d5398eb49d603679b0f0c55d74/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFontMono-Regular.ttf",
+          "checksum": "f4f40e003e9d00000f1218a606127fab82b1faf0df2d9095a06190f4f2c32e36"
+        }
+      ]
+    },
+    {
       "description": "Allows users to load fonts with [fontconfig](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html).",
       "version": "0.1",
       "path": "plugins/fontconfig.lua",
@@ -1443,12 +1457,15 @@
       "id": "net"
     },
     {
-      "description": "File icons set for TreeView. Download font from nerdfonts.com. Modification of the [nonicons](plugins/nonicons.lua) plugin",
-      "version": "1.0.1",
+      "description": "File icons set for TreeView. Modification of the [nonicons](plugins/nonicons.lua) plugin. Uses [NerdFont](https://www.nerdfonts.com/) icons",
+      "version": "1.1",
       "type": "plugin",
       "path": "plugins/nerdicons.lua",
       "id": "nerdicons",
-      "mod_version": "3"
+      "mod_version": "3",
+      "dependencies": {
+        "font_symbols_nerdfont_mono_regular": {}
+      }
     },
     {
       "description": "File icons set for TreeView. Uses the [Nonicons](https://github.com/yamatsum/nonicons/) font",
