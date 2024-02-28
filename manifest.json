@@ -432,6 +432,20 @@
       "dependencies": { "thread": { } }
     },
     {
+      "name": "Nonicons font",
+      "description": "[Nonicons](https://github.com/yamatsum/nonicons/) font with mapping",
+      "version": "20230530",
+      "type": "library",
+      "path": "plugins/font_nonicons.lua",
+      "id": "font_nonicons",
+      "files": [
+        {
+          "url": "https://github.com/yamatsum/nonicons/raw/8454b3b6c3ceeee18b386b7882c5a071dcf0f3af/dist/nonicons.ttf",
+          "checksum": "da0a065856c44ea3fd3b9fba2fff5e25a32992dc3a3c5df6e9bfca2cd106a8cc"
+        }
+      ]
+    },
+    {
       "description": "Allows users to load fonts with [fontconfig](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html).",
       "version": "0.1",
       "path": "plugins/fontconfig.lua",
@@ -1437,11 +1451,14 @@
       "mod_version": "3"
     },
     {
-      "description": "File icons set for TreeView. Download [font](https://github.com/yamatsum/nonicons/raw/6a2faf4fbdfbe353c5ae6a496740ac4bfb6d0e74/dist/nonicons.ttf) to your config/fonts folder",
-      "version": "0.2.1",
+      "description": "File icons set for TreeView. Uses the [Nonicons](https://github.com/yamatsum/nonicons/) font",
+      "version": "0.3",
       "path": "plugins/nonicons.lua",
       "id": "nonicons",
-      "mod_version": "3"
+      "mod_version": "3",
+      "dependencies": {
+        "font_nonicons": {}
+      }
     },
     {
       "description": "Change the opaqueness/transparency of `lite-xl` using shift+mousewheel or a command.",
