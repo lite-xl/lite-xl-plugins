@@ -70,7 +70,7 @@ local extension_icons = {
   [".json"] = { "#854CC7", "json-16" },
   [".css"] = { "#563d7c", "css-16" },
   [".html"] = { "#e34c26", "html-16" },
-  [".js"] = { "#cbcb41", "javascript-16" },  -- JavaScript
+  [".js"] = { "#cbcb41", "javascript-16" }, [".cjs"] = { "#cbcb41", "javascript-16" }, [".mjs"] = { "#cbcb41", "javascript-16" },  -- JavaScript
   [".go"] = { "#519aba", "go-16" },
   [".jpg"] = { "#a074c4", "image-16" }, [".png"] = { "#a074c4", "image-16" },
   [".sh"] = { "#4d5a5e", "terminal-16" },  -- Shell
