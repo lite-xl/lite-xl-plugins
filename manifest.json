@@ -720,6 +720,14 @@
       "tags": ["language"]
     },
     {
+      "description": "Syntax for the [Djot](https://djot.net/) markup language",
+      "version": "0.1",
+      "remote": "https://github.com/Tamnac/lite-xl-djot:e92ad996aba56c3363ef83a2dd8d1026be56c730",
+      "id": "language_djot",
+      "mod_version": "3",
+      "tags": ["language"]
+    },
+    {
       "description": "Syntax for [FreeFEM++](http://freefem.org) programming language",
       "version": "0.1",
       "path": "plugins/language_edp.lua",
