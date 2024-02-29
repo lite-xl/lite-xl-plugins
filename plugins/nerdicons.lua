@@ -5,21 +5,15 @@
 
 -- This is an extension/modification of the nonicons plugin, https://github.com/lite-xl/lite-xl-plugins/blob/master/plugins/nonicons.lua
 
--- Any icon can be searched by it's hex from nerdfonts.com/cheat-sheet
+-- Any icon can be searched with nerdfonts.com/cheat-sheet
 
--- How to use:
--- 1. Download a nerd font that you like from nerdfonts.com
--- 2. Unzip the zip file that you downloaded.
--- 3. Choose a font file from the unzipped directory and install it.
--- 4. Copy the font file to the .config/lite-xl/fonts and rename it to "icon-nerd-font.ttf".
--- 5. Restart lite-xl, the icons should appear.
-
-local core = require "core"
 local common = require "core.common"
 local config = require "core.config"
 local style = require "core.style"
 local TreeView = require "plugins.treeview"
 local Node = require "core.node"
+
+local nerdfonts_symbols = require "libraries.font_symbols_nerdfont_mono_regular"
 
 -- Config
 config.plugins.nerdicons = common.merge({
@@ -61,67 +55,69 @@ config.plugins.nerdicons = common.merge({
   }
 }, config.plugins.nerdicons)
 
-local icon_font = renderer.font.load(USERDIR .. "/fonts/icon-nerd-font.ttf", 18.5 * SCALE)
-local chevron_width = icon_font:get_width("")
+local icon_font = renderer.font.load(nerdfonts_symbols.path, 18.5 * SCALE)
+local map = nerdfonts_symbols.utf8
+local chevron_width = icon_font:get_width(map["oct-chevron_down"])
 local previous_scale = SCALE
 
 local extension_icons = {
-  [".lua"] = { "#405af0", ""},
-  [".md"]  = { "#519aba", "" }, -- Markdown
-  [".powershell"] = { "#519aba", "" },
-  [".bat"] = { "#cbcb41", "" },
-  [".txt"] = { "#ffffff", "" },
-  [".cpp"] = { "#519aba", "ﭱ" },
-  [".c"]   = { "#599eff", "" },
-  [".h"]   = { "#79029b", "h" },
-  [".hpp"] = { "#79029b", "h" },
-  [".py"]  = { "#3572A5", "" }, -- Python
-  [".pyc"]  = { "#519aba", "" },
-  [".pyd"]  = { "#519aba", "" },
-  [".php"] = { "#a074c4", "" },
-  [".cs"] = { "#596706", "" },  -- C#
-  [".conf"] = { "#6d8086", "" }, [".cfg"] = { "#6d8086", "" },
-  [".toml"] = { "#6d8086", "" },
-  [".yaml"] = { "#6d8086", "" }, [".yml"] = { "#6d8086", "" },
-  [".json"] = { "#854CC7", "" },
-  [".css"] = { "#519abc", "" },
-  [".html"] = { "#e34c26", "" },
-  [".js"] = { "#cbcb41", "" },  -- JavaScript
-  [".go"] = { "#519aba", "" },
-  [".jpg"] = { "#a074c4", "" }, [".png"] = { "#a074c4", "" },
-  [".sh"] = { "#4d5a5e", "" }, [".bash"] = { "#4d5a5e", "" },  -- Shell
-  [".java"] = { "#cc3e44", "" },
-  [".scala"] = { "#cc3e44", "" },
-  [".kt"] = { "#F88A02", "" },  -- Kotlin
-  [".pl"] = { "#519aba", "" }, [".pm"] = { "#519aba", "" },  -- Perl
-  [".rb"] = { "#701516", "" },  -- Ruby
-  [".rs"] = { "#c95625", "" },  -- Rust
-  [".rss"] = { "#cc3e44", "" },
-  [".sql"] = { "#dad8d8", "" },
-  [".swift"] = { "#e37933", "ﯣ" },
-  [".ts"] = { "#519aba", "ﯤ" },  -- TypeScript
-  [".diff"] = { "#41535b", "" },
-  [".exe"] = {"#cc3e55", ""},
-  [".make"] = { "#d0bf41", "" },
-  [".svg"] = { "#f7ca39", "ﰟ" },
-  [".ttf"] = {"#dad8d4", ""}, [".otf"] = {"#dad8d4", ""}
+  [".lua"] = { "#405af0", "seti-lua"},
+  [".md"]  = { "#519aba", "dev-markdown" }, -- Markdown
+  [".powershell"] = { "#519aba", "cod-terminal_powershell" },
+  [".bat"] = { "#cbcb41", "cod-terminal_cmd" },
+  [".txt"] = { "#ffffff", "fa-file_text" },
+  [".cpp"] = { "#519aba", "custom-cpp" },
+  [".c"]   = { "#599eff", "custom-c" },
+  [".h"]   = { "#79029b", "fa-header" },
+  [".hpp"] = { "#79029b", "fa-header" },
+  [".py"]  = { "#3572A5", "md-language_python" }, -- Python
+  [".pyc"]  = { "#519aba", "md-language_python" },
+  [".pyd"]  = { "#519aba", "md-language_python" },
+  [".php"] = { "#a074c4", "md-language_php" },
+  [".cs"] = { "#596706", "md-language_csharp" },  -- C#
+  [".conf"] = { "#6d8086", "seti-config" }, [".cfg"] = { "#6d8086", "seti-config" },
+  [".toml"] = { "#6d8086", "seti-config" },
+  [".yaml"] = { "#6d8086", "seti-yml" }, [".yml"] = { "#6d8086", "seti-yml" },
+  [".json"] = { "#854CC7", "seti-json" },
+  [".css"] = { "#519abc", "dev-css3" },
+  [".html"] = { "#e34c26", "dev-html5" },
+  [".js"] = { "#cbcb41", "dev-javascript_badge" },  -- JavaScript
+  [".go"] = { "#519aba", "seti-go" },
+  [".jpg"] = { "#a074c4", "fa-image" }, [".png"] = { "#a074c4", "fa-image" },
+  [".sh"] = { "#4d5a5e", "cod-terminal_bash" }, [".bash"] = { "#4d5a5e", "cod-terminal_bash" },  -- Shell
+  [".java"] = { "#cc3e44", "dev-java" },
+  [".scala"] = { "#cc3e44", "dev-scala" },
+  [".kt"] = { "#F88A02", "custom-kotlin" },  -- Kotlin
+  [".pl"] = { "#519aba", "dev-perl" }, [".pm"] = { "#519aba", "dev-perl" },  -- Perl
+  [".rb"] = { "#701516", "dev-ruby_rough" },  -- Ruby
+  [".rs"] = { "#c95625", "dev-rust" },  -- Rust
+  [".rss"] = { "#cc3e44", "fa-rss_square" },
+  [".sql"] = { "#dad8d8", "dev-sqllite" },
+  [".swift"] = { "#e37933", "dev-swift" },
+  [".ts"] = { "#519aba", "md-language_typescript" },  -- TypeScript
+  [".diff"] = { "#41535b", "oct-diff" },
+  [".exe"] = {"#cc3e55", "cod-file_binary"},
+  [".make"] = { "#d0bf41", "dev-gnu" },
+  [".svg"] = { "#f7ca39", "md-svg" },
+  [".ttf"] = {"#dad8d4", "fa-font"}, [".otf"] = {"#dad8d4", "fa-font"},
+  [".vim"] = {"#8f00ff", "custom-vim"},
 }
 
 local known_filenames_icons = {
-  ["dockerfile"] = { "#296478", "" },
-  [".gitignore"] = { "#cc3e55", "" },
-  [".gitmodules"] = { "#cc3e56", "" },
-  ["PKGBUILD"] = { "#6d8ccc", "" },
-  ["license"] = { "#d0bf41", "" },
-  ["makefile"] = { "#d0bf41", "" },
-  ["cmakelists.txt"] = { "#cc3e55", "喝" },
+  ["dockerfile"] = { "#296478", "linux-docker" },
+  [".gitignore"] = { "#cc3e55", "dev-git" },
+  [".gitmodules"] = { "#cc3e56", "dev-git" },
+  ["PKGBUILD"] = { "#6d8ccc", "md-package" },
+  ["license"] = { "#d0bf41", "seti-license" },
+  ["makefile"] = { "#d0bf41", "dev-gnu" },
+  ["cmakelists.txt"] = { "#cc3e55", "md-triangle_outline" },
 }
 
 -- Preparing colors
-for k, v in pairs(extension_icons) do
+for _, v in pairs(extension_icons) do
   v[1] = { common.color(v[1]) }
 end
-for k, v in pairs(known_filenames_icons) do
+for _, v in pairs(known_filenames_icons) do
   v[1] = { common.color(v[1]) }
 end
 
@@ -133,15 +129,15 @@ function TreeView:get_item_icon(item, active, hovered)
     icon_font:set_size(
       icon_font:get_size() * (SCALE / previous_scale)
     )
-    chevron_width = icon_font:get_width("")
+    chevron_width = icon_font:get_width(map["oct-chevron_down"])
     previous_scale = SCALE
   end
   if not config.plugins.nerdicons.use_default_dir_icons then
-    icon = "" -- hex ea7b
+    icon = map["cod-file"] -- hex ea7b
     font = icon_font
     color = style.text
     if item.type == "dir" then
-      icon = item.expanded and "ﱮ" or "" -- hex f07c and f07b
+      icon = item.expanded and map["fa-folder_open"] or map["fa-folder"] -- hex f07c and f07b
     end
   end
   if config.plugins.nerdicons.draw_treeview_icons then
@@ -151,7 +147,7 @@ function TreeView:get_item_icon(item, active, hovered)
     end
     if custom_icon ~= nil then
       color = custom_icon[1]
-      icon = custom_icon[2]
+      icon = map[custom_icon[2]]
       font = icon_font
     end
     if active or hovered then
@@ -166,9 +162,9 @@ local TreeView_draw_item_chevron = TreeView.draw_item_chevron
 function TreeView:draw_item_chevron(item, active, hovered, x, y, w, h)
   if not config.plugins.nerdicons.use_default_chevrons then
     if item.type == "dir" then
-      local chevron_icon = item.expanded and "" or ""
+      local chevron_icon = item.expanded and "oct-chevron_down" or "oct-chevron_right"
       local chevron_color = hovered and style.accent or style.text
-      common.draw_text(icon_font, chevron_color, chevron_icon, nil, x+8, y, 0, h) -- added 8 to x to draw the chevron closer to the icon
+      common.draw_text(icon_font, chevron_color, map[chevron_icon], nil, x+8, y, 0, h) -- added 8 to x to draw the chevron closer to the icon
     end
     return chevron_width + style.padding.x
   end

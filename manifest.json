@@ -432,6 +432,34 @@
       "dependencies": { "thread": { } }
     },
     {
+      "name": "Nonicons font",
+      "description": "[Nonicons](https://github.com/yamatsum/nonicons/) font with mapping",
+      "version": "20230530",
+      "type": "library",
+      "path": "plugins/font_nonicons.lua",
+      "id": "font_nonicons",
+      "files": [
+        {
+          "url": "https://github.com/yamatsum/nonicons/raw/8454b3b6c3ceeee18b386b7882c5a071dcf0f3af/dist/nonicons.ttf",
+          "checksum": "da0a065856c44ea3fd3b9fba2fff5e25a32992dc3a3c5df6e9bfca2cd106a8cc"
+        }
+      ]
+    },
+    {
+      "name": "Nerd Font Symbols Mono Regular",
+      "description": "[Nerd Font Symbols](https://github.com/ryanoasis/nerd-fonts/) font with mapping",
+      "version": "3.1.1",
+      "type": "library",
+      "path": "plugins/font_symbols_nerdfont_mono_regular.lua",
+      "id": "font_symbols_nerdfont_mono_regular",
+      "files": [
+        {
+          "url": "https://github.com/ryanoasis/nerd-fonts/raw/cf3561b1a51f70d5398eb49d603679b0f0c55d74/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFontMono-Regular.ttf",
+          "checksum": "f4f40e003e9d00000f1218a606127fab82b1faf0df2d9095a06190f4f2c32e36"
+        }
+      ]
+    },
+    {
       "description": "Allows users to load fonts with [fontconfig](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html).",
       "version": "0.1",
       "path": "plugins/fontconfig.lua",
@@ -1305,14 +1333,8 @@
       "remote": "https://github.com/liquid600pgm/lintplus:771b1fe6cddb7897cd034ed5ee96201d6a2831c2",
       "mod_version": "3",
       "id": "lintplus",
-      "name": "lint+"
-    },
-    {
-      "description": "Linters for multiple languages",
-      "version": "0.1",
-      "remote": "https://github.com/drmargarido/linters:eb1611eaade6e5328df5172bd3f759d853c33a31",
-      "mod_version": "3",
-      "id": "linter"
+      "name": "lint+",
+      "replaces": ["linter"]
     },
     {
       "description": "Discord rich presence for Lite XL (display file editing in Discord)",
@@ -1330,8 +1352,8 @@
     },
     {
       "description": "Provides code completion (also known as IntelliSense) using the Language Server Protocol",
-      "version": "0.5",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp:7c6a72b6a296e9948df6dfdf322d04a43c90e546",
+      "version": "0.6",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp:d2999f269c3d7f11cc245ad6ccc48475a464afcb",
       "mod_version": "3",
       "id": "lsp"
     },
@@ -1435,19 +1457,25 @@
       "id": "net"
     },
     {
-      "description": "File icons set for TreeView. Download font from nerdfonts.com. Modification of the [nonicons](plugins/nonicons.lua) plugin",
-      "version": "1.0.1",
+      "description": "File icons set for TreeView. Modification of the [nonicons](plugins/nonicons.lua) plugin. Uses [NerdFont](https://www.nerdfonts.com/) icons",
+      "version": "1.1",
       "type": "plugin",
       "path": "plugins/nerdicons.lua",
       "id": "nerdicons",
-      "mod_version": "3"
+      "mod_version": "3",
+      "dependencies": {
+        "font_symbols_nerdfont_mono_regular": {}
+      }
     },
     {
-      "description": "File icons set for TreeView. Download [font](https://github.com/yamatsum/nonicons/raw/6a2faf4fbdfbe353c5ae6a496740ac4bfb6d0e74/dist/nonicons.ttf) to your config/fonts folder",
-      "version": "0.2.1",
+      "description": "File icons set for TreeView. Uses the [Nonicons](https://github.com/yamatsum/nonicons/) font",
+      "version": "0.3",
       "path": "plugins/nonicons.lua",
       "id": "nonicons",
-      "mod_version": "3"
+      "mod_version": "3",
+      "dependencies": {
+        "font_nonicons": {}
+      }
     },
     {
       "description": "Change the opaqueness/transparency of `lite-xl` using shift+mousewheel or a command.",
