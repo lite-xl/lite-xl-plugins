@@ -1458,7 +1458,7 @@
     },
     {
       "description": "File icons set for TreeView. Modification of the [nonicons](plugins/nonicons.lua) plugin. Uses [NerdFont](https://www.nerdfonts.com/) icons",
-      "version": "1.1",
+      "version": "1.2",
       "type": "plugin",
       "path": "plugins/nerdicons.lua",
       "id": "nerdicons",
@@ -1469,7 +1469,7 @@
     },
     {
       "description": "File icons set for TreeView. Uses the [Nonicons](https://github.com/yamatsum/nonicons/) font",
-      "version": "0.3",
+      "version": "0.4",
       "path": "plugins/nonicons.lua",
       "id": "nonicons",
       "mod_version": "3",

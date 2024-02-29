@@ -81,7 +81,9 @@ local extension_icons = {
   [".json"] = { "#854CC7", "seti-json" },
   [".css"] = { "#519abc", "dev-css3" },
   [".html"] = { "#e34c26", "dev-html5" },
-  [".js"] = { "#cbcb41", "dev-javascript_badge" },  -- JavaScript
+  [".js"] = { "#cbcb41", "dev-javascript_badge" }, [".cjs"] = { "#cbcb41", "dev-javascript_badge" }, [".mjs"] = { "#cbcb41", "dev-javascript_badge" },  -- JavaScript
+  [".ejs"] = { "#ffea7f", "seti-ejs" },
+  [".pug"] = { "#a86454", "seti-pug" },
   [".go"] = { "#519aba", "seti-go" },
   [".jpg"] = { "#a074c4", "fa-image" }, [".png"] = { "#a074c4", "fa-image" },
   [".sh"] = { "#4d5a5e", "cod-terminal_bash" }, [".bash"] = { "#4d5a5e", "cod-terminal_bash" },  -- Shell
