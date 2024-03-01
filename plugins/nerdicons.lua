@@ -60,59 +60,70 @@ local map = nerdfonts_symbols.utf8
 local chevron_width = icon_font:get_width(map["oct-chevron_down"])
 local previous_scale = SCALE
 
+
 local extension_icons = {
-  [".lua"] = { "#405af0", "seti-lua"},
-  [".md"]  = { "#519aba", "dev-markdown" }, -- Markdown
-  [".powershell"] = { "#519aba", "cod-terminal_powershell" },
-  [".bat"] = { "#cbcb41", "cod-terminal_cmd" },
-  [".txt"] = { "#ffffff", "fa-file_text" },
-  [".cpp"] = { "#519aba", "custom-cpp" },
-  [".c"]   = { "#599eff", "custom-c" },
-  [".h"]   = { "#79029b", "fa-header" },
-  [".hpp"] = { "#79029b", "fa-header" },
-  [".py"]  = { "#3572A5", "md-language_python" }, -- Python
-  [".pyc"]  = { "#519aba", "md-language_python" },
-  [".pyd"]  = { "#519aba", "md-language_python" },
-  [".php"] = { "#a074c4", "md-language_php" },
-  [".cs"] = { "#596706", "md-language_csharp" },  -- C#
-  [".conf"] = { "#6d8086", "seti-config" }, [".cfg"] = { "#6d8086", "seti-config" },
-  [".toml"] = { "#6d8086", "seti-config" },
-  [".yaml"] = { "#6d8086", "seti-yml" }, [".yml"] = { "#6d8086", "seti-yml" },
-  [".json"] = { "#854CC7", "seti-json" },
-  [".css"] = { "#519abc", "dev-css3" },
-  [".html"] = { "#e34c26", "dev-html5" },
-  [".js"] = { "#cbcb41", "dev-javascript_badge" }, [".cjs"] = { "#cbcb41", "dev-javascript_badge" }, [".mjs"] = { "#cbcb41", "dev-javascript_badge" },  -- JavaScript
-  [".ejs"] = { "#ffea7f", "seti-ejs" },
-  [".pug"] = { "#a86454", "seti-pug" },
-  [".go"] = { "#519aba", "seti-go" },
-  [".jpg"] = { "#a074c4", "fa-image" }, [".png"] = { "#a074c4", "fa-image" },
-  [".sh"] = { "#4d5a5e", "cod-terminal_bash" }, [".bash"] = { "#4d5a5e", "cod-terminal_bash" },  -- Shell
-  [".java"] = { "#cc3e44", "dev-java" },
-  [".scala"] = { "#cc3e44", "dev-scala" },
-  [".kt"] = { "#F88A02", "custom-kotlin" },  -- Kotlin
-  [".pl"] = { "#519aba", "dev-perl" }, [".pm"] = { "#519aba", "dev-perl" },  -- Perl
-  [".rb"] = { "#701516", "dev-ruby_rough" },  -- Ruby
-  [".rs"] = { "#c95625", "dev-rust" },  -- Rust
-  [".rss"] = { "#cc3e44", "fa-rss_square" },
-  [".sql"] = { "#dad8d8", "dev-sqllite" },
-  [".swift"] = { "#e37933", "dev-swift" },
-  [".ts"] = { "#519aba", "md-language_typescript" },  -- TypeScript
-  [".diff"] = { "#41535b", "oct-diff" },
-  [".exe"] = {"#cc3e55", "cod-file_binary"},
-  [".make"] = { "#d0bf41", "dev-gnu" },
-  [".svg"] = { "#f7ca39", "md-svg" },
-  [".ttf"] = {"#dad8d4", "fa-font"}, [".otf"] = {"#dad8d4", "fa-font"},
-  [".vim"] = {"#8f00ff", "custom-vim"},
+  [".lua"]         = { "#405af0", "seti-lua"                 },
+  [".md"]          = { "#519aba", "dev-markdown"             }, -- Markdown
+  [".powershell"]  = { "#519aba", "cod-terminal_powershell"  },
+  [".bat"]         = { "#cbcb41", "cod-terminal_cmd"         },
+  [".txt"]         = { "#ffffff", "fa-file_text"             },
+  [".cpp"]         = { "#519aba", "custom-cpp"               },
+  [".c"]           = { "#599eff", "custom-c"                 },
+  [".h"]           = { "#79029b", "fa-header"                },
+  [".hpp"]         = { "#79029b", "fa-header"                },
+  [".py"]          = { "#3572A5", "md-language_python"       }, -- Python
+  [".pyc"]         = { "#519aba", "md-language_python"       },
+  [".pyd"]         = { "#519aba", "md-language_python"       },
+  [".php"]         = { "#a074c4", "md-language_php"          },
+  [".cs"]          = { "#596706", "md-language_csharp"       },  -- C#
+  [".conf"]        = { "#6d8086", "seti-config"              },
+  [".cfg"]         = { "#6d8086", "seti-config"              },
+  [".toml"]        = { "#6d8086", "seti-config"              },
+  [".yaml"]        = { "#6d8086", "seti-yml"                 },
+  [".yml"]         = { "#6d8086", "seti-yml"                 },
+  [".json"]        = { "#854CC7", "seti-json"                },
+  [".css"]         = { "#519abc", "dev-css3"                 },
+  [".html"]        = { "#e34c26", "dev-html5"                },
+  [".js"]          = { "#cbcb41", "dev-javascript_badge"     },
+  [".cjs"]         = { "#cbcb41", "dev-javascript_badge"     },
+  [".mjs"]         = { "#cbcb41", "dev-javascript_badge"     },  -- JavaScript
+  [".ejs"]         = { "#ffea7f", "seti-ejs"                 },
+  [".pug"]         = { "#a86454", "seti-pug"                 },
+  [".go"]          = { "#519aba", "seti-go"                  },
+  [".jpg"]         = { "#a074c4", "fa-image"                 },
+  [".png"]         = { "#a074c4", "fa-image"                 },
+  [".sh"]          = { "#4d5a5e", "cod-terminal_bash"        },
+  [".bash"]        = { "#4d5a5e", "cod-terminal_bash"        },  -- Shell
+  [".java"]        = { "#cc3e44", "dev-java"                 },
+  [".scala"]       = { "#cc3e44", "dev-scala"                },
+  [".kt"]          = { "#F88A02", "custom-kotlin"            },  -- Kotlin
+  [".pl"]          = { "#519aba", "dev-perl"                 },  -- Perl
+  [".pm"]          = { "#519aba", "dev-perl"                 },  -- Perl
+  [".rb"]          = { "#701516", "dev-ruby_rough"           },  -- Ruby
+  [".rs"]          = { "#c95625", "dev-rust"                 },  -- Rust
+  [".rss"]         = { "#cc3e44", "fa-rss_square"            },
+  [".sql"]         = { "#dad8d8", "dev-sqllite"              },
+  [".swift"]       = { "#e37933", "dev-swift"                },
+  [".ts"]          = { "#519aba", "md-language_typescript"   },  -- TypeScript
+  [".diff"]        = { "#41535b", "oct-diff"                 },
+  [".exe"]         = { "#cc3e55", "cod-file_binary"          },
+  [".make"]        = { "#d0bf41", "dev-gnu"                  },
+  [".svg"]         = { "#f7ca39", "md-svg"                   },
+  [".ttf"]         = { "#dad8d4", "fa-font"                  },
+  [".otf"]         = { "#dad8d4", "fa-font"                  },
+  [".vim"]         = { "#8f00ff", "custom-vim"               },
+  [".pdf"]         = { "#E53935", "fa-file_pdf_o"            },
 }
 
+
 local known_filenames_icons = {
-  ["dockerfile"] = { "#296478", "linux-docker" },
-  [".gitignore"] = { "#cc3e55", "dev-git" },
-  [".gitmodules"] = { "#cc3e56", "dev-git" },
-  ["PKGBUILD"] = { "#6d8ccc", "md-package" },
-  ["license"] = { "#d0bf41", "seti-license" },
-  ["makefile"] = { "#d0bf41", "dev-gnu" },
-  ["cmakelists.txt"] = { "#cc3e55", "md-triangle_outline" },
+  ["dockerfile"]      = { "#296478", "linux-docker"         },
+  [".gitignore"]      = { "#cc3e55", "dev-git"              },
+  [".gitmodules"]     = { "#cc3e56", "dev-git"              },
+  ["PKGBUILD"]        = { "#6d8ccc", "md-package"           },
+  ["license"]         = { "#d0bf41", "seti-license"         },
+  ["makefile"]        = { "#d0bf41", "dev-gnu"              },
+  ["cmakelists.txt"]  = { "#cc3e55", "md-triangle_outline"  },
 }
 
 -- Preparing colors
