@@ -1298,6 +1298,14 @@
       "tags": ["language"]
     },
     {
+      "description": "Syntax for the [Vale](https://vale.dev) programming language",
+      "version": "0.1",
+      "remote": "https://github.com/programutox/lite-plugin-vale:faa75f67b093978ceebc31bb7db8aa297f3c3e52",
+      "mod_version": "3",
+      "id": "language_vale",
+      "tags": ["language"]
+    },
+    {
       "description": "Syntax for the [Wren](http://wren.io/) programming language",
       "version": "0.1",
       "path": "plugins/language_wren.lua",
