@@ -1387,6 +1387,13 @@
       "id": "lsp_lua"
     },
     {
+      "description": "Automatic configuration/binary download for LSP completion for Python with Pyright.",
+      "version": "1.1.351",
+      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:e2ec4cb92ceb58c3d0214919e715e5e1903c6633",
+      "mod_version": "3",
+      "id": "lsp_python"
+    },
+    {
       "description": "Automatic configuration/binary download for LSP linting for Javascript with quick-lint-js.",
       "version": "3.1.0",
       "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:69c85033c8a62214d1e758d986cb2eea7a66728e",
@@ -1474,6 +1481,14 @@
       "dependencies": {
         "font_symbols_nerdfont_mono_regular": {}
       }
+    },
+    {
+      "description": "Provides official NodeJs binaries",
+      "version": "20.11.1",
+      "type": "library",
+      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:e2ec4cb92ceb58c3d0214919e715e5e1903c6633",
+      "mod_version": "3",
+      "id": "nodejs"
     },
     {
       "description": "File icons set for TreeView. Uses the [Nonicons](https://github.com/yamatsum/nonicons/) font",
