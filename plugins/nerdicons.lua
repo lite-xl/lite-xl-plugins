@@ -122,6 +122,7 @@ local known_filenames_icons = {
   [".gitmodules"]     = { "#cc3e56", "dev-git"              },
   ["PKGBUILD"]        = { "#6d8ccc", "md-package"           },
   ["license"]         = { "#d0bf41", "seti-license"         },
+  ["copying"]         = { "#d0bf41", "seti-license"         },
   ["makefile"]        = { "#d0bf41", "dev-gnu"              },
   ["cmakelists.txt"]  = { "#cc3e55", "md-triangle_outline"  },
 }
