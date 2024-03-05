@@ -1,18 +1,49 @@
 -- mod-version:3
 
+-- ** LINUX ONLY **
+-- KDE Dialog: Install kdialog package.
+-- GTK Zenity: Install zenity package (default).
+
 local core = require("core")
 local command = require("core.command")
 local common = require("core.common")
 local keymap = require("core.keymap")
+local config = require("core.config")
 local TreeView = require("plugins.treeview")
 
-local function run_zenity(options, callback)
-	local zen, proc_err = process.start({
-		"zenity",
-		table.unpack(options)
+config.plugins.gui_filepicker = common.merge({
+	dialog_utility = "zenity",
+	config_spec = {
+		name = "GUI Filepicker",
+		{
+			label = "Dialog Utility",
+			description = "The Default Filepicker Dialog Boxes Utility",
+			path = "dialog_utility",
+			type = "selection",
+			default = "zenity",
+			values = {
+				{"Zenity", "zenity"},
+				{"KDE Dialogs", "kdialog"}
+			}
+		}
+	}
+}, config.plugins.gui_filepicker)
+
+local function dialog(kdialogFlags, zenityFlags, callback)
+	local utility = config.plugins.gui_filepicker.dialog_utility
+	local flags = zenityFlags -- The Default
+
+	if utility == "kdialog" then
+		flags = kdialogFlags
+	end
+
+	local proc, proc_err = process.start({
+		utility,
+		table.unpack(flags)
 	})
-	if not zen then
-		core.error("Unable to run zenity: %s", proc_err)
+
+	if not proc then
+		core.error("Unable to run %s: %s", utility, proc_err)
 		return
 	end
 
@@ -20,7 +51,7 @@ local function run_zenity(options, callback)
 	core.add_thread(function()
 		local buffer = {}
 		repeat
-			local buf = zen:read_stdout()
+			local buf = proc:read_stdout()
 			if buf and #buf > 0 then
 				table.insert(buffer, buf)
 			end
@@ -28,7 +59,6 @@ local function run_zenity(options, callback)
 		until not buf
 		local abs_path = table.concat(buffer) or ""
 
-		-- Remove final newline zenity adds
 		abs_path = string.match(abs_path, "^[^\n]+") or ""
 		if #abs_path == 0 then
 			return
@@ -40,7 +70,10 @@ end
 
 command.add(nil, {
 	["gui-filepicker:open-file"] = function()
-		run_zenity(
+		dialog(
+			{
+				"--getopenfilename"
+			},
 			{
 				"--file-selection"
 			},
@@ -51,10 +84,13 @@ command.add(nil, {
 	end,
 
 	["gui-filepicker:open-project-folder"] = function()
-		run_zenity(
+		dialog(
 			{
-				"--file-selection",
-				"--directory",
+				"--getexistingdirectory"
+			},
+			{
+					"--file-selection",
+					"--directory"
 			},
 			function(abs_path)
 				if abs_path == core.project_dir then
@@ -66,10 +102,13 @@ command.add(nil, {
 	end,
 
 	["gui-filepicker:change-project-folder"] = function()
-		run_zenity(
+		dialog(
+			{
+				"--getexistingdirectory"
+			},
 			{
 				"--file-selection",
-				"--directory",
+				"--directory"
 			},
 			function(abs_path)
 				if abs_path == core.project_dir then
@@ -83,10 +122,13 @@ command.add(nil, {
 	end,
 
 	["gui-filepicker:add-directory"] = function()
-		run_zenity(
+		dialog(
+			{
+				"--getexistingdirectory",
+			},
 			{
 				"--file-selection",
-				"--directory",
+				"--directory"
 			},
 			function(abs_path)
 				if abs_path == core.project_dir then
@@ -100,12 +142,15 @@ command.add(nil, {
 
 command.add("core.docview", {
 	["gui-filepicker:save-as"] = function(dv)
-		run_zenity(
+		dialog(
+			{
+				"--getsavefilename"
+			},
 			{
 				"--file-selection",
 				"--save",
 				"--filename",
-				dv.doc.filename or "new_file",
+				dv.doc.filename or "new_file"
 			},
 			function(abs_path)
 				dv.doc:save(abs_path, abs_path)
@@ -135,9 +180,9 @@ local replacements = {
 	["core:open-file"] = "gui-filepicker:open-file",
 	["doc:save"] = "gui-filepicker:save",
 }
+
 for _, v in ipairs(TreeView.toolbar.toolbar_commands) do
 	if replacements[v.command] then
 		v.command = replacements[v.command]
 	end
 end
-
