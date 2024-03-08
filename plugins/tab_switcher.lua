@@ -28,8 +28,8 @@ function keymap.on_key_released(k)
   -- Check if hold_mode has been triggered erroneously
   if hold_mode and not in_switcher then
     hold_mode = false
-    core.warning("Something went wrong with the tab_switcher plugin. " ..
-                 "Please open an issue about it in the plugins repository on Github.")
+    core.warn("Something went wrong with the tab_switcher plugin. " ..
+              "Please open an issue about it in the plugins repository on Github.")
   end
 
   local was_pressed = any_true(keymap.modkeys)
