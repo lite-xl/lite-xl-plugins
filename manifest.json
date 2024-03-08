@@ -1721,7 +1721,7 @@
     },
     {
       "description": "Switch between open tabs by searching by name",
-      "version": "0.2",
+      "version": "0.3",
       "path": "plugins/tab_switcher.lua",
       "id": "tab_switcher",
       "mod_version": "3"
