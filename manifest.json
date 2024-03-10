@@ -558,6 +558,14 @@
       "mod_version": "3"
     },
     {
+        "description": "Production and Early-Access OpenJDK Builds, from Oracle.",
+        "version": "21.0.2",
+        "type": "library",
+        "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
+        "mod_version": "3",
+        "id": "jdk"
+    },
+    {
       "description": "Exports the keymap to a JSON file.",
       "version": "0.1",
       "path": "plugins/keymap_export.lua",
@@ -1382,38 +1390,66 @@
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for C/C++ with clangd.",
-      "version": "16.0.2",
-      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:58e1192b7abe9cff60c59b1c8b098fde88f03ecc",
+      "version": "17.0.3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
       "mod_version": "3",
       "id": "lsp_c"
     },
     {
+      "description": "Automatic configuration/binary download for LSP completion for Emmet with emmet-language-server.",
+      "version": "2.5.0",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
+      "mod_version": "3",
+      "id": "lsp_emmet"
+    },
+    {
       "description": "Automatic configuration/binary download for LSP completion for Lua with lua-language-server (sumneko).",
-      "version": "3.7.0",
-      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:58e1192b7abe9cff60c59b1c8b098fde88f03ecc",
+      "version": "3.7.4",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
       "mod_version": "3",
       "id": "lsp_lua"
     },
     {
+      "description": "Automatic configuration/binary download for LSP completion for Java with jdtls.",
+      "version": "1.33.0",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
+      "mod_version": "3",
+      "id": "lsp_java"
+    },
+    {
       "description": "Automatic configuration/binary download for LSP completion for Python with Pyright.",
-      "version": "1.1.351",
-      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:e2ec4cb92ceb58c3d0214919e715e5e1903c6633",
+      "version": "1.1.352",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
       "mod_version": "3",
       "id": "lsp_python"
     },
     {
       "description": "Automatic configuration/binary download for LSP linting for Javascript with quick-lint-js.",
-      "version": "3.1.0",
-      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:69c85033c8a62214d1e758d986cb2eea7a66728e",
+      "version": "3.2.0",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
       "mod_version": "3",
       "id": "lsp_quicklintjs"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Rust with rust-analyzer.",
-      "version": "20231009",
-      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:58e1192b7abe9cff60c59b1c8b098fde88f03ecc",
+      "version": "20240304",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
       "mod_version": "3",
       "id": "lsp_rust"
+    },
+    {
+      "description": "Automatic configuration/binary download for LSP completion for TeX with texlab.",
+      "version": "5.12.4",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
+      "mod_version": "3",
+      "id": "lsp_tex"
+    },
+    {
+      "description": "Automatic configuration/binary download for LSP completion for Typescript and Javascript with typescript-language-server.",
+      "version": "4.3.3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
+      "mod_version": "3",
+      "id": "lsp_typescript"
     },
     {
       "description": "Adds LSP snippets support to the snippets plugin",
@@ -1425,7 +1461,7 @@
     {
       "description": "LSP support for Zig via zls.",
       "version": "0.11.0",
-      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:f872f65e30360b3add7b33122fec52fe6b5119bb",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
       "mod_version": "3",
       "id": "lsp_zig"
     },
@@ -1494,7 +1530,7 @@
       "description": "Provides official NodeJs binaries",
       "version": "20.11.1",
       "type": "library",
-      "remote": "https://github.com/adamharrison/lite-xl-lsp-servers:e2ec4cb92ceb58c3d0214919e715e5e1903c6633",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
       "mod_version": "3",
       "id": "nodejs"
     },
