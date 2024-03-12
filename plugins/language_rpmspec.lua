@@ -7,21 +7,19 @@ syntax.add {
   comment = "#",
   patterns = {
     -- common types --
-    { pattern = "^#.*\n",                          type = "comment"  },
-    { pattern = "[!<>|&%[%]=*()]",                   type = "operator" },
+    { pattern = "#.*",                              type = "comment"  },
+    { pattern = "[!<>|&%[%]=*()]",                  type = "operator" },
     -- int
-    { pattern = "[%d]+%s",                         type = "number"   }, 
+    { pattern = "%s[%d]+%s",                        type = "number"   }, 
     -- hex
-    { pattern = "%x%x%x%x%x+",                     type = "number"   }, 
+    { pattern = "%s%x%x%x%x%x+%s",                  type = "number"   }, 
     -- version
-    { pattern = "%s[%d%.]+",                       type = "string"   }, 
-    { pattern = { '"', '"', '\\' },                type = "string"   },
-    -- inline commands, no quotes
-    { pattern = "^\\$",                            type = "normal"   },
-
+    { pattern = "%s[%d%.-]+",                       type = "string"   }, 
+    { pattern = { '"', '"', '\\' },                 type = "string"   },
+    
     -- language specific types --
     -- normal and predefined  macros
-    { pattern = "%%{[%l_]+%}",                     type = "function", "symbol" }, 
+    { pattern = "%%{[%a%d%:_]+%}",        type = "function", "symbol" }, 
 
     -- conditional macro with expansion
     { 
@@ -29,20 +27,28 @@ syntax.add {
       type = "function" 
     },
 
-    -- arch keywords
-    { pattern = "[%l%d_]+[%.\\%d]+",                type = "symbol"   }, 
-    -- all caps keywords
-    { pattern = "%u%u[%u_]+",                       type = "symbol"   },
+    -- odd arch and os keywords
+    { pattern = "[%l%d%-]+\\%.[%d]+",               type = "symbol"   },
+    { pattern = "%u[%l]+\\%/[%d%u]+",               type = "symbol"   },
+    { pattern = "[%u]+\\%/[%d%u]+",                 type = "symbol"   },
+    -- uppercase and digit keywords with underscore
+    { pattern = "[%u%d]+_[%u%d]+",                  type = "symbol"   },
+    -- lowercase and digit keywords with underscore
+    { pattern = "[%l%d]+_[%l%d]+",                  type = "symbol"   },
     -- commands 
     { pattern = "^%%[%l_]+",                        type = "symbol"   },
     -- package tags
-    { pattern = "^[%u%l]+%:",                       type = "symbol"   },
+    { pattern = "^[%a]+%:",                         type = "symbol"   },
     
     -- hard defined patterns
     { pattern = "^Source[%d]+%:",                   type = "keyword2" },
     { pattern = "^Patch[%d]+%:",                    type = "keyword2" },
+    -- sed doesn't follow the rules with ' and ", enforce highlighting
+    { pattern = "sed[%g%s]+[\'\"]+",                type = "literal"  },
     -- url's
     { pattern = "http[s]?://[%g]*",                 type = "string"   }, 
+    -- give it up for SCO... meh...
+    { pattern = "SCO_SV3\\.2v5\\.0\\.2",            type = "symbol"   },
   };
     
   symbols = {
@@ -309,8 +315,19 @@ syntax.add {
         ["%ninja_build"]                   = "keyword2",
         ["%ninja_install"]                 = "keyword2",
         ["%setup"]                         = "keyword2",
+        ["%attr"]                          = "keyword2",
+        ["%docdir"]                        = "keyword2",
+        ["%dir"]                           = "keyword2",
+        ["%exclude"]                       = "keyword2",
+        ["%config"]                        = "keyword2",
+        ["%defattr"]                       = "keyword2",
+        ["%ghost"]                         = "keyword2",
+        ["%verify"]                        = "keyword2",
 
 -- autoconf macros and analogues "keyword"
+        ["%{_arch}"]                       = "keyword",
+        ["%{buildroot}"]                   = "keyword",
+        ["%{_builddir}"]                   = "keyword",
         ["%{_prefix}"]                     = "keyword",
         ["%{_bindir}"]                     = "keyword",
         ["%{_sbindir}"]                    = "keyword",
@@ -325,6 +342,11 @@ syntax.add {
         ["%{_mandir}"]                     = "keyword",
         ["%{_infodir}"]                    = "keyword",
         ["%{_oldincludedir}"]              = "keyword",
+        ["%{_metainfodir}"]                = "keyword",
+        ["%{_usrsrc}"]                     = "keyword",
+        ["%{_udevrulesdir}"]               = "keyword",
+        ["%{_unitdir}"]                    = "keyword",
+        ["%{_presetdir}"]                  = "keyword",
 
 -- per sh language plugin "keyword"
         ["break"]                          = "keyword",
