@@ -876,6 +876,27 @@ system.get_time = function()
     local primary_instance = ipc:get_primary_instance()
     if primary_instance and ARGS[2] then
       local open_directory = false
+
+      local path_sep=package.config:sub(1,1)
+      local pwd=""
+
+      if path_sep=='\\' then
+        pwd="cd"
+      else
+        pwd="pwd"
+      end
+      
+      local new_dir=os.getenv(string.upper(pwd)) -- This is preserved even though the actual cwd may change
+      local old_dir=io.popen(pwd):read()
+      local should_change_dir=false
+      if new_dir and old_dir then
+        should_change_dir=true -- Hacky. Should be fixed properly by the main program not changing the cwd all of the time
+      end
+
+      if should_change_dir then
+        system.chdir(new_dir)
+      end
+      
       for i=2, #ARGS do
         local path = system.absolute_path(ARGS[i])
 
@@ -900,6 +921,11 @@ system.get_time = function()
           end
         end
       end
+
+      if should_change_dir then
+        system.chdir(old_dir)
+      end
+      
       ipc:wait_for_messages()
       if not open_directory then
         os.exit()
