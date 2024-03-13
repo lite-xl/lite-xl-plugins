@@ -4,29 +4,33 @@ local syntax = require "core.syntax"
 syntax.add {
   name = "Perl",
   files = { "%.pm$", "%.pl$" },
-  headers = "^#!.*[ /]perl",
+  headers = "^#!.*[ /]perl[%s-w]*",
   comment = "#",
   patterns = {
-    { pattern = "%#.-\n",                 type = "comment"  },
-    { pattern = { '"', '"', '\\' },       type = "string"   },
-    { pattern = { "'", "'", '\\' },       type = "string"   },
-    { pattern = { "qw%(", "%)", '\\' },     type = "string"   },
-    { pattern = { "qw%[", "%]", '\\' },     type = "string"   },
-    { pattern = { "qw%/", "%/", '\\' },     type = "string"   },
-    { pattern = { "qq?%(", "%)",  '\\' },     type = "string"   },
-    { pattern = { "qq?%[", "%]",  '\\' },     type = "string"   },
-    { pattern = { "qq?%/", "%/",  '\\' },     type = "string"   },
-    { pattern = { "^=%w+", "=cut" },   type = "comment" },
+    { pattern = "%#.*",                              type = "comment" },
+    { pattern = { '"', '"', '\\' },                  type = "string"  },
+    { pattern = { "'", "'", '\\' },                  type = "string"  },
+    { pattern = { "^=%w+", "=cut" },                 type = "comment" },
+    -- hash
+    { pattern = "[%$][%a_][%w_]*[{]()[%a%d_]+()[}]", type = { "normal", "string", "normal" } },
+    { pattern = "->{()[%a%d_]+()}",                  type = { "normal", "string", "normal" } },
+    -- q syntax
+    { pattern = "q[qrxw]?()[%[]()[^%]]+()[%]]",      type = { "keyword", "normal", "string", "normal" } },
+    { pattern = "q[qrxw]?()[(]()[^(]+()[)]",         type = { "keyword", "normal", "string", "normal" } },
+    { pattern = "q[qrxw]?()[!]()[^!]+()[!]",         type = { "keyword", "normal", "string", "normal" }  },
+    { pattern = "q[qrxw]?()[|]()[^|]+()[|]",         type = { "keyword", "normal", "string", "normal" }  },
+    { pattern = "q[qrxw]?()[/]()[^/]+()[/]",         type = { "keyword", "normal", "string", "normal" }  },
+    { pattern = "q[qrxw]?()[{]()[^{]+()[}]",         type = { "keyword", "normal", "string", "normal" }  },
+    { pattern = "q[qrxw]?()[%%]()[^%%]+()[%%]",      type = { "keyword", "normal", "string", "normal" }  },
     -- until we can get this workign with s///, just don't do any of them.
     -- { pattern = { '/', '/', '\\' },       type = "string"   },
-    { pattern = "-?%d+[%d%.eE]*",         type = "number"   },
-    { pattern = "-?%.?%d+",               type = "number"   },
-    { pattern = "[%a_][%w_]*%f[(]",       type = "function" },
-    { pattern = "[%@%$%*%%]+[%a_][%w_]*", type = "keyword2" },
-    { pattern = "[%a_][%w_]*%s+()=>", type =  { "string", "operator" } },
-    { pattern = "sub%s+()[%w_]+", type =  { "keyword", "operator" } },
-    { pattern = "[<=>%+%-%*%/:%&%|%!%?%~]+", type = "operator" },
-    { pattern = "%--[%a_][%w_]*",         type = "symbol"   },
+    { pattern = "-?%d+[%d%.eE]*",                    type = "number"    },
+    { pattern = "-?%.?%d+",                          type = "number"    },
+    { pattern = "[%a_][%w_]*%f[(]",                  type = "function"  },
+    { pattern = "[%@%$%*%%]+[%a_][%w_]*",            type = "keyword2"  },
+    { pattern = "%--[%a_][%w_]*",                    type = "symbol"    },
+    { pattern = "sub%s+()[%w_]+",                    type = { "keyword", "operator" } },
+    { pattern = "[<=>%+%-%*%/:%&%|%!%?%~]+",         type = "operator" }
   },
   symbols = {
     ["-A"] = "keyword",
@@ -286,6 +290,11 @@ syntax.add {
     ["ge"] = "operator",
     ["cmp"] = "operator",
     ["STDERR"] = "keyword2",
-    ["STDOUT"] = "keyword2"
+    ["STDOUT"] = "keyword2",
+    ["qq"] = "keyword",
+    ["q"] = "keyword",
+    ["qr"] = "keyword",
+    ["qx"] = "keyword",
+    ["qw"] = "keyword"
   }
 }
