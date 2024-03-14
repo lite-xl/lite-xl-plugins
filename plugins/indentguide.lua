@@ -6,6 +6,7 @@ local DocView = require "core.docview"
 
 config.plugins.indentguide = common.merge({
   enabled = true,
+  highlight = true,
   -- The config specification used by the settings gui
   config_spec = {
     name = "Indent Guide",
@@ -13,6 +14,13 @@ config.plugins.indentguide = common.merge({
       label = "Enable",
       description = "Toggle the drawing of indentation indicator lines.",
       path = "enabled",
+      type = "toggle",
+      default = true
+    },
+    {
+      label = "Highlight Line",
+      description = "Toggle the highlight of the curent indentation indicator lines.",
+      path = "highlight",
       type = "toggle",
       default = true
     }
@@ -133,7 +141,9 @@ function DocView:draw_line_text(line, x, y)
     for i = 0, spaces - 1, indent_size do
       local color = style.guide or style.selection
       local active_lvl = self.indentguide_indent_active[line] or -1
-      if i < active_lvl and i + indent_size >= active_lvl then
+      if i < active_lvl 
+      and i + indent_size >= active_lvl
+      and config.plugins.indentguide.highlight then
         color = style.guide_highlight or style.accent
       end
       local sw = space_sz * i
