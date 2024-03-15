@@ -375,8 +375,8 @@
     },
     {
       "description": "Graphs y=x equations.",
-      "version": "0.1",
-      "remote": "https://github.com/ThaCuber/equationgrapher?raw=1:bd7056b5d4a6f6b98365e1a5e3e78e29ed843d13",
+      "version": "0.2",
+      "remote": "https://github.com/thacuber2a03/equationgrapher:7b17d8de47ab5c40019c1910a303340b5176e105",
       "mod_version": "3",
       "id": "equationgrapher"
     },
