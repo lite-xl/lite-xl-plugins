@@ -1376,8 +1376,8 @@
     },
     {
       "description": "Provides code completion (also known as IntelliSense) using the Language Server Protocol",
-      "version": "0.6",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp:d2999f269c3d7f11cc245ad6ccc48475a464afcb",
+      "version": "0.7",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp:b1b77d143b2c6e3cd953b3573ea1a96dd61ff3bb",
       "mod_version": "3",
       "id": "lsp"
     },
