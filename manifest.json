@@ -1817,8 +1817,8 @@
     },
     {
       "description": "Todo tree viewer for annotations in code like `TODO`, `BUG`, `FIX`, `IMPROVEMENT`",
-      "version": "0.1.1",
-      "remote": "https://github.com/drmargarido/TodoTreeView:28995b7e6292980ce7ce73b372d3cdd4dac80e7f",
+      "version": "0.1.2",
+      "remote": "https://github.com/drmargarido/TodoTreeView:e222f7074cae607dec82fb191a4fb077e75886e2",
       "mod_version": "3",
       "id": "todotreeview"
     },
