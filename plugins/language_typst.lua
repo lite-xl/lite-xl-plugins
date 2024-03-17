@@ -193,7 +193,7 @@ local typst_syntax = {
 		--{ pattern = {"link"},                      type = "typst_underline"                }, -- add underline text later
 
 		-- Finish later
-		{ pattern = "^%s*=+%s.+%f[\n]",         type = "keyword"                        }, -- Bold
+		{ pattern = "^%s*=+%s.*",               type = "keyword"                        }, -- Bold
 		{ pattern = {"%*_", "_%*"},             type = "keyword"                        }, -- Bold Italic
 		{ pattern = {"_%*", "%*_"},             type = "keyword"                        }, -- Bold Italic
 		{ pattern = {"_", "_"},                 type = "keyword"                        }, -- Italic
