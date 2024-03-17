@@ -1291,7 +1291,7 @@
     },
     {
       "description": "Syntax for [Typst](https://typst.app/) markup language",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_typst.lua",
       "id": "language_typst",
       "mod_version": "3",
