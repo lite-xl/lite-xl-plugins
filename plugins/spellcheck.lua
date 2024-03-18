@@ -17,7 +17,20 @@ end
 
 config.plugins.spellcheck = common.merge({
   enabled = true,
-  files = { "%.txt$", "%.md$", "%.markdown$" },
+  files = {
+    "%.txt$",
+    "%.md$",
+    "%.markdown$",
+    {
+      pattern = ".*",
+      -- language = "Lua", -- In alternative to `pattern`
+      -- token_types = true, -- Matches all token types
+      token_types = {
+        "comment",
+        "string"
+      }
+    },
+  },
   dictionary_file = platform_dictionary_file
 }, config.plugins.spellcheck)
 
@@ -98,9 +111,22 @@ local function load_dictionary()
 end
 
 
-local function matches_any(filename, ptns)
+local function matches_any(doc, ptns)
+  local filename = doc.filename or ""
   for _, ptn in ipairs(ptns) do
-    if filename:find(ptn) then return true end
+    if type(ptn) == "string" then
+      if filename:find(ptn) then return true end
+    elseif ptn.pattern then
+      if filename:find(ptn.pattern) then return ptn.token_types end
+    elseif ptn.language then
+      if doc.syntax and doc.syntax.name == ptn.language then return ptn.token_types end
+    end
+  end
+end
+
+local function contains(t, s)
+  for _, v in ipairs(t) do
+    if v == s then return true end
   end
 end
 
@@ -139,9 +165,12 @@ function DocView:draw_line_text(idx, x, y)
     not config.plugins.spellcheck.enabled
     or
     not words
-    or
-    not matches_any(self.doc.filename or "", config.plugins.spellcheck.files)
   then
+    return lh
+  end
+
+  local token_types = matches_any(self.doc, config.plugins.spellcheck.files)
+  if not token_types then
     return lh
   end
 
@@ -157,21 +186,26 @@ function DocView:draw_line_text(idx, x, y)
   end
   if not spell_cache[self.doc.highlighter][idx] then
     local calculated = {}
-    local s, e = 0, 0
-    local text = self.doc.lines[idx]
-
-    while true do
-      s, e = text:find(word_pattern, e + 1)
-      if not s then break end
-      local word = text:sub(s, e):lower()
-      if not words[word] and not active_word(self.doc, idx, e + 1) then
-        local x,y = self:get_line_screen_position(idx, s)
-        table.insert(calculated, x + self.scroll.x)
-        table.insert(calculated, y + self.scroll.y)
-        x,y = self:get_line_screen_position(idx, e + 1)
-        table.insert(calculated, x + self.scroll.x)
-        table.insert(calculated, y + self.scroll.y)
+    local count = 0
+    for _, type, text in self.doc.highlighter:each_token(idx) do
+      local s, e = 0, 0
+      if token_types == true or contains(token_types, type) then
+        while true do
+          s, e = text:find(word_pattern, e + 1)
+          if not s then break end
+          local word = text:sub(s, e):lower()
+          if not words[word] then
+            local x1,y1 = self:get_line_screen_position(idx, s + count)
+            table.insert(calculated, x1 - x)
+            table.insert(calculated, y1 - y)
+            local x2,y2 = self:get_line_screen_position(idx, e + 1 + count)
+            table.insert(calculated, x2 - x)
+            table.insert(calculated, y2 - y)
+            table.insert(calculated, e + count)
+          end
+        end
       end
+      count = count + #text
     end
 
     spell_cache[self.doc.highlighter][idx] = calculated
@@ -181,9 +215,11 @@ function DocView:draw_line_text(idx, x, y)
   local h = math.ceil(1 * SCALE)
   local slh = self:get_line_height()
   local calculated = spell_cache[self.doc.highlighter][idx]
-  for i=1,#calculated,4 do
-    local x1, y1, x2, y2 = calculated[i], calculated[i+1], calculated[i+2], calculated[i+3]
-    renderer.draw_rect(x1 - self.scroll.x, y1 + slh - self.scroll.y, x2 - x1, h, color)
+  for i=1,#calculated,5 do
+    local x1, y1, x2, y2, e = calculated[i], calculated[i+1], calculated[i+2], calculated[i+3], calculated[i+4]
+    if not active_word(self.doc, idx, e + 1) then
+      renderer.draw_rect(x + x1, y + y1 + slh - h, x2 - x1, h, color)
+    end
   end
   return lh
 end
