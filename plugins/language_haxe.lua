@@ -17,9 +17,10 @@ syntax.add {
   name = "Haxe String Interpolation",
   files = "%.hx__string_interp$",
   patterns = {
-    { pattern = {"%${", "}", "\\"},     type="keyword", syntax = ".hx" },
-    { pattern = {"%$", "%s", "\\"},     type="keyword", syntax = ".hx" },
-    { pattern = "[^ ]",                 type = "string"}
+    { pattern = {"%${", "}", "\\"},    type="keyword", syntax = ".hx" },
+    { pattern = {"%$", "%f[']", "\\"}, type="keyword", syntax = ".hx" },
+    { pattern = {"%$", "%s", "\\"},    type="keyword", syntax = ".hx" },
+    { pattern = "[^ ]",                type = "string"}
   },
   symbols = {}
 }

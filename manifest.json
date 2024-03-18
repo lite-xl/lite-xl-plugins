@@ -873,7 +873,7 @@
     },
     {
       "description": "Syntax for the [Haxe](https://haxe.org) programming language",
-      "version": "0.1",
+      "version": "0.2",
       "path": "plugins/language_haxe.lua",
       "id": "language_haxe",
       "mod_version": "3",
