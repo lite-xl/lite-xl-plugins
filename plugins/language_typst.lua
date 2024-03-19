@@ -104,7 +104,7 @@ local typst_script = {
 		{ pattern = { '"', '"', '\\' },            type = "string", syntax = typst_string },
 		{ pattern = {"%[", "%]"},                  type = "normal", syntax = ".typ"       },
 		{ pattern = "[%a_][%w_%-]*%f[(]",          type = "function"                      },
-		{ pattern = "[%+%-=/%*%^%%<>~|&#_^\\%%]",  type = "operator"                      },
+		{ pattern = "[%+%-=/%*%^%%<>~|&#_^\\]",    type = "operator"                      },
 
 		{ pattern = "0x[%dabcdef]+()%a*",          type = {"number", "keyword2"}          },
 		{ pattern = "0b[01]+()%a*",                type = {"number", "keyword2"}          },
@@ -153,6 +153,7 @@ local typst_syntax = {
 	block_comment = { "/*", "*/" },
 
 	patterns = {
+		{ pattern = { "%[", "%]" }, syntax = ".typ" },
 		{
 			pattern = { "#()import", "\n"    },
 			type    = { "literal", "keyword" },
@@ -182,10 +183,15 @@ local typst_syntax = {
 		{ pattern = { "#", "%s"},               type = "literal", syntax = typst_script },
 		{ pattern = { "%$", "%$", "\\" },       type = "literal", syntax = typst_math   },
 
-		{ pattern = { "```js", "```", "\\" },   type = "string", syntax = ".js"         },
-		{ pattern = { "```py", "```", "\\" },   type = "string", syntax = ".py"         },
+		{ pattern = { "```js"  , "```", "\\" }, type = "string", syntax = ".js"         },
+		{ pattern = { "```py",   "```", "\\" }, type = "string", syntax = ".py"         },
+		{ pattern = { "```rust", "```", "\\" }, type = "string", syntax = ".rs"         },
+		{ pattern = { "```c",    "```", "\\" }, type = "string", syntax = ".c"          },
 		-- Possibility to add more syntax later
 		{ pattern = { "`", "`", "\\" },         type = "string"                         },
+
+		{ pattern = { "<", ">" },               type = "string"                         },
+		{ pattern = { "@", "%s" },              type = "string"                         },
 
 		{ pattern = "//.*",                     type = "comment"                        },
 		{ pattern = { "/%*", "%*/" },           type = "comment"                        },
@@ -193,7 +199,7 @@ local typst_syntax = {
 		--{ pattern = {"link"},                      type = "typst_underline"                }, -- add underline text later
 
 		-- Finish later
-		{ pattern = "^%s*=+%s.*",               type = "keyword"                        }, -- Bold
+		{ pattern = "^%s*=+%s.+%f[\n]",         type = "keyword"                        }, -- Bold
 		{ pattern = {"%*_", "_%*"},             type = "keyword"                        }, -- Bold Italic
 		{ pattern = {"_%*", "%*_"},             type = "keyword"                        }, -- Bold Italic
 		{ pattern = {"_", "_"},                 type = "keyword"                        }, -- Italic
@@ -209,7 +215,7 @@ local typst_syntax = {
 	symbols = {}
 }
 
-table.insert(typst_syntax.patterns, 1, { pattern = { "%[", "%]" }, syntax = typst_syntax })
+
 
 
 
