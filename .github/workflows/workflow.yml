@@ -21,7 +21,7 @@ jobs:
           ./lpm-latest list --table url,description --header Language,Description --type plugin --tag 'language' --userdir .  >> README.md
           echo -e "\n## Libraries\n" >> README.md
           ./lpm-latest list --table url,description --header Library,Description --type library --userdir .  >> README.md
-          ./lpm-latest exec 'common.write("manifest.json", json.encode(json.decode(common.read("manifest.json")), { pretty = true })) .. "\n"' --userdir .
+          ./lpm-latest exec 'common.write("manifest.json", json.encode(json.decode(common.read("manifest.json")), { pretty = true }) .. "\n")' --userdir .
           ./lpm-latest purge --userdir .
           if ! git diff --exit-code -s README.md manifest.json; then
             git config --global user.name "Github Actions" && git config --global user.email "<>"
