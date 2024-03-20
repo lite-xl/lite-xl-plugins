@@ -1977,8 +1977,8 @@
       "description": "An integrated terminal for lite-xl. *([screenshot](https://github.com/adamharrison/lite-xl-terminal/assets/1034518/eb8a72a0-ff61-4b95-b009-364ac2725f70))*",
       "id": "terminal",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-terminal.git:394b577caa1491d2a8fb92b1b4acd93b2feb6b9a",
-      "version": "1.01"
+      "remote": "https://github.com/adamharrison/lite-xl-terminal.git:d8c4916dbfb38e703c1cff0605909dba4689a702",
+      "version": "1.02"
     },
     {
       "description": "Allows you to play tetris directly in the editor.",
