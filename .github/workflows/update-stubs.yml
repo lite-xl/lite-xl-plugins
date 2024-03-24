@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
 jobs:
-  reorganize:
+  update_stubs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
