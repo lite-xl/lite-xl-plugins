@@ -36,6 +36,9 @@ the manifest.json file should be updated to include any new plugins added, as sp
 pin the remote to a specific commit hash. Any plugin that is hosted not in a repository,
 but only with a `url` must provide a `checksum` that matches the existing plugin.*
 
+*Any commits specified with a `remote` will automatically be checked for updates, and PRs will
+automaticaly be created for them on a recurring basis to keep things up to date.*
+
 *Any non-conforming PRs will not be accepted. The table below will be updated automatically.*
 
 *Any entries marked with an asterisk are hosted on external repositories.*
