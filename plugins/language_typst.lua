@@ -180,7 +180,7 @@ local typst_syntax = {
 			syntax  = typst_script
 		},
 
-		{ pattern = { "#", "%s"},               type = "literal", syntax = typst_script },
+		{ pattern = { "#", "%f[%s']"},          type = "literal", syntax = typst_script },
 		{ pattern = { "%$", "%$", "\\" },       type = "literal", syntax = typst_math   },
 
 		{ pattern = { "```js"  , "```", "\\" }, type = "string", syntax = ".js"         },
