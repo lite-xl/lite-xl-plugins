@@ -480,8 +480,211 @@
       "version": "0.1"
     },
     {
-      "description": "formatters for various languages",
+      "description": "Formatters for various languages.",
       "id": "formatter",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "Autoflake formatter for Python.",
+      "id": "formatter_autoflake",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "Black formatter for Python.",
+      "id": "formatter_black",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "clang-format formatter for C/C++/Java/JavaScript/JSON/Objective-C/Protobuf/C#",
+      "id": "formatter_clangformat",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "cljfmt formatter for Clojure.",
+      "id": "formatter_cljfmt",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "Cmakeformat formatter for CMake files.",
+      "id": "formatter_cmakeformat",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "Official formatter for Crystal.",
+      "id": "formatter_crystal",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "cssbeautify formatter for CSS.",
+      "id": "formatter_cssbeautify",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "dartformat formatter for Dart.",
+      "id": "formatter_dartformat",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "dfmt formatter for D.",
+      "id": "formatter_dfmt",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "Official formatter for Elixir.",
+      "id": "formatter_elixir",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "elmformat formatter for Elm.",
+      "id": "formatter_elmformat",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "esformatter formatter for ECMAScript.",
+      "id": "formatter_esformatter",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "gdformat formatter for GDScript.",
+      "id": "formatter_gdformat",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "google-java-format formatter for Java.",
+      "id": "formatter_googlejavaformat",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "goimports formatter (and more) for Go.",
+      "id": "formatter_goimports",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "html-beautify formatter for HTML.",
+      "id": "formatter_htmlbeautify",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "isort formatter (specifically for imports) for Python.",
+      "id": "formatter_isort",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "js-beautify formatter for Javascript.",
+      "id": "formatter_jsbeautify",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "luaformatter formatter for Lua.",
+      "id": "formatter_luaformatter",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "ormolu formatter for Haskell.",
+      "id": "formatter_ormolu",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "perltidy formatte for Perl.",
+      "id": "formatter_perltidy",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "ocp-indent formatter for OCaml.",
+      "id": "formatter_ocpindent",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "qmlformat formatter for QML.",
+      "id": "formatter_qmlformat",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "rubocop formatter for Ruby.",
+      "id": "formatter_rubocop",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "rustfmt formatter for Rust.",
+      "id": "formatter_rustfmt",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "shfmt formatter for Bash.",
+      "id": "formatter_shfmt",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "vfmt formatter for V.",
+      "id": "formatter_vfmt",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "sql-formatter formatter for SQL.",
+      "id": "formatter_sqlformatter",
+      "mod_version": "3",
+      "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
+      "version": "0.1"
+    },
+    {
+      "description": "zigfmt formatter for Zig.",
+      "id": "formatter_zigfmt",
       "mod_version": "3",
       "remote": "https://github.com/vincens2005/lite-formatters:7e017080a967c01d437e484247a90c1ff52e8ef8",
       "version": "0.1"
