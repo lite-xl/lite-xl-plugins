@@ -484,7 +484,7 @@
       "id": "formatter",
       "mod_version": "3",
       "remote": "https://github.com/vincens2005/lite-formatters:e5d0ccbad76a51969f9dc8392a33b15c06ee84b8",
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Autoflake formatter for Python.",
