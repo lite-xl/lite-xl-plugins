@@ -1723,12 +1723,12 @@
       "version": "1.2.2"
     },
     {
-      "description": "Provides official NodeJs binaries",
+      "description": "Provides official NodeJs binaries.",
       "id": "nodejs",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:1df8be64ad87efa45341d8c3953df60d90f9539b",
       "type": "library",
-      "version": "20.11.1"
+      "version": "20.12.0"
     },
     {
       "dependencies": {
