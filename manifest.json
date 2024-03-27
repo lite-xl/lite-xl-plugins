@@ -1616,8 +1616,8 @@
       "description": "Automatic configuration/binary download for LSP completion for Python with Pyright.",
       "id": "lsp_python",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
-      "version": "1.1.352"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:71275f7e47a30ac0cbeb17706cea29a29c8267a7",
+      "version": "1.1.356"
     },
     {
       "description": "Automatic configuration/binary download for LSP linting for Javascript with quick-lint-js.",
