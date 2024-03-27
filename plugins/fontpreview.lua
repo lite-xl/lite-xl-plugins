@@ -20,6 +20,8 @@ function FontView:get_h_scrollable_size()
 	return self.fonts[#self.fonts]:get_width(font_text) + style.padding.x
 end
 
+function FontView:get_scrollable_size() return 0 end
+
 function FontView:get_name()
 	return "Font: " .. self.path
 end
