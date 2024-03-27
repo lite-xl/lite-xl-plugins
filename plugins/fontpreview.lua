@@ -24,20 +24,30 @@ function FontView:get_name()
 	return "Font: " .. self.path
 end
 
+local function draw_next_row(fv, y, text, font)
+	local _
+	_, y = common.draw_text(
+		font, style.text, text, "left",
+		fv.position.x - fv.scroll.x + style.padding.x, y - fv.scroll.y,
+		0, style.padding.y + font:get_height() / 2
+	)
+	return y
+end
+
 function FontView:draw()
 	self:draw_background(style.background)
 
 	local y = self.position.y + self.fonts[1]:get_height() / 2 + style.padding.y
+
 	for i=1, #self.fonts do
-		local font = self.fonts[i]
-		local _
-		_, y = common.draw_text(
-			font, style.text, font_text, "left",
-			self.position.x - self.scroll.x + style.padding.x, y - self.scroll.y,
-			0, style.padding.y
-		)
-		y = y + font:get_height() / 2
+		y = draw_next_row(self, y, font_text, self.fonts[i])
 	end
+
+	local font = self.fonts[1]
+	y = draw_next_row(self, y, "abcdefghijklmnopqrstuvwxyz", font)
+	y = draw_next_row(self, y, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", font)
+	y = draw_next_row(self, y, "0123456789", font)
+	y = draw_next_row(self, y, "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~", font)
 
 	self:draw_scrollbar()
 end
