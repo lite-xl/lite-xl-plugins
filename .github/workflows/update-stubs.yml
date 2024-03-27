@@ -1,0 +1,15 @@
+name: Update Stubs
+on:
+  workflow_dispatch:
+    inputs:
+jobs:
+  update_stubs:
+    runs-on: ubuntu-latest
+    permissions: { pull-requests: "write" }
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update Stubs with LPM
+        env: { GITHUB_TOKEN: "${{ github.token }}" }
+        run: |
+          wget https://github.com/lite-xl/lite-xl-plugin-manager/releases/download/latest/lpm.x86_64-linux -O lpm && chmod +x lpm
+          ./lpm --plugin https://raw.githubusercontent.com/adamharrison/lite-xl-maintenance/latest/lpm-plugins/gh.lua gh check-stubs-update-pr --staging .
