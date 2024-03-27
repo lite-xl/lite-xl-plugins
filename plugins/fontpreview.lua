@@ -42,17 +42,22 @@ function FontView:draw()
 	self:draw_scrollbar()
 end
 
+local supported_types = { ".ttf", ".otf" }
+
 local RootView = require 'core.rootview'
 local open_doc = RootView.open_doc
 function RootView:open_doc(doc)
 	local path = doc.filename or doc.abs_filename or ""
-	if path:find(".ttf") then
-		local node = self:get_active_node_default()
-		local view = FontView(path)
-		node:add_view(view)
-		self.root_node:update_layout()
-		return view
-	else
-		open_doc(self, doc)
+
+	for _, v in ipairs(supported_types) do
+		if path:find(v) then
+			local node = self:get_active_node_default()
+			local view = FontView(path)
+			node:add_view(view)
+			self.root_node:update_layout()
+			return view
+		end
 	end
+
+	return open_doc(self, doc)
 end
