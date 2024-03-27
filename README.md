@@ -295,7 +295,7 @@ but only with a `url` must provide a `checksum` that matches the existing plugin
 | [`Nerd Font Symbols Mono Regular`](plugins/font_symbols_nerdfont_mono_regular.lua?raw=1) | [Nerd Font Symbols](https://github.com/ryanoasis/nerd-fonts/) font with mapping                              |
 | [`jdk`](https://github.com/lite-xl/lite-xl-lsp-servers)\*                                | Production and Early-Access OpenJDK Builds, from Oracle.                                                     |
 | [`net`](https://github.com/jgmdev/lite-xl-net)\*                                         | Add support for TCP and UDP sockets using SDL_net.                                                           |
-| [`nodejs`](https://github.com/lite-xl/lite-xl-lsp-servers)\*                             | Provides official NodeJs binaries                                                                            |
+| [`nodejs`](https://github.com/lite-xl/lite-xl-lsp-servers)\*                             | Provides official NodeJs binaries.                                                                           |
 | [`Threads`](https://github.com/jgmdev/lite-xl-threads)\*                                 | Supports spawning true os-threads.                                                                           |
 | [`widget`](https://github.com/lite-xl/lite-xl-widgets)\*                                 | Plugin library that provides a set of re-usable components to more easily write UI elements for your plugins |
 | [`www`](https://github.com/adamharrison/lite-xl-www.git)\*                               | A simple library that provides a web client to fetch, and submit data via HTTP requests.                     |
