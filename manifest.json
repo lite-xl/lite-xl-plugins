@@ -1726,7 +1726,7 @@
       "description": "Provides official NodeJs binaries.",
       "id": "nodejs",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:0cf6a6598826508187349fd5a79d77441b171e22",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:1df8be64ad87efa45341d8c3953df60d90f9539b",
       "type": "library",
       "version": "20.12.0"
     },
