@@ -12,16 +12,12 @@ function FontView:new(path)
 	FontView.super.new(self)
 	self.path = path
 	self.fonts = {}
-	for i=1, 8 do self.fonts[i] = renderer.font.load(path, 12+i*7) end
+	for i=1, 8 do self.fonts[i] = renderer.font.load(path, (12+i*7)*SCALE) end
 	self.scrollable = true
 end
 
 function FontView:get_h_scrollable_size()
 	return self.fonts[#self.fonts]:get_width(font_text) + style.padding.x
-end
-
-function FontView:get_scrollable_size()
-	return math.huge
 end
 
 function FontView:get_name()
@@ -32,7 +28,6 @@ function FontView:draw()
 	self:draw_background(style.background)
 
 	local y = self.position.y + self.fonts[1]:get_height() / 2 + style.padding.y
-	local y2 = y
 	for i=1, #self.fonts do
 		local font = self.fonts[i]
 		local _
