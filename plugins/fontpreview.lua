@@ -54,7 +54,7 @@ function FontView:draw()
 	self:draw_scrollbar()
 end
 
-local supported_types = { ".ttf", ".otf" }
+local supported_types = { "%.ttf$", "%.otf$" }
 
 local RootView = require 'core.rootview'
 local open_doc = RootView.open_doc
