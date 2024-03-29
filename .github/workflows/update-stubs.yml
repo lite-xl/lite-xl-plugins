@@ -11,5 +11,6 @@ jobs:
       - name: Update Stubs with LPM
         env: { GITHUB_TOKEN: "${{ github.token }}" }
         run: |
+          git config --global user.name "Github Actions" && git config --global user.email "<>"
           wget https://github.com/lite-xl/lite-xl-plugin-manager/releases/download/latest/lpm.x86_64-linux -O lpm && chmod +x lpm
           ./lpm --plugin https://raw.githubusercontent.com/adamharrison/lite-xl-maintenance/latest/lpm-plugins/gh.lua gh check-stubs-update-pr --staging .
