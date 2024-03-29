@@ -5,7 +5,7 @@ on:
 jobs:
   update_stubs:
     runs-on: ubuntu-latest
-    permissions: { pull-requests: "write" }
+    permissions: { pull-requests: "write", content: "write" }
     steps:
       - uses: actions/checkout@v2
       - name: Update Stubs with LPM
