@@ -294,6 +294,21 @@
       "version": "0.1"
     },
     {
+      "description": "Icons font for the devicons plugin.",
+      "id": "font_devicons",
+      "mod_version": "3",
+      "type": "font",
+      "remote": "https://github.com/PerilousBooklet/lite-xl-devicons:e78f2374a1f4de5d0f324af46a07c2f9ffa7ccef",
+      "version": "1.0.0"
+    },
+    {
+      "description": "PerilousBooklet's treeview icons for software developers.",
+      "id": "devicons",
+      "mod_version": "3",
+      "remote": "https://github.com/PerilousBooklet/lite-xl-devicons:e78f2374a1f4de5d0f324af46a07c2f9ffa7ccef",
+      "version": "1.0.0"
+    },
+    {
       "description": "Add end tags in variety of languages. Similar to [Vim Endwise](https://github.com/tpope/vim-endwise)",
       "id": "endwise",
       "mod_version": "3",
