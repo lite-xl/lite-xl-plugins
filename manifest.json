@@ -297,8 +297,8 @@
       "description": "Icons font for the devicons plugin.",
       "id": "font_devicons",
       "mod_version": "3",
-      "type": "font",
       "remote": "https://github.com/PerilousBooklet/lite-xl-devicons:e78f2374a1f4de5d0f324af46a07c2f9ffa7ccef",
+      "type": "font",
       "version": "1.0.0"
     },
     {
