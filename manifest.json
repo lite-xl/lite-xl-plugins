@@ -150,7 +150,7 @@
         "language_v": {},
         "language_wren": {},
         "language_yaml": {},
-        "language_zig": {},
+        "language_zig": {}
       },
       "description": "A metapackage containing all publically accessible language syntaxes.",
       "id": "meta_languages",
@@ -696,7 +696,7 @@
       "description": "A syntax hilighter for buzz programming language in lite-xl.",
       "id": "language_buzz",
       "mod_version": "3",
-      "remote": "https://github.com/RohanVashisht1234/buzz_syntax_highlighter_lite-xl:016a728f00b347b45a4a32e331a0078c65816aee",
+      "remote": "https://github.com/RohanVashisht1234/buzz_syntax_highlighter_lite-xl:f20a969d99698f6e72ce352326387cfe74505b38",
       "version": "0.1"
     },
     {
