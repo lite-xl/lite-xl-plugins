@@ -697,6 +697,9 @@
       "id": "language_buzz",
       "mod_version": "3",
       "remote": "https://github.com/RohanVashisht1234/buzz_syntax_highlighter_lite-xl:dc680dfb7d528ad521fe0c7bdfbc88ef3f95528e",
+      "tags": [
+        "language"
+      ],
       "version": "0.1"
     },
     {
