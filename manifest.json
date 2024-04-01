@@ -696,7 +696,7 @@
       "description": "A syntax hilighter for buzz programming language in lite-xl.",
       "id": "language_buzz",
       "mod_version": "3",
-      "remote": "https://github.com/RohanVashisht1234/buzz_syntax_highlighter_lite-xl:f20a969d99698f6e72ce352326387cfe74505b38",
+      "remote": "https://github.com/RohanVashisht1234/buzz_syntax_highlighter_lite-xl:dc680dfb7d528ad521fe0c7bdfbc88ef3f95528e",
       "version": "0.1"
     },
     {
