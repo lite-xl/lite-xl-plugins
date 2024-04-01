@@ -71,6 +71,7 @@
         "language_buzz": {},
         "language_c7": {},
         "language_caddyfile": {},
+        "language_carbon": {},
         "language_cmake": {},
         "language_containerfile": {},
         "language_crystal": {},
@@ -156,7 +157,7 @@
       "id": "meta_languages",
       "mod_version": "3",
       "type": "meta",
-      "version": "0.1.7"
+      "version": "0.1.8"
     },
     {
       "description": "Align multiple carets and selections *([clip](https://user-images.githubusercontent.com/2798487/165631951-532f8d24-d596-4dd0-9d21-ff53c71ed32f.mp4))*",
@@ -717,6 +718,16 @@
       "id": "language_caddyfile",
       "mod_version": "3",
       "path": "plugins/language_caddyfile.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
+      "description": "Syntax for the [Carbon programming language](https://github.com/carbon-language/carbon-lang).",
+      "id": "language_carbon",
+      "mod_version": "3",
+      "remote":"https://github.com/RohanVashisht1234/carbon_syntax_highlighter_lite-xl.git:2557359ae2ebf8baee54779e980e0683cbcb7a3c",
       "tags": [
         "language"
       ],
