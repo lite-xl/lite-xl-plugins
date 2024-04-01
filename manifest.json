@@ -158,6 +158,14 @@
       "version": "0.1.6"
     },
     {
+        "id": "language_buzz",
+        "version": "0.1",
+        "mod_version": "3",
+        "description": "A syntax hilighter for buzz programming language in lite-xl.",
+        "remote":"https://github.com/RohanVashisht1234/buzz_syntax_highlighter_lite-xl",
+        "path": "src/highlight.lua"
+    }
+    {
       "description": "Align multiple carets and selections *([clip](https://user-images.githubusercontent.com/2798487/165631951-532f8d24-d596-4dd0-9d21-ff53c71ed32f.mp4))*",
       "id": "align_carets",
       "mod_version": "3",
