@@ -1093,6 +1093,16 @@
       "version": "0.1"
     },
     {
+      "description": "Syntax for the [Kotlin](https://kotlinlang.org/docs/home.html) programming language",
+      "id": "language_kotlin",
+      "mod_version": "3",
+      "path": "plugins/language_kotlin.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
       "checksum": "08a9f8635b09a98cec9dfca8bb65f24fd7b6585c7e8308773e7ddff9a3e5a60f",
       "description": "Syntax for [Kaitai](http://kaitai.io/) struct files",
       "id": "language_ksy",
