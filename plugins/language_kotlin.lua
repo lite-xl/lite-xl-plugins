@@ -1,6 +1,6 @@
 -- mod-version:3
 
--- https://kotlinlang.org/docs/keyword-reference.html#hard-keywords
+-- https://kotlinlang.org/docs/keyword-reference.html
 
 local syntax = require "core.syntax"
 
