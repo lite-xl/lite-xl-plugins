@@ -1,7 +1,6 @@
 -- mod-version:3
 
 -- https://kotlinlang.org/docs/keyword-reference.html#hard-keywords
--- 
 
 local syntax = require "core.syntax"
 
@@ -20,14 +19,15 @@ syntax.add {
     { pattern = "-?0x%x+",              type = "number"   }, -- ?
     { pattern = "-?%d+[%d%.eE]*f?",     type = "number"   }, -- ?
     { pattern = "-?%.?%d+f?",           type = "number"   }, -- ?
+    { regex = "\\-\\>(?=\\s)",          type = "keyword" },  -- lambdas
     { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" }, -- Operators
     { pattern = "[%a_][%w_]*%f[(]",     type = "function" }, -- Function/Method/Class/... name
+    { regex = "\\$(?=[a-zA-Z]+)",       type = "string" },   -- ?
+    { regex = "\\@[a-zA-Z]+",           type = "string" },   -- Annotations
+    { regex = "this(?=\\.)",            type = "keyword" },  -- this keyword
     { regex = "[A-Z]+_?[A-Z]+",         type = "keyword2" }, -- Constants, FULL UPPERCASE
-    -- TODO: var type, careful with generic types
-    -- TODO: nested comments
-    -- TODO: lambda
-    -- TODO: parenthesis
-    -- FIX: from 0.. only the 0 (number) should be colored
+    -- FIX: stricter number match, careful about .1
+    -- FIX: .. and ..< are operators
   },
   symbols = {
     -- Hard keywords
