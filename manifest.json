@@ -1420,7 +1420,7 @@
       "description": "Syntax for the [Swift](https://developer.apple.com/swift/) programming language",
       "id": "language_swift",
       "mod_version": "3",
-      "remote":"https://github.com/RohanVashisht1234/swift_syntax_highlighting_lite-xl:4211079ced99ed693b5c8acad61f3a27a511919d",
+      "remote": "https://github.com/RohanVashisht1234/swift_syntax_highlighting_lite-xl:4211079ced99ed693b5c8acad61f3a27a511919d",
       "tags": [
         "language"
       ],
