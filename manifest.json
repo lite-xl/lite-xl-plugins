@@ -139,6 +139,7 @@
         "language_scala": {},
         "language_sh": {},
         "language_ssh_config": {},
+        "language_swift": {},
         "language_tal": {},
         "language_tcl": {},
         "language_teal": {},
@@ -157,7 +158,7 @@
       "id": "meta_languages",
       "mod_version": "3",
       "type": "meta",
-      "version": "0.1.8"
+      "version": "0.1.9"
     },
     {
       "description": "Align multiple carets and selections *([clip](https://user-images.githubusercontent.com/2798487/165631951-532f8d24-d596-4dd0-9d21-ff53c71ed32f.mp4))*",
@@ -1410,6 +1411,16 @@
       "id": "language_scala",
       "mod_version": "3",
       "path": "plugins/language_scala.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
+      "description": "Syntax for the [Swift](https://developer.apple.com/swift/) programming language",
+      "id": "language_swift",
+      "mod_version": "3",
+      "remote":"https://github.com/RohanVashisht1234/swift_syntax_highlighting_lite-xl:4211079ced99ed693b5c8acad61f3a27a511919d",
       "tags": [
         "language"
       ],
