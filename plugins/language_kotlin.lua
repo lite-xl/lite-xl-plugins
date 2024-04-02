@@ -9,7 +9,7 @@ syntax.add {
   files = { "%.kt$" },
   comment = "//",
   patterns = {
-    { pattern = "//.-\n",               type = "comment"  }, -- Comment, single-line
+    { pattern = "//.*",               type = "comment"  }, -- Comment, single-line
     { pattern = { "/%*", "%*/" },       type = "comment"  }, -- Comment, multi-line
     { pattern = { '"', '"', '\\' },     type = "string"   }, -- String, quotation marks
     { pattern = { "'", "'", '\\' },     type = "string"   }, -- String, apices
