@@ -88,6 +88,7 @@
         "language_erb": {},
         "language_fe": {},
         "language_fennel": {},
+        "language_fortran": {},
         "language_fstab": {},
         "language_gabc": {},
         "language_gdscript": {},
@@ -158,7 +159,7 @@
       "id": "meta_languages",
       "mod_version": "3",
       "type": "meta",
-      "version": "0.1.9"
+      "version": "0.1.10"
     },
     {
       "description": "Align multiple carets and selections *([clip](https://user-images.githubusercontent.com/2798487/165631951-532f8d24-d596-4dd0-9d21-ff53c71ed32f.mp4))*",
@@ -899,6 +900,16 @@
       "id": "language_fennel",
       "mod_version": "3",
       "path": "plugins/language_fennel.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
+      "description": "Syntax for the [fortran](https://fortran-lang.org/) programming language",
+      "id": "language_fortran",
+      "mod_version": "3",
+      "remote":"https://github.com/RohanVashisht1234/fortran_syntax_highlighter_lite-xl:2bf91dd7a50f1ba7c8847532084448a9d2d88456",
       "tags": [
         "language"
       ],
