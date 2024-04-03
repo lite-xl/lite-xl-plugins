@@ -856,6 +856,14 @@
       "tags": ["language"]
     },
     {
+      "description": "Syntax for the [Groovy](https://en.wikipedia.org/wiki/Apache_Groovy",
+      "version": "0.1",
+      "path": "plugins/language_groovy.lua",
+      "id": "language_groovy",
+      "mod_version": "3",
+      "tags": ["language"]
+    },
+    {
       "description": "Syntax for the [Hare](https://harelang.org) programming language",
       "version": "0.1",
       "path": "plugins/language_hare.lua",
