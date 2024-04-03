@@ -909,7 +909,7 @@
       "description": "Syntax for the [fortran](https://fortran-lang.org/) programming language",
       "id": "language_fortran",
       "mod_version": "3",
-      "remote":"https://github.com/RohanVashisht1234/fortran_syntax_highlighter_lite-xl:2bf91dd7a50f1ba7c8847532084448a9d2d88456",
+      "remote": "https://github.com/RohanVashisht1234/fortran_syntax_highlighter_lite-xl:2bf91dd7a50f1ba7c8847532084448a9d2d88456",
       "tags": [
         "language"
       ],
