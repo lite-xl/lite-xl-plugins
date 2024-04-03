@@ -728,11 +728,11 @@
       "description": "Syntax for the [Carbon programming language](https://github.com/carbon-language/carbon-lang).",
       "id": "language_carbon",
       "mod_version": "3",
-      "remote": "https://github.com/RohanVashisht1234/carbon_syntax_highlighter_lite-xl.git:2557359ae2ebf8baee54779e980e0683cbcb7a3c",
+      "remote": "https://github.com/RohanVashisht1234/carbon_syntax_highlighter_lite-xl.git:997c0d099145afe47001703df829a3a9af955297",
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the CMake build system language",
