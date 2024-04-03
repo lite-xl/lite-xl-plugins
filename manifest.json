@@ -1081,6 +1081,14 @@
       "tags": ["language"]
     },
     {
+      "description": "Syntax for the [OpenSCAD](https://openscad.org/) programming language",
+      "version": "0.1",
+      "path": "plugins/language_openscad.lua",
+      "id": "language_openscad",
+      "mod_version": "3",
+      "tags": ["language"]
+    },
+    {
       "description": "Syntax for the [Perl](https://perl.org) programming language",
       "version": "0.2",
       "path": "plugins/language_perl.lua",
