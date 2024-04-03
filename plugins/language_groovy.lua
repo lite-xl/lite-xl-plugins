@@ -9,23 +9,23 @@ syntax.add {
   files = { "%.groovy$" },
   comment = "//",
   patterns = {
-    { pattern = "//.-\n",               type = "comment"  },
-    { pattern = { "/%*", "%*/" },       type = "comment"  },
-    { pattern = { '"', '"', '\\' },     type = "string"   },
-    { pattern = { "'", "'", '\\' },     type = "string"   },
+    { pattern = "//.*",                 type = "comment"  }, -- Single-line comment
+    { pattern = { "/%*", "%*/" },       type = "comment"  }, -- Multi-line comment
+    { pattern = { '"', '"', '\\' },     type = "string"   }, -- String, double quotes
+    { pattern = { "'", "'", '\\' },     type = "string"   }, -- String, apices
     { pattern = "'\\x%x?%x?%x?%x'",     type = "string"   }, -- character hexadecimal escape sequence
     { pattern = "'\\u%x%x%x%x'",        type = "string"   }, -- character unicode escape sequence
     { pattern = "'\\?.'",               type = "string"   }, -- character literal
-    { pattern = "-?0x%x+",              type = "number"   },
-    { pattern = "-?%d+[%d%.eE]*f?",     type = "number"   },
-    { pattern = "-?%.?%d+f?",           type = "number"   },
-    { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
-    { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
+    { pattern = "-?0x%x+",              type = "number"   }, -- ?
+    { pattern = "-?%d+[%d%.eE]*f?",     type = "number"   }, -- ?
+    { pattern = "-?%.?%d+f?",           type = "number"   }, -- ?
+    { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" }, -- Operators
+    { pattern = "[%a_][%w_]*%f[(]",     type = "function" }, -- Function/Class/Method/...
     { regex   = "[A-Z]+_?[A-Z]+",       type = "keyword2" }, -- Constants
-    { pattern = "[%a_][%w_]*",          type = "symbol"   },
+    { pattern = "[%a_][%w_]*",          type = "symbol"   }, -- ?
     -- TODO: shebang
     -- TODO: dollar slashy string
-    -- TODO: 
+    -- TODO: .class.
   },
   symbols = {
     -- Reserved keywords
