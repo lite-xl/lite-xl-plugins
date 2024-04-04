@@ -8,6 +8,7 @@ syntax.add {
   name = "Groovy",
   files = { "%.groovy$" },
   comment = "//",
+  block_comment = { "/*", "*/" },
   patterns = {
     { pattern = "//.*",                 type = "comment"  }, -- Single-line comment
     { pattern = { "/%*", "%*/" },       type = "comment"  }, -- Multi-line comment
