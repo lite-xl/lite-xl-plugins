@@ -10,7 +10,7 @@ local typst_math = {
 		{ pattern = "//.*",                        type = "comment"  },
 
 		{ pattern = { '"', '"', '\\' },            type = "string"   },
-
+		{ pattern = "#%a+",                        type = "literal"  },
 		{ pattern = "%a+%f[(]",                    type = "function" },
 		{ pattern = "%a%a+",                       type = "function" },
 
@@ -23,7 +23,7 @@ local typst_math = {
 
 		{ pattern = "&",                           type = "literal"  },
 		{ pattern = "!=",                          type = "operator" },
-		{ pattern = "[%+%-=/%*%^%%<>~|#_^\\]",     type = "operator" },
+		{ pattern = "[%+%-=/%*%^%%<>~|_^\\]",      type = "operator" },
 		{ pattern = "%a%a+",                       type = "symbol"   },
 
 	},
@@ -87,7 +87,8 @@ local typst_math = {
 local typst_string = {
 
 	patterns = {
-		{ pattern = "%g", type = "string" }
+		{ pattern = "\\.",     type = "string" },
+		{ pattern = '[^"\\]+', type = "string" }
 	},
 
 	symbols = {}
@@ -104,7 +105,9 @@ local typst_script = {
 		{ pattern = { '"', '"', '\\' },            type = "string", syntax = typst_string },
 		{ pattern = {"%[", "%]"},                  type = "normal", syntax = ".typ"       },
 		{ pattern = "[%a_][%w_%-]*%f[(]",          type = "function"                      },
-		{ pattern = "[%+%-=/%*%^%%<>~|&#_^\\]",    type = "operator"                      },
+		{ pattern = "[%+%-=/%*%^%%<>~|&_^\\]",     type = "operator"                      },
+		{ pattern = "%f[^#][%a_]+",                type = "literal"                       },
+		{ pattern = "#",                           type = "literal"                       },
 
 		{ pattern = "0x[%dabcdef]+()%a*",          type = {"number", "keyword2"}          },
 		{ pattern = "0b[01]+()%a*",                type = {"number", "keyword2"}          },
@@ -123,6 +126,7 @@ local typst_script = {
 		["show"]     = "keyword",
 		["include"]  = "keyword",
 		["import"]   = "keyword",
+		["context"]  = "keyword",
 		["if"]       = "keyword",
 		["else"]     = "keyword",
 		["for"]      = "keyword",
@@ -179,8 +183,13 @@ local typst_syntax = {
 			type    = { "literal", "keyword" },
 			syntax  = typst_script
 		},
+		{
+			pattern = { "#()context", "\n"      },
+			type    = { "literal", "keyword" },
+			syntax  = typst_script
+		},
 
-		{ pattern = { "#", "%f[%s']"},          type = "literal", syntax = typst_script },
+		{ pattern = { "%f[#]", "%f[%s']"},      type = "literal", syntax = typst_script },
 		{ pattern = { "%$", "%$", "\\" },       type = "literal", syntax = typst_math   },
 
 		{ pattern = { "```js"  , "```", "\\" }, type = "string", syntax = ".js"         },
