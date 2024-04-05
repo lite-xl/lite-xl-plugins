@@ -10,22 +10,22 @@ syntax.add {
   comment = "//",
   block_comment = { "/*", "*/" },
   patterns = {
-    { pattern = "//.*",                 type = "comment"  }, -- Single-line comment
-    { pattern = { "/%*", "%*/" },       type = "comment"  }, -- Multi-line comment
-    { pattern = { '"', '"', '\\' },     type = "string"   }, -- String, double quotes
-    { pattern = { "'", "'", '\\' },     type = "string"   }, -- String, apices
-    { pattern = "'\\x%x?%x?%x?%x'",     type = "string"   }, -- character hexadecimal escape sequence
-    { pattern = "'\\u%x%x%x%x'",        type = "string"   }, -- character unicode escape sequence
-    { pattern = "'\\?.'",               type = "string"   }, -- character literal
-    { pattern = "-?0x%x+",              type = "number"   }, -- ?
-    { pattern = "-?%d+[%d%.eE]*f?",     type = "number"   }, -- ?
-    { pattern = "-?%.?%d+f?",           type = "number"   }, -- ?
-    { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" }, -- Operators
-    { pattern = "[%a_][%w_]*%f[(]",     type = "function" }, -- Function/Class/Method/...
-    { regex   = "[A-Z]+_?[A-Z]+",       type = "keyword2" }, -- Constants
-    { pattern = "[%a_][%w_]*",          type = "symbol"   }, -- ?
-    -- TODO: shebang
-    -- TODO: dollar slashy string
+    { pattern = "//.*",                          type = "comment"  }, -- Single-line comment
+    { pattern = { "/%*", "%*/" },                type = "comment"  }, -- Multi-line comment
+    { pattern = { '"', '"', '\\' },              type = "string"   }, -- String, double quotes
+    { pattern = { "'", "'", '\\' },              type = "string"   }, -- String, apices
+    { regex =   { "/$//", "///$", '\\' },        type = "string" },   -- Slashy string
+    { pattern = "'\\x%x?%x?%x?%x'",              type = "string"   }, -- character hexadecimal escape sequence
+    { pattern = "'\\u%x%x%x%x'",                 type = "string"   }, -- character unicode escape sequence
+    { pattern = "'\\?.'",                        type = "string"   }, -- character literal
+    { pattern = "-?0x%x+",                       type = "number"   }, -- ?
+    { pattern = "-?%d+[%d%.eE]*f?",              type = "number"   }, -- ?
+    { pattern = "-?%.?%d+f?",                    type = "number"   }, -- ?
+    { pattern = "[%+%-=/%*%^%%<>!~|&]",          type = "operator" }, -- Operators
+    { pattern = "[%a_][%w_]*%f[(]",              type = "function" }, -- Function/Class/Method/...
+    { regex   = "[A-Z]+_?[A-Z]+",                type = "keyword2" }, -- Constants
+    { pattern = "[%a_][%w_]*",                   type = "symbol"   }, -- ?
+    { regex   = "#!//[a-z//?A-Z]+/s[a-zA-Z]+",   type = "keyword" },  -- Shebang
     -- TODO: .class.
   },
   symbols = {
