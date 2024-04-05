@@ -21,13 +21,13 @@ syntax.add {
     { pattern = "-?%.?%d+f?",           type = "number"   }, -- ?
     { regex = "\\-\\>(?=\\s)",          type = "keyword" },  -- lambdas
     { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" }, -- Operators
+    { regex = "\\.{2}\\<?",             type = "operator" }, -- Operators
     { pattern = "[%a_][%w_]*%f[(]",     type = "function" }, -- Function/Method/Class/... name
     { regex = "\\$(?=[a-zA-Z]+)",       type = "string" },   -- ?
     { regex = "\\@[a-zA-Z]+",           type = "string" },   -- Annotations
     { regex = "this(?=\\.)",            type = "keyword" },  -- this keyword
     { regex = "[A-Z]+_?[A-Z]+",         type = "keyword2" }, -- Constants, FULL UPPERCASE
-    -- FIX: stricter number match, careful about .1
-    -- FIX: .. and ..< are operators
+    -- FIX: arbitrary expressions
   },
   symbols = {
     -- Hard keywords
