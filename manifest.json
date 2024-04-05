@@ -584,6 +584,14 @@
       "tags": ["language"]
     },
     {
+      "description": "Syntax for the [Arduino]() programming language",
+      "version": "0.1",
+      "path": "plugins/language_arduino.lua",
+      "id": "language_arduino",
+      "mod_version": "3",
+      "tags": ["language"]
+    },
+    {
       "description": "Syntax for Intel x86 assembly",
       "version": "0.1",
       "path": "plugins/language_assembly_x86.lua",
