@@ -19,11 +19,10 @@ syntax.add {
     { pattern = "-?0x%x+",                     type = "number"   }, -- ?
     { pattern = "-?%d+[%d%.eE]*f?",            type = "number"   }, -- ?
     { pattern = "-?%.?%d+f?",                  type = "number"   }, -- ?
-    { regex = "\\-\\>(?=\\s)",                 type = "keyword" },  -- Lambda
-    { regex = "\\.{2}\\<?\\s?(?=[a-z0-9])",   type = "operator" }, -- Range operators
+    { regex = "\\-\\>(?=\\s)",                 type = "literal" },  -- Lambda
+    { regex = "\\.{2}\\<?\\s?(?=[a-z0-9])",    type = "operator" }, -- Range operators
     { pattern = "[%+%-=/%*%^%%<>!~|&]",        type = "operator" }, -- Operators
-    { pattern = "[%a_][%w_]*%f[(]",            type = "function" }, -- Function/Method/Class/...
-    { regex = "\\$(?=[a-zA-Z]+)",              type = "string" },   -- String ?
+    { pattern = "[%a_][%w_]*%f[(]",            type = "function" }, -- Function/Method/Class
     { regex = "\\@[a-zA-Z]+",                  type = "string" },   -- Annotations
     { regex = "this(?=\\.)",                   type = "keyword" },  -- this keyword
     { regex = "[A-Z]+_?[A-Z]+",                type = "keyword2" }, -- Constants, FULL UPPERCASE
