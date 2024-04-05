@@ -9,24 +9,24 @@ syntax.add {
   files = { "%.kt$" },
   comment = "//",
   patterns = {
-    { pattern = "//.*",                 type = "comment"  }, -- Comment, single-line
-    { pattern = { "/%*", "%*/" },       type = "comment"  }, -- Comment, multi-line
-    { pattern = { '"', '"', '\\' },     type = "string"   }, -- String, quotation marks
-    { pattern = { "'", "'", '\\' },     type = "string"   }, -- String, apices
-    { pattern = "'\\x%x?%x?%x?%x'",     type = "string"   }, -- Character hexadecimal escape sequence
-    { pattern = "'\\u%x%x%x%x'",        type = "string"   }, -- Character unicode escape sequence
-    { pattern = "'\\?.'",               type = "string"   }, -- Character literal
-    { pattern = "-?0x%x+",              type = "number"   }, -- ?
-    { pattern = "-?%d+[%d%.eE]*f?",     type = "number"   }, -- ?
-    { pattern = "-?%.?%d+f?",           type = "number"   }, -- ?
-    { regex = "\\-\\>(?=\\s)",          type = "keyword" },  -- lambdas
-    { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" }, -- Operators
-    { regex = "\\.{2}\\<?",             type = "operator" }, -- Operators
-    { pattern = "[%a_][%w_]*%f[(]",     type = "function" }, -- Function/Method/Class/... name
-    { regex = "\\$(?=[a-zA-Z]+)",       type = "string" },   -- ?
-    { regex = "\\@[a-zA-Z]+",           type = "string" },   -- Annotations
-    { regex = "this(?=\\.)",            type = "keyword" },  -- this keyword
-    { regex = "[A-Z]+_?[A-Z]+",         type = "keyword2" }, -- Constants, FULL UPPERCASE
+    { pattern = "//.*",                        type = "comment"  }, -- Comment, single-line
+    { pattern = { "/%*", "%*/" },              type = "comment"  }, -- Comment, multi-line
+    { pattern = { '"', '"', '\\' },            type = "string"   }, -- String, quotation marks
+    { pattern = { "'", "'", '\\' },            type = "string"   }, -- String, apices
+    { pattern = "'\\x%x?%x?%x?%x'",            type = "string"   }, -- Character hexadecimal escape sequence
+    { pattern = "'\\u%x%x%x%x'",               type = "string"   }, -- Character unicode escape sequence
+    { pattern = "'\\?.'",                      type = "string"   }, -- Character literal
+    { pattern = "-?0x%x+",                     type = "number"   }, -- ?
+    { pattern = "-?%d+[%d%.eE]*f?",            type = "number"   }, -- ?
+    { pattern = "-?%.?%d+f?",                  type = "number"   }, -- ?
+    { regex = "\\-\\>(?=\\s)",                 type = "keyword" },  -- Lambda
+    { regex = "\\.{2}\\<?\\s?(?=[a-z0-9])",   type = "operator" }, -- Range operators
+    { pattern = "[%+%-=/%*%^%%<>!~|&]",        type = "operator" }, -- Operators
+    { pattern = "[%a_][%w_]*%f[(]",            type = "function" }, -- Function/Method/Class/...
+    { regex = "\\$(?=[a-zA-Z]+)",              type = "string" },   -- String ?
+    { regex = "\\@[a-zA-Z]+",                  type = "string" },   -- Annotations
+    { regex = "this(?=\\.)",                   type = "keyword" },  -- this keyword
+    { regex = "[A-Z]+_?[A-Z]+",                type = "keyword2" }, -- Constants, FULL UPPERCASE
     -- FIX: arbitrary expressions
   },
   symbols = {
