@@ -26,7 +26,6 @@ syntax.add {
     { regex = "\\@[a-zA-Z]+",                  type = "string" },   -- Annotations
     { regex = "this(?=\\.)",                   type = "keyword" },  -- this keyword
     { regex = "[A-Z]+_?[A-Z]+",                type = "keyword2" }, -- Constants, FULL UPPERCASE
-    -- FIX: arbitrary expressions
   },
   symbols = {
     -- Hard keywords
