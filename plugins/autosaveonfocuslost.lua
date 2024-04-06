@@ -11,7 +11,7 @@ local function save_node(node)
     local i = 1
     while i <= #node.views do
       local view = node.views[i]
-      if view:is(DocView) and not view:is(CommandView) and view.doc.abs_filename ~= USERDIR .. PATHSEP .. "init.lua" and
+      if view:is(DocView) and not view:is(CommandView) and view.doc.abs_filename ~= system.absolute_path(USERDIR .. PATHSEP .. "init.lua") and view.doc.abs_filename ~= system.absolute_path(".lite_project.lua") and
           view.doc.filename and view.doc:is_dirty() then
         core.log("Saving doc \"%s\"", view.doc.filename)
         view.doc:save()
