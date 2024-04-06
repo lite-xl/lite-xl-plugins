@@ -729,7 +729,7 @@
       "description": "Syntax for the [Carbon programming language](https://github.com/carbon-language/carbon-lang).",
       "id": "language_carbon",
       "mod_version": "3",
-      "remote": "https://github.com/RohanVashisht1234/carbon_syntax_highlighter_lite-xl.git:997c0d099145afe47001703df829a3a9af955297",
+      "remote": "https://github.com/RohanVashisht1234/carbon_syntax_highlighter_lite-xl.git:2c72b3f2d0fc9b714305d6bc2b80e6068952b3dc",
       "tags": [
         "language"
       ],
