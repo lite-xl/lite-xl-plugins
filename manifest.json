@@ -187,7 +187,7 @@
       "id": "autosaveonfocuslost",
       "mod_version": "3",
       "path": "plugins/autosaveonfocuslost.lua",
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Automatically hardwraps lines when typing",
