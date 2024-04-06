@@ -4,7 +4,6 @@ local CommandView = require "core.commandview"
 local DocView = require "core.docview"
 local RootView = require "core.rootview"
 
-
 local on_focus_lost = RootView.on_focus_lost;
 
 local function save_node(node)
