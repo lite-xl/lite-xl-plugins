@@ -1,5 +1,4 @@
--- Generated using https://github.com/RohanVashisht1234/rohansyntax
--- Author: Rohan Vashisht
+-- Author: https://github.com/RohanVashisht1234/
 -- mod-version:3
 local syntax = require "core.syntax"
 syntax.add {
