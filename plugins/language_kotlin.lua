@@ -26,9 +26,10 @@ syntax.add {
     { regex = [[\?(?=\.)]],                    type = "operator" }, -- ?. operator
     { pattern = "[%a_][%w_]*%f[(]",            type = "function" }, -- Function/Method/Class
     { regex = [[let(?=\s\{)]],                 type = "function" }, -- ? operator
-    { regex = [[\?\:(?=\s?[a-zA-Z])]],                 type = "function" }, -- elvis operator
+    { regex = [[\?\:(?=\s?[a-zA-Z])]],         type = "function" }, -- elvis operator
+    { regex = [[this(?=\.?\@?)]],              type = "keyword"  }, -- this keyword
     { regex = [[\@[a-zA-Z]+]],                 type = "string"   }, -- Annotations
-    { regex = [[this(?=\.)]],                  type = "keyword"  }, -- this keyword
+    { regex = [[[a-zA-Z]+\@(?=\s?[a-zA-Z])]],  type = "string"   }, -- Annotations (this pattern is lower priority than the `this keyword` pattern)
     { regex = "[A-Z]+_?[A-Z]+",                type = "keyword2" }, -- Constants, FULL UPPERCASE
   },
   symbols = {
