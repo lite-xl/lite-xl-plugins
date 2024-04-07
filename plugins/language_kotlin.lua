@@ -8,6 +8,7 @@ syntax.add {
   name = "Kotlin",
   files = { "%.kt$" },
   comment = "//",
+  block_comment = { "/*", "*/" },
   patterns = {
     { pattern = "//.*",                        type = "comment"  }, -- Comment, single-line
     { pattern = { "/%*", "%*/" },              type = "comment"  }, -- Comment, multi-line
