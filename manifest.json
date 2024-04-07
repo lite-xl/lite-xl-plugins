@@ -740,7 +740,7 @@
       "description": "Syntax for the [Clojure programming language](https://clojure.org/).",
       "id": "language_clojure",
       "mod_version": "3",
-      "remote": "https://github.com/RohanVashisht1234/clojure_syntax_highlighter_lite-xl.git:9a07790770ba508ad2b98542e71284cd9e2b7363",
+      "path":"plugins/language_clojure.lua"
       "tags": [
         "language"
       ],
