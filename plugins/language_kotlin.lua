@@ -23,9 +23,11 @@ syntax.add {
     { regex = [[\-\>(?=\s)]],                  type = "operator" }, -- Lambda
     { regex = [[\.{2}\<?\s?(?=[a-z0-9])]],     type = "operator" }, -- Range operators
     { pattern = "[%+%-=/%*%^%%<>!~|&]",        type = "operator" }, -- Operators
+    { regex = [[\?(?=\.)]],                    type = "operator" }, -- ?. operator
     { pattern = "[%a_][%w_]*%f[(]",            type = "function" }, -- Function/Method/Class
-    { regex = [[\@[a-zA-Z]+]],                 type = "string"   },   -- Annotations
-    { regex = [[this(?=\.)]],                  type = "keyword"  },  -- this keyword
+    { regex = [[let(?=\s\{)]],                 type = "function" }, -- ?
+    { regex = [[\@[a-zA-Z]+]],                 type = "string"   }, -- Annotations
+    { regex = [[this(?=\.)]],                  type = "keyword"  }, -- this keyword
     { regex = "[A-Z]+_?[A-Z]+",                type = "keyword2" }, -- Constants, FULL UPPERCASE
   },
   symbols = {
