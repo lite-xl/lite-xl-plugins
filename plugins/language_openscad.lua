@@ -1,69 +1,127 @@
 -- mod-version:3
-
--- https://openscad.org/cheatsheet/index.html
-
 local syntax = require "core.syntax"
 
 syntax.add {
   name = "OpenSCAD",
   files = {"%.scad$"},
   comment = "//",
+  block_comment = { "/*", "*/" },
   patterns = {
-    --{ pattern = "",                          type = "" },
-    { pattern = "[%+%-=/%*%^%%<>!~|&]",      type = "operator" },
-    { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
+    { pattern = "//.*",                          type = "comment"  }, -- Single-line comment
+    { pattern = { "/%*", "%*/" },                type = "comment"  }, -- Multi-line comment
+    { pattern = { '"', '"', '\\' },              type = "string"   }, -- String, double quotes
+    { pattern = { "'", "'", '\\' },              type = "string"   }, -- String, apices
+    { pattern = "-?0x%x+",                       type = "number"   }, -- ?
+    { pattern = "-?%d+[%d%.eE]*[a-zA-Z]?",       type = "number"   }, -- ?
+    { pattern = "-?%.?%d+",                      type = "number"   }, -- ?
+    { pattern = "[%+%-=/%*%^%%<>!~|&%?%:]",      type = "operator" }, -- Operators
+    { pattern = "[%a_][%w_]*%f[(]",              type = "function" }, -- Functions
+    --{ pattern = "", type = "" },
+    -- TODO: list dot notation
   },
-  symbols = {    
-    ["cube"] = "function",
-    ["cylinder"] = "function",
-    ["import"] = "function",
-    ["linear_extrude"] = "function",
-    ["polyhedron"] = "function",
-    ["rotate_extrude"] = "function",
-    ["sphere"] = "function",
-    ["surface"] = "function",
-
-    ["color"] = "function",
-    ["hull"] = "function",
-    ["mirror"] = "function",
-    ["minkowski"] = "function",
-    ["multmatrix"] = "function",
-    ["offset"] = "function",
-    ["resize"] = "function",
-    ["rotate"] = "function",
-    ["scale"] = "function",
-    ["translate"] = "function",
-
-    ["abs"] = "function",
-    ["sign"] = "function",
-    ["sin"] = "function",
-    ["cos"] = "function",
-    ["tan"] = "function",
-    ["acos"] = "function",
-    ["asin"] = "function",
-    ["atan"] = "function",
-    ["atan2"] = "function",
-    ["floor"] = "function",
-    ["round"] = "function",
-    ["ceil"] = "function",
-    ["ln"] = "function",
-    ["len"] = "function",
-    ["let"] = "function",
-    ["log"] = "function",
-    ["pow"] = "function",
-    ["sqrt"] = "function",
-    ["exp"] = "function",
-    ["rands"] = "function",
-    ["min"] = "function",
-    ["max"] = "function",
-    ["norm"] = "function",
-    ["cross"] = "function",
-
-    [""] = "function",
-    [""] = "function",
-    [""] = "function",
-    [""] = "function",
-    [""] = "function",
-    [""] = "function",
+  symbols = {
+    -- ?
+    ["var"]               = "keyword",
+    ["module"]            = "keyword",
+    ["function"]          = "keyword",
+    ["include"]           = "keyword",
+    ["use"]               = "keyword",
+    -- Constants
+    ["undef"]             = "keyword2",
+    ["PI"]                = "keyword2",
+    -- Special Variables
+    ["$fa"]               = "keyword",
+    ["$fn"]               = "keyword",
+    ["$fs"]               = "keyword",
+    ["$t"]                = "keyword",
+    ["$vpr"]              = "keyword",
+    ["$vpt"]              = "keyword",
+    ["$vpd"]              = "keyword",
+    ["$vpf"]              = "keyword",
+    ["$children"]         = "keyword",
+    ["$preview"]          = "keyword",
+    -- 2D
+    ["circle"]            = "keyword",
+    ["square"]            = "keyword",
+    ["polygon"]           = "keyword",
+    ["text"]              = "keyword",
+    ["import"]            = "keyword",
+    ["projection"]        = "keyword",
+    -- 3D
+    ["sphere"]            = "keyword",
+    ["cube"]              = "keyword",
+    ["cylinder"]          = "keyword",
+    ["polyhedron"]        = "keyword",
+    ["surface"]           = "keyword",
+    -- Transformations
+    ["linear_extrude"]    = "keyword",
+    ["rotate_extrude"]    = "keyword",
+    ["translate"]         = "keyword",
+    ["rotate"]            = "keyword",
+    ["scale"]             = "keyword",
+    ["resize"]            = "keyword",
+    ["mirror"]            = "keyword",
+    ["multmatrix"]        = "keyword",
+    ["color"]             = "keyword",
+    ["offset"]            = "keyword",
+    ["hull"]              = "keyword",
+    ["minkowski"]         = "keyword",
+    -- Boolean Operations
+    ["union"]             = "keyword",
+    ["difference"]        = "keyword",
+    ["intersection"]      = "keyword",
+    -- Flow Control
+    ["for"]               = "keyword",
+    ["each"]              = "keyword",
+    -- Type Test Functions
+    ["is_undef"]          = "function",
+    ["is_bool"]           = "function",
+    ["is_num"]            = "function",
+    ["is_string"]         = "function",
+    ["is_list"]           = "function",
+    ["is_function"]       = "function",
+    -- Other
+    ["echo"]              = "keyword",
+    ["render"]            = "keyword",
+    ["children"]          = "keyword",
+    ["assert"]            = "keyword",
+    -- Functions
+    ["concat"]            = "function",
+    ["lookup"]            = "function",
+    ["str"]               = "function",
+    ["chr"]               = "function",
+    ["ord"]               = "function",
+    ["search"]            = "function",
+    ["version"]           = "function",
+    ["version_num"]       = "function",
+    ["parent_module"]     = "function",    
+    -- Math Functions
+    ["abs"]               = "keyword",
+    ["sign"]              = "keyword",
+    ["sin"]               = "keyword",
+    ["cos"]               = "keyword",
+    ["tan"]               = "keyword",
+    ["acos"]              = "keyword",
+    ["asin"]              = "keyword",
+    ["atan"]              = "keyword",
+    ["atan2"]             = "keyword",
+    ["floor"]             = "keyword",
+    ["round"]             = "keyword",
+    ["ceil"]              = "keyword",
+    ["ln"]                = "keyword",
+    ["len"]               = "keyword",
+    ["let"]               = "keyword",
+    ["log"]               = "keyword",
+    ["pow"]               = "keyword",
+    ["sqrt"]              = "keyword",
+    ["exp"]               = "keyword",
+    ["rands"]             = "keyword",
+    ["min"]               = "keyword",
+    ["max"]               = "keyword",
+    ["norm"]              = "keyword",
+    ["cross"]             = "keyword",
+    -- Literals
+    ["true"]              = "keyword",
+    ["false"]             = "keyword",
   }
 }
