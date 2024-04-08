@@ -740,7 +740,7 @@
       "description": "Syntax for the [Clojure](https://clojure.org/) programming language",
       "id": "language_clojure",
       "mod_version": "3",
-      "path":"plugins/language_clojure.lua"
+      "path":"plugins/language_clojure.lua",
       "tags": [
         "language"
       ],
