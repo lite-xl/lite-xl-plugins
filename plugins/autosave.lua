@@ -64,8 +64,8 @@ end
 function Doc:on_text_change(type)
   -- check if file is saved
   if config.plugins.autosave.enabled and self.filename
-    and self.filename ~= system.absolute_path(USERDIR .. PATHSEP .. "init.lua")
-    and self.filename ~= system.absolute_path(".lite_project.lua")
+    and self.abs_filename ~= system.absolute_path(USERDIR .. PATHSEP .. "init.lua")
+    and self.abs_filename ~= system.absolute_path(".lite_project.lua")
     then
     updatepress()
   end
