@@ -13,7 +13,7 @@ syntax.add {
     { pattern = { '#"', '"', '\\' },                      type = 'string' },
     { pattern = { '"', '"', '\\' },                       type = 'string' },
     { pattern = { '"""', '"""', '\\' },                   type = 'string' },
-    { pattern = 'Retention%s+()[%a_][%w_/]*',             type = { 'keyword', 'literal' } },
+    { pattern = 'Retention()%s+()[%a_][%w_/]*',             type = { 'keyword', 'normal', 'literal' } },
     { pattern = ':[%a_][%w_/%-]*',                        type = { 'keyword2', 'literal' } },
     { pattern = '[%a_][%w_]*()%.()[%a_][%w_/%-]*',        type = { 'keyword','operator', 'keyword2' } },
     { pattern = "%(()def()%s+()[%a_][%w_%-]*",            type = { "normal", "keyword", "literal", 'literal' } }, -- tested ok
