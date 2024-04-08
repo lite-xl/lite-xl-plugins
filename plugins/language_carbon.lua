@@ -1,5 +1,4 @@
--- Please check LICENSE file for license related details
--- Author: Rohan Vashisht
+-- Author: https://github.com/rohanvashisht1234/
 
 -- mod-version:3
 local syntax = require "core.syntax"
