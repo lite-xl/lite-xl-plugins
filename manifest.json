@@ -1687,6 +1687,13 @@
       "version": "2.5.0"
     },
     {
+      "description": "LSP support for JSON via vscode-json-languageserver with [additional patches](https://github.com/lite-xl/lite-xl-lsp-servers/patches/vscode-json-languageserver) for increased functionality.",
+      "id": "lsp_json",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:69a24616439ea9078df9a7474a4b0cb82f3cf65c",
+      "version": "1.87.2.0.1"
+    },
+    {
       "description": "Automatic configuration/binary download for LSP completion for Lua with lua-language-server (sumneko).",
       "id": "lsp_lua",
       "mod_version": "3",
@@ -1718,7 +1725,7 @@
       "description": "Automatic configuration/binary download for LSP completion for Rust with rust-analyzer.",
       "id": "lsp_rust",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:71275f7e47a30ac0cbeb17706cea29a29c8267a7",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:69a24616439ea9078df9a7474a4b0cb82f3cf65c",
       "version": "20240325"
     },
     {
@@ -1741,6 +1748,13 @@
       "mod_version": "3",
       "remote": "https://github.com/vqns/lite-xl-snippets:1f0bba02bb3af6df9cb2ce72526851b427caf143",
       "version": "1.1"
+    },
+    {
+      "description": "LSP support for YAML via yaml-language-server.",
+      "id": "lsp_yaml",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:69a24616439ea9078df9a7474a4b0cb82f3cf65c",
+      "version": "1.14.0"
     },
     {
       "description": "LSP support for Zig via zls.",
