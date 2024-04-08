@@ -1442,7 +1442,7 @@
       "description": "Syntax for the [Swift](https://developer.apple.com/swift/) programming language",
       "id": "language_swift",
       "mod_version": "3",
-      "path":"plugins/language_swift",
+      "path":"plugins/language_swift.lua",
       "tags": [
         "language"
       ],
