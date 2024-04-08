@@ -669,7 +669,7 @@
       "version": "0.1"
     },
     {
-      "description": "Syntax for bazel [Bazel](https://bazel.build/) build tool files.",
+      "description": "Syntax for [Bazel](https://bazel.build/) build tool files.",
       "id": "language_bazel",
       "mod_version": "3",
       "path": "plugins/language_bazel.lua",
