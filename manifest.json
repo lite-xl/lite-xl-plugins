@@ -737,7 +737,7 @@
       "version": "0.2"
     },
     {
-      "description": "Syntax for the [Clojure programming language](https://clojure.org/).",
+      "description": "Syntax for the [Clojure](https://clojure.org/) programming language",
       "id": "language_clojure",
       "mod_version": "3",
       "path":"plugins/language_clojure.lua"
