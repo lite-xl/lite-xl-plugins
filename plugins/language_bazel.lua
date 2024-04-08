@@ -7,9 +7,9 @@ local syntax_highlight = require("core.syntax")
 ------------- DATABASE -------------
 
 ---- SYMBOLS ----
-SYMBOLS = {}
+local SYMBOLS = {}
 
-KEYWORDS = {
+local KEYWORDS = {
   "break",
   "continue",
   "elif",
@@ -20,7 +20,7 @@ KEYWORDS = {
   "return"
 }
 
-KEYWORDS2 = {
+local KEYWORDS2 = {
   "as",
   "assert",
   "class",
@@ -41,7 +41,7 @@ KEYWORDS2 = {
   "yield"
 }
 
-LITERALS = {
+local LITERALS = {
   "all",
   "any",
   "bool",
@@ -68,7 +68,7 @@ LITERALS = {
 -----------------
 
 ---- PATTERNS ----
-PATTERNS = {
+local PATTERNS = {
   { pattern = { '"', '"', '\\' }, type = "string"   },  -- tested ok
   { pattern = "#.*",              type = "comment"  },  -- tested ok
   { pattern = "[!%-/*?:=><]",     type = "operator" },  -- tested ok
@@ -92,7 +92,7 @@ for _, literal in ipairs(LITERALS) do
 end
 syntax_highlight.add {
   name = "Bazel",
-  files = "%.bazel$",
+  files = {"%.bazel$","%.bzl$"},
   comment = "#",
   patterns = PATTERNS,
   symbols = SYMBOLS,
