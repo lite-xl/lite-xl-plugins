@@ -1,4 +1,4 @@
--- Author: https://github.com/rohanvashisht1234/
+-- Author: Rohan Vashisht: https://github.com/rohanvashisht1234/
 
 -- mod-version:3
 local syntax = require "core.syntax"
