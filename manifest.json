@@ -182,7 +182,7 @@
       "id": "autosave",
       "mod_version": "3",
       "path": "plugins/autosave.lua",
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Automatically saves files that were changed when the main window loses focus by switching to another application",
