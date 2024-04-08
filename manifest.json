@@ -700,7 +700,7 @@
       "description": "A syntax highlighter for the [Buzz programming language](https://buzz-lang.dev/) in lite-xl.",
       "id": "language_buzz",
       "mod_version": "3",
-      "path":"plugins/language_buzz.lua",
+      "path": "plugins/language_buzz.lua",
       "tags": [
         "language"
       ],
@@ -730,7 +730,7 @@
       "description": "Syntax for the [Carbon programming language](https://github.com/carbon-language/carbon-lang).",
       "id": "language_carbon",
       "mod_version": "3",
-      "path":"plugins/language_carbon.lua",
+      "path": "plugins/language_carbon.lua",
       "tags": [
         "language"
       ],
@@ -920,7 +920,7 @@
       "description": "Syntax for the [fortran](https://fortran-lang.org/) programming language",
       "id": "language_fortran",
       "mod_version": "3",
-      "path":"plugins/language_fortran.lua",
+      "path": "plugins/language_fortran.lua",
       "tags": [
         "language"
       ],
@@ -1442,7 +1442,7 @@
       "description": "Syntax for the [Swift](https://developer.apple.com/swift/) programming language",
       "id": "language_swift",
       "mod_version": "3",
-      "path":"plugins/language_swift.lua",
+      "path": "plugins/language_swift.lua",
       "tags": [
         "language"
       ],
