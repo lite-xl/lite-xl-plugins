@@ -696,14 +696,14 @@
       "version": "0.1"
     },
     {
-      "description": "A syntax hilighter for buzz programming language in lite-xl.",
+      "description": "A syntax highlighter for the [Buzz programming language](https://buzz-lang.dev/) in lite-xl.",
       "id": "language_buzz",
       "mod_version": "3",
-      "remote": "https://github.com/RohanVashisht1234/buzz_syntax_highlighter_lite-xl:dc680dfb7d528ad521fe0c7bdfbc88ef3f95528e",
+      "path":"plugins/language_buzz.lua",
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the modifications to [fe](https://github.com/rxi/fe/) used in [cel7](https://rxi.itch.io/cel7)",
@@ -729,11 +729,11 @@
       "description": "Syntax for the [Carbon programming language](https://github.com/carbon-language/carbon-lang).",
       "id": "language_carbon",
       "mod_version": "3",
-      "remote": "https://github.com/RohanVashisht1234/carbon_syntax_highlighter_lite-xl.git:2c72b3f2d0fc9b714305d6bc2b80e6068952b3dc",
+      "path":"plugins/language_carbon.lua",
       "tags": [
         "language"
       ],
-      "version": "0.2"
+      "version": "0.3"
     },
     {
       "description": "Syntax for the CMake build system language",
@@ -909,11 +909,11 @@
       "description": "Syntax for the [fortran](https://fortran-lang.org/) programming language",
       "id": "language_fortran",
       "mod_version": "3",
-      "remote": "https://github.com/RohanVashisht1234/fortran_syntax_highlighter_lite-xl:2bf91dd7a50f1ba7c8847532084448a9d2d88456",
+      "path":"plugins/language_fortran.lua",
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [fstab](https://en.wikipedia.org/wiki/Fstab) config files",
