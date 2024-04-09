@@ -16,8 +16,7 @@ syntax.add {
     { pattern = "-?%.?%d+",                      type = "number"   }, -- ?
     { pattern = "[%+%-=/%*%^%%<>!~|&%?%:]",      type = "operator" }, -- Operators
     { pattern = "[%a_][%w_]*%f[(]",              type = "function" }, -- Functions
-    --{ pattern = "", type = "" },
-    -- TODO: list dot notation
+    { regex   = "\\$[a-zA-Z]+",                  type = "keyword"  }, -- Special variables
   },
   symbols = {
     -- ?
@@ -29,17 +28,6 @@ syntax.add {
     -- Constants
     ["undef"]             = "keyword2",
     ["PI"]                = "keyword2",
-    -- Special Variables
-    ["$fa"]               = "keyword",
-    ["$fn"]               = "keyword",
-    ["$fs"]               = "keyword",
-    ["$t"]                = "keyword",
-    ["$vpr"]              = "keyword",
-    ["$vpt"]              = "keyword",
-    ["$vpd"]              = "keyword",
-    ["$vpf"]              = "keyword",
-    ["$children"]         = "keyword",
-    ["$preview"]          = "keyword",
     -- 2D
     ["circle"]            = "keyword",
     ["square"]            = "keyword",
