@@ -9,8 +9,7 @@ syntax.add {
         "%.clj$",
         "%.cljs$", 
         "%.clc$", 
-        "%.edn$", 
-        "%.clojure$"
+        "%.edn$",
     },
     patterns = {
         { pattern = ';;.*',                                   type = 'comment' },                                     -- tested ok
