@@ -5,8 +5,12 @@ local syntax = require "core.syntax"
 syntax.add {
     name = "Clojure", -- tested ok
     comment = ";;",   -- tested ok
-    files = {
-        "%.clojure$", -- tested ok
+    files = { 
+        "%.clj$",
+        "%.cljs$", 
+        "%.clc$", 
+        "%.edn$", 
+        "%.clojure$"
     },
     patterns = {
         { pattern = ';;.*',                                   type = 'comment' },                                     -- tested ok
