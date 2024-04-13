@@ -8,8 +8,7 @@ syntax.add {
   patterns = {
     { pattern = "//.*",                              type = "comment"   }, -- Single-line comment
     { pattern = { '"', '"', '\\' },                  type = "string"    }, -- String, quotation marks
-    { regex   = ":\\s?\\w+\\<\\'?\\w+\\>",           type = "keyword2"  }, -- Field type
-    { regex   = "\'[a-zA-Z]",                        type = "symbol"    }, -- ?
+    { regex   = ":\\s?\\w+\\<\\'?\\w+\\>",           type = "keyword2"  }, -- Generic field type
     { pattern = { "'", "'", '\\' },                  type = "string"    }, -- String, apices
     { regex   = "\\${1,2}(?=\"?\'?)",                type = "string"    }, -- String, $
     { pattern = "-?0x%x+",                           type = "number"    }, -- ?
@@ -17,33 +16,37 @@ syntax.add {
     { pattern = "-?%.?%d+f?",                        type = "number"    }, -- ?
     { regex   = "\\[\\<\\w+\\;?\\s?\\w+\\>\\]",      type = "keyword2"  }, -- Attribute
     { pattern = "[%+%-=/%*%^%%<>!~|&]",              type = "operator"  }, -- Operators
-    { regex   = [[\-\>(?=\s)]],                      type = "operator"  }, -- Function arrow
+    { regex   = [[\.{2}\<?\s?(?=[\\-]?[a-z0-9])]],   type = "operator"  }, -- Range operators
+    { regex   = [[\-\>(?=\s)]],                      type = "function"  }, -- Function arrow
     { regex   = "[a-zA-Z0-9]+\\s?(?=[(])",           type = "function"  }, -- Function
+    { regex   = "[a-zA-Z0-9]+\\s?(?=[)?\\,?])",      type = "keyword"   }, -- Field type
+    { regex   = "\\#[a-zA-Z0-9]+",                   type = "keyword"   }, -- Load
+    
   },
   symbols = {
-    ["sbyte"]          = "literal",
-    ["byte"]           = "literal",
-    ["int16"]          = "literal",
-    ["uint16"]         = "literal",
-    ["int"]            = "literal",
-    ["int32"]          = "literal",
-    ["uint32"]         = "literal",
-    ["nativeint"]      = "literal",
-    ["unativeint"]     = "literal",
-    ["int64"]          = "literal",
-    ["uint64"]         = "literal",
-    ["single"]         = "literal",
-    ["float32"]        = "literal",
-    ["double"]         = "literal",
-    ["bigint"]         = "literal",
-    ["decimal"]        = "literal",
-    ["Char"]           = "literal",
-    ["String"]         = "literal",
-    ["bool"]           = "literal",
-    ["char"]           = "literal",
-    ["string"]         = "literal",
-    ["unit"]           = "literal",
-    ["enum"]           = "literal",
+    ["sbyte"]          = "keyword",
+    ["byte"]           = "keyword",
+    ["int16"]          = "keyword",
+    ["uint16"]         = "keyword",
+    ["int"]            = "keyword",
+    ["int32"]          = "keyword",
+    ["uint32"]         = "keyword",
+    ["nativeint"]      = "keyword",
+    ["unativeint"]     = "keyword",
+    ["int64"]          = "keyword",
+    ["uint64"]         = "keyword",
+    ["single"]         = "keyword",
+    ["float32"]        = "keyword",
+    ["double"]         = "keyword",
+    ["bigint"]         = "keyword",
+    ["decimal"]        = "keyword",
+    ["Char"]           = "keyword",
+    ["String"]         = "keyword",
+    ["bool"]           = "keyword",
+    ["char"]           = "keyword",
+    ["string"]         = "keyword",
+    ["unit"]           = "keyword",
+    ["enum"]           = "keyword",
     
     ["let"]            = "keyword",
     ["type"]           = "keyword",
@@ -92,6 +95,7 @@ syntax.add {
     ["contains"]       = "keyword",
     ["not"]            = "keyword",
     ["struct"]         = "keyword",
+    ["namespace"]      = "keyword",
 
     ["true"]           = "literal",
     ["false"]          = "literal",
