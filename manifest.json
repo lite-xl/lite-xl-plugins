@@ -65,7 +65,6 @@
         "language_assembly_x86": {},
         "language_autohotkey_v1": {},
         "language_batch": {},
-        "language_bazel": {},
         "language_bib": {},
         "language_blade": {},
         "language_blueprint": {},
@@ -162,7 +161,7 @@
       "id": "meta_languages",
       "mod_version": "3",
       "type": "meta",
-      "version": "0.1.13"
+      "version": "0.1.12"
     },
     {
       "description": "Align multiple carets and selections *([clip](https://user-images.githubusercontent.com/2798487/165631951-532f8d24-d596-4dd0-9d21-ff53c71ed32f.mp4))*",
@@ -663,16 +662,6 @@
       "id": "language_batch",
       "mod_version": "3",
       "path": "plugins/language_batch.lua",
-      "tags": [
-        "language"
-      ],
-      "version": "0.1"
-    },
-    {
-      "description": "Syntax for Windows [Bazel](https://bazel.build/) build tool files.",
-      "id": "language_bazel",
-      "mod_version": "3",
-      "path": "plugins/language_bazel.lua",
       "tags": [
         "language"
       ],
