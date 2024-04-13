@@ -91,6 +91,7 @@
         "language_fe": {},
         "language_fennel": {},
         "language_fortran": {},
+        "language_fsharp": {},
         "language_fstab": {},
         "language_gabc": {},
         "language_gdscript": {},
@@ -936,6 +937,16 @@
         "language"
       ],
       "version": "0.2"
+    },
+    {
+      "description": "Syntax for the [F#](https://fsharp.org/) programming language",
+      "id": "language_fsharp",
+      "mod_version": "3",
+      "path": "plugins/language_fsharp.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
     },
     {
       "description": "Syntax for the [fstab](https://en.wikipedia.org/wiki/Fstab) config files",
