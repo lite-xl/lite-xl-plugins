@@ -10,27 +10,27 @@ syntax.add {
   comment = "//",
   block_comment = { "/*", "*/" },
   patterns = {
-    { pattern = "//.*",                          type = "comment"  }, -- Comment, single-line
-    { pattern = { "/%*", "%*/" },                type = "comment"  }, -- Comment, multi-line
-    { pattern = { '"', '"', '\\' },              type = "string"   }, -- String, quotation marks
-    { pattern = { "'", "'", '\\' },              type = "string"   }, -- String, apices
-    { pattern = "'\\x%x?%x?%x?%x'",              type = "string"   }, -- Character hexadecimal escape sequence
-    { pattern = "'\\u%x%x%x%x'",                 type = "string"   }, -- Character unicode escape sequence
-    { pattern = "'\\?.'",                        type = "string"   }, -- Character literal
-    { pattern = "-?0x%x+",                       type = "number"   }, -- ?
-    { pattern = "-?%d+[%deE]*f?",                type = "number"   }, -- ?
-    { pattern = "-?%.?%d+f?",                    type = "number"   }, -- ?
-    { regex   = [[\-\>(?=\s)]],                  type = "operator" }, -- Lambda
-    { regex   = [[\.{2}\<?\s?(?=[a-z0-9])]],     type = "operator" }, -- Range operators
-    { pattern = "[%+%-=/%*%^%%<>!~|&]",          type = "operator" }, -- Operators
-    { regex   = [[\?(?=\.)]],                    type = "operator" }, -- ?. operator
-    { pattern = "[%a_][%w_]*%f[(]",              type = "function" }, -- Function/Method/Class
-    { regex   = [[let(?=\s\{)]],                 type = "function" }, -- ? operator
-    { regex   = [[\?\:(?=\s?)]],                 type = "operator" }, -- elvis operator
-    { regex   = [[this(?=\.?\@?)]],              type = "keyword"  }, -- this keyword
-    { regex   = [[\@[a-zA-Z]+]],                 type = "string"   }, -- Annotations
-    { regex   = [[[a-zA-Z]+\@(?=\s?[a-zA-Z])]],  type = "string"   }, -- Annotations (this pattern is lower priority than the `this keyword` pattern)
-    { regex   = "[A-Z][A-Z_]*",                  type = "keyword2" }, -- Constants, FULL UPPERCASE
+    { pattern = "//.*",                              type = "comment"  }, -- Comment, single-line
+    { pattern = { "/%*", "%*/" },                    type = "comment"  }, -- Comment, multi-line
+    { pattern = { '"', '"', '\\' },                  type = "string"   }, -- String, quotation marks
+    { pattern = { "'", "'", '\\' },                  type = "string"   }, -- String, apices
+    { pattern = "'\\x%x?%x?%x?%x'",                  type = "string"   }, -- Character hexadecimal escape sequence
+    { pattern = "'\\u%x%x%x%x'",                     type = "string"   }, -- Character unicode escape sequence
+    { pattern = "'\\?.'",                            type = "string"   }, -- Character literal
+    { pattern = "-?0x%x+",                           type = "number"   }, -- ?
+    { pattern = "-?%d+[%deE]*f?",                    type = "number"   }, -- ?
+    { pattern = "-?%.?%d+f?",                        type = "number"   }, -- ?
+    { regex   = [[\-\>(?=\s)]],                      type = "operator" }, -- Lambda
+    { regex   = [[\.{2}\<?\s?(?=[\\-]?[a-z0-9])]],   type = "operator" }, -- Range operators
+    { pattern = "[%+%-=/%*%^%%<>!~|&]",              type = "operator" }, -- Operators
+    { regex   = [[\?(?=\.)]],                        type = "operator" }, -- ?. operator
+    { pattern = "[%a_][%w_]*%f[(]",                  type = "function" }, -- Function/Method/Class
+    { regex   = [[let(?=\s\{)]],                     type = "function" }, -- ? operator
+    { regex   = [[\?\:(?=\s?)]],                     type = "operator" }, -- elvis operator
+    { regex   = [[this(?=\.?\@?)]],                  type = "keyword"  }, -- this keyword
+    { regex   = [[\@[a-zA-Z]+]],                     type = "string"   }, -- Annotations
+    { regex   = [[[a-zA-Z]+\@(?=\s?[a-zA-Z])]],      type = "string"   }, -- Annotations (this pattern is lower priority than the `this keyword` pattern)
+    { regex   = "[A-Z][A-Z_]*",                      type = "keyword2" }, -- Constants, FULL UPPERCASE
   },
   symbols = {
     -- Hard keywords
