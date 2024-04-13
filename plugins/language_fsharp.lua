@@ -90,6 +90,8 @@ syntax.add {
     ["abstract"]       = "keyword",
     ["downcast"]       = "keyword",
     ["override"]       = "keyword",
+    ["add"]            = "keyword",
+    ["contains"]       = "keyword",
 
     ["true"]           = "literal",
     ["false"]          = "literal",
