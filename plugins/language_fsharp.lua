@@ -21,7 +21,6 @@ syntax.add {
     { regex   = "[a-zA-Z0-9]+\\s?(?=[(])",           type = "function"  }, -- Function
     { regex   = "[a-zA-Z0-9]+\\s?(?=[)?\\,?])",      type = "keyword"   }, -- Field type
     { regex   = "\\#[a-zA-Z0-9]+",                   type = "keyword"   }, -- Load
-    
   },
   symbols = {
     ["sbyte"]          = "keyword",
