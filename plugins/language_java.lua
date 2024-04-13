@@ -18,9 +18,9 @@ syntax.add {
     { pattern = "-?%.?%d+f?",           type = "number"   },
     { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
     { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
-    { regex = "[A-Z]+_?[A-Z]+",         type = "keyword2" }, -- Constants
+    { regex = "[A-Z][A-Z_]*",           type = "keyword2" }, -- Constants
     { pattern = "[%a_][%w_]*",          type = "symbol"   }
-    --{ regex = "(?<=\s)([A-Z]+[a-z]+)+(?=\s[a-z])", type = "function" }, -- Class name in instance (WIP: Lite XL needs to add support for look-behind)
+    --{ regex = "(?<=\s)([A-Z]+[a-z]+)+(?=\s[a-z])", type = "function" }, -- Class name in class instance
   },
   symbols = {
     ["abstract"]      = "keyword",
