@@ -6,21 +6,19 @@ syntax.add {
   files = { "%.fs$" },
   comment = "//",
   patterns = {
-    { pattern = "//.*",                          type = "comment"   }, -- Single-line comment
-    { pattern = { '"', '"', '\\' },              type = "string"    }, -- String, quotation marks
-    { regex   = "\'[a-zA-Z]",                    type = "symbol"    }, -- ?
-    { pattern = { "'", "'", '\\' },              type = "string"    }, -- String, apices
-    { regex   = "\\${1,2}(?=\"?\'?)",            type = "string"    }, -- String, $
-    { pattern = "-?0x%x+",                       type = "number"    }, -- ?
-    { pattern = "-?%d+[%deE]*f?",                type = "number"    }, -- ?
-    { pattern = "-?%.?%d+f?",                    type = "number"    }, -- ?
-    { pattern = "[%+%-=/%*%^%%<>!~|&]",          type = "operator"  }, -- Operators
-    { regex   = [[\-\>(?=\s)]],                  type = "operator"  }, -- Function arrow
-    { regex   = "[a-zA-Z0-9]+\\s?(?=[(])",       type = "function"  }, -- Function
-    -- TODO: generic type
-    -- TODO: named literal
-    -- TODO: field type
-    -- TODO: attributes (e.g. [<InlineIfLambda>])
+    { pattern = "//.*",                              type = "comment"   }, -- Single-line comment
+    { pattern = { '"', '"', '\\' },                  type = "string"    }, -- String, quotation marks
+    { regex   = ":\\s?\\w+\\<\\'?\\w+\\>",           type = "keyword2"  }, -- Field type
+    { regex   = "\'[a-zA-Z]",                        type = "symbol"    }, -- ?
+    { pattern = { "'", "'", '\\' },                  type = "string"    }, -- String, apices
+    { regex   = "\\${1,2}(?=\"?\'?)",                type = "string"    }, -- String, $
+    { pattern = "-?0x%x+",                           type = "number"    }, -- ?
+    { pattern = "-?%d+[%deE]*f?",                    type = "number"    }, -- ?
+    { pattern = "-?%.?%d+f?",                        type = "number"    }, -- ?
+    { regex   = "\\[\\<\\w+\\;?\\s?\\w+\\>\\]",      type = "keyword2"  }, -- Attribute
+    { pattern = "[%+%-=/%*%^%%<>!~|&]",              type = "operator"  }, -- Operators
+    { regex   = [[\-\>(?=\s)]],                      type = "operator"  }, -- Function arrow
+    { regex   = "[a-zA-Z0-9]+\\s?(?=[(])",           type = "function"  }, -- Function
   },
   symbols = {
     ["sbyte"]          = "literal",
@@ -92,6 +90,8 @@ syntax.add {
     ["override"]       = "keyword",
     ["add"]            = "keyword",
     ["contains"]       = "keyword",
+    ["not"]            = "keyword",
+    ["struct"]         = "keyword",
 
     ["true"]           = "literal",
     ["false"]          = "literal",
