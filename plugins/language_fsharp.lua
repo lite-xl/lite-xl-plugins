@@ -14,13 +14,15 @@ syntax.add {
     { pattern = "-?0x%x+",                           type = "number"    }, -- ?
     { pattern = "-?%d+[%deE]*f?",                    type = "number"    }, -- ?
     { pattern = "-?%.?%d+f?",                        type = "number"    }, -- ?
-    { regex   = "\\[\\<\\w+\\;?\\s?\\w+\\>\\]",      type = "keyword2"  }, -- Attribute
-    { pattern = "[%+%-=/%*%^%%<>!~|&]",              type = "operator"  }, -- Operators
+    { regex   = "\\[\\<.+\\>\\]",                    type = "keyword2"  }, -- Attribute
+    { pattern = "[%+%-=/%*%^%%<>!~|&_:]",            type = "operator"  }, -- Operators
     { regex   = [[\.{2}\<?\s?(?=[\\-]?[a-z0-9])]],   type = "operator"  }, -- Range operators
     { regex   = [[\-\>(?=\s)]],                      type = "function"  }, -- Function arrow
     { regex   = "[a-zA-Z0-9]+\\s?(?=[(])",           type = "function"  }, -- Function
     { regex   = "[a-zA-Z0-9]+\\s?(?=[)?\\,?])",      type = "keyword"   }, -- Field type
     { regex   = "\\#[a-zA-Z0-9]+",                   type = "keyword"   }, -- Load
+    -- FIXME: variables like 'T are not compatible with strings like 'string'
+    -- TODO: highlight function names like: function_name 0
   },
   symbols = {
     ["sbyte"]          = "keyword",
