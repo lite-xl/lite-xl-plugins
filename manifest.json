@@ -99,6 +99,7 @@
         "language_go": {},
         "language_graphql": {},
         "language_gravity": {},
+        "language_groovy": {},
         "language_hare": {},
         "language_haxe": {},
         "language_hlsl": {},
@@ -161,7 +162,7 @@
       "id": "meta_languages",
       "mod_version": "3",
       "type": "meta",
-      "version": "0.1.12"
+      "version": "0.1.13"
     },
     {
       "description": "Align multiple carets and selections *([clip](https://user-images.githubusercontent.com/2798487/165631951-532f8d24-d596-4dd0-9d21-ff53c71ed32f.mp4))*",
@@ -1016,6 +1017,14 @@
         "language"
       ],
       "version": "0.1"
+    },
+    {
+      "description": "Syntax for the [Groovy](https://en.wikipedia.org/wiki/Apache_Groovy",
+      "version": "0.1",
+      "path": "plugins/language_groovy.lua",
+      "id": "language_groovy",
+      "mod_version": "3",
+      "tags": ["language"]
     },
     {
       "description": "Syntax for the [Hare](https://harelang.org) programming language",
