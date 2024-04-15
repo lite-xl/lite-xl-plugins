@@ -9,7 +9,6 @@ syntax.add {
   patterns = {
     { pattern = "//.*",                          type = "comment"  }, -- Single-line comment
     { pattern = { "/%*", "%*/" },                type = "comment"  }, -- Multi-line comment
-    { regex   = "\\#\\!.+",                      type = "comment"  }, -- Shebang
     { pattern = { '"', '"', '\\' },              type = "string"   }, -- String, double quotes
     { pattern = { "'", "'", '\\' },              type = "string"   }, -- String, apices
     { pattern = { "%/", "%/", '\\' },            type = "string"   }, -- Slashy string
