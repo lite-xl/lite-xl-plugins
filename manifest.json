@@ -68,10 +68,12 @@
         "language_bib": {},
         "language_blade": {},
         "language_blueprint": {},
+        "language_brainfuck": {},
         "language_buzz": {},
         "language_c7": {},
         "language_caddyfile": {},
         "language_carbon": {},
+        "language_clojure": {},
         "language_cmake": {},
         "language_containerfile": {},
         "language_crystal": {},
@@ -181,7 +183,7 @@
       "id": "autosave",
       "mod_version": "3",
       "path": "plugins/autosave.lua",
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Automatically saves files that were changed when the main window loses focus by switching to another application",
@@ -697,14 +699,24 @@
       "version": "0.1"
     },
     {
-      "description": "A syntax hilighter for buzz programming language in lite-xl.",
-      "id": "language_buzz",
+      "description": "Syntax for the [Brainfuck](https://en.wikipedia.org/wiki/Brainfuck) programming language",
+      "id": "language_brainfuck",
       "mod_version": "3",
-      "remote": "https://github.com/RohanVashisht1234/buzz_syntax_highlighter_lite-xl:dc680dfb7d528ad521fe0c7bdfbc88ef3f95528e",
+      "path": "plugins/language_brainfuck.lua",
       "tags": [
         "language"
       ],
       "version": "0.1"
+    },
+    {
+      "description": "A syntax highlighter for the [Buzz programming language](https://buzz-lang.dev/) in lite-xl.",
+      "id": "language_buzz",
+      "mod_version": "3",
+      "path": "plugins/language_buzz.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.2"
     },
     {
       "description": "Syntax for the modifications to [fe](https://github.com/rxi/fe/) used in [cel7](https://rxi.itch.io/cel7)",
@@ -730,11 +742,21 @@
       "description": "Syntax for the [Carbon programming language](https://github.com/carbon-language/carbon-lang).",
       "id": "language_carbon",
       "mod_version": "3",
-      "remote": "https://github.com/RohanVashisht1234/carbon_syntax_highlighter_lite-xl.git:997c0d099145afe47001703df829a3a9af955297",
+      "path": "plugins/language_carbon.lua",
       "tags": [
         "language"
       ],
-      "version": "0.2"
+      "version": "0.3"
+    },
+    {
+      "description": "Syntax for the [Clojure](https://clojure.org/) programming language",
+      "id": "language_clojure",
+      "mod_version": "3",
+      "path": "plugins/language_clojure.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
     },
     {
       "description": "Syntax for the CMake build system language",
@@ -910,11 +932,11 @@
       "description": "Syntax for the [fortran](https://fortran-lang.org/) programming language",
       "id": "language_fortran",
       "mod_version": "3",
-      "remote": "https://github.com/RohanVashisht1234/fortran_syntax_highlighter_lite-xl:2bf91dd7a50f1ba7c8847532084448a9d2d88456",
+      "path": "plugins/language_fortran.lua",
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [fstab](https://en.wikipedia.org/wiki/Fstab) config files",
@@ -1440,11 +1462,11 @@
       "description": "Syntax for the [Swift](https://developer.apple.com/swift/) programming language",
       "id": "language_swift",
       "mod_version": "3",
-      "remote": "https://github.com/RohanVashisht1234/swift_syntax_highlighting_lite-xl:4211079ced99ed693b5c8acad61f3a27a511919d",
+      "path": "plugins/language_swift.lua",
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for shell scripting language",
@@ -1554,7 +1576,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [V](https://vlang.io/) programming language",
@@ -1674,6 +1696,13 @@
       "version": "2.5.0"
     },
     {
+      "description": "LSP support for JSON via vscode-json-languageserver with [additional patches](https://github.com/lite-xl/lite-xl-lsp-servers/patches/vscode-json-languageserver) for increased functionality.",
+      "id": "lsp_json",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:69a24616439ea9078df9a7474a4b0cb82f3cf65c",
+      "version": "1.87.2.0.1"
+    },
+    {
       "description": "Automatic configuration/binary download for LSP completion for Lua with lua-language-server (sumneko).",
       "id": "lsp_lua",
       "mod_version": "3",
@@ -1705,7 +1734,7 @@
       "description": "Automatic configuration/binary download for LSP completion for Rust with rust-analyzer.",
       "id": "lsp_rust",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:71275f7e47a30ac0cbeb17706cea29a29c8267a7",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:69a24616439ea9078df9a7474a4b0cb82f3cf65c",
       "version": "20240325"
     },
     {
@@ -1728,6 +1757,13 @@
       "mod_version": "3",
       "remote": "https://github.com/vqns/lite-xl-snippets:1f0bba02bb3af6df9cb2ce72526851b427caf143",
       "version": "1.1"
+    },
+    {
+      "description": "LSP support for YAML via yaml-language-server.",
+      "id": "lsp_yaml",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:69a24616439ea9078df9a7474a4b0cb82f3cf65c",
+      "version": "1.14.0"
     },
     {
       "description": "LSP support for Zig via zls.",
