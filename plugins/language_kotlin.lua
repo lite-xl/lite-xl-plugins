@@ -30,7 +30,7 @@ syntax.add {
     { regex   = [[this(?=\.?\@?)]],                  type = "keyword"  }, -- this keyword
     { regex   = [[\@[a-zA-Z]+]],                     type = "string"   }, -- Annotations
     { regex   = [[[a-zA-Z]+\@(?=\s?[a-zA-Z])]],      type = "string"   }, -- Annotations (this pattern is lower priority than the `this keyword` pattern)
-    { regex   = "[A-Z][A-Z_]*",                      type = "keyword2" }, -- Constants, FULL UPPERCASE
+    { regex   = "[A-Z][A-Z_]+",                      type = "keyword2" }, -- Constants, FULL UPPERCASE
   },
   symbols = {
     -- Hard keywords
