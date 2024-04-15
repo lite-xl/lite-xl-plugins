@@ -110,7 +110,7 @@ syntax.add {
     ["norm"]              = "keyword",
     ["cross"]             = "keyword",
     -- Literals
-    ["true"]              = "keyword",
-    ["false"]             = "keyword",
+    ["true"]              = "literal",
+    ["false"]             = "literal",
   }
 }
