@@ -17,7 +17,9 @@ local KEYWORDS = {
   "for",
   "if",
   "pass",
-  "return"
+  "return",
+  "True",
+  "False"
 }
 
 local KEYWORDS2 = {
