@@ -16,7 +16,7 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&_:]",              type = "operator"  }, -- Operators
     { regex   = [[\.{2}\<?\s?(?=[\\-]?[a-z0-9])]],     type = "operator"  }, -- Range operators
     { regex   = [[\-\>(?=\s)]],                        type = "function"  }, -- Function arrow
-    { regex   = "\\w+(?=\\s?[(])",                     type = "function" }, -- Function without generic type
+    { regex   = "\\w+(?=\\s?[(])",                     type = "function"  }, -- Function without generic type
     { regex   = "\\w+()\\s?\\<\\'?\\w+\\>",            type = { "function", "keyword2" }  }, -- Function with generic type
     { regex   = "\\\\w+",                              type = "keyword"   }, -- Load
     { regex   = "\\w+\\s?\\<\\.\\>",                   type = "keyword2"  }, -- Generic type
