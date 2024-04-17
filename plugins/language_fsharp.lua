@@ -6,22 +6,21 @@ syntax.add {
   files = { "%.fs$" },
   comment = "//",
   patterns = {
-    { pattern = "//.*",                              type = "comment"   }, -- Single-line comment
-    { pattern = { '"', '"', '\\' },                  type = "string"    }, -- String, quotation marks
-    { regex   = ":\\s?\\w+\\<\\'?\\w+\\>",           type = "keyword2"  }, -- Generic field type
-    { pattern = { "'", "'", '\\' },                  type = "string"    }, -- String, apices
-    { regex   = "\\${1,2}(?=\"?\'?)",                type = "string"    }, -- String, $
-    { pattern = "-?0x%x+",                           type = "number"    }, -- ?
-    { pattern = "-?%d+[%deE]*f?",                    type = "number"    }, -- ?
-    { pattern = "-?%.?%d+f?",                        type = "number"    }, -- ?
-    { regex   = "\\[\\<.+\\>\\]",                    type = "keyword2"  }, -- Attribute
-    { pattern = "[%+%-=/%*%^%%<>!~|&_:]",            type = "operator"  }, -- Operators
-    { regex   = [[\.{2}\<?\s?(?=[\\-]?[a-z0-9])]],   type = "operator"  }, -- Range operators
-    { regex   = [[\-\>(?=\s)]],                      type = "function"  }, -- Function arrow
-    { regex   = "[a-zA-Z0-9]+\\s?(?=[(])",           type = "function"  }, -- Function
-    { regex   = "[a-zA-Z0-9]+\\s?(?=[)?\\,?])",      type = "keyword"   }, -- Field type
-    { regex   = "\\#[a-zA-Z0-9]+",                   type = "keyword"   }, -- Load
-    -- FIXME: variables like 'T are not compatible with strings like 'string'
+    { pattern = "//.*",                                type = "comment"   }, -- Single-line comment
+    { pattern = { '"', '"', '\\' },                    type = "string"    }, -- String, quotation marks
+    { regex   = "\\${1,2}(?=\"?\'?)",                  type = "string"    }, -- String, $
+    { pattern = "-?0x%x+",                             type = "number"    }, -- ?
+    { pattern = "-?%d+[%deE]*f?",                      type = "number"    }, -- ?
+    { pattern = "-?%.?%d+f?",                          type = "number"    }, -- ?
+    { regex   = "\\[\\<.+\\>\\]",                      type = "keyword2"  }, -- Attribute
+    { pattern = "[%+%-=/%*%^%%<>!~|&_:]",              type = "operator"  }, -- Operators
+    { regex   = [[\.{2}\<?\s?(?=[\\-]?[a-z0-9])]],     type = "operator"  }, -- Range operators
+    { regex   = [[\-\>(?=\s)]],                        type = "function"  }, -- Function arrow
+    { regex   = "\\w+(?=\\s?[(])",                     type = "function" }, -- Function without generic type
+    { regex   = "\\w+()\\s?\\<\\'?\\w+\\>",            type = { "function", "keyword2" }  }, -- Function with generic type
+    { regex   = "\\\\w+",                              type = "keyword"   }, -- Load
+    { regex   = "\\w+\\s?\\<\\.\\>",                   type = "keyword2"  }, -- Generic type
+    { regex   = "\\'\\w+",                             type = "keyword"   }, -- Special variable
     -- TODO: highlight function names like: function_name 0
   },
   symbols = {
