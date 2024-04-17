@@ -99,6 +99,7 @@
         "language_go": {},
         "language_graphql": {},
         "language_gravity": {},
+        "language_groovy": {},
         "language_hare": {},
         "language_haxe": {},
         "language_hlsl": {},
@@ -756,7 +757,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the CMake build system language",
@@ -1013,6 +1014,16 @@
       "id": "language_gravity",
       "mod_version": "3",
       "path": "plugins/language_gravity.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
+      "description": "Syntax for the [Groovy](https://en.wikipedia.org/wiki/Apache_Groovy",
+      "id": "language_groovy",
+      "mod_version": "3",
+      "path": "plugins/language_groovy.lua",
       "tags": [
         "language"
       ],
