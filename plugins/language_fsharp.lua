@@ -2,8 +2,8 @@
 local syntax = require "core.syntax"
 
 syntax.add {
-  name = "FSharp",
-  files = { "%.fs$" },
+  name = "F#",
+  files = { "%.fsi?$" },
   comment = "//",
   patterns = {
     { pattern = "//.*",                                type = "comment"   }, -- Single-line comment
@@ -17,11 +17,12 @@ syntax.add {
     { regex   = [[\.{2}\<?\s?(?=[\\-]?[a-z0-9])]],     type = "operator"  }, -- Range operators
     { regex   = [[\-\>(?=\s)]],                        type = "function"  }, -- Function arrow
     { regex   = "\\w+(?=\\s?[(])",                     type = "function"  }, -- Function without generic type
-    { regex   = "\\w+()\\s?\\<\\'?\\w+\\>",            type = { "function", "keyword2" }  }, -- Function with generic type
-    { regex   = "\\\\w+",                              type = "keyword"   }, -- Load
+    { regex   = "\\w+()\\s?\\[?\\<\\'?\\w+\\>\\]?",    type = { "function", "keyword2" } }, -- Function with generic type
+    { regex   = "\\#\\w+",                             type = "keyword2"  }, -- Load
     { regex   = "\\w+\\s?\\<\\.\\>",                   type = "keyword2"  }, -- Generic type
     { regex   = "\\'\\w+",                             type = "keyword"   }, -- Special variable
     -- TODO: highlight function names like: function_name 0
+    -- FIXME: fix generic type containing an attribute not matching fully as generic type
   },
   symbols = {
     ["sbyte"]          = "keyword",
@@ -96,6 +97,10 @@ syntax.add {
     ["not"]            = "keyword",
     ["struct"]         = "keyword",
     ["namespace"]      = "keyword",
+    ["global"]         = "keyword",
+    ["private"]        = "keyword",
+    ["internal"]       = "keyword",
+    ["val"]            = "keyword",
 
     ["true"]           = "literal",
     ["false"]          = "literal",
