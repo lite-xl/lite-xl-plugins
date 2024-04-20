@@ -1702,6 +1702,13 @@
       "version": "17.0.3"
     },
     {
+      "description": "Automatic configuration/binary download for LSP completion for clojure with clojure-lsp.",
+      "id": "lsp_clojure",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:e6460f2711c8a11495be2292e07ec894457b8c16",
+      "version": "2024.03.31"
+    },
+    {
       "description": "Automatic configuration/binary download for LSP completion for Emmet with emmet-language-server.",
       "id": "lsp_emmet",
       "mod_version": "3",
