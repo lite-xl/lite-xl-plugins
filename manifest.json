@@ -65,6 +65,7 @@
         "language_assembly_x86": {},
         "language_autohotkey_v1": {},
         "language_batch": {},
+        "language_bazel": {},
         "language_bib": {},
         "language_blade": {},
         "language_blueprint": {},
@@ -127,6 +128,7 @@
         "language_nix": {},
         "language_objc": {},
         "language_odin": {},
+        "language_openscad": {},
         "language_perl": {},
         "language_php": {},
         "language_pico8": {},
@@ -669,6 +671,16 @@
       "version": "0.1"
     },
     {
+      "description": "Syntax for [Bazel](https://bazel.build/) build tool files.",
+      "id": "language_bazel",
+      "mod_version": "3",
+      "path": "plugins/language_bazel.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
       "description": "Syntax for [BibTex](https://en.wikipedia.org/wiki/BibTeX) files",
       "id": "language_bib",
       "mod_version": "3",
@@ -756,7 +768,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the CMake build system language",
@@ -1310,6 +1322,16 @@
       "version": "0.1"
     },
     {
+      "description": "Syntax for the [OpenSCAD](https://openscad.org/) programming language",
+      "id": "language_openscad",
+      "mod_version": "3",
+      "path": "plugins/language_openscad.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
       "description": "Syntax for the [Perl](https://perl.org) programming language",
       "id": "language_perl",
       "mod_version": "3",
@@ -1689,6 +1711,13 @@
       "mod_version": "3",
       "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
       "version": "17.0.3"
+    },
+    {
+      "description": "Automatic configuration/binary download for LSP completion for clojure with clojure-lsp.",
+      "id": "lsp_clojure",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:e6460f2711c8a11495be2292e07ec894457b8c16",
+      "version": "2024.03.31"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Emmet with emmet-language-server.",
