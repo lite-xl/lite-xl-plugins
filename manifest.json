@@ -231,10 +231,10 @@
       "version": "0.2"
     },
     {
-      "description": "Provides a build system, messages window, and easily clickable errors. Supports an internal build system, and `make`. *([screenshot](https://raw.githubusercontent.com/adamharrison/lite-xl-ide/main/screenshots/build.png))*",
+      "description": "Provides a build system, messages window, and easily clickable errors. Supports an internal build system, and `make`. *([screenshot](https://raw.githubusercontent.com/lite-xl/lite-xl-ide/main/screenshots/build.png))*",
       "id": "build",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-ide.git:95639db0f96d8d560d48fa525496329dcbadbbde",
+      "remote": "https://github.com/lite-xl/lite-xl-ide.git:95639db0f96d8d560d48fa525496329dcbadbbde",
       "version": "0.1"
     },
     {
@@ -340,10 +340,10 @@
       "version": "0.1"
     },
     {
-      "description": "Provides a debugger integration, with pluggable backends. Currently supports only gdb. *([screenshot](https://raw.githubusercontent.com/adamharrison/lite-xl-ide/main/screenshots/debugger.png))*",
+      "description": "Provides a debugger integration, with pluggable backends. Currently supports only gdb. *([screenshot](https://raw.githubusercontent.com/lite-xl/lite-xl-ide/main/screenshots/debugger.png))*",
       "id": "debugger",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-ide.git:95639db0f96d8d560d48fa525496329dcbadbbde",
+      "remote": "https://github.com/lite-xl/lite-xl-ide.git:95639db0f96d8d560d48fa525496329dcbadbbde",
       "version": "0.1"
     },
     {
@@ -2284,71 +2284,75 @@
       "description": "A metapackage that provides the minimum functionalities for Lite XL to run as a minimal IDE.",
       "id": "ide",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
+      "remote": "https://github.com/lite-xl/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
       "version": "0.1"
     },
     {
       "description": "A metapackage that turns Lite XL into an IDE for C/C++.",
       "id": "ide_c",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
+      "remote": "https://github.com/lite-xl/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
       "version": "0.1"
     },
     {
       "description": "A metapackage that turns Lite XL into an IDE for Java.",
       "id": "ide_java",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
+      "remote": "https://github.com/lite-xl/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
       "version": "0.1"
     },
     {
       "description": "A metapackage that turns Lite XL into an IDE for Javascript.",
       "id": "ide_javascript",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
+      "remote": "https://github.com/lite-xl/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
       "version": "0.1"
     },
     {
       "description": "A metapackage that turns Lite XL into an IDE for Lua.",
       "id": "ide_lua",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
+      "remote": "https://github.com/lite-xl/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
       "version": "0.1"
     },
     {
       "description": "A metapackage that turns Lite XL into an IDE for Python.",
       "id": "ide_python",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
+      "remote": "https://github.com/lite-xl/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
       "version": "0.1"
     },
     {
       "description": "A metapackage that turns Lite XL into an IDE for Rust.",
       "id": "ide_rust",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
+      "remote": "https://github.com/lite-xl/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
       "version": "0.1"
     },
     {
       "description": "A metapackage that turns Lite XL into an IDE for TeX.",
       "id": "ide_tex",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
+      "remote": "https://github.com/lite-xl/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
       "version": "0.1"
     },
     {
       "description": "A metapackage that turns Lite XL into an IDE for Typescript.",
       "id": "ide_typescript",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
+      "remote": "https://github.com/lite-xl/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
       "version": "0.1"
     },
     {
       "description": "A metapackage that turns Lite XL into an IDE for Zig.",
       "id": "ide_zig",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
+      "remote": "https://github.com/lite-xl/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
       "version": "0.1"
     }
+  ],
+  "remotes": [
+    "https://github.com/lite-xl/lite-xl-lsp-servers:latest",
+    "https://github.com/lite-xl/lite-xl-ide:latest"
   ]
 }
