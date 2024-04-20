@@ -1,7 +1,4 @@
 -- mod-version:3
-
--- https://kotlinlang.org/docs/keyword-reference.html
-
 local syntax = require "core.syntax"
 
 syntax.add {
@@ -28,11 +25,11 @@ syntax.add {
     { regex   = [[let(?=\s\{)]],                     type = "function" }, -- ? operator
     { regex   = [[\?\:(?=\s?)]],                     type = "operator" }, -- elvis operator
     { regex   = [[this(?=\.?\@?)]],                  type = "keyword"  }, -- this keyword
-    { regex   = [[\@[a-zA-Z]+]],                     type = "string"   }, -- Annotations
-    { regex   = [[[a-zA-Z]+\@(?=\s?[a-zA-Z])]],      type = "string"   }, -- Annotations (this pattern is lower priority than the `this keyword` pattern)
+    { regex   = "\\@\\w+",                           type = "keyword2" }, -- Annotations
+    { regex   = [[[a-zA-Z]+\@(?=\s?[a-zA-Z])]],      type = "keyword2" }, -- Annotations (this pattern is lower priority than the `this keyword` pattern)
     { regex   = "[A-Z][A-Z_]+",                      type = "keyword2" }, -- Constants, FULL UPPERCASE
     { pattern = "import()%s+()[%w_.]+",              type = { "keyword", "normal", "normal" } },
-    { pattern = "[%a_][%w_]*",                       type = "symbol"   },
+    { pattern = "[%a_][%w_]*",                       type = "symbol"   }, -- ?
   },
   symbols = {
     -- Hard keywords
