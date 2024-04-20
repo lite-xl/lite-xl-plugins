@@ -65,6 +65,7 @@
         "language_assembly_x86": {},
         "language_autohotkey_v1": {},
         "language_batch": {},
+        "language_bazel": {},
         "language_bib": {},
         "language_blade": {},
         "language_blueprint": {},
@@ -99,6 +100,7 @@
         "language_go": {},
         "language_graphql": {},
         "language_gravity": {},
+        "language_groovy": {},
         "language_hare": {},
         "language_haxe": {},
         "language_hlsl": {},
@@ -127,6 +129,7 @@
         "language_nix": {},
         "language_objc": {},
         "language_odin": {},
+        "language_openscad": {},
         "language_perl": {},
         "language_php": {},
         "language_pico8": {},
@@ -162,7 +165,7 @@
       "id": "meta_languages",
       "mod_version": "3",
       "type": "meta",
-      "version": "0.1.13"
+      "version": "0.1.15"
     },
     {
       "description": "Align multiple carets and selections *([clip](https://user-images.githubusercontent.com/2798487/165631951-532f8d24-d596-4dd0-9d21-ff53c71ed32f.mp4))*",
@@ -669,6 +672,16 @@
       "version": "0.1"
     },
     {
+      "description": "Syntax for [Bazel](https://bazel.build/) build tool files.",
+      "id": "language_bazel",
+      "mod_version": "3",
+      "path": "plugins/language_bazel.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
       "description": "Syntax for [BibTex](https://en.wikipedia.org/wiki/BibTeX) files",
       "id": "language_bib",
       "mod_version": "3",
@@ -756,7 +769,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the CMake build system language",
@@ -1017,6 +1030,16 @@
         "language"
       ],
       "version": "0.1"
+    },
+    {
+      "description": "Syntax for the [Groovy](https://en.wikipedia.org/wiki/Apache_Groovy",
+      "id": "language_groovy",
+      "mod_version": "3",
+      "path": "plugins/language_groovy.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [Hare](https://harelang.org) programming language",
@@ -1304,6 +1327,16 @@
       "id": "language_odin",
       "mod_version": "3",
       "path": "plugins/language_odin.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
+      "description": "Syntax for the [OpenSCAD](https://openscad.org/) programming language",
+      "id": "language_openscad",
+      "mod_version": "3",
+      "path": "plugins/language_openscad.lua",
       "tags": [
         "language"
       ],
@@ -1689,6 +1722,13 @@
       "mod_version": "3",
       "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
       "version": "17.0.3"
+    },
+    {
+      "description": "Automatic configuration/binary download for LSP completion for clojure with clojure-lsp.",
+      "id": "lsp_clojure",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:e6460f2711c8a11495be2292e07ec894457b8c16",
+      "version": "2024.03.31"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Emmet with emmet-language-server.",
