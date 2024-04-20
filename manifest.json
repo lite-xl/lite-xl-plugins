@@ -65,6 +65,7 @@
         "language_assembly_x86": {},
         "language_autohotkey_v1": {},
         "language_batch": {},
+        "language_bazel": {},
         "language_bib": {},
         "language_blade": {},
         "language_blueprint": {},
@@ -664,6 +665,16 @@
       "id": "language_batch",
       "mod_version": "3",
       "path": "plugins/language_batch.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
+      "description": "Syntax for [Bazel](https://bazel.build/) build tool files.",
+      "id": "language_bazel",
+      "mod_version": "3",
+      "path": "plugins/language_bazel.lua",
       "tags": [
         "language"
       ],
