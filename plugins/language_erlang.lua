@@ -22,7 +22,6 @@ syntax.add {
     { regex   = "(?<=\\s?\\d)\\%(?=\\s?\\d)",          type = "operator" }, -- % operator
     { regex   = "(?<=\\s?\\d)rem(?=\\s?\\d)",          type = "operator" }, -- rem operator
     { regex   = "(?<=\\s?\\d)div(?=\\s?\\d)",          type = "operator" }, -- div operator
-    -- TODO: map
   },
   symbols = {
     ["-export"]       = "keyword",
