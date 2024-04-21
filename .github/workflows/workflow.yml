@@ -23,9 +23,9 @@ jobs:
           ./lpm-latest list --table url,description --header Library,Description --type library --userdir .  >> README.md
           ./lpm-latest exec 'common.write("manifest.json", json.encode(json.decode(common.read("manifest.json")), { pretty = true }) .. "\n")' --userdir .
           ./lpm-latest purge --userdir .
-          #if ! git diff --exit-code -s README.md manifest.json; then
-          #  git config --global user.name "Github Actions" && git config --global user.email "<>"
-          #  git add README.md manifest.json
-          #   git commit -m '[CI] Updated README.md and manifest.json.'
-          #  git push
-          #fi
+          if ! git diff --exit-code -s README.md manifest.json; then
+            git config --global user.name "Github Actions" && git config --global user.email "<>"
+            git add README.md manifest.json
+            git commit -m '[CI] Updated README.md and manifest.json.'
+            git push
+          fi
