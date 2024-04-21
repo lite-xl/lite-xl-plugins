@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 -- Support for the GDScript programming language: https://godotengine.org/
 -- Covers the most used keywords up to Godot version 3.2.x
 

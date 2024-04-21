@@ -1,11 +1,10 @@
--- mod-version:3
+-- mod-version:4 priority: 2000
 local core = require "core"
 local command = require "core.command"
 local common = require "core.common"
 local config = require "core.config"
 local style = require "core.style"
 local DocView = require "core.docview"
-local Highlighter = require "core.doc.highlighter"
 local Object = require "core.object"
 local Scrollbar = require "core.scrollbar"
 
@@ -228,65 +227,6 @@ local function reset_cache_if_needed()
 end
 
 
--- Move cache to make space for new lines
-local prev_insert_notify = Highlighter.insert_notify
-function Highlighter:insert_notify(line, n, ...)
-  prev_insert_notify(self, line, n, ...)
-  local blanks = { }
-  if not highlighter_cache[self] then
-    highlighter_cache[self] = {}
-  else
-    local blanks = { }
-    for i = 1, n do
-      blanks[i] = false
-    end
-    common.splice(highlighter_cache[self], line, 0, blanks)
-  end
-end
-
-
--- Close the cache gap created by removed lines
-local prev_remove_notify = Highlighter.remove_notify
-function Highlighter:remove_notify(line, n, ...)
-  prev_remove_notify(self, line, n, ...)
-  if not highlighter_cache[self] then
-    highlighter_cache[self] = {}
-  else
-    common.splice(highlighter_cache[self], line, n)
-  end
-end
-
-
--- Remove changed lines from the cache
-local prev_tokenize_line = Highlighter.tokenize_line
-function Highlighter:tokenize_line(idx, state, ...)
-  local res = prev_tokenize_line(self, idx, state, ...)
-  if not highlighter_cache[self] then
-    highlighter_cache[self] = {}
-  end
-  highlighter_cache[self][idx] = false
-  return res
-end
-
--- Ask the Highlighter to retokenize the lines we have in cache
-local prev_invalidate = Highlighter.invalidate
-function Highlighter:invalidate(idx, ...)
-  local cache = highlighter_cache[self]
-  if cache then
-    self.max_wanted_line = math.max(self.max_wanted_line, #cache)
-  end
-  return prev_invalidate(self, idx, ...)
-end
-
-
--- Remove cache on Highlighter reset (for example on syntax change)
-local prev_soft_reset = Highlighter.soft_reset
-function Highlighter:soft_reset(...)
-  prev_soft_reset(self, ...)
-  highlighter_cache[self] = {}
-end
-
-
 local MiniMap = Scrollbar:extend()
 
 
@@ -407,6 +347,37 @@ function MiniMap:set_size(x, y, w, h, scrollable)
 end
 
 
+function MiniMap:on_mouse_moved(x, y, dx, dy)
+  local percent = MiniMap.super.on_mouse_moved(self, x, y, dx, dy)
+  if not self:is_minimap_enabled() or type(percent) ~= "number" then return percent end
+  local _, visible_lines_count, minimap_lines_start, minimap_lines_count, is_file_too_large = self:get_minimap_dimensions()
+  local lh = self.dv:get_line_height()
+  local _, _, w, h = self:get_track_rect()
+  local tx, ty, tw, th = self:get_thumb_rect()
+  if x >= tx and x < tx + tw and y >= ty and y < ty + th then self.hovering.thumb = true end
+  if not self.hovering.thumb then return self.percent end
+  y = y - self.drag_start_offset
+  percent = math.max(0.0, math.min((y - self.dv.position.y) / h, 1.0))
+  return (((percent * minimap_lines_count) + minimap_lines_start) * lh / self.dv:get_scrollable_size()) - (visible_lines_count / #self.dv.doc.lines / 2)
+end
+
+function MiniMap:draw_thumb()
+  local color = self.hovering.thumb and style.scrollbar2 or style.scrollbar
+  local x, y, w, h = self:get_thumb_rect()
+  renderer.draw_rect(x, y, w, h, color)
+end
+
+local total_time = 0
+local old_tokenize = DocView.tokenize
+function DocView:tokenize(line, ...)
+  if not highlighter_cache[self] then highlighter_cache[self] = {} end
+  highlighter_cache[self][line] = nil
+  local start = system.get_time()
+  local results = old_tokenize(self, line, ...)
+  total_time = total_time + system.get_time() - start
+  return results
+end
+
 function MiniMap:draw()
   if not self:is_minimap_enabled() then return MiniMap.super.draw(self) end
   local dv = self.dv
@@ -429,9 +400,9 @@ function MiniMap:draw()
   local selection_color = config.plugins.minimap.selection_color or style.dim
   local caret_color = config.plugins.minimap.caret_color or style.caret
 
-  for _, line1, _, line2, _ in dv.doc:get_selections() do
-    local selection1_y = y + (line1 - minimap_lines_start) * line_spacing - line_selection_offset
-    local selection2_y = y + (line2 - minimap_lines_start) * line_spacing - line_selection_offset
+  for i, line1, col1, line2, col2 in dv:get_selections() do
+    local selection1_y = y + (line1 - minimap_lines_start) * line_spacing
+    local selection2_y = y + (line2 - minimap_lines_start) * line_spacing
     local selection_min_y = math.min(selection1_y, selection2_y)
     local selection_h = math.abs(selection2_y - selection1_y) + 1 + line_selection_offset
     renderer.draw_rect(x, selection_min_y, w, selection_h, selection_color)
@@ -455,11 +426,11 @@ function MiniMap:draw()
   local last_batch_end = -1
   local minimap_cutoff_x = config.plugins.minimap.width * SCALE
   local batch_syntax_type = nil
-  local function flush_batch(type, cache)
+  local function flush_batch(style, cache)
     if batch_width > 0 then
       local lastidx = #cache
       local old_color = color
-      color = style.syntax[type]
+      color = style.color
       if config.plugins.minimap.syntax_highlight and color ~= nil then
         -- fetch and dim colors
         color = {color[1], color[2], color[3], (color[4] or 255) * 0.5}
@@ -471,7 +442,7 @@ function MiniMap:draw()
         if
           last_batch_end == batch_start -- no space skipped
           and (
-                batch_syntax_type == type -- and same syntax
+                batch_syntax_type == style.type -- and same syntax
                 or (                      -- or same color
                       last_color[1] == color[1]
                       and last_color[2] == color[2]
@@ -489,7 +460,7 @@ function MiniMap:draw()
       cache[lastidx + 2] = batch_width
       cache[lastidx + 3] = color
     end
-    batch_syntax_type = type
+    batch_syntax_type = style.type
     batch_start = batch_start + batch_width
     last_batch_end = batch_start
     batch_width = 0
@@ -511,11 +482,14 @@ function MiniMap:draw()
 
   local endidx = math.min(minimap_lines_start + minimap_lines_count, #self.dv.doc.lines)
 
-  if not highlighter_cache[dv.doc.highlighter] then
-    highlighter_cache[dv.doc.highlighter] = {}
+  reset_cache_if_needed()
+
+  if not highlighter_cache[dv] then
+    highlighter_cache[dv] = {}
   end
 
   -- per line
+  dv:ensure_cache(minimap_lines_start, endidx)
   for idx = minimap_lines_start, endidx do
     batch_syntax_type = nil
     batch_start = 0
@@ -523,19 +497,26 @@ function MiniMap:draw()
     last_batch_end = -1
 
     render_highlight(idx, line_y)
-    local cache = highlighter_cache[dv.doc.highlighter][idx]
-    if not highlighter_cache[dv.doc.highlighter][idx] then -- need to cache
-      highlighter_cache[dv.doc.highlighter][idx] = {}
-      cache = highlighter_cache[dv.doc.highlighter][idx]
+    local cache = highlighter_cache[dv][idx]
+    --print("IDX", idx)
+    if not highlighter_cache[dv][idx] then -- need to cache
+      highlighter_cache[dv][idx] = {}
+      cache = highlighter_cache[dv][idx]
       -- per token
-      for _, type, text in dv.doc.highlighter:each_token(idx) do
+      for _, text, style in dv:each_vline_token(idx) do
         if not config.plugins.minimap.syntax_highlight then
-          type = nil
+          style = nil
         end
         local start = 1
         while true do
           -- find text followed spaces followed by newline
-          local s, e, w, eol = string.find(text, "[^%s]*()[ \t]*()\n?", start)
+          local is_utf8 = text:ulen()
+          local s, e, w, eol
+          if is_utf8 then
+            s, e, w, eol = text:ufind("[^%s]*()[ \t]*()\n?", start)
+          else
+            s, e, w, eol = text:find("[^%s]*()[ \t]*()\n?", start)
+          end
           if not s then break end
           local nchars = w - s
           start = e + 1
@@ -558,13 +539,13 @@ function MiniMap:draw()
           -- we can go to the next line
           if eol <= w or batch_start + batch_width > minimap_cutoff_x then
             if batch_width > 0 then
-              flush_batch(type, cache)
+              flush_batch(style, cache)
             end
             break
           end
           -- enough spaces to split the batch
           if nspaces >= config.plugins.minimap.spaces_to_split then
-            flush_batch(type, cache)
+            flush_batch(style, cache)
             batch_start = batch_start + nspaces * char_spacing
           end
         end

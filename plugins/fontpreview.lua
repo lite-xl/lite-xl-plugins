@@ -1,4 +1,4 @@
---mod-version:3 --priority:110
+--mod-version:4 --priority:110
 
 local common = require 'core.common'
 local style = require 'core.style'

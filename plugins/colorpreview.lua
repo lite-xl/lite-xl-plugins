@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 local config = require "core.config"
 local common = require "core.common"
 local DocView = require "core.docview"
@@ -58,9 +58,9 @@ local function draw_color_previews(self, line, x, y, ptn, base, nibbles)
     local text_color = math.max(r, g, b) < 128 and white or black
     tmp[1], tmp[2], tmp[3], tmp[4] = r, g, b, a
 
-    local l1, _, l2, _ = self.doc:get_selection(true)
+    local l1, _, l2, _ = self:get_selection(true)
 
-    if not (self.doc:has_selection() and line >= l1 and line <= l2) then
+    if not (self:has_selection() and line >= l1 and line <= l2) then
       renderer.draw_rect(x1, y, x2 - x1, self:get_line_height(), tmp)
       renderer.draw_text(self:get_font(), str, x1, y + oy, text_color)
     end

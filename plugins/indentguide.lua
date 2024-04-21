@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 local style = require "core.style"
 local config = require "core.config"
 local common = require "core.common"
@@ -82,7 +82,7 @@ function DocView:update()
   end
 
   local _, indent_size = self.doc:get_indent_info()
-  for _,line in self.doc:get_selections() do
+  for _,line in self:get_selections() do
     local lvl = get_indent(line)
     local top, bottom
 
@@ -129,27 +129,30 @@ end
 
 
 local draw_line_text = DocView.draw_line_text
-function DocView:draw_line_text(line, x, y)
+function DocView:draw_line_text(vline, x, y)
   if config.plugins.indentguide.enabled and self:is(DocView) then
-    local spaces = self.indentguide_indents[line] or -1
-    local _, indent_size = self.doc:get_indent_info()
-    local w = indentguide.get_width()
-    local h = self:get_line_height()
-    local font = self:get_font()
-    local space_sz = font:get_width(" ")
-    for i = 0, spaces - 1, indent_size do
-      local color = style.guide or style.selection
-      local active_lvl = self.indentguide_indent_active[line] or -1
-      if i < active_lvl 
-      and i + indent_size >= active_lvl
-      and config.plugins.indentguide.highlight then
-        color = style.guide_highlight or style.accent
+    local line, col = self:get_dline(vline, 1)
+    if col == 1 then
+      local spaces = self.indentguide_indents[line] or -1
+      local _, indent_size = self.doc:get_indent_info()
+      local w = indentguide.get_width()
+      local h = self:get_line_height()
+      local font = self:get_font()
+      local space_sz = font:get_width(" ")
+      for i = 0, spaces - 1, indent_size do
+        local color = style.guide or style.selection
+        local active_lvl = self.indentguide_indent_active[line] or -1
+        if i < active_lvl 
+        and i + indent_size >= active_lvl
+        and config.plugins.indentguide.highlight then
+          color = style.guide_highlight or style.accent
+        end
+        local sw = space_sz * i
+        renderer.draw_rect(math.ceil(x + sw), y, w, h, color)
       end
-      local sw = space_sz * i
-      renderer.draw_rect(math.ceil(x + sw), y, w, h, color)
     end
   end
-  return draw_line_text(self, line, x, y)
+  return draw_line_text(self, vline, x, y)
 end
 
 return indentguide

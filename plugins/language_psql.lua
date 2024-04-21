@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 local syntax = require "core.syntax"
 
 -- In sql symbols can be lower case and upper case

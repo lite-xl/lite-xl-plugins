@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 --
 -- EditorConfig plugin for Lite XL
 -- @copyright Jefferson Gonzalez <jgmdev@gmail.com>
