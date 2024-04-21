@@ -12,17 +12,17 @@ syntax.add {
     { pattern = "-?0x%x+",                             type = "number"    }, -- ?
     { pattern = "-?%d+[%deE]*f?",                      type = "number"    }, -- ?
     { pattern = "-?%.?%d+f?",                          type = "number"    }, -- ?
+    { regex   = "\\<.+\\>",                            type = "keyword2"  }, -- Generic type
     { regex   = "\\[\\<.+\\>\\]",                      type = "keyword2"  }, -- Attribute
+    { regex   = "\\:\\s?\\w+",                         type = "keyword2"  }, -- Type
+    { regex   = "\\_(?=\\s?\\:)",                      type = "normal"    }, -- _ should be normal when used as ?
     { pattern = "[%+%-=/%*%^%%<>!~|&_:]",              type = "operator"  }, -- Operators
     { regex   = [[\.{2}\<?\s?(?=[\\-]?[a-z0-9])]],     type = "operator"  }, -- Range operators
     { regex   = [[\-\>(?=\s)]],                        type = "function"  }, -- Function arrow
     { regex   = "\\w+(?=\\s?[(])",                     type = "function"  }, -- Function without generic type
     { regex   = "\\w+()\\s?\\[?\\<\\'?\\w+\\>\\]?",    type = { "function", "keyword2" } }, -- Function with generic type
     { regex   = "\\#\\w+",                             type = "keyword2"  }, -- Load
-    { regex   = "\\w+\\s?\\<\\.\\>",                   type = "keyword2"  }, -- Generic type
     { regex   = "\\'\\w+",                             type = "keyword"   }, -- Special variable
-    -- TODO: highlight function names like: function_name 0
-    -- FIXME: fix generic type containing an attribute not matching fully as generic type
   },
   symbols = {
     ["sbyte"]          = "keyword",
