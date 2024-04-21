@@ -5,8 +5,10 @@ syntax.add {
   name = "F#",
   files = { "%.fsi?$" },
   comment = "//",
+  block_comment = { "(*", "*)" },
   patterns = {
     { pattern = "//.*",                                type = "comment"   }, -- Single-line comment
+    { pattern = { "%(%*", "%*%)" },                    type = "comment"   }, -- Multi-line comment
     { pattern = { '"', '"', '\\' },                    type = "string"    }, -- String, quotation marks
     { regex   = "\\${1,2}(?=\"?\'?)",                  type = "string"    }, -- String, $
     { pattern = "-?0x%x+",                             type = "number"    }, -- ?
