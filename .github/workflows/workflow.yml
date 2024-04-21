@@ -15,12 +15,13 @@ jobs:
           # Remove everything after the --- so we can regenerate it.
           perl -pi -e 'exit(0) if $_ =~ m/^\-\-\-/' README.md && echo -e "---" >> README.md
           echo -e "\n## Plugins\n" >> README.md
+          export TABLE_COLUMNS='{{string.format("[`%s`](%s)", addon.id, (addon.extra and addon.extra.url or addon.url)) .. ((addon.extra and addon.extra.url or addon.url:find("http")) and "*" or "")}},description'
           ./lpm-latest init . --userdir .
-          ./lpm-latest list --table url,description --header Plugin,Description --type plugin --tag '!language' --status '!core' --userdir . >> README.md
+          ./lpm-latest list --table "$TABLE_COLUMNS" --header Plugin,Description --type plugin --tag '!language' --status '!core' --userdir . >> README.md
           echo -e "\n## Languages\n" >> README.md
-          ./lpm-latest list --table url,description --header Language,Description --type plugin --tag 'language' --userdir .  >> README.md
+          ./lpm-latest list --table "$TABLE_COLUMNS" --header Language,Description --type plugin --tag 'language' --userdir .  >> README.md
           echo -e "\n## Libraries\n" >> README.md
-          ./lpm-latest list --table url,description --header Library,Description --type library --userdir .  >> README.md
+          ./lpm-latest list --table "$TABLE_COLUMNS" --header Library,Description --type library --userdir .  >> README.md
           ./lpm-latest exec 'common.write("manifest.json", json.encode(json.decode(common.read("manifest.json")), { pretty = true }) .. "\n")' --userdir .
           ./lpm-latest purge --userdir .
           if ! git diff --exit-code -s README.md manifest.json; then
