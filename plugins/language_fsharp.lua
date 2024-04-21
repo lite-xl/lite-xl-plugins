@@ -24,7 +24,7 @@ syntax.add {
     { regex   = "\\w+(?=\\s?[(])",                     type = "function"  }, -- Function without generic type
     { regex   = "\\w+()\\s?\\[?\\<\\'?\\w+\\>\\]?",    type = { "function", "keyword2" } }, -- Function with generic type
     { regex   = "\\#\\w+",                             type = "keyword2"  }, -- Load
-    { regex   = "\\'\\w+",                             type = "keyword"   }, -- Special variable
+    { pattern = "%'[%a_][%w_]*",                       type = "normal"    }, -- Special variable
   },
   symbols = {
     ["sbyte"]          = "keyword",
