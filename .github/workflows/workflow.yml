@@ -16,7 +16,7 @@ jobs:
           perl -pi -e 'exit(0) if $_ =~ m/^\-\-\-/' README.md && echo -e "---" >> README.md
           echo -e "\n## Plugins\n" >> README.md
           export TABLE_COLUMNS='{{string.format("[`%s`](%s)", addon.id, (addon.extra and addon.extra.url or addon.url)) .. ((addon.extra and addon.extra.url or addon.url:find("http")) and "*" or "")}},description'
-          ./lpm-latest init . --userdir .
+          ./lpm-latest init none --userdir . && ./lpm-latest add . --userdir .
           ./lpm-latest list --table "$TABLE_COLUMNS" --header Plugin,Description --type plugin --tag '!language' --status '!core' --userdir . >> README.md
           echo -e "\n## Languages\n" >> README.md
           ./lpm-latest list --table "$TABLE_COLUMNS" --header Language,Description --type plugin --tag 'language' --userdir .  >> README.md
