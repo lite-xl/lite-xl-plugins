@@ -19,6 +19,8 @@ syntax.add {
     { pattern = "-?%d+[%deE]*f?",                     type = "number"   }, -- Number
     { pattern = "-?%.?%d+f?",                         type = "number"   }, -- Number
     { regex   = "T\\#[0-9]+m?s",                      type = "number"   }, -- Time format
+    -- TODO: function name in definition
+    -- TODO: function name in call
   },
   symbols = {
     ["PROGRAM_INIT"] = "keyword",
@@ -52,6 +54,12 @@ syntax.add {
     ["ORGANIZATION_BLOCK"] = "keyword",
     ["END_ORGANIZATION_BLOCK"] = "keyword",
     ["TRUE"] = "literal",
-    ["FALSE"] = "literal"
+    ["FALSE"] = "literal",
+
+    ["bool"] = "keyword2",
+    ["int"] = "keyword2",
+    ["uint"] = "keyword2",
+    --[""] = "keyword2",
+    --[""] = "keyword2",
   }
 }
