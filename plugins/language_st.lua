@@ -38,7 +38,7 @@ syntax.add {
     ["IF"] = "keyword",
     ["THEN"] = "keyword",
     ["ELSE"] = "keyword",
-    ["ELSEIF"] = "keyword",
+    ["ELSIF"] = "keyword",
     ["END_IF"] = "keyword",
     ["CASE"] = "keyword",
     ["END_CASE"] = "keyword",
