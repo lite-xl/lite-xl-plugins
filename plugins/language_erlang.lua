@@ -6,36 +6,32 @@ syntax.add {
   files = "%.erl$", "%.hrl$",
   comment = "%%",
   patterns = {
-    { pattern = "%%.*",                                type = "comment"  }, -- Single-line comment
-    { pattern = { '"', '"', '\\' },                    type = "string"   }, -- String, quotes
-    { pattern = { "'", "'", '\\' },                    type = "string"   }, -- String, apices
-    { regex   = "\\w+[0-9]*(?=[)])",                   type = "symbol"   }, -- Field name
-    { pattern = "-?0x%x+",                             type = "number"   }, -- ?
-    { pattern = "-?%d+[%deE]*f?",                      type = "number"   }, -- ?
-    { pattern = "-?%.?%d+f?",                          type = "number"   }, -- ?
-    { regex   = "[a-zA-Z0-9]_[a-zA-Z0-9]+(?=//s//s)",  type = "keyword2" }, -- Atom
-    { regex   = [[\-\>(?=\s)]],                        type = "function" }, -- Function arrow
-    { pattern = "-?[%a_][%w_]*%f[(]",                  type = "function" }, -- Function name
-    { regex   = "<<.+>>",                              type = "keyword2" }, -- bit string
-    { regex   = "\\#\\{.+\\}",                         type = "keyword2" }, -- map
-    { pattern = "[%+%-=/%*%^<>!~|&]",                  type = "operator" }, -- Operators
-    { regex   = "(?<=\\s?\\d)\\%(?=\\s?\\d)",          type = "operator" }, -- % operator
-    { regex   = "(?<=\\s?\\d)rem(?=\\s?\\d)",          type = "operator" }, -- rem operator
-    { regex   = "(?<=\\s?\\d)div(?=\\s?\\d)",          type = "operator" }, -- div operator
+    { pattern = "%%.*",                                     type = "comment"  }, -- Single-line comment
+    { pattern = { '"', '"', '\\' },                         type = "string"   }, -- String, quotes
+    { regex   = "\\w+[0-9]*(?=[)])",                        type = "symbol"   }, -- Field name
+    { pattern = "-?0x%x+",                                  type = "number"   }, -- ?
+    { pattern = "-?%d+[%deE]*f?",                           type = "number"   }, -- ?
+    { pattern = "-?%.?%d+f?",                               type = "number"   }, -- ?
+    { regex   = [[\-\>(?=\s)]],                             type = "function" }, -- Function arrow
+    { pattern = "-?[%a_][%w_]*%f[(]",                       type = "function" }, -- Function name
+    { regex   = "^\\w+",                                    type = "keyword2" }, -- Atom
+    { regex   = "^\\'?\\w+\\s?\\w+\\'?",                    type = "keyword2" }, -- Atom
+    { regex   = "<<.+>>",                                   type = "keyword2" }, -- bit string
+    { regex   = "\\#\\{.+\\}",                              type = "keyword2" }, -- map
+    { pattern = "[%+%-=/%*%^<>!~|&]",                       type = "operator" }, -- Operators
+    { regex   = "bnot|div|rem|band|bor|bxor|bsl|bsr",       type = "operator" }, -- Operators
   },
   symbols = {
     ["-export"]       = "keyword",
+    ["-import"]       = "keyword",
     ["-module"]       = "keyword",
+    ["-compile"]      = "keyword",
+    
     ["after"]         = "keyword",
     ["and"]           = "keyword",
     ["andalso"]       = "keyword",
     ["band"]          = "keyword",
     ["begin"]         = "keyword",
-    ["bnot"]          = "keyword",
-    ["bor"]           = "keyword",
-    ["bsl"]           = "keyword",
-    ["bsr"]           = "keyword",
-    ["bxor"]          = "keyword",
     ["case"]          = "keyword",
     ["catch"]         = "keyword",
     ["cond"]          = "keyword",
@@ -51,6 +47,7 @@ syntax.add {
     ["try"]           = "keyword",
     ["when"]          = "keyword",
     ["xor"]           = "keyword",
+    
     ["true"]          = "literal",
     ["false"]         = "literal"
   }
