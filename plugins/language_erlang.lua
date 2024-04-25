@@ -15,19 +15,21 @@ syntax.add {
     { pattern = "-?0x%x+",                                  type = "number"   }, -- ?
     { pattern = "-?%d+[%deE]*f?",                           type = "number"   }, -- ?
     { pattern = "-?%.?%d+f?",                               type = "number"   }, -- ?
+    { regex   = "^\\-\\w+",                                 type = "keyword"  }, -- Modules
     { regex   = [[\-\>(?=\s)]],                             type = "function" }, -- Function arrow
     { pattern = "-?[%a_][%w_]*%f[(]",                       type = "function" }, -- Function name
-    { regex   = "<<.+>>",                                   type = "keyword2" }, -- bit string
-    { regex   = "\\#\\{.+\\}",                              type = "keyword2" }, -- map
+    { regex   = "^\\w+(?!.+)",                              type = "keyword2" }, -- Atom
+    { regex   = "^\\'?\\w+\\s?\\w+\\'?(?!.+)",              type = "keyword2" }, -- Atom
+    { regex   = "<<.+>>",                                   type = "keyword2" }, -- Bit string
+    { regex   = "\\#\\w*\\{.*\\}(?![\\s\\=\\s\\#])",        type = "keyword2" }, -- Map
     { pattern = "[%+%-=/%*%^<>!~|&]",                       type = "operator" }, -- Operators
     { regex   = "bnot|div|rem|band|bor|bxor|bsl|bsr",       type = "operator" }, -- Operators
+    -- TODO: add missing number expressions
+    -- FIXME: true or false, true is colored like an atom
+    -- FIXME: fix maps coloring on same line
+    -- FIXME: try should be colored as keyword
   },
-  symbols = {
-    ["-export"]       = "keyword",
-    ["-import"]       = "keyword",
-    ["-module"]       = "keyword",
-    ["-compile"]      = "keyword",
-    
+  symbols = {    
     ["after"]         = "keyword",
     ["and"]           = "keyword",
     ["andalso"]       = "keyword",
@@ -43,13 +45,14 @@ syntax.add {
     ["not"]           = "keyword",
     ["of"]            = "keyword",
     ["or"]            = "keyword",
-    ["oselse"]        = "keyword",
+    ["orelse"]        = "keyword",
     ["receive"]       = "keyword",
     ["try"]           = "keyword",
     ["when"]          = "keyword",
     ["xor"]           = "keyword",
+    ["maybe"]         = "keyword",
     
     ["true"]          = "literal",
-    ["false"]         = "literal"
+    ["false"]         = "literal",
   }
 }
