@@ -11,16 +11,16 @@ syntax.add {
     { pattern = { "%(%*", "%*%)" },                   type = "comment"  }, -- Multi-line comment
     { pattern = { '"', '"', '\\' },                   type = "string"   }, -- String, quotation marks
     { pattern = { "'", "'", '\\' },                   type = "string"   }, -- String, apices
+    { regex   = "\\w+\\#[0-9]+m?s?",                  type = "number"   }, -- Time/Date formats
     { regex   = "\\w+\\s?(?=[(])",                    type = "function" }, -- Function
-    { regex   = "^\\s*[A-Z]+_[A-Z]*\\s?\\;?\\s?",     type = "keyword"  }, -- keyword
+    { regex   = "^\\s*[A-Z]+_[A-Z]*\\s?\\;?\\s?",     type = "keyword"  }, -- Keyword
     { regex   = "\\:\\s?[A-Z]+",                      type = "keyword2" }, -- Variable/Method type
     { pattern = "[%+%-=/%*%^%%<>!~|&:]",              type = "operator" }, -- Operators
     { pattern = "-?0x%x+",                            type = "number"   }, -- Number
     { pattern = "-?%d+[%deE]*f?",                     type = "number"   }, -- Number
     { pattern = "-?%.?%d+f?",                         type = "number"   }, -- Number
-    { regex   = "T\\#[0-9]+m?s",                      type = "number"   }, -- Time format
-    -- TODO: function name in definition
-    -- TODO: function name in call
+    -- TODO: function name in definition (requires lookbehind regex patternsupport)
+    -- TODO: function name in call (requires lookbehind regex patternsupport)
   },
   symbols = {
     ["PROGRAM_INIT"] = "keyword",
@@ -43,6 +43,8 @@ syntax.add {
     ["CASE"] = "keyword",
     ["END_CASE"] = "keyword",
     ["OF"] = "keyword",
+
+    ["MOD"] = "operator",
     
     ["AND"] = "keyword",
     ["NOT"] = "keyword",
