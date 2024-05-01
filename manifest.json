@@ -722,7 +722,7 @@
       "version": "0.1"
     },
     {
-      "description": "A syntax highlighter for the [Buzz programming language](https://buzz-lang.dev/) in lite-xl.",
+      "description": "Syntax for the [Buzz](https://buzz-lang.dev/) programming language.",
       "id": "language_buzz",
       "mod_version": "3",
       "path": "plugins/language_buzz.lua",
