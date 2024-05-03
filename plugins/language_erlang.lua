@@ -15,6 +15,8 @@ syntax.add {
     { pattern = "-?0x%x+",                                  type = "number"   }, -- ?
     { pattern = "-?%d+[%deE]*f?",                           type = "number"   }, -- ?
     { pattern = "-?%.?%d+f?",                               type = "number"   }, -- ?
+    { regex   = "\\$\\w+(?=\\s?\\=?)",                      type = "keyword2" }, -- Type
+    { regex   = "[a-zA-Z0-9_]+\\#[a-zA-Z0-9_]+",            type = "keyword2" }, -- Type
     { regex   = "^\\-\\w+",                                 type = "keyword"  }, -- Modules
     { regex   = [[\-\>(?=\s)]],                             type = "function" }, -- Function arrow
     { pattern = "-?[%a_][%w_]*%f[(]",                       type = "function" }, -- Function name
@@ -22,12 +24,18 @@ syntax.add {
     { regex   = "^\\'?\\w+\\s?\\w+\\'?(?!.+)",              type = "keyword2" }, -- Atom
     { regex   = "<<.+>>",                                   type = "keyword2" }, -- Bit string
     { regex   = "\\#\\w*\\{.*\\}(?![\\s\\=\\s\\#])",        type = "keyword2" }, -- Map
-    { pattern = "[%+%-=/%*%^<>!~|&]",                       type = "operator" }, -- Operators
+    { pattern = "[%+%-=/%*%^<>!~|&?]",                      type = "operator" }, -- Operators
     { regex   = "bnot|div|rem|band|bor|bxor|bsl|bsr",       type = "operator" }, -- Operators
     -- TODO: add missing number expressions
     -- FIXME: true or false, true is colored like an atom
     -- FIXME: fix maps coloring on same line
     -- FIXME: try should be colored as keyword
+    -- FIXME: add missing number formats
+    -- TODO: add support for records
+    -- TODO: color rec#{...}, set#{...} and similar
+    -- FIXME: fix number coloring in field names
+    -- TODO: add support for nested records
+    -- TODO: add support for macros
   },
   symbols = {    
     ["after"]         = "keyword",
