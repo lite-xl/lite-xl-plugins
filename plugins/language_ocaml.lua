@@ -4,21 +4,19 @@ local syntax = require "core.syntax"
 syntax.add {
   name = "OCaml",
   files = { "%.ml$" },
-  comment = "%(%*",
-  block_comment = { "%(%*", "%*%)" },
+  block_comment = { "(*", "*)" },
   patterns = {
-    { pattern = "%(%*.*",                     type = "comment"  }, -- Single-line comment
     { pattern = { "%(%*", "%*%)", '\\' },     type = "comment"  }, -- Multi-line comment
     { pattern = { '"', '"', '\\' },           type = "string"   }, -- String
-    { pattern = "-?0x%x+",                    type = "number"   }, -- ?
-    { pattern = "-?%d+[%d%.eE]*f?",           type = "number"   }, -- ?
-    { pattern = "-?%.?%d+f?",                 type = "number"   }, -- ?
+    { pattern = "-?0x%x+%-?%_?%x+",           type = "number"   }, -- Number to fix
+    { pattern = "-?%d+[%d%.eE]*f?",           type = "number"   }, -- Number
+    { pattern = "-?%.?%d+f?",                 type = "number"   }, -- Number
     { regex   = "\\<\\w*\\>",                 type = "literal"  }, -- Function ?
     { regex   = "\\:\\s?\\w+",                type = "keyword2" }, -- Field type
     { pattern = "[%+%-=/%*%^%%<>!~|&_:]",     type = "operator" }, -- Operators
     { regex   = [[\-\>(?=\s)]],               type = "function" }, -- Function arrow
     { pattern = "-?[%a_][%w_]*%f[(]",         type = "function" }, -- Function name
-    -- FIXME: multiline string pattern is broken
+    { pattern = "[%a_][%w_]*",                type = "symbol"   }, -- ?
   },
   symbols = {
     ["and"] = "keyword",
