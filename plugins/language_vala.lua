@@ -7,27 +7,26 @@ syntax.add {
   comment = "//",
   block_comment = { "/*", "*/" },
   patterns = {
-    { pattern = "//.*",                                                           type = "comment"  }, -- Single-string comment
-    { pattern = { "/%*", "%*/" },                                                 type = "comment"  }, -- Multi-line comment
-    { pattern = { '"', '"', '\\' },                                               type = "string"   }, -- ?
-    { pattern = { "'", "'", '\\' },                                               type = "string"   }, -- ?
-    { pattern = "-?0x%x+",                                                        type = "number"   }, -- ?
-    { pattern = "-?%d+[%d%.eE]*f?",                                               type = "number"   }, -- ?
-    { pattern = "-?%.?%d+f?",                                                     type = "number"   }, -- ?
-    { regex   = "\\w+(?=\\s+\\w++\\s+\\=\\s+)",                                   type = "function" }, -- Class name in class instance
-    { regex   = "\\<.+\\>",                                                       type = "keyword2" }, -- Generic Type
-    { pattern = "[%+%-=/%*%^%%<>!~|&]",                                           type = "operator" }, -- ?
-    { pattern = "[%a_][%w_]*%f[(]",                                               type = "function" }, -- ?
-    { pattern = "[%a_][%w_]*",                                                    type = "symbol"   }, -- ?
-    { regex   = "\\s?\\:\\s?(?:\\w+\\.?)+(?=\\s?[{])",                            type = "keyword2" }, -- Inheritance
-    { regex   = "\\s?\\:\\s?(?:\\w+(?:\\<.+\\>)?\\s?\\,?\\s?)+(?=\\s?[{])",       type = "keyword2" }, -- Inheritance
-    { regex   = "class()\\s\\w+()\\<.+\\>(?=\\s?\\:)",                            type = { "keyword", "normal", "keyword2" } }, -- Generic Class Type
-    { regex   = "interface()\\s\\w+()\\<.+\\>(?=\\s?\\:)",                        type = { "keyword", "normal", "keyword2" } }, -- Generic Interface Type
-    { regex   = "\\=\\>(?=[{])",                                                  type = "keyword"  }, -- Lambda
-    { regex   = "[A-Z][A-Z_]+",                                                   type = "keyword2" }, -- Constants
-    { regex   = "\\[.+\\](?=\\w*)",                                               type = "keyword2" }, -- Attribute
-    { regex   = "\\#[if|elif|else|endif](?=\\s?\\w*)",                            type = "keyword"  }, -- Preprocessor directive
-    { pattern = "[%a_][%w_]*",                                                    type = "symbol"   }, -- Symbols
+    { pattern = "//.*",                                                  type = "comment"  }, -- Single-line comment
+    { pattern = { "/%*", "%*/" },                                        type = "comment"  }, -- Multi-line comment
+    { pattern = { '"', '"', '\\' },                                      type = "string"   }, -- ?
+    { pattern = { "'", "'", '\\' },                                      type = "string"   }, -- ?
+    { pattern = "-?0x%x+",                                               type = "number"   }, -- ?
+    { pattern = "-?%d+[%d%.eE]*f?",                                      type = "number"   }, -- ?
+    { pattern = "-?%.?%d+f?",                                            type = "number"   }, -- ?
+    { regex   = "\\w+(?=\\s+\\w++\\s+\\=\\s+)",                          type = "function" }, -- Class name in class instance
+    { regex   = "\\<.+\\>",                                              type = "keyword2" }, -- Generic Type
+    { pattern = "[%+%-=/%*%^%%<>!~|&]",                                  type = "operator" }, -- ?
+    { pattern = "[%a_][%w_]*%f[(]",                                      type = "function" }, -- ?
+    { regex   = [[\s?\:\s?(?:\w+\.?)+(?=\s?[{])]],                       type = "keyword2" }, -- Inheritance
+    { regex   = [[\s?\:\s?(?:\w+(?:\<.+\>)?\s?\,?\s?)+(?=\s?[{])]],      type = "keyword2" }, -- Inheritance
+    { regex   = [[class()\s+\w+()\<.+\>(?=\s?\:)]],                      type = { "keyword", "normal", "keyword2" } }, -- Generic Class Type
+    { regex   = [[interface()\s+\w+()\<.+\>(?=\s?\:)]],                  type = { "keyword", "normal", "keyword2" } }, -- Generic Interface Type
+    { regex   = "\\=\\>(?=[{])",                                         type = "keyword"  }, -- Lambda
+    { regex   = "[A-Z][A-Z_]+",                                          type = "keyword2" }, -- Constants
+    { regex   = "\\[.+\\](?=\\w*)",                                      type = "literal"  }, -- Attribute
+    { regex   = "\\#\\w+(?=\\s?\\w*)",                                   type = "keyword"  }, -- Preprocessor directive
+    { pattern = "[%a_][%w_]*",                                           type = "symbol"   }, -- ?
   },
   symbols = {
     ["class"] = "keyword",
