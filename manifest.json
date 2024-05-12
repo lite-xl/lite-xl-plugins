@@ -789,7 +789,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.2"
+      "version": "0.1"
     },
     {
       "description": "Syntax for the [Crystal](https://crystal-lang.org) programming language",
