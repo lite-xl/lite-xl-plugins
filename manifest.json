@@ -2130,7 +2130,7 @@
       "description": "An integrated terminal for lite-xl. *([screenshot](https://github.com/adamharrison/lite-xl-terminal/assets/1034518/eb8a72a0-ff61-4b95-b009-364ac2725f70))*",
       "id": "terminal",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-terminal.git:6b8ac85260561fa8cf7e467af1fc0ce79922650d",
+      "remote": "https://github.com/adamharrison/lite-xl-terminal.git:cfa2756762fd5bddfa279a5a04bb90538d6e7c44",
       "version": "1.04"
     },
     {
