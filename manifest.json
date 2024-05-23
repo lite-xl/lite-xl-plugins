@@ -1703,11 +1703,15 @@
       "version": "0.1"
     },
     {
-      "description": "Provides code completion (also known as IntelliSense) using the Language Server Protocol",
+      "description": "Provides intellisense by leveraging the LSP protocol.",
       "id": "lsp",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp:b1b77d143b2c6e3cd953b3573ea1a96dd61ff3bb",
-      "version": "0.7"
+      "name": "Language Server Protocol",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp.git:ed8345488ee97d3ee99605025303a40ec301a513",
+      "tags": [
+        "language server protocol"
+      ],
+      "version": "0.8"
     },
     {
       "description": "Completion menu kind/type icons for Lite XL LSP",
