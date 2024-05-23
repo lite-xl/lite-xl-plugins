@@ -599,9 +599,9 @@
       "description": "Production and Early-Access OpenJDK Builds, from Oracle.",
       "id": "jdk",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
       "type": "library",
-      "version": "21.0.2"
+      "version": "22.0.1"
     },
     {
       "description": "Exports the keymap to a JSON file.",
@@ -1724,15 +1724,15 @@
       "description": "Automatic configuration/binary download for LSP completion for C/C++ with clangd.",
       "id": "lsp_c",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
-      "version": "17.0.3"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
+      "version": "18.1.3"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for clojure with clojure-lsp.",
       "id": "lsp_clojure",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:e6460f2711c8a11495be2292e07ec894457b8c16",
-      "version": "2024.03.31"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
+      "version": "2024.04.22"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Emmet with emmet-language-server.",
@@ -1742,32 +1742,32 @@
       "version": "2.5.0"
     },
     {
-      "description": "LSP support for JSON via vscode-json-languageserver with [additional patches](https://github.com/lite-xl/lite-xl-lsp-servers/patches/vscode-json-languageserver) for increased functionality.",
+      "description": "LSP support for JSON via vscode-json-languageserver with [additional patches](patches/vscode-json-languageserver) for increased functionality.",
       "id": "lsp_json",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:69a24616439ea9078df9a7474a4b0cb82f3cf65c",
-      "version": "1.87.2.0.1"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
+      "version": "1.89.1.0.1"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Lua with lua-language-server (sumneko).",
       "id": "lsp_lua",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
-      "version": "3.7.4"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
+      "version": "3.9.1"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Java with jdtls.",
       "id": "lsp_java",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
-      "version": "1.33.0"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
+      "version": "1.35.0"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Python with Pyright.",
       "id": "lsp_python",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:71275f7e47a30ac0cbeb17706cea29a29c8267a7",
-      "version": "1.1.356"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
+      "version": "1.1.364"
     },
     {
       "description": "Automatic configuration/binary download for LSP linting for Javascript with quick-lint-js.",
@@ -1780,15 +1780,15 @@
       "description": "Automatic configuration/binary download for LSP completion for Rust with rust-analyzer.",
       "id": "lsp_rust",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:69a24616439ea9078df9a7474a4b0cb82f3cf65c",
-      "version": "20240325"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
+      "version": "20240520"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for TeX with texlab.",
       "id": "lsp_tex",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:71275f7e47a30ac0cbeb17706cea29a29c8267a7",
-      "version": "5.14.0"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
+      "version": "5.16.0"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Typescript and Javascript with typescript-language-server.",
@@ -1880,12 +1880,12 @@
       "version": "1.2.2"
     },
     {
-      "description": "Provides official NodeJs binaries.",
+      "description": "Official NodeJs builds.",
       "id": "nodejs",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:1df8be64ad87efa45341d8c3953df60d90f9539b",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
       "type": "library",
-      "version": "20.12.0"
+      "version": "20.13.1"
     },
     {
       "dependencies": {
