@@ -66,6 +66,7 @@
         "language_autohotkey_v1": {},
         "language_batch": {},
         "language_bazel": {},
+        "language_bend": {},
         "language_bib": {},
         "language_blade": {},
         "language_blueprint": {},
@@ -676,6 +677,16 @@
       "id": "language_bazel",
       "mod_version": "3",
       "path": "plugins/language_bazel.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
+      "description": "Syntax for [Bend](https://higherorderco.com/) programming language files.",
+      "id": "language_bend",
+      "mod_version": "3",
+      "path": "plugins/language_bend.lua",
       "tags": [
         "language"
       ],
