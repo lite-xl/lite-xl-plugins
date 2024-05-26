@@ -1742,7 +1742,7 @@
       "version": "2.5.0"
     },
     {
-      "description": "LSP support for JSON via vscode-json-languageserver with [additional patches](patches/vscode-json-languageserver) for increased functionality.",
+      "description": "LSP support for JSON via vscode-json-languageserver with [additional patches](https://github.com/lite-xl/lite-xl-lsp-servers/tree/latest/patches/vscode-json-languageserver) for increased functionality.",
       "id": "lsp_json",
       "mod_version": "3",
       "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
