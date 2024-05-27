@@ -6,17 +6,17 @@ syntax.add {
   files = { "%.ml$" },
   block_comment = { "(*", "*)" },
   patterns = {
-    { pattern = { "%(%*", "%*%)", '\\' },     type = "comment"  }, -- Multi-line comment
-    { pattern = { '"', '"', '\\' },           type = "string"   }, -- String
-    { pattern = "-?0x%x+%-?%_?%x+",           type = "number"   }, -- Number to fix
-    { pattern = "-?%d+[%d%.eE]*f?",           type = "number"   }, -- Number
-    { pattern = "-?%.?%d+f?",                 type = "number"   }, -- Number
-    { regex   = "\\<\\w*\\>",                 type = "literal"  }, -- Function ?
-    { regex   = "\\:\\s?\\w+",                type = "keyword2" }, -- Field type
-    { pattern = "[%+%-=/%*%^%%<>!~|&_:]",     type = "operator" }, -- Operators
-    { regex   = [[\-\>(?=\s)]],               type = "function" }, -- Function arrow
-    { pattern = "-?[%a_][%w_]*%f[(]",         type = "function" }, -- Function name
-    { pattern = "[%a_][%w_]*",                type = "symbol"   }, -- ?
+    { pattern = { "%(%*", "%*%)", '\\' },           type = "comment"  }, -- Multi-line comment
+    { pattern = { '"', '"', '\\' },                 type = "string"   }, -- String
+    { pattern = "-?(?:%d+%_?)+[%d%_?%.eE]*f?",      type = "number"   }, -- Number
+    { pattern = "-?0x%x+%-?%_?%x+",                 type = "number"   }, -- Number
+    { pattern = "-?%.?%d+f?",                       type = "number"   }, -- Number
+    { regex   = "\\<\\w*\\>",                       type = "literal"  }, -- Function ?
+    { regex   = "\\:\\s?\\w+",                      type = "keyword2" }, -- Field type
+    { pattern = "[%+%-=/%*%^%%<>!~|&_:]",           type = "operator" }, -- Operators
+    { regex   = [[\-\>(?=\s)]],                     type = "function" }, -- Function arrow
+    { pattern = "-?[%a_][%w_]*%f[(]",               type = "function" }, -- Function name
+    { pattern = "[%a_][%w_]*",                      type = "symbol"   }, -- ?
   },
   symbols = {
     ["and"] = "keyword",
