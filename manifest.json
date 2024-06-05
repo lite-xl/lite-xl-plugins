@@ -530,7 +530,7 @@
       "description": "Shows \"git blame\" information of a line *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-gitblame/main/screenshot_1.png))*",
       "id": "gitblame",
       "mod_version": "3",
-      "remote": "https://github.com/juliardi/lite-xl-gitblame:0395fed18d3a779bc1eae26130f00a2eb23638ad",
+      "remote": "https://github.com/juliardi/lite-xl-gitblame:fa6db3525a6a995da599e7c6b88926e1a7d61788",
       "version": "0.2"
     },
     {
