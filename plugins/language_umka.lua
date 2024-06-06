@@ -19,7 +19,9 @@ syntax.add {
 		{ pattern = "%.%.",                            type = "operator" },
 		{ pattern = "[%^%+%-%*/%%&|~<>!=]",            type = "operator" },
 		{ pattern = "[%a_][%w_]*()%*?()%s*%f[%(]",     type = {"function", "operator", "normal"} },
-		{ pattern = "%u[%w_]*",                        type = "literal"  },
+		{ pattern = "%u[%w_]*%.()%u[%w_]*",            type = {"normal", "literal"}  },
+		{ pattern = "%.?%u[%w_]*",                     type = "literal"  },
+		{ pattern = "[%a_][%w_]*::",                   type = "keyword2" },
 		{ pattern = "[%a_][%w_]*",                     type = "symbol"   },
 	},
 	symbols = {
