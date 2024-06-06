@@ -31,6 +31,7 @@ syntax.add {
 		["continue"]  = "keyword",
 		["default"]   = "keyword",
 		["else"]      = "keyword",
+		["enum"]      = "keyword",
 		["for"]       = "keyword",
 		["fn"]        = "keyword",
 		["import"]    = "keyword",
