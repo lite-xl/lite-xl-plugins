@@ -530,8 +530,8 @@
       "description": "Shows \"git blame\" information of a line *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-gitblame/main/screenshot_1.png))*",
       "id": "gitblame",
       "mod_version": "3",
-      "remote": "https://github.com/juliardi/lite-xl-gitblame:fa6db3525a6a995da599e7c6b88926e1a7d61788",
-      "version": "0.2"
+      "remote": "https://github.com/juliardi/lite-xl-gitblame:922d6961ee87990c92adb8bc89d1ce18fe8e2ee0",
+      "version": "0.2.1"
     },
     {
       "description": "highlight changed lines from git *([screenshot](https://raw.githubusercontent.com/vincens2005/lite-xl-gitdiff-highlight/master/screenshot.png))*",
