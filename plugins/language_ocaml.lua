@@ -33,7 +33,6 @@ syntax.add {
     ["end"] = "keyword",
     ["exception"] = "keyword",
     ["external"] = "keyword",
-    ["false"] = "keyword",
     ["for"] = "keyword",
     ["fun"] = "keyword",
     ["function"] = "keyword",
@@ -60,7 +59,6 @@ syntax.add {
     ["nonrec"] = "keyword",
     ["object"] = "keyword",
     ["of"] = "keyword",
-    ["open"] = "keyword",
     ["open!"] = "keyword",
     ["or"] = "keyword",
     ["private"] = "keyword",
@@ -69,7 +67,6 @@ syntax.add {
     ["struct"] = "keyword",
     ["then"] = "keyword",
     ["to"] = "keyword",
-    ["true"] = "keyword",
     ["try"] = "keyword",
     ["type"] = "keyword",
     ["val"] = "keyword",
@@ -77,5 +74,8 @@ syntax.add {
     ["when"] = "keyword",
     ["while"] = "keyword",
     ["with"] = "keyword",
+
+    ["true"] = "literal",
+    ["false"] = "literal",
   },
 }
