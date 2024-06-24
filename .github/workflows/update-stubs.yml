@@ -1,13 +1,13 @@
 name: Update Stubs
 on:
   workflow_dispatch:
-    inputs:
+
 jobs:
   update_stubs:
     runs-on: ubuntu-latest
     permissions: { pull-requests: "write", contents: "write" }
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Update Stubs with LPM
         env: { GITHUB_TOKEN: "${{ github.token }}" }
         run: |
