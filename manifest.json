@@ -2151,7 +2151,7 @@
     {
       "description": "Allows you to play tetris directly in the editor.",
       "id": "tetris",
-      "mod_version": 3,
+      "mod_version": "3",
       "path": "plugins/tetris.lua",
       "tags": [
         "game"
