@@ -101,7 +101,7 @@ end
 
 local interpolation_syntax = {
   { pattern = { '{{', '}}' }, type = "string" },
-  { pattern = { '{', '}', '\\' }, type = "keyword2", syntax = { patterns = patterns, symbols = symbols, } },
+  { pattern = { '{', '}', '\\' }, type = "keyword2", syntax = ".nim" },
   { pattern = "[%S][%w]*", type = "string" },
 }
 
@@ -111,14 +111,14 @@ local user_patterns = {
   { pattern = "##?.-\n",                      type = "comment" },
   -- strings and chars
   { pattern = { "'", "'", '\\' },             type = "literal" },
-  string_pattern('"""', '"""[^"]'),
-  string_pattern('"'  , '"'      ),
-  string_pattern('\\"', '\\"'    ), -- For highlighting strings inside iterpolated blocks
+  string_pattern('"""', '"""%f[^"]'),
+  string_pattern('"'  , '"'        ),
+  string_pattern('\\"', '\\"'      ), -- For highlighting strings inside iterpolated blocks
   -- string interpolation
-  string_pattern('%&"""' , '"""[^"]', interpolation_syntax),
-  string_pattern('fmt"""', '"""[^"]', interpolation_syntax),
-  string_pattern('%&"'   , '"'      , interpolation_syntax),
-  string_pattern('fmt"'  , '"'      , interpolation_syntax),
+  string_pattern('%&"""' , '"""%f[^"]', interpolation_syntax),
+  string_pattern('fmt"""', '"""%f[^"]', interpolation_syntax),
+  string_pattern('%&"'   , '"'        , interpolation_syntax),
+  string_pattern('fmt"'  , '"'        , interpolation_syntax),
   -- function calls
   { pattern = "[a-zA-Z][a-zA-Z0-9_]*%f[(]",   type = "function" },
   -- identifiers
