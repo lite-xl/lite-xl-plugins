@@ -1,0 +1,17 @@
+{
+  "addons": [
+    {
+      "id": "widget",
+      "name": "Widgets",
+      "description": "Reusable widget components for plugin developers.",
+      "version": "0.2",
+      "mod_version": "3",
+      "type": "library",
+      "tags": [
+        "ui",
+        "gui",
+        "widgets"
+      ]
+    }
+  ]
+}
