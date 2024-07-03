@@ -80,7 +80,7 @@ end
 -- Remake with lua-based dictionaries
 local function load_dictionary(language)
   if not language then language = config.plugins.spellcheck.language end
-  
+
   local ok, dict = pcall(require, "libraries.dictionaries")
   if ok then
     core.log("[Spellcheck]: Successfully loaded the dictionaries!!")
@@ -88,21 +88,21 @@ local function load_dictionary(language)
     core.error("[Spellcheck]: There was a problem loading the dictionaries")
     return
   end
-  
-  local ok, added = pcall(require, "plugins.spellcheck.added_words")
-    if ok then
+
+  local ok_again, added = pcall(require, "plugins.spellcheck.added_words")
+    if ok_again then
     core.log("[Spellcheck]: Successfully loaded the added words!!")
   else
     core.error("[Spellcheck]: There was a problem loading the added words")
     return
   end
-  
+
   added_words = added
   languages = dict.languages
   words = common.merge(dict[language], added[language])
-  
+
   core.log("[Spellcheck]: Loaded the %s dictionary", language)
-  
+
 end
 
 
@@ -171,7 +171,7 @@ function DocView:draw_line_text(idx, x, y)
       if not s then break end
       local word = text:sub(s, e):lower()
       if not words[word] and not active_word(self.doc, idx, e + 1) then
-        local x,y = self:get_line_screen_position(idx, s)
+        local x, y = self:get_line_screen_position(idx, s)
         table.insert(calculated, x + self.scroll.x)
         table.insert(calculated, y + self.scroll.y)
         x,y = self:get_line_screen_position(idx, e + 1)
@@ -325,14 +325,14 @@ command.add("core.docview", {
       end
     })
   end,
-  
-  
+
+
   ["spell-check:load-dictionary"] = function()
     core.command_view:enter("Language", {
       text = "",
       suggest = function () return languages end,
       submit  = function (name) load_dictionary(name) end
-      
+
     })
   end,
 
