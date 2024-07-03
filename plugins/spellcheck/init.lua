@@ -264,7 +264,7 @@ command.add("core.docview", {
       words[word] = true
       added_words[config.plugins.spellcheck.language][word] = true
       local added_path = USERDIR .. PATHSEP .. "plugins" .. PATHSEP .. "spellcheck" .. PATHSEP .. "added_words.lua"
-      local fp = io.open(added_path, "w+")
+      local fp = assert(io.open(added_path, "w+"))
       fp:write("return ", common.serialize(added_words, { pretty = true }))
       fp:close()
       core.log("[Spellcheck]: Added \"%s\" to dictionary", word)
