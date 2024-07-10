@@ -1888,7 +1888,7 @@
       "mod_version": "3",
       "path": "plugins/nerdicons.lua",
       "type": "plugin",
-      "version": "1.2.2"
+      "version": "1.2.3"
     },
     {
       "description": "Official NodeJs builds.",
