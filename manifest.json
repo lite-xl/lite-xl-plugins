@@ -605,8 +605,8 @@
       "version": "22.0.1"
     },
     {
-      "id": "keyhud",
       "description": "Simple *key HUD* for Lite XL",
+      "id": "keyhud",
       "mod_version": "3",
       "remote": "https://codeberg.org/Mandarancio/keyhud:1560d11fb5485aea264ea742e7ee6cd7693f03e0",
       "type": "plugin",
