@@ -1871,9 +1871,9 @@
       "description": "Fully customizable modal editing for Lite XL",
       "mod_version": "3",
       "name": "modal",
-      "remote": "https://codeberg.org/Mandarancio/lite-modal:5c4403b4d5c4eaece75dcd7ba445a9295aee765e",
+      "remote": "https://codeberg.org/Mandarancio/lite-modal:a770b1673b8cb2c5f80176c0a3529bdafe3e482a",
       "type": "plugin",
-      "version": "0.1",
+      "version": "0.2",
       "dependencies": {
         "lsp": {
           "optional": true
