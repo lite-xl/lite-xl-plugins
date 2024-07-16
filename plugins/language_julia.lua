@@ -8,7 +8,7 @@ local syntax = require "core.syntax"
 local jlstr = {
 
   patterns = {
-    { pattern = { "%$", "%f[^%w_]" },  type = "operator",  syntax = ".jl" },
+    { pattern = { "%$", "%f[^%w%(%)_%.]" },  type = "operator",  syntax = ".jl" },
     { pattern = "\\.",                 type = "string"                    },
     { pattern = '[^"\\%$\']+',         type = "string"                    }
 
@@ -47,8 +47,8 @@ syntax.add {
     { pattern = { '"""',     '"""', "\\" },  type = "string",  syntax = jlstr },
     { pattern = { 'r"',      '""',  "\\" },  type = "string"                  },
     { pattern = { '[bvL]?"', '"',   "\\" },  type = "string",  syntax = jlstr },
-    { pattern = { "`",       "`",   "\\" },  type = "string"                  },
-    { pattern = { "'\\",     "'",   "\\" },  type = "string",  syntax = jlstr },
+    { pattern = { "`",       "`",   "\\" },  type = "string",  syntax = jlstr },
+    { pattern = { "'\\",     "'",   "\\" },  type = "string"                  },
     { pattern = "'.'",                       type = "string",                 },
 
     { pattern = "%.?[%+%-=/%*%^%%<>!~|&:]",  type = "operator"                },
