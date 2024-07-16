@@ -340,7 +340,7 @@ syntax.add {
     {
       regex = {
         "<\\?php\\s+",
-        "(\\?>|(?=`{3}))" -- end if inside markdown code tags
+        "(?:\\?>|(?=`{3}))" -- end if inside markdown code tags
       },
       syntax = ".phps",
       type = "keyword2"

@@ -195,7 +195,7 @@ local function redraw_char(dv, x, y, line, col, bg_color, char_color)
 end
 
 
-local function draw_decoration(dv, x, y, line, col)
+local function draw_decoration(dv, x, y, line, col, width)
   local conf = config.plugins.bracketmatch
   local color = style.bracketmatch_color or style.syntax["function"]
   local char_color = style.bracketmatch_char_color
@@ -206,18 +206,20 @@ local function draw_decoration(dv, x, y, line, col)
   local h = conf.line_size
 
   if conf.color_char or conf.style == "block" then
-    redraw_char(dv, x, y, line, col,
-                conf.style == "block" and block_color, conf.color_char and char_color)
+    for i = 1, width, 1 do
+      redraw_char(dv, x, y, line, col + i - 1,
+                  conf.style == "block" and block_color, conf.color_char and char_color)
+    end
   end
   if conf.style == "underline" then
     local x1 = x + dv:get_col_x_offset(line, col)
-    local x2 = x + dv:get_col_x_offset(line, col + 1)
+    local x2 = x + dv:get_col_x_offset(line, col + width)
     local lh = dv:get_line_height()
 
     renderer.draw_rect(x1, y + lh - h, x2 - x1, h, color)
   elseif conf.style == "frame" then
     local x1 = x + dv:get_col_x_offset(line, col)
-    local x2 = x + dv:get_col_x_offset(line, col + 1)
+    local x2 = x + dv:get_col_x_offset(line, col + width)
     local lh = dv:get_line_height()
 
     renderer.draw_rect(x1, y + lh - h, x2 - x1, h, frame_color)
@@ -232,12 +234,23 @@ local draw_line_text = DocView.draw_line_text
 
 function DocView:draw_line_text(line, x, y)
   local lh = draw_line_text(self, line, x, y)
+  local width = 1
   if self.doc == state.doc and state.line2 then
-    if line == state.line2 then
-      draw_decoration(self, x, y, line, state.col2)
-    end
     if line == state.line and config.plugins.bracketmatch.highlight_both then
-      draw_decoration(self, x, y, line, state.col + select_adj - 1)
+      local offset = 0
+      if state.line == state.line2 and math.abs(state.col + select_adj - 1 - state.col2) == 1 then
+        width = 2
+        if state.col > state.col2 then
+          offset = -1
+        end
+        if state.col2 > state.col + select_adj then
+          offset = 1
+        end
+      end
+      draw_decoration(self, x, y, line, state.col + select_adj + offset - 1, width)
+    end
+    if line == state.line2 and width == 1 then
+      draw_decoration(self, x, y, line, state.col2, width)
     end
   end
   return lh

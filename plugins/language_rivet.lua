@@ -1,7 +1,8 @@
 -- mod-version:3
 
 -- Syntax highlighting for the Rivet programming language.
--- by StunxFS :)
+-- This plugin is always updated to the latest Rivet syntax.
+-- By StunxFS =).
 
 local syntax = require "core.syntax"
 
@@ -25,73 +26,77 @@ syntax.add {
         {pattern = "[%[%]%(%)%+%-=/%*%^%%<>!~|&%.%?:;]", type = "operator"},
         {
             pattern = "_?%u[%u_][%u%d_]*%f[%s%+%*%-%.%)%]}%?%^%%=/<>~|&;:,!]",
-            type = "number"
+            type = "literal"
         },
-        {pattern = "[A-Z][%w_]*", type = "keyword2"}, -- types
+        -- types
+        {pattern = "[A-Z][%w_]*", type = "keyword2"},
+        -- builtin func/var
+        {pattern = "%@%s?[%a_][%w_]*", type = "literal"},
+        -- `defer` modes
+        {pattern = "defer%s?%(%s?()[%a_][%w_]*()%s?%)", type = {"keyword", "comment", "normal"} },
+        -- functions
         {pattern = "[%a_][%w_]*%f[(]", type = "function"},
-        {pattern = "[%a_][%w_]*!%f[(]", type = "keyword2"}, -- builtin function
-        {pattern = "[%a_][%w_]*", type = "symbol"},
-        {pattern = {"#%[", "%]"}, type = "literal"},
-        {pattern = "#%s?[%a_][%w_]*", type = "comment"} -- #if/#elif/#else/#endif
+        -- attributes
+        {pattern = "#%s?%[.*%]", type = "keyword2"},
+        -- symbols
+        {pattern = "[%a_][%w_]*", type = "symbol"}
     },
     symbols = {
-        ["and"] = "keyword",
+        ["alias"] = "keyword",
         ["as"] = "keyword",
-        ["base"] = "literal",
         ["break"] = "keyword",
         ["catch"] = "keyword",
-        ["class"] = "keyword",
         ["const"] = "keyword",
         ["continue"] = "keyword",
         ["defer"] = "keyword",
         ["else"] = "keyword",
         ["enum"] = "keyword",
-        ["errdefer"] = "keyword",
         ["extend"] = "keyword",
         ["extern"] = "keyword",
-        ["false"] = "literal",
-        ["fn"] = "keyword",
+        ["func"] = "keyword",
         ["for"] = "keyword",
         ["if"] = "keyword",
         ["import"] = "keyword",
         ["in"] = "keyword",
         ["is"] = "keyword",
-        ["let"] = "keyword",
+        ["match"] = "keyword",
         ["mut"] = "keyword",
-        ["nil"] = "literal",
-        ["or"] = "keyword",
         ["pub"] = "keyword",
-        ["prot"] = "keyword",
         ["return"] = "keyword",
-        ["self"] = "literal",
         ["struct"] = "keyword",
-        ["switch"] = "keyword",
         ["test"] = "keyword",
+        ["throw"] = "keyword",
         ["trait"] = "keyword",
-        ["true"] = "literal",
-        ["type"] = "keyword",
         ["unsafe"] = "keyword",
+        ["var"] = "keyword",
         ["while"] = "keyword",
+
+        -- literals
+        ["false"] = "literal",
+        ["none"] = "literal",
+        ["self"] = "literal",
+        ["true"] = "literal",
 
         -- types
         ["never"] = "keyword2",
-        ["void"] = "keyword2",
         ["bool"] = "keyword2",
-        ["i8"] = "keyword2",
-        ["i16"] = "keyword2",
-        ["i32"] = "keyword2",
-        ["i64"] = "keyword2",
-        ["isize"] = "keyword2",
-        ["u8"] = "keyword2",
-        ["u16"] = "keyword2",
-        ["u32"] = "keyword2",
-        ["u64"] = "keyword2",
-        ["usize"] = "keyword2",
-        ["f32"] = "keyword2",
-        ["f64"] = "keyword2",
+        ["comptime_int"] = "keyword2",
+        ["comptime_float"] = "keyword2",
+        ["int"] = "keyword2",
+        ["int8"] = "keyword2",
+        ["int16"] = "keyword2",
+        ["int32"] = "keyword2",
+        ["int64"] = "keyword2",
+        ["uint"] = "keyword2",
+        ["uint8"] = "keyword2",
+        ["uint16"] = "keyword2",
+        ["uint32"] = "keyword2",
+        ["uint64"] = "keyword2",
+        ["float32"] = "keyword2",
+        ["float64"] = "keyword2",
+        ["rawptr"] = "keyword2",
         ["rune"] = "keyword2",
         ["string"] = "keyword2",
-        ["Base"] = "keyword2",
         ["Self"] = "keyword2"
     }
 }

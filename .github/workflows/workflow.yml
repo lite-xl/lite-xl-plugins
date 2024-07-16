@@ -1,4 +1,4 @@
-name: Reorganize README
+name: Update README
 
 on:
   push:
@@ -8,31 +8,25 @@ jobs:
   reorganize:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 16
-      - name: Run the script
+      - uses: actions/checkout@v4
+      - name: Generate table with `lpm`
         run: |
-          cd scripts
-          npm install
-          npm run main -- "https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}/" ../README.md ../README.md
-      - name: Set environment variables
-        run: |
-          set +e # need to disable this
-          git diff --exit-code -s README.md
-          echo "has_diff=$?" >> $GITHUB_ENV
-      - name: create PR
-        if: env.has_diff == 1
-        uses: peter-evans/create-pull-request@v3
-        with:
-          commit-message: Reorganize README.md
-          branch: reorganize-ci
-          add-paths: README.md
-          delete-branch: false
-          title: '[CI] Reorganize README.md'
-          body: |
-            This is a CI that makes sure entries are in alphabetical order and no links are invalid.
-            Please check the [CI run][1] for logs.
-
-            [1]: https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}
+          wget https://github.com/lite-xl/lite-xl-plugin-manager/releases/download/latest/lpm.x86_64-linux -O lpm-latest && chmod +x lpm-latest
+          # Remove everything after the --- so we can regenerate it.
+          perl -pi -e 'exit(0) if $_ =~ m/^\-\-\-/' README.md && echo -e "---" >> README.md
+          echo -e "\n## Plugins\n" >> README.md
+          export TABLE_COLUMNS='{{string.format("[`%s`](%s)", addon.id, (addon.extra and addon.extra.url or addon.url)) .. ((addon.extra and addon.extra.url or addon.url:find("http")) and "*" or "")}},description'
+          ./lpm-latest init none --userdir . && ./lpm-latest add . --userdir .
+          ./lpm-latest list --table "$TABLE_COLUMNS" --header Plugin,Description --type plugin --tag '!language' --status '!core' --userdir . >> README.md
+          echo -e "\n## Languages\n" >> README.md
+          ./lpm-latest list --table "$TABLE_COLUMNS" --header Language,Description --type plugin --tag 'language' --userdir .  >> README.md
+          echo -e "\n## Libraries\n" >> README.md
+          ./lpm-latest list --table "$TABLE_COLUMNS" --header Library,Description --type library --userdir .  >> README.md
+          ./lpm-latest exec 'common.write("manifest.json", json.encode(json.decode(common.read("manifest.json")), { pretty = true }) .. "\n")' --userdir .
+          ./lpm-latest purge --userdir .
+          if ! git diff --exit-code -s README.md manifest.json; then
+            git config --global user.name "Github Actions" && git config --global user.email "<>"
+            git add README.md manifest.json
+            git commit -m '[CI] Updated README.md and manifest.json.'
+            git push
+          fi

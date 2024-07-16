@@ -1,0 +1,71 @@
+; test { and }
+
+root=true
+
+; word choice
+[*.{py,js,html}]
+choice=true
+
+; single choice
+[{single}.b]
+choice=single
+
+; empty choice
+[{}.c]
+empty=all
+
+; choice with empty word
+[a{b,c,}.d]
+empty=word
+
+; choice with empty words
+[a{,b,,c,}.e]
+empty=words
+
+; no closing brace
+[{.f]
+closing=false
+
+; nested braces
+[{word,{also},this}.g]
+nested=true
+
+; nested braces, adjacent at start
+[{{a,b},c}.k]
+nested_start=true
+
+; nested braces, adjacent at end
+[{a,{b,c}}.l]
+nested_end=true
+
+; closing inside beginning
+[{},b}.h]
+closing=inside
+
+; opening inside beginning
+[{{,b,c{d}.i]
+unmatched=true
+
+; escaped comma
+[{a\,b,cd}.txt]
+comma=yes
+
+; escaped closing brace
+[{e,\},f}.txt]
+closing=yes
+
+; escaped backslash
+[{g,\\,i}.txt]
+backslash=yes
+
+; patterns nested in braces
+[{some,a{*c,b}[ef]}.j]
+patterns=nested
+
+; numeric braces
+[{3..120}]
+number=true
+
+; alphabetical
+[{aardvark..antelope}]
+words=a

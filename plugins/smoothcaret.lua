@@ -31,6 +31,8 @@ config.plugins.smoothcaret = common.merge({
   }
 }, config.plugins.smoothcaret)
 
+local caret_idx = 1
+
 local docview_update = DocView.update
 function DocView:update()
   docview_update(self)
@@ -96,7 +98,7 @@ function DocView:update()
   end
 
   -- This is used by `DocView:draw_caret` to keep track of the current caret
-  self.caret_idx = 1
+  caret_idx = 1
 end
 
 local docview_draw_caret = DocView.draw_caret
@@ -106,11 +108,8 @@ function DocView:draw_caret(x, y)
     return
   end
 
-  local c = self.visible_carets[self.caret_idx] or { current = { x = x, y = y } }
-  local lh = self:get_line_height()
+  local c = self.visible_carets[caret_idx] or { current = { x = x, y = y } }
+  docview_draw_caret(self, c.current.x - self.scroll.x, c.current.y - self.scroll.y)
 
-  -- We use the scroll position to move back to the position relative to the window
-  renderer.draw_rect(c.current.x - self.scroll.x, c.current.y - self.scroll.y, style.caret_width, lh, style.caret)
-
-  self.caret_idx = self.caret_idx + 1
+  caret_idx = caret_idx + 1
 end

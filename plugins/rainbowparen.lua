@@ -20,6 +20,7 @@ style.syntax.paren4  =  style.syntax.paren4 or { common.color "#52dab2"}
 style.syntax.paren5  =  style.syntax.paren5 or { common.color "#5a98cf"}
 
 local tokenize = tokenizer.tokenize
+local extract_subsyntaxes = tokenizer.extract_subsyntaxes
 local closers = {
   ["("] = ")",
   ["["] = "]",
@@ -30,12 +31,19 @@ local function parenstyle(parenstack)
   return "paren" .. ((#parenstack % config.plugins.rainbowparen.parens) + 1)
 end
 
-function tokenizer.tokenize(syntax, text, state)
+function tokenizer.extract_subsyntaxes(base_syntax, state)
   if not config.plugins.rainbowparen.enabled then
-    return tokenize(syntax, text, state)
+    return extract_subsyntaxes(base_syntax, state)
+  end
+  return extract_subsyntaxes(base_syntax, state.istate)
+end
+
+function tokenizer.tokenize(syntax, text, state, resume)
+  if not config.plugins.rainbowparen.enabled then
+    return tokenize(syntax, text, state, resume)
   end
   state = state or {}
-  local res, istate = tokenize(syntax, text, state.istate)
+  local res, istate, resume = tokenize(syntax, text, state.istate, resume)
   local parenstack = state.parenstack or ""
   local newres = {}
   -- split parens out
@@ -69,7 +77,7 @@ function tokenizer.tokenize(syntax, text, state)
       table.insert(newres, text)
     end
   end
-  return newres, { parenstack = parenstack, istate = istate }
+  return newres, { parenstack = parenstack, istate = istate }, resume
 end
 
 local function toggle_rainbowparen(enabled)
