@@ -1959,6 +1959,14 @@
       "version": "0.1"
     },
     {
+      "id": "previewer",
+      "description": "Preview files and doc before before opening them",
+      "mod_version": "3",
+      "remote": "https://codeberg.org/Mandarancio/lite-previewer:49a4747279276bb40e993fabb726c0cb43fa0899",
+      "type": "plugin",
+      "version": "0.1"
+    },
+    {
       "description": "Adds middle mouse click copy/paste (primary selection). To use this plugin, `xclip` must be installed.",
       "id": "primary_selection",
       "mod_version": "3",
