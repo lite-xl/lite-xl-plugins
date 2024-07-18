@@ -232,6 +232,14 @@
       "version": "0.2"
     },
     {
+      "id": "buffers",
+      "description": "Buffers and not tabs for Lite XL",
+      "mod_version": "3",
+      "name": "buffers",
+      "remote": "https://codeberg.org/Mandarancio/lite-buffers:e38671838adf215d1505983727b9f41cc58f5996",
+      "version": "0.1"
+    },
+    {
       "description": "Provides a build system, messages window, and easily clickable errors. Supports an internal build system, and `make`. *([screenshot](https://raw.githubusercontent.com/lite-xl/lite-xl-ide/main/screenshots/build.png))*",
       "id": "build",
       "mod_version": "3",
