@@ -608,9 +608,9 @@
       "description": "Simple *key HUD* for Lite XL",
       "id": "keyhud",
       "mod_version": "3",
-      "remote": "https://codeberg.org/Mandarancio/keyhud:1560d11fb5485aea264ea742e7ee6cd7693f03e0",
+      "remote": "https://codeberg.org/Mandarancio/keyhud:77c95fed9756b0b20a78ca0f61f20b593787bf20",
       "type": "plugin",
-      "version": "0.1"
+      "version": "0.2.3"
     },
     {
       "description": "Exports the keymap to a JSON file.",
