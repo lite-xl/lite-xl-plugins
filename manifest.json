@@ -1600,7 +1600,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [TypeScript](https://www.typescriptlang.org/) programming language, a typed dialect of JavaScript.",
