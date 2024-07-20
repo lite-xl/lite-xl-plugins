@@ -43,7 +43,6 @@ syntax.add {
     { pattern = "[%a_][%w_]*",                     type = "symbol"   },
   },
   symbols = {
-    ["case"]      = "keyword",
     ["break"]     = "keyword",
     ["continue"]  = "keyword",
     ["do"]        = "keyword",
