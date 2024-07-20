@@ -1535,6 +1535,16 @@
       "version": "0.1"
     },
     {
+      "description": "Syntax for the [Svelte]()https://svelte.dev/ web framework",
+      "id": "language_svelte",
+      "mod_version": "3",
+      "path": "plugins/language_svelte.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },    
+    {
       "description": "Syntax for the [Uxntal](https://wiki.xxiivv.com/site/uxntal) assembly language",
       "id": "language_tal",
       "mod_version": "3",
