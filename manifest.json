@@ -236,7 +236,7 @@
       "description": "Buffers and not tabs for Lite XL",
       "mod_version": "3",
       "name": "buffers",
-      "remote": "https://codeberg.org/Mandarancio/lite-buffers:79985e148a760205252dee2e1238b5d10113c2de",
+      "remote": "https://codeberg.org/Mandarancio/lite-buffers:2a2a706a3bad9fc4361bb83c8d34d7a369f5f3fb",
       "version": "0.1.1"
     },
     {
