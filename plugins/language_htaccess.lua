@@ -165,11 +165,11 @@ local xml_syntax = {
 
 syntax.add {
   name = ".htaccess File",
-  files = { "^%.htaccess$" },
+  files = { PATHSEP .. "%.htaccess$" },
   comment = "#",
   patterns = {
     -- Comments
-    { pattern = "#.*\n",                        type = "comment"  },
+    { pattern = "#.*",                          type = "comment"  },
     -- Strings
     { pattern = { '"', '"', '\\' },             type = "string"   },
     { pattern = { "'", "'", '\\' },             type = "string"   },
@@ -191,14 +191,14 @@ syntax.add {
     -- Emails
     { pattern = "%w+@%w+%.%w+",                 type = "keyword2" },
     -- Rewrite option sections
-    { pattern = "%f[%S]%b[]",                   type = "number" },
+    { pattern = "%f[%S]%b[]",                   type = "number"   },
     -- XML tags
     { pattern = { "</?%w+", ">" },              type = "literal", syntax = xml_syntax },
     -- Variables
     { pattern = "[%%$]%d+",                     type = "keyword2" },
     { pattern = "[%%$]%{[%w_:%-]+%}",           type = "keyword2" },
     -- Numbers
-    { pattern = "A?%d+",                        type = "number" },
+    { pattern = "A?%d+",                        type = "number"   },
     -- Operators
     { pattern = "%f[%S][!=+%-]+",               type = "operator" },
     -- Regex (TODO: improve this, it's pretty naive and only works on some regex)
@@ -206,7 +206,7 @@ syntax.add {
     { pattern = "%f[^%s!]%S*%$",                type = "literal" },
     { pattern = "%f[^%s!]%b()",                 type = "literal" },
     -- Everything else
-    { pattern = "[%a_][%w_-]*",                 type = "symbol"   },
+    { pattern = "[%a_][%w_-]*",                 type = "symbol"  },
   },
   symbols = symbols
 }
