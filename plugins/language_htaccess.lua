@@ -187,7 +187,7 @@ syntax.add {
     -- IPs
     { pattern = "%d+%.%d+%.%d+%.%d+",           type = "keyword2" },
     { pattern = "%d+%.%d+%.%d+%.%d+/%d+",       type = "keyword2" },
-    { regex   = "([a-f0-9:]+:+)+[a-f0-9]+",     type = "keyword2" },
+    { regex   = [[(?:[a-fA-F0-9]*:)+(?:[a-fA-F0-9]+|:)(?:\/[0-9]+)?]], type = "keyword2" },
     -- Emails
     { pattern = "%w+@%w+%.%w+",                 type = "keyword2" },
     -- Rewrite option sections
