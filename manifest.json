@@ -1962,7 +1962,7 @@
       "id": "previewer",
       "description": "Preview files and doc before before opening them",
       "mod_version": "3",
-      "remote": "https://codeberg.org/Mandarancio/lite-previewer:659ce9b8c33d57841bebc956b373e2726dd86586",
+      "remote": "https://codeberg.org/Mandarancio/lite-previewer:39c6c4667009f669bdc84a99360455c8e384bd4d",
       "type": "plugin",
       "version": "0.1.1"
     },
