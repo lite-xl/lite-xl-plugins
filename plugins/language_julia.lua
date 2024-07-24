@@ -9,8 +9,8 @@ local jlstr = {
 
   patterns = {
     { pattern = { "%$", "%f[^%w%(%)_%.]" },  type = "operator",  syntax = ".jl" },
-    { pattern = "\\.",                 type = "string"                    },
-    { pattern = '[^"\\%$\']+',         type = "string"                    }
+    { pattern = "\\.",                       type = "string"                    },
+    { pattern = '[^"\\%$]+',                 type = "string"                    }
 
   },
 
@@ -40,7 +40,7 @@ syntax.add {
     { pattern = "%.?%d+[%d%.eE_]*f?",        type = "number"                  },
     { pattern = "%f[-%w_]-%f[%d%.]",         type = "number"                  },
 
-    { pattern = ":[%a_][%w_]*",              type = "function"                },
+    { pattern = "%f[%w:]:[%a_][%w_]*",       type = "function"                },
     { pattern = "[%a_][%w_]*[.!]?%f[(]",     type = "function"                },
     { pattern = "@[%a_][%w_]+",              type = "function"                },
 
