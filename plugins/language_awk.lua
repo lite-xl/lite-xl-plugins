@@ -11,7 +11,7 @@ syntax.add {
     -- as a comment.
     { pattern = "$[%a_@*#][%w_]*",                type = "keyword2" },
     -- Comments
-    { pattern = "#.*\n",                          type = "comment"  },
+    { pattern = "#.*",                            type = "comment"  },
     -- Strings
     { pattern = { '"', '"', '\\' },               type = "string"   },
     { pattern = { "'", "'", '\\' },               type = "string"   },
