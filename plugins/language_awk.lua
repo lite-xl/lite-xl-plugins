@@ -4,7 +4,7 @@ local syntax = require "core.syntax"
 syntax.add {
   name = "Awk script",
   files = "%.awk$",
-  headers = "^#!.*bin.*awk.*\n",
+  headers = "^#!.*bin.*awk",
   comment = "#",
   patterns = {
     -- $# is a awk special variable and the '#' shouldn't be interpreted
