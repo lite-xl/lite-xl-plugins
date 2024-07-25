@@ -673,7 +673,7 @@
     },
     {
       "description": "Syntax for the [Awk](https://en.wikipedia.org/wiki/AWK)(v1) programming language",
-      "id": "language_autohotkey_v1",
+      "id": "language_awk",
       "mod_version": "3",
       "path": "plugins/language_awk.lua",
       "tags": [
