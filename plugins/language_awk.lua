@@ -9,7 +9,7 @@ syntax.add {
   patterns = {
     -- $# is a awk special variable and the '#' shouldn't be interpreted
     -- as a comment.
-    { pattern = "$[%a_@*#][%w_]*",                type = "keyword2" },
+    { pattern = "%$[%a_@*#][%w_]*",               type = "keyword2" },
     -- Comments
     { pattern = "#.*",                            type = "comment"  },
     -- Strings
