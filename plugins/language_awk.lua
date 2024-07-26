@@ -35,8 +35,8 @@ syntax.add {
     -- Match variable assignments
     { pattern = "[_%a][%w_]+%f[%+=]",              type = "keyword2" },
     -- Match variable expansions
-    { pattern = "${.-}",                           type = "keyword2" },
-    { pattern = "$[%d$%a_@*][%w_]*",               type = "keyword2" },
+    { pattern = "%${.-}",                          type = "keyword2" },
+    { pattern = "%$[%d%$%a_@*][%w_]*",             type = "keyword2" },
     -- Functions
     { pattern = "[%a_%-][%w_%-]*()%s*%f[(]",       type = { "function", "normal" } },
     -- Everything else
