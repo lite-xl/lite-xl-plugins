@@ -25,8 +25,8 @@ syntax.add {
     { pattern = "%f[%S][%+%-][%w%-_]+%f[=]",      type = "function" },
     -- Prevent parameters with assignments from been matched as variables
     {
-      pattern = "%s%-%a[%w_%-]*%s+()%d[%d%.]+",
-      type = { "function", "number" }
+      pattern = "%s%-%a[%w_%-]*()%s+()%d[%d%.]+",
+      type = { "function", "normal", "number" }
     },
     {
       pattern = "%s%-%a[%w_%-]*%s+()%a[%a%-_:=]+",
