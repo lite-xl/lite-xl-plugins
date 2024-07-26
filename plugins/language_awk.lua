@@ -29,8 +29,8 @@ syntax.add {
       type = { "function", "normal", "number" }
     },
     {
-      pattern = "%s%-%a[%w_%-]*%s+()%a[%a%-_:=]+",
-      type = { "function", "symbol" }
+      pattern = "%s%-%a[%w_%-]*()%s+()%a[%a%-_:=]+",
+      type = { "function", "normal", "symbol" }
     },
     -- Match variable assignments
     { pattern = "[_%a][%w_]+%f[%+=]",              type = "keyword2" },
