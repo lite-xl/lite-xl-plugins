@@ -3,8 +3,8 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "Shell script",
-  files = { "%.sh$", "%.bash$", "^%.bashrc$", "^%.bash_profile$", "^%.profile$", "%.zsh$", "%.fish$" },
-  headers = "^#!.*bin.*sh\n",
+  files = { "%.sh$", "%.bash$", "^%.bashrc$", "^%.bash_profile$", "^%.profile$", "^%.zprofile$", "%.zsh$", "%.zshrc$", "%.fish$" },
+  headers = "^#!.*bin.*sh",
   comment = "#",
   patterns = {
     -- $# is a bash special variable and the '#' shouldn't be interpreted
