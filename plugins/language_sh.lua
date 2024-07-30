@@ -1,6 +1,26 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
+local expansion_syntax = {
+  name = "Shell script parameter expansion",
+  symbols = {}
+}
+expansion_syntax.patterns = {
+    { pattern = { "%${", "}", "\\" }, type = "keyword2", syntax = expansion_syntax },
+    { pattern = "[^%$}]+",            type = "string" },
+    { pattern = "[%$}]",              type = "string" },
+}
+
+local string_syntax = {
+  name = "Shell script string",
+  patterns = {
+    { pattern = { "%${", "}", "\\" }, type = "keyword2", syntax = expansion_syntax },
+    { pattern = '[^%$"]+',            type = "string" },
+    { pattern = '[%$"]',              type = "string" },
+  },
+  symbols = {}
+}
+
 syntax.add {
   name = "Shell script",
   files = { "%.sh$", "%.bash$", "%.bashrc$", "%.bash_profile$", "%.profile$", "%.zprofile$", "%.zsh$", "%.zshrc$", "%.fish$" },
@@ -11,11 +31,11 @@ syntax.add {
     -- as a comment.
     { pattern = "$[%a_@*#][%w_]*",                type = "keyword2" },
     -- Comments
-    { pattern = "#.*\n",                          type = "comment"  },
+    { pattern = "#.*",                            type = "comment"  },
     -- Strings
-    { pattern = { '"', '"', '\\' },               type = "string"   },
-    { pattern = { "'", "'", '\\' },               type = "string"   },
-    { pattern = { '`', '`', '\\' },               type = "string"   },
+    { pattern = { '"', '"', '\\' },               type = "string", syntax = string_syntax },
+    { pattern = { "'", "'", '\\' },               type = "string"                         },
+    { pattern = { '`', '`', '\\' },               type = "string", syntax = ".sh"         },
     -- Ignore numbers that start with dots or slashes
     { pattern = "%f[%w_%.%/]%d[%d%.]*%f[^%w_%.]", type = "number"   },
     -- Operators
@@ -35,7 +55,7 @@ syntax.add {
     -- Match variable assignments
     { pattern = "[_%a][%w_]+%f[%+=]",              type = "keyword2" },
     -- Match variable expansions
-    { pattern = "${.*}",                           type = "keyword2" },
+    { pattern = { "${", "}", '\\' },               type = "keyword2", syntax = expansion_syntax },
     { pattern = "$[%d$%a_@*][%w_]*",               type = "keyword2" },
     -- Functions
     { pattern = "[%a_%-][%w_%-]*[%s]*%f[(]",       type = "function" },
@@ -95,4 +115,3 @@ syntax.add {
     ["false"]     = "literal"
   }
 }
-
