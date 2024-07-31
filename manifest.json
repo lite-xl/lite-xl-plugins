@@ -2235,9 +2235,9 @@
       "description": "Tree-sitter bindings based on `lua-tree-sitter`",
       "id": "tree_sitter",
       "name": "Tree-sitter",
-      "remote": "https://github.com/xcb-xwii/lite-xl-tree-sitter:0aafd746d037e8334c26975a61acee7cf1c40da1",
+      "remote": "https://github.com/Evergreen-lxl/lite-xl-tree-sitter:9463aec4b09f6b9bb4c1f56fb5ab923335f4e554",
       "type": "library",
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     {
       "description": "Extend Lite XL's treeview menu *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-treeview-extender/main/screenshot.png))*",
