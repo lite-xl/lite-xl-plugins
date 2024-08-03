@@ -567,7 +567,7 @@
       "id": "gui_filepicker",
       "mod_version": "3",
       "path": "plugins/gui_filepicker.lua",
-      "version": "1.0"
+      "version": "1.1"
     },
     {
       "description": "Dark (or even Mica!) title bar for Lite XL",
