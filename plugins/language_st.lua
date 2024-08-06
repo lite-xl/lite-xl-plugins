@@ -14,12 +14,15 @@ syntax.add {
     { regex   = "\\w+\\#[0-9]+m?s?",                        type = "number"   }, -- Time/Date formats
     { regex   = "\\w+\\s?(?=[(])",                          type = "function" }, -- Function
     { regex   = "^\\s*[A-Z]+_[A-Z]*\\s?\\;?\\s?",           type = "keyword"  }, -- Keyword
-    { regex   = "\\:\\s?[A-Z]+",                            type = "keyword2" }, -- Variable/Method type
+    { regex   = "\\:\\s*\\w+",                              type = "keyword2" }, -- Variable/Method type
     { pattern = "[%+%-=/%*%^%%<>!~|&:]",                    type = "operator" }, -- Operators
+    { regex   = "(\\-|\\+)\\d+\\.{2}(\\-|\\+)\\d+",         type = "number"   }, -- WIP: Number Range
     { pattern = "-?0x%x+",                                  type = "number"   }, -- Number
     { pattern = "-?%d+[%deE]*f?",                           type = "number"   }, -- Number
     { pattern = "-?%.?%d+f?",                               type = "number"   }, -- Number
     { regex   = "^\\w+()\\s(?:[A-Z]+[a-z]*\\_?)+(?=\\w*)",  type = { "normal", "function" } }, -- Function implementation
+    -- TODO: symbols pattern
+    -- https://pdhonline.com/courses/e334/e334content.pdf
   },
   symbols = {
     ["PROGRAM_INIT"] = "keyword",
@@ -58,6 +61,8 @@ syntax.add {
     
     ["TYPE"] = "keyword",
     ["END_TYPE"] = "keyword",
+    ["STRUCT"] = "keyword",
+    ["END_STRUCT"] = "keyword",
     
     ["ORGANIZATION_BLOCK"] = "keyword",
     ["END_ORGANIZATION_BLOCK"] = "keyword",
@@ -66,27 +71,27 @@ syntax.add {
     ["FALSE"] = "literal",
     ["true"] = "literal",
     ["false"] = "literal",
-
-    ["bool"] = "keyword2",
-    ["sint"] = "keyword2",
-    ["int"] = "keyword2",
-    ["dint"] = "keyword2",
-    ["lint"] = "keyword2",
-    ["usint"] = "keyword2",
-    ["uint"] = "keyword2",
-    ["ldint"] = "keyword2",
-    ["ulint"] = "keyword2",
-    ["real"] = "keyword2",
-    ["lreal"] = "keyword2",
-    ["time"] = "keyword2",
-    ["date"] = "keyword2",
-    ["time_of_day"] = "keyword2",
-    ["date_and_time"] = "keyword2",
-    ["string"] = "keyword2",
-    ["bool"] = "keyword2",
-    ["byte"] = "keyword2",
-    ["word"] = "keyword2",
-    ["dword"] = "keyword2",
-    ["lword"] = "keyword2",
+    
+    ["SINT"] = "keyword2",
+    ["INT"] = "keyword2",
+    ["DINT"] = "keyword2",
+    ["LINT"] = "keyword2",
+    ["USINT"] = "keyword2",
+    ["UINT"] = "keyword2",
+    ["UDINT"] = "keyword2",
+    ["ULINT"] = "keyword2",
+    ["LDINT"] = "keyword2",
+    ["REAL"] = "keyword2",
+    ["LREAL"] = "keyword2",
+    ["TIME"] = "keyword2",
+    ["DATE"] = "keyword2",
+    ["TIME_OF_DAY"] = "keyword2",
+    ["DATE_AND_TIME"] = "keyword2",
+    ["STRING"] = "keyword2",
+    ["BOOL"] = "keyword2",
+    ["BYTE"] = "keyword2",
+    ["WORD"] = "keyword2",
+    ["DWORD"] = "keyword2",
+    ["LWORD"] = "keyword2",
   }
 }
