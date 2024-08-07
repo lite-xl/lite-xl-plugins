@@ -1,6 +1,8 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
+-- https://pdhonline.com/courses/e334/e334content.pdf
+
 syntax.add {
   name = "PLC Structured Text IEC 61131-3",
   files = { "%.stx?$", "%.iecst$" },
@@ -14,17 +16,24 @@ syntax.add {
     { regex   = "\\w+\\#[0-9]+m?s?",                        type = "number"   }, -- Time/Date formats
     { regex   = "\\w+\\s?(?=[(])",                          type = "function" }, -- Function
     { regex   = "^\\s*[A-Z]+_[A-Z]*\\s?\\;?\\s?",           type = "keyword"  }, -- Keyword
-    { regex   = "\\:\\s*\\w+",                              type = "keyword2" }, -- Variable/Method type
+    { regex   = "\\:\\s*\\w+",                              type = "keyword2" }, -- Variable/Method Type
     { pattern = "[%+%-=/%*%^%%<>!~|&:]",                    type = "operator" }, -- Operators
-    { regex   = "(\\-|\\+)\\d+\\.{2}(\\-|\\+)\\d+",         type = "number"   }, -- WIP: Number Range
+    { regex   = "(\\-|\\+)\\d+\\.{2}(\\-|\\+)\\d+",         type = "number"   }, -- Number Range
     { pattern = "-?0x%x+",                                  type = "number"   }, -- Number
     { pattern = "-?%d+[%deE]*f?",                           type = "number"   }, -- Number
     { pattern = "-?%.?%d+f?",                               type = "number"   }, -- Number
     { regex   = "^\\w+()\\s(?:[A-Z]+[a-z]*\\_?)+(?=\\w*)",  type = { "normal", "function" } }, -- Function implementation
     -- TODO: symbols pattern
-    -- https://pdhonline.com/courses/e334/e334content.pdf
+    -- FIX: TIME_OF_DAY and DATE_AND_TIME
+    -- FIX: Number Range
+    -- TODO: Array
+    -- FIX: END_FUNCTION_BLOCK
+    -- FIX: Force2): 2 should be colored as symbol, not as number
+    -- TODO: switch case: fix the var colors and the ..
+    -- FIX: EXIT, RETURN, UNTIL are not colored
   },
   symbols = {
+    ["PROGRAM"] = "keyword",
     ["PROGRAM_INIT"] = "keyword",
     ["PROGRAM_CYCLIC"] = "keyword",
     
@@ -36,6 +45,10 @@ syntax.add {
     ["END_FUNCTION"] = "keyword",
     ["METHOD"] = "keyword",
     ["END_METHOD"] = "keyword",
+    ["IMPLEMENTATION"] = "keyword",
+    ["END_IMPLEMENTATION"] = "keyword",
+    ["INTERFACE"] = "keyword",
+    ["END_INTERFACE"] = "keyword",
     
     ["IF"] = "keyword",
     ["THEN"] = "keyword",
@@ -45,8 +58,17 @@ syntax.add {
     ["CASE"] = "keyword",
     ["END_CASE"] = "keyword",
     ["OF"] = "keyword",
+    ["FOR"] = "keyword",
+    ["END_FOR"] = "keyword",
+    ["WHILE"] = "keyword",
+    ["END_WHILE"] = "keyword",
+    ["REPEAT"] = "keyword",
+    ["END_REPEAT"] = "keyword",
 
     ["MOD"] = "operator",
+    ["UNTIL"] = "operator",
+    ["EXIT"] = "keyword",
+    ["RETURN"] = "keyword",
     
     ["AND"] = "keyword",
     ["NOT"] = "keyword",
@@ -55,6 +77,15 @@ syntax.add {
     ["END_NAMESPACE"] = "keyword",
     
     ["VAR"] = "keyword",
+    ["VAR_GLOBAL"] = "keyword",
+    ["VAR_INPUT"] = "keyword",
+    ["VAR_OUTPUT"] = "keyword",
+    ["VAR_IN_OUT"] = "keyword",
+    ["VAR_ACCESS"] = "keyword",
+    ["VAR_EXTERNAL"] = "keyword",
+    ["VAR_TEMP"] = "keyword",
+    ["AT"] = "keyword",
+    ["RETAIN"] = "keyword",
     ["END_VAR"] = "keyword",
     ["CONST"] = "keyword",
     ["END_CONST"] = "keyword",
