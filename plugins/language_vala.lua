@@ -1,6 +1,8 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
+-- https://docs.vala.dev/tutorials/programming-language/main/02-00-basics/02-03-comments.html
+
 syntax.add {
   name = "Vala",
   files = { "%.vala$" },
@@ -27,6 +29,15 @@ syntax.add {
     { regex   = "\\[.+\\](?=\\w*)",                                      type = "literal"  }, -- Attribute
     { regex   = "\\#\\w+(?=\\s?\\w*)",                                   type = "keyword"  }, -- Preprocessor directive
     { pattern = "[%a_][%w_]*",                                           type = "symbol"   }, -- ?
+    -- FIX: @"$a * $b = $(a * b)" should be fully string-colored
+    -- FIX: 21.to_string(); the . should be symbol-colored
+    -- FIX: int[] a = new int[10] and int[] c = b[1:3];
+    -- FIX: var l = new List<int>();  // same as: List<int> l = new List<int>();
+    -- FIX: MyFoo<string, MyBar<string, int>> foo = new MyFoo<string, MyBar<string, int>>();
+    -- FIX: : GLib.List<GLib.Value>
+    -- FIX: <> and <<>> operators
+    -- FIX: int method_name(int arg1, Object arg2) { Object is not colored properly
+    -- 
   },
   symbols = {
     ["class"] = "keyword",
@@ -46,6 +57,8 @@ syntax.add {
     ["signal"] = "keyword",
     ["struct"] = "keyword",
     ["Type"] = "keyword",
+    ["string"] = "keyword",
+    ["unowned"] = "keyword",
     
     ["public"] = "keyword",
     ["private"] = "keyword",
@@ -66,6 +79,8 @@ syntax.add {
     ["break"] = "keyword",
     ["continue"] = "keyword",
     ["return"] = "keyword",
+    ["switch"] = "keyword",
+    ["case"] = "keyword",
     
     ["in"] = "keyword",
     ["lock"] = "keyword",
