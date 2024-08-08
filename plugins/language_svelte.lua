@@ -2,6 +2,8 @@
 -- copied from https://github.com/lite-xl/lite-xl/blob/master/data/plugins/language_html.lua
 local syntax = require "core.syntax"
 
+-- https://learn.svelte.dev/tutorial/your-first-component
+
 syntax.add {
   name = "Svelte",
   files = { "%.svelte$" },
