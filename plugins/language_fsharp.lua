@@ -1,6 +1,10 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
+-- https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/
+
+-- WIP: https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/type-abbreviations
+
 syntax.add {
   name = "F#",
   files = { "%.fsi?$" },
@@ -21,11 +25,32 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&_:]",              type = "operator"  }, -- Operators
     { regex   = [[\.{2}\<?\s?(?=[\\-]?[a-z0-9])]],     type = "operator"  }, -- Range operators
     { regex   = [[\-\>(?=\s)]],                        type = "function"  }, -- Function arrow
-    { regex   = "\\w+(?=\\s?[(])",                     type = "function"  }, -- Function without generic type
+    { regex   = "\\w+(?=\\s*[(])",                     type = "function"  }, -- Function without generic type
     { regex   = "\\w+()\\s?\\[?\\<\\'?\\w+\\>\\]?",    type = { "function", "keyword2" } }, -- Function with generic type
     { regex   = "\\#\\w+",                             type = "keyword2"  }, -- Load
     { regex   = "\\'\\w+",                             type = "keyword2"  }, -- Special variable
     { pattern = "[%a_][%w_]*",                         type = "symbol"    }, -- Words
+    -- FIX: """{"numbers":[1,2,3,4,5]}"""
+    -- FIX: @"<book author=""Milton, John"" title=""Paradise Lost"">"
+    -- FIX: $"""string-text {"embedded string literal"}"""
+    -- FIX: $"""Name: {"Phillip"}, Age: %d{age}"""
+    -- FIX: 2.3E+32
+    -- FIX: 2.3e+32
+    -- FIX: 100u
+    -- FIX: 0o77
+    -- FIX: 0b1010
+    -- FIX: 0xDEAD_BEEF
+    -- FIX: 0b1101_1110_1010_1101_1011_1110_1110_1111
+    -- FIX: 123_45_6789
+    -- FIX: add pattern for functions without (): function1 x y
+    -- FIX: add pattern for methods without (): .get p 0
+    -- FIX: update range pattern for [| 1.. 100 |]
+    -- FIX: 'a' .. 'z'
+    -- FIX: < var2 -> should be properly colored
+    -- FIX: the :: should be operator-colored in the following: head :: tail
+    -- FIX: : System.IO.StreamReader should be properly colored
+    -- FIX: 
+    -- FIX: 
   },
   symbols = {
     ["sbyte"]          = "keyword",
@@ -33,6 +58,7 @@ syntax.add {
     ["int16"]          = "keyword",
     ["uint16"]         = "keyword",
     ["int"]            = "keyword",
+    ["uint"]           = "keyword",
     ["int32"]          = "keyword",
     ["uint32"]         = "keyword",
     ["nativeint"]      = "keyword",
@@ -51,6 +77,7 @@ syntax.add {
     ["string"]         = "keyword",
     ["unit"]           = "keyword",
     ["enum"]           = "keyword",
+    ["fixed"]          = "keyword",
     
     ["let"]            = "keyword",
     ["type"]           = "keyword",
