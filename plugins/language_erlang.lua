@@ -1,6 +1,10 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
+-- https://www.erlang.org/doc/system/reference_manual.html
+
+-- WIP: https://www.erlang.org/doc/system/modules.html#module-syntax
+
 syntax.add {
   name = "Erlang",
   files = "%.erl$", "%.hrl$",
@@ -26,20 +30,19 @@ syntax.add {
     { pattern = "[%+%-=/%*%^<>!~|&?]",                              type = "operator" }, -- Operators
     { regex   = "bnot|div|rem|band|bor|bxor|bsl|bsr",               type = "operator" }, -- Operators
     -- TODO: add missing number expressions
-    -- FIXME: fix number coloring in field names
-    -- FIXME: add missing number formats
-    -- FIXME: true or false, true is colored like an atom
-    -- FIXME: try should be colored as keyword
+    -- FIX: fix number coloring in field names
+    -- FIX: add missing number formats
+    -- FIX: true or false, true is colored like an atom
+    -- FIX: try should be colored as keyword
     -- TODO: add support for records
-    -- TODO: color rec#{...}, set#{...} and similar
     -- TODO: add support for nested records
+    -- TODO: color rec#{...}, set#{...} and similar
     -- TODO: add support for macros
+    -- FIX: number strings inside multi-line """ ... """
+    -- TODO: 
   },
   symbols = {
     ["after"]         = "keyword",
-    ["and"]           = "keyword",
-    ["andalso"]       = "keyword",
-    ["band"]          = "keyword",
     ["begin"]         = "keyword",
     ["case"]          = "keyword",
     ["catch"]         = "keyword",
@@ -55,8 +58,19 @@ syntax.add {
     ["receive"]       = "keyword",
     ["try"]           = "keyword",
     ["when"]          = "keyword",
-    ["xor"]           = "keyword",
     ["maybe"]         = "keyword",
+
+    ["and"]           = "keyword",
+    ["andalso"]       = "keyword",
+    ["xor"]           = "keyword",
+    ["bnot"]          = "keyword",
+    ["div"]           = "keyword",
+    ["rem"]           = "keyword",
+    ["band"]          = "keyword",
+    ["bor"]           = "keyword",
+    ["bxor"]          = "keyword",
+    ["bsl"]           = "keyword",
+    ["bsr"]           = "keyword",
     
     ["true"]          = "literal",
     ["false"]         = "literal",
