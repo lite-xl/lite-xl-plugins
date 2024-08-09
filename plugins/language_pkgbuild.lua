@@ -3,12 +3,12 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "PKGBUILD",
-  files = "/*PKGBUILD$",
+  files = { PATHSEP .. "PKGBUILD$" },
   comment = "#",
   patterns = {
     -- Don't colorize number of arguments expression as comment
-    { pattern = "$#",                          type = "keyword2" },
-    { pattern = "#.*\n",                       type = "comment"  },
+    { pattern = "%$#",                         type = "keyword2" },
+    { pattern = "#.*",                         type = "comment"  },
     -- Strings
     { pattern = { '"', '"', '\\' },            type = "string"   },
     { pattern = { "'", "'", '\\' },            type = "string"   },
@@ -48,8 +48,8 @@ syntax.add {
     -- Match variable assignments
     { pattern = "[_%a][%w_]+%f[%+=]",          type = "keyword2" },
     -- Match variable expansions
-    { pattern = "${.-}",                       type = "keyword2" },
-    { pattern = "$[%d$%a_@*][%w_]*",           type = "keyword2" },
+    { pattern = "%${.-}",                      type = "keyword2" },
+    { pattern = "%$[%d%$%a_@*][%w_]*",         type = "keyword2" },
     -- Functions
     { pattern = "[%a_%-][%w_%-]*[%s]*%f[(]",   type = "function" },
     -- Everything else
