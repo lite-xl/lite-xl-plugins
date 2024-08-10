@@ -1,6 +1,9 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
+-- https://ocaml.org/manual/5.2/index.html
+-- https://ocaml.org/manual/5.2/lex.html#sss:keywords
+
 syntax.add {
   name = "OCaml",
   files = { "%.ml$" },
