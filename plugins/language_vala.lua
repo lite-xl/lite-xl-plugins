@@ -25,7 +25,7 @@ syntax.add {
     { regex   = [[class()\s+\w+()\<.+\>(?=\s?\:)]],                      type = { "keyword", "normal", "keyword2" } }, -- Generic Class Type
     { regex   = [[interface()\s+\w+()\<.+\>(?=\s?\:)]],                  type = { "keyword", "normal", "keyword2" } }, -- Generic Interface Type
     { regex   = "\\=\\>(?=[{])",                                         type = "keyword"  }, -- Lambda
-    { regex   = "[A-Z][A-Z_]+",                                          type = "keyword2" }, -- Constants
+    { regex   = "[A-Z][A-Z_]+(?=\\s*[)]|[\\;]|[\\,]|[\\s\\=])",          type = "keyword2" }, -- Constants
     { regex   = "\\[.+\\](?=\\w*)",                                      type = "literal"  }, -- Attribute
     { regex   = "\\#\\w+(?=\\s?\\w*)",                                   type = "keyword"  }, -- Preprocessor directive
     { pattern = "[%a_][%w_]*",                                           type = "symbol"   }, -- ?
@@ -37,18 +37,19 @@ syntax.add {
     -- FIX: : GLib.List<GLib.Value>
     -- FIX: <> and <<>> operators
     -- FIX: int method_name(int arg1, Object arg2) { Object is not colored properly
-    -- 
+    -- FIX: proper coloring for: public class ListClass : GLib.Object, Collection, List
   },
   symbols = {
     ["class"] = "keyword",
     ["this"] = "keyword",
+    ["is"] = "keyword",
+    ["as"] = "keyword",
     ["var"] = "keyword",
     ["const"] = "keyword",
     ["new"] = "keyword",
     ["enum"] = "keyword",
     ["namespace"] = "keyword",
     ["interface"] = "keyword",
-    ["const"] = "keyword",
     ["construct"] = "keyword",
     ["virtual"] = "keyword",
     ["get"] = "keyword",
@@ -58,7 +59,10 @@ syntax.add {
     ["struct"] = "keyword",
     ["Type"] = "keyword",
     ["string"] = "keyword",
+    ["yield"] = "keyword",
+    ["owned"] = "keyword",
     ["unowned"] = "keyword",
+    ["weak"] = "keyword",
     
     ["public"] = "keyword",
     ["private"] = "keyword",
