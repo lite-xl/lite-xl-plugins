@@ -3,7 +3,7 @@ local syntax = require "core.syntax"
 
 -- https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/
 
--- WIP: https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/type-abbreviations
+-- WIP: https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/generics/constraints
 
 syntax.add {
   name = "F#",
@@ -49,8 +49,9 @@ syntax.add {
     -- FIX: < var2 -> should be properly colored
     -- FIX: the :: should be operator-colored in the following: head :: tail
     -- FIX: : System.IO.StreamReader should be properly colored
-    -- FIX: 
-    -- FIX: 
+    -- FIX: Collections.seq<_> should be colored as type
+    -- FIX: In abstract abstractMethod<'a, 'b> : 'a * 'b -> unit the -> should colored as operators
+    -- 
   },
   symbols = {
     ["sbyte"]          = "keyword",
@@ -120,6 +121,7 @@ syntax.add {
     ["invalidArg"]     = "keyword",
     ["assert"]         = "keyword",
     ["abstract"]       = "keyword",
+    ["upcast"]         = "keyword",
     ["downcast"]       = "keyword",
     ["override"]       = "keyword",
     ["add"]            = "keyword",
