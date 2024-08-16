@@ -4,6 +4,8 @@ local syntax = require "core.syntax"
 -- https://ocaml.org/manual/5.2/index.html
 -- https://ocaml.org/manual/5.2/lex.html#sss:keywords
 
+-- WIP: https://ocaml.org/manual/5.2/coreexamples.html#s:tut-recvariants
+
 syntax.add {
   name = "OCaml",
   files = { "%.ml$" },
@@ -20,6 +22,17 @@ syntax.add {
     { regex   = [[\-\>(?=\s)]],                     type = "function" }, -- Function arrow
     { pattern = "-?[%a_][%w_]*%f[(]",               type = "function" }, -- Function name
     { pattern = "[%a_][%w_]*",                      type = "symbol"   }, -- ?
+    -- FIX: match n spaces between function-name and ()
+    -- FIX: add char pattern
+    -- FIX: add pattern for quoted string
+    -- FIX: :: should be colored as operator
+    -- FIX: 
+    -- FIX: 
+    -- FIX: 
+    -- FIX: 
+    -- FIX: 
+    -- FIX: 
+    -- FIX: 
   },
   symbols = {
     ["and"] = "keyword",
