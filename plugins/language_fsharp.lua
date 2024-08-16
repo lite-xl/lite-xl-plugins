@@ -3,7 +3,7 @@ local syntax = require "core.syntax"
 
 -- https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/
 
--- WIP: https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/generics/constraints
+-- WIP: https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/slices#defining-slices-for-other-data-structures
 
 syntax.add {
   name = "F#",
@@ -22,7 +22,7 @@ syntax.add {
     { regex   = "\\[\\<.+\\>\\]",                      type = "keyword2"  }, -- Attribute
     { regex   = "\\:\\s?\\w+",                         type = "keyword2"  }, -- Type
     { regex   = "\\_(?=\\s?\\:)",                      type = "normal"    }, -- _ should be normal when used as ?
-    { pattern = "[%+%-=/%*%^%%<>!~|&_:]",              type = "operator"  }, -- Operators
+    { pattern = "[%+%-=/%*%^%%<>!~|&_:@]",              type = "operator"  }, -- Operators
     { regex   = [[\.{2}\<?\s?(?=[\\-]?[a-z0-9])]],     type = "operator"  }, -- Range operators
     { regex   = [[\-\>(?=\s)]],                        type = "function"  }, -- Function arrow
     { regex   = "\\w+(?=\\s*[(])",                     type = "function"  }, -- Function without generic type
@@ -45,12 +45,17 @@ syntax.add {
     -- FIX: add pattern for functions without (): function1 x y
     -- FIX: add pattern for methods without (): .get p 0
     -- FIX: update range pattern for [| 1.. 100 |]
+    -- TODO: add range pattern for 1..10 or 1 .. 10
     -- FIX: 'a' .. 'z'
     -- FIX: < var2 -> should be properly colored
     -- FIX: the :: should be operator-colored in the following: head :: tail
     -- FIX: : System.IO.StreamReader should be properly colored
     -- FIX: Collections.seq<_> should be colored as type
     -- FIX: In abstract abstractMethod<'a, 'b> : 'a * 'b -> unit the -> should colored as operators
+    -- FIX: in the val concat: sequences:seq<#seq<'T>> -> seq<'T> example, the -> should be colored as operator
+    -- FIX: let convertg2kg (x : float<g>) = x / 1000.0<g/kg>
+    -- FIX: in System.Char.IsUpper , Char should not be colored
+    -- FIX: int array should be colored fully as type
     -- 
   },
   symbols = {
@@ -107,6 +112,7 @@ syntax.add {
     ["to"]             = "keyword",
     ["downto"]         = "keyword",
     ["and"]            = "keyword",
+    ["or"]             = "keyword",
     ["in"]             = "keyword",
     ["while"]          = "keyword",
     ["as"]             = "keyword",
@@ -131,6 +137,7 @@ syntax.add {
     ["namespace"]      = "keyword",
     ["global"]         = "keyword",
     ["private"]        = "keyword",
+    ["public"]        = "keyword",
     ["internal"]       = "keyword",
     ["val"]            = "keyword",
 
