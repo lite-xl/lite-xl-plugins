@@ -3,7 +3,7 @@ local syntax = require "core.syntax"
 
 -- https://www.erlang.org/doc/system/reference_manual.html
 
--- WIP: https://www.erlang.org/doc/system/modules.html#module-syntax
+-- WIP: https://www.erlang.org/doc/system/ref_man_records.html#updating-records
 
 syntax.add {
   name = "Erlang",
@@ -39,7 +39,9 @@ syntax.add {
     -- TODO: color rec#{...}, set#{...} and similar
     -- TODO: add support for macros
     -- FIX: number strings inside multi-line """ ... """
-    -- TODO: 
+    -- FIX: ~S/Example "docs"/ and ~B|Example "docs"| should be colored as string
+    -- FIX: end.
+    -- 
   },
   symbols = {
     ["after"]         = "keyword",
@@ -59,6 +61,10 @@ syntax.add {
     ["try"]           = "keyword",
     ["when"]          = "keyword",
     ["maybe"]         = "keyword",
+
+    ["onhook"]        = "keyword",
+    ["connect"]       = "keyword",
+    ["timeout"]       = "keyword",
 
     ["and"]           = "keyword",
     ["andalso"]       = "keyword",
