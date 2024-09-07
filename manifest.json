@@ -115,6 +115,7 @@
         "language_json": {},
         "language_jsx": {},
         "language_julia": {},
+        "language_kdl": {},
         "language_kotlin": {},
         "language_lilypond": {},
         "language_liquid": {},
@@ -1186,6 +1187,16 @@
       "id": "language_julia",
       "mod_version": "3",
       "path": "plugins/language_julia.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
+      "description": "Syntax for the [KDL](https://kdl.dev) document language",
+      "id": "language_kdl",
+      "mod_version": "3",
+      "path": "plugins/language_kdl.lua",
       "tags": [
         "language"
       ],
