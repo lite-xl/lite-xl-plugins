@@ -1995,12 +1995,12 @@
       "version": "1.2"
     },
     {
-      "description": "Turns lite-xl into a terminal based editor.",
+      "description": "Turns Lite XL into a terminal based editor.",
       "id": "quetta",
       "mod_version": "3",
       "name": "Quetta",
-      "remote": "https://github.com/adamharrison/quetta.git:fc78304fa44685c608ae8babfc0e81324b793765",
-      "version": "0.4"
+      "remote": "https://github.com/adamharrison/quetta.git:38350ef0708aa392cc21e850e82db39df6e3a38e",
+      "version": "0.51"
     },
     {
       "description": "Show nesting of parentheses with rainbow colours",
