@@ -3,6 +3,18 @@ local syntax = require "core.syntax"
 
 local identifier = "\"?[^%d%s\\/%(%){}<>;%[%]=,\"][^%s\\/%(%){}<>;%[%]=,\"]*\"?"
 
+local node_comment = { symbols = {} }
+node_comment["patterns"] = {
+  { pattern = { "{", "}" }, type = "comment", syntax = node_comment },
+  { pattern = "[^{}]+",     type = "comment" }
+}
+
+local nested_multiline = { symbols = {} }
+nested_multiline["patterns"] = {
+  { pattern = { "/%*", "%*/" }, type = "comment", syntax = nested_multiline },
+  { pattern = "[^/*]+",         type = "comment" },
+}
+
 syntax.add {
   name = "KDL",
   files = { "%.kdl$" },
@@ -31,8 +43,15 @@ syntax.add {
 	  { pattern = "[%-+]?[%d_]+%.[%d_]+",      type = "number"   },
     { pattern = "[%-+]?[%d_]+e[%-+]?[%d_]+", type = "number"   },
     { pattern = "[%-+]?[%d_]+",              type = "number"   },
-    { pattern = "/[%-/].*",                type = "comment"  },
-    { pattern = {"/%*", "%*/"},              type = "comment"  },
+    { pattern = "//.*",                      type = "comment"  },
+    {
+      pattern = { "/%-.*{", "}" },
+      type = "comment", syntax = node_comment
+    },
+    {
+      pattern = {"/%*", "%*/"},
+      type = "comment", syntax = nested_multiline
+    },
     { pattern = identifier,                  type = "keyword2" },
     {
       pattern = "%(()" .. identifier .. "()%)",
