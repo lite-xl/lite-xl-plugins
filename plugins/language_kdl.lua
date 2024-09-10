@@ -31,6 +31,7 @@ syntax.add {
       pattern = "[{;]%s*()" .. identifier .. "%s*",
       type = {"normal", "keyword"}
     },
+
     { pattern = { "r#+\"", "\"#+" },         type = "string"   },
     { pattern = { '"', '"', '\\' },          type = "string"   },
     { pattern = "[%-+]?0x[%x_]+",            type = "number"   },
