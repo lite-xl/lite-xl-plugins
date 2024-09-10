@@ -5,7 +5,7 @@ local identifier = "\"?[^%d%s\\/%(%){}<>;%[%]=,\"][^%s\\/%(%){}<>;%[%]=,\"]*\"?"
 
 syntax.add {
   name = "KDL",
-  files = { "%.kdl" },
+  files = { "%.kdl$" },
   space_handling = false,
   comment = "//",
   block_comment = {"/*", "*/"},
@@ -31,7 +31,7 @@ syntax.add {
 	  { pattern = "[%-+]?[%d_]+%.[%d_]+",      type = "number"   },
     { pattern = "[%-+]?[%d_]+e[%-+]?[%d_]+", type = "number"   },
     { pattern = "[%-+]?[%d_]+",              type = "number"   },
-    { pattern = "/[%-/].-\n",                type = "comment"  },
+    { pattern = "/[%-/].*",                type = "comment"  },
     { pattern = {"/%*", "%*/"},              type = "comment"  },
     { pattern = identifier,                  type = "keyword2" },
     {
