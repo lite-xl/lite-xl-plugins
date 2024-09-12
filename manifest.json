@@ -147,6 +147,7 @@
         "language_scala": {},
         "language_sh": {},
         "language_ssh_config": {},
+        "language_svelte": {},
         "language_swift": {},
         "language_tal": {},
         "language_tcl": {},
@@ -1535,14 +1536,14 @@
       "version": "0.1"
     },
     {
-      "description": "Syntax for the [Svelte]()https://svelte.dev/ web framework",
+      "description": "Syntax for the [Svelte](https://svelte.dev/) web framework",
       "id": "language_svelte",
       "mod_version": "3",
       "path": "plugins/language_svelte.lua",
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },    
     {
       "description": "Syntax for the [Uxntal](https://wiki.xxiivv.com/site/uxntal) assembly language",
