@@ -1776,6 +1776,13 @@
       "version": "2024.04.22"
     },
     {
+      "description": "Automatic configuration/binary download for LSP completion for D with serve_d.",
+      "id": "lsp_d",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:975e96322c6b0e343395c56bf66360c3156dad42",
+      "version": "0.7.6"
+    },
+    {
       "description": "Automatic configuration/binary download for LSP completion for Emmet with emmet-language-server.",
       "id": "lsp_emmet",
       "mod_version": "3",
