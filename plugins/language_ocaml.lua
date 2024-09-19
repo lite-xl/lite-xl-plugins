@@ -1,24 +1,30 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
+-- Language Syntax references
 -- https://ocaml.org/manual/5.2/lex.html#
+
+-- Real world examples
+-- https://github.com/ocaml-community/awesome-ocaml
+-- https://github.com/ocaml-batteries-team/batteries-included
+-- 
 
 -- WIP: https://ocaml.org/manual/5.2/expr.html
 
 syntax.add {
   name = "OCaml",
-  files = { "%.ml$" },
+  files = { "%.mli?$" },
   block_comment = { "(*", "*)" },
   patterns = {
     { pattern = { "%(%*", "%*%)", '\\' },           type = "comment"  }, -- Multi-line comment
     { pattern = { '"', '"', '\\' },                 type = "string"   }, -- String
-    { regex   = "\\'\\w+(?=\\s?\\w?)",              type = "keyword2" }, -- Special variable
+    { regex   = "\\'\\w+(?=\\s|[)]|\\:)",           type = "keyword2" }, -- Special variable ('a)
+    { regex   = "\\w+\\'(?=\\s|[)]|\\:)",           type = "keyword2" }, -- Special variable (h')
     { pattern = { "'", "'", '\\' },                 type = "literal"  }, -- Character literal
-    { pattern = "-?(?:%d+%_?)+[%d%_?%.eE]*f?",      type = "number"   }, -- Number
-    { pattern = "-?0x%x+%-?%_?%x+",                 type = "number"   }, -- Number
-    { pattern = "-?%.?%d+_?f?%u?",                  type = "number"   }, -- Number
+    { regex   = "-?(?:\\d_?)+(?:.\\d+)?",           type = "number"   }, -- Numbers
+    { regex   = "-?0x[0-9a-fA-F]+",                 type = "number"   }, -- Exadecimal Numbers
     { regex   = "\\<\\w*\\>",                       type = "literal"  }, -- Function ?
-    { regex   = "\\:\\s?\\w+",                      type = "keyword2" }, -- Field type
+    { regex   = "\\:\\s*\\w+",                      type = "keyword2" }, -- Field type
     { pattern = "[%+%-=/%*%^%%<>!~|&_:]",           type = "operator" }, -- Operators
     { regex   = [[\-\>(?=\s)]],                     type = "function" }, -- Function arrow
     { pattern = "-?[%a_][%w_]*%f[(]",               type = "function" }, -- Function name
@@ -28,9 +34,6 @@ syntax.add {
     -- FIX: add char pattern
     -- FIX: add pattern for quoted string
     -- FIX: :: should be colored as operator
-    -- FIX: add pattern for: add_ratio r1 r2
-    -- FIX: fix special variable pattern
-    -- 
   },
   symbols = {
     ["and"] = "keyword",
