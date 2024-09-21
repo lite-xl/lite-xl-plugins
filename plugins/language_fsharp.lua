@@ -11,25 +11,24 @@ syntax.add {
   comment = "//",
   block_comment = { "(*", "*)" },
   patterns = {
-    { pattern = "//.*",                                type = "comment"   }, -- Single-line comment
-    { pattern = { "%(%*", "%*%)" },                    type = "comment"   }, -- Multi-line comment
-    { pattern = { '"', '"', '\\' },                    type = "string"    }, -- String, quotation marks
-    { regex   = "\\${1,2}(?=\"?\'?)",                  type = "string"    }, -- String, $
-    { pattern = "-?0x%x+",                             type = "number"    }, -- ?
-    { pattern = "-?%d+[%deE]*f?",                      type = "number"    }, -- ?
-    { pattern = "-?%.?%d+f?",                          type = "number"    }, -- ?
-    { regex   = "\\<.+\\>",                            type = "keyword2"  }, -- Generic type
-    { regex   = "\\[\\<.+\\>\\]",                      type = "keyword2"  }, -- Attribute
-    { regex   = "\\:\\s?\\w+",                         type = "keyword2"  }, -- Type
-    { regex   = "\\_(?=\\s?\\:)",                      type = "normal"    }, -- _ should be normal when used as ?
-    { pattern = "[%+%-=/%*%^%%<>!~|&_:@]",              type = "operator"  }, -- Operators
-    { regex   = [[\.{2}\<?\s?(?=[\\-]?[a-z0-9])]],     type = "operator"  }, -- Range operators
-    { regex   = [[\-\>(?=\s)]],                        type = "function"  }, -- Function arrow
-    { regex   = "\\w+(?=\\s*[(])",                     type = "function"  }, -- Function without generic type
-    { regex   = "\\w+()\\s?\\[?\\<\\'?\\w+\\>\\]?",    type = { "function", "keyword2" } }, -- Function with generic type
-    { regex   = "\\#\\w+",                             type = "keyword2"  }, -- Load
-    { regex   = "\\'\\w+",                             type = "keyword2"  }, -- Special variable
-    { pattern = "[%a_][%w_]*",                         type = "symbol"    }, -- Words
+    { pattern = "//.*",                                        type = "comment"   }, -- Single-line comment
+    { pattern = { "%(%*", "%*%)" },                            type = "comment"   }, -- Multi-line comment
+    { pattern = { '"', '"', '\\' },                            type = "string"    }, -- String, quotation marks
+    { regex   = "\\${1,2}(?=\"?\'?)",                          type = "string"    }, -- String, $
+    { regex   = "-?(?:\\d_?)+(?:.\\d+)?(?:e|E\\+\\^\\d+)?",    type = "number"    }, -- Numbers
+    { regex   = "-?0x[0-9a-fA-F]+",                            type = "number"    }, -- Exadecimal Numbers
+    { regex   = "\\<.+\\>",                                    type = "keyword2"  }, -- Generic type
+    { regex   = "\\[\\<.+\\>\\]",                              type = "keyword2"  }, -- Attribute
+    { regex   = "\\:\\s?\\w+",                                 type = "keyword2"  }, -- Type
+    { regex   = "\\_(?=\\s?\\:)",                              type = "normal"    }, -- _ should be normal when used as ?
+    { pattern = "[%+%-=/%*%^%%<>!~|&_:@]",                     type = "operator"  }, -- Operators
+    { regex   = [[\.{2}\<?\s?(?=[\\-]?[a-z0-9])]],             type = "operator"  }, -- Range operators
+    { regex   = [[\-\>(?=\s)]],                                type = "function"  }, -- Function arrow
+    { regex   = "\\w+(?=\\s*[(])",                             type = "function"  }, -- Function without generic type
+    { regex   = "\\w+()\\s?\\[?\\<\\'?\\w+\\>\\]?",            type = { "function", "keyword2" } }, -- Function with generic type
+    { regex   = "\\#\\w+",                                     type = "keyword2"  }, -- Load
+    { regex   = "\\'\\w+",                                     type = "keyword2"  }, -- Special variable
+    { pattern = "[%a_][%w_]*",                                 type = "symbol"    }, -- Words
     -- FIX: """{"numbers":[1,2,3,4,5]}"""
     -- FIX: @"<book author=""Milton, John"" title=""Paradise Lost"">"
     -- FIX: $"""string-text {"embedded string literal"}"""
@@ -56,7 +55,6 @@ syntax.add {
     -- FIX: let convertg2kg (x : float<g>) = x / 1000.0<g/kg>
     -- FIX: in System.Char.IsUpper , Char should not be colored
     -- FIX: int array should be colored fully as type
-    -- 
   },
   symbols = {
     ["sbyte"]          = "keyword",
