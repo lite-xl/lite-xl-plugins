@@ -1,6 +1,9 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
+-- Language syntax reference
+-- https://gnome.pages.gitlab.gnome.org/vala/manual/overview.html
+
 syntax.add {
   name = "Vala",
   files = { "%.vala$" },
