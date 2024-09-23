@@ -1,6 +1,7 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
+-- Language syntax reference
 -- https://pdhonline.com/courses/e334/e334content.pdf
 
 syntax.add {
@@ -14,23 +15,16 @@ syntax.add {
     { pattern = { '"', '"', '\\' },                         type = "string"   }, -- String, quotation marks
     { pattern = { "'", "'", '\\' },                         type = "string"   }, -- String, apices
     { regex   = "\\w+\\#[0-9]+m?s?",                        type = "number"   }, -- Time/Date formats
-    { regex   = "\\w+\\s?(?=[(])",                          type = "function" }, -- Function
+    { regex   = "\\w+(?=[(])",                              type = "function" }, -- Function
+    { pattern = "[%a_][%w_]*",                              type = "symbol"   }, -- Symbols
     { regex   = "^\\s*[A-Z]+_[A-Z]*\\s?\\;?\\s?",           type = "keyword"  }, -- Keyword
     { regex   = "\\:\\s*\\w+",                              type = "keyword2" }, -- Variable/Method Type
+    { regex   = "(?:\\-|\\+)?\\d+\\.*(?:\\-|\\+)?\\d+",     type = "number"   }, -- Number Range
     { pattern = "[%+%-=/%*%^%%<>!~|&:]",                    type = "operator" }, -- Operators
-    { regex   = "(\\-|\\+)\\d+\\.{2}(\\-|\\+)\\d+",         type = "number"   }, -- Number Range
     { pattern = "-?0x%x+",                                  type = "number"   }, -- Number
     { pattern = "-?%d+[%deE]*f?",                           type = "number"   }, -- Number
     { pattern = "-?%.?%d+f?",                               type = "number"   }, -- Number
     { regex   = "^\\w+()\\s(?:[A-Z]+[a-z]*\\_?)+(?=\\w*)",  type = { "normal", "function" } }, -- Function implementation
-    -- TODO: symbols pattern
-    -- FIX: TIME_OF_DAY and DATE_AND_TIME
-    -- FIX: Number Range
-    -- TODO: Array
-    -- FIX: END_FUNCTION_BLOCK
-    -- FIX: Force2): 2 should be colored as symbol, not as number
-    -- TODO: switch case: fix the var colors and the ..
-    -- FIX: EXIT, RETURN, UNTIL are not colored
   },
   symbols = {
     ["PROGRAM"] = "keyword",
@@ -59,6 +53,9 @@ syntax.add {
     ["END_CASE"] = "keyword",
     ["OF"] = "keyword",
     ["FOR"] = "keyword",
+    ["TO"] = "keyword",
+    ["BY"] = "keyword",
+    ["DO"] = "keyword",
     ["END_FOR"] = "keyword",
     ["WHILE"] = "keyword",
     ["END_WHILE"] = "keyword",
@@ -72,6 +69,8 @@ syntax.add {
     
     ["AND"] = "keyword",
     ["NOT"] = "keyword",
+    ["OR"] = "keyword",
+    ["XOR"] = "keyword",
     
     ["NAMESPACE"] = "keyword",
     ["END_NAMESPACE"] = "keyword",
