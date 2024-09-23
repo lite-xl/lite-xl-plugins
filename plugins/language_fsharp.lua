@@ -3,8 +3,6 @@ local syntax = require "core.syntax"
 
 -- https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/
 
--- WIP: https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/slices#defining-slices-for-other-data-structures
-
 syntax.add {
   name = "F#",
   files = { "%.fsi?$" },
@@ -19,7 +17,7 @@ syntax.add {
     { regex   = "-?0x[0-9a-fA-F]+",                            type = "number"    }, -- Exadecimal Numbers
     { regex   = "\\<.+\\>",                                    type = "keyword2"  }, -- Generic type
     { regex   = "\\[\\<.+\\>\\]",                              type = "keyword2"  }, -- Attribute
-    { regex   = "\\:\\s?\\w+",                                 type = "keyword2"  }, -- Type
+    { regex   = "\\:\\s*\\w+",                                 type = "keyword2"  }, -- Type
     { regex   = "\\_(?=\\s?\\:)",                              type = "normal"    }, -- _ should be normal when used as ?
     { pattern = "[%+%-=/%*%^%%<>!~|&_:@]",                     type = "operator"  }, -- Operators
     { regex   = [[\.{2}\<?\s?(?=[\\-]?[a-z0-9])]],             type = "operator"  }, -- Range operators
@@ -28,7 +26,7 @@ syntax.add {
     { regex   = "\\w+()\\s?\\[?\\<\\'?\\w+\\>\\]?",            type = { "function", "keyword2" } }, -- Function with generic type
     { regex   = "\\#\\w+",                                     type = "keyword2"  }, -- Load
     { regex   = "\\'\\w+",                                     type = "keyword2"  }, -- Special variable
-    { pattern = "[%a_][%w_]*",                                 type = "symbol"    }, -- Words
+    { pattern = "[%a_][%w_]*",                                 type = "symbol"    }, -- Symbols
     -- FIX: """{"numbers":[1,2,3,4,5]}"""
     -- FIX: @"<book author=""Milton, John"" title=""Paradise Lost"">"
     -- FIX: $"""string-text {"embedded string literal"}"""
@@ -120,6 +118,7 @@ syntax.add {
     ["exception"]      = "keyword",
     ["of"]             = "keyword",
     ["yield"]          = "keyword",
+    ["yield!"]         = "keyword",
     ["try"]            = "keyword",
     ["finally"]        = "keyword",
     ["invalidArg"]     = "keyword",
