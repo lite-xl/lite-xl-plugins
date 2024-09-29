@@ -7,6 +7,7 @@ local DocView = require "core.docview"
 config.plugins.indentguide = common.merge({
   enabled = true,
   highlight = true,
+  width = nil,
   -- The config specification used by the settings gui
   config_spec = {
     name = "Indent Guide",
@@ -16,6 +17,13 @@ config.plugins.indentguide = common.merge({
       path = "enabled",
       type = "toggle",
       default = true
+    },
+    {
+      label = "Width",
+      description = "Manually sets the width of the indicator lines.",
+      path = "width",
+      type = "number",
+      default = nil
     },
     {
       label = "Highlight Line",
