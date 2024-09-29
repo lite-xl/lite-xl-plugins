@@ -134,7 +134,7 @@ function DocView:draw_line_text(line, x, y)
   if config.plugins.indentguide.enabled and self:is(DocView) then
     local spaces = self.indentguide_indents[line] or -1
     local _, indent_size = get_indent_info(self.doc)
-    local w = math.max(1, SCALE)
+    local w = config.plugins.indentguide.width or math.max(1, SCALE)
     local h = self:get_line_height()
     local font = self:get_font()
     local space_sz = font:get_width(" ")
