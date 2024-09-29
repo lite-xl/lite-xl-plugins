@@ -7,7 +7,6 @@ local DocView = require "core.docview"
 config.plugins.indentguide = common.merge({
   enabled = true,
   highlight = true,
-  width = nil,
   -- The config specification used by the settings gui
   config_spec = {
     name = "Indent Guide",
@@ -19,13 +18,6 @@ config.plugins.indentguide = common.merge({
       default = true
     },
     {
-      label = "Width",
-      description = "Manually sets the width of the indicator lines.",
-      path = "width",
-      type = "number",
-      default = nil
-    },
-    {
       label = "Highlight Line",
       description = "Toggle the highlight of the curent indentation indicator lines.",
       path = "highlight",
@@ -35,24 +27,17 @@ config.plugins.indentguide = common.merge({
   }
 }, config.plugins.indentguide)
 
--- TODO: replace with `doc:get_indent_info()` when 2.1 releases
-local function get_indent_info(doc)
-  if doc.get_indent_info then
-    return doc:get_indent_info()
-  end
-  return config.tab_type, config.indent_size
-end
+local indentguide = {}
 
-
-local function get_line_spaces(doc, line, dir)
-  local _, indent_size = get_indent_info(doc)
+function indentguide.get_line_spaces(doc, line, dir)
+  local _, indent_size = doc:get_indent_info()
   local text = doc.lines[line]
   if not text or #text == 1 then
     return -1
   end
   local s, e = text:find("^%s*")
   if e == #text then
-    return get_line_spaces(doc, line + dir, dir)
+    return indentguide.get_line_spaces(doc, line + dir, dir)
   end
   local n = 0
   for _,b in pairs({text:byte(s, e)}) do
@@ -62,14 +47,15 @@ local function get_line_spaces(doc, line, dir)
 end
 
 
-local function get_line_indent_guide_spaces(doc, line)
+function indentguide.get_line_indent_guide_spaces(doc, line)
   if doc.lines[line]:find("^%s*\n") then
     return math.max(
-      get_line_spaces(doc, line - 1, -1),
-      get_line_spaces(doc, line + 1,  1))
+      indentguide.get_line_spaces(doc, line - 1, -1),
+      indentguide.get_line_spaces(doc, line + 1,  1))
   end
-  return get_line_spaces(doc, line)
+  return indentguide.get_line_spaces(doc, line)
 end
+
 
 local docview_update = DocView.update
 function DocView:update()
@@ -82,7 +68,7 @@ function DocView:update()
   local function get_indent(line)
     if line < 1 or line > #self.doc.lines then return -1 end
     if not self.indentguide_indents[line] then
-      self.indentguide_indents[line] = get_line_indent_guide_spaces(self.doc, line)
+      self.indentguide_indents[line] = indentguide.get_line_indent_guide_spaces(self.doc, line)
     end
     return self.indentguide_indents[line]
   end
@@ -92,10 +78,10 @@ function DocView:update()
 
   local minline, maxline = self:get_visible_line_range()
   for i = minline, maxline do
-    self.indentguide_indents[i] = get_line_indent_guide_spaces(self.doc, i)
+    self.indentguide_indents[i] = indentguide.get_line_indent_guide_spaces(self.doc, i)
   end
 
-  local _, indent_size = get_indent_info(self.doc)
+  local _, indent_size = self.doc:get_indent_info()
   for _,line in self.doc:get_selections() do
     local lvl = get_indent(line)
     local top, bottom
@@ -137,12 +123,17 @@ function DocView:update()
 end
 
 
+function indentguide.get_width()
+  return math.max(1, SCALE)
+end
+
+
 local draw_line_text = DocView.draw_line_text
 function DocView:draw_line_text(line, x, y)
   if config.plugins.indentguide.enabled and self:is(DocView) then
     local spaces = self.indentguide_indents[line] or -1
-    local _, indent_size = get_indent_info(self.doc)
-    local w = config.plugins.indentguide.width or math.max(1, SCALE)
+    local _, indent_size = self.doc:get_indent_info()
+    local w = indentguide.get_width()
     local h = self:get_line_height()
     local font = self:get_font()
     local space_sz = font:get_width(" ")
@@ -160,3 +151,5 @@ function DocView:draw_line_text(line, x, y)
   end
   return draw_line_text(self, line, x, y)
 end
+
+return indentguide
