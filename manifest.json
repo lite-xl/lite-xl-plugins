@@ -2017,8 +2017,8 @@
       "id": "quetta",
       "mod_version": "3",
       "name": "Quetta",
-      "remote": "https://github.com/adamharrison/quetta.git:38350ef0708aa392cc21e850e82db39df6e3a38e",
-      "version": "0.51"
+      "remote": "https://github.com/adamharrison/quetta.git:1b1ae07ae7cdcd04c8a23d42f401da9fbf68f34a",
+      "version": "0.52"
     },
     {
       "description": "Show nesting of parentheses with rainbow colours",
