@@ -2238,8 +2238,8 @@
       "description": "Todo tree viewer for annotations in code like `TODO`, `BUG`, `FIX`, `IMPROVEMENT`",
       "id": "todotreeview",
       "mod_version": "3",
-      "remote": "https://github.com/drmargarido/TodoTreeView:e222f7074cae607dec82fb191a4fb077e75886e2",
-      "version": "0.1.2"
+      "remote": "https://github.com/drmargarido/TodoTreeView:0b3937a0f0d761843df9b71cfea35884e839348b",
+      "version": "0.1.11"
     },
     {
       "description": "Toggles symbols between `snake_case` and `camelCase`",
