@@ -12,33 +12,32 @@ syntax.add {
   patterns = {
     { pattern = "//.*",                                                  type = "comment"  }, -- Single-line comment
     { pattern = { "/%*", "%*/" },                                        type = "comment"  }, -- Multi-line comment
-    { pattern = { '"', '"', '\\' },                                      type = "string"   }, -- ?
-    { pattern = { "'", "'", '\\' },                                      type = "string"   }, -- ?
+    --{ pattern = { '"', '"', '\\' },                                      type = "string"   }, -- String, double apices
+    { regex   = { '\\@?\\"', '\\"', '\\' },                              type = "string"   }, -- Special string
+    { pattern = { "'", "'", '\\' },                                      type = "string"   }, -- String, apices
     { pattern = "-?0x%x+",                                               type = "number"   }, -- ?
     { pattern = "-?%d+[%d%.eE]*f?",                                      type = "number"   }, -- ?
-    { pattern = "-?%.?%d+f?",                                            type = "number"   }, -- ?
+    --{ pattern = "-?%.?%d+f?",                                            type = "number"   }, -- ?
     { regex   = "\\w+(?=\\s+\\w++\\s+\\=\\s+)",                          type = "function" }, -- Class name in class instance
     { regex   = "\\<.+\\>",                                              type = "keyword2" }, -- Generic Type
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                                  type = "operator" }, -- ?
     { pattern = "[%a_][%w_]*%f[(]",                                      type = "function" }, -- ?
     { regex   = [[\s?\:\s?(?:\w+\.?)+(?=\s?[{])]],                       type = "keyword2" }, -- Inheritance
-    { regex   = [[\s?\:\s?(?:\w+(?:\<.+\>)?\s?\,?\s?)+(?=\s?[{])]],      type = "keyword2" }, -- Inheritance
+    { regex   = [[\s?\:\s?(?:\w+(?:\<\w+\.\>)?\s?\,?\s?)+(?=\s?[{])]],      type = "keyword2" }, -- Inheritance
     { regex   = [[class()\s+\w+()\<.+\>(?=\s?\:)]],                      type = { "keyword", "normal", "keyword2" } }, -- Generic Class Type
     { regex   = [[interface()\s+\w+()\<.+\>(?=\s?\:)]],                  type = { "keyword", "normal", "keyword2" } }, -- Generic Interface Type
     { regex   = "\\=\\>(?=[{])",                                         type = "keyword"  }, -- Lambda
     { regex   = "[A-Z][A-Z_]+(?=\\s*[)]|[\\;]|[\\,]|[\\s\\=])",          type = "keyword2" }, -- Constants
-    { regex   = "\\[.+\\](?=\\w*)",                                      type = "literal"  }, -- Attribute
+    { regex   = "^\\[.+\\]",                                             type = "literal"  }, -- Attribute
     { regex   = "\\#\\w+(?=\\s?\\w*)",                                   type = "keyword"  }, -- Preprocessor directive
     { pattern = "[%a_][%w_]*",                                           type = "symbol"   }, -- Symbols
-    -- FIX: @"$a * $b = $(a * b)" should be fully string-colored
-    -- FIX: 21.to_string(); the . should be symbol-colored
-    -- FIX: int[] a = new int[10] and int[] c = b[1:3];
+    -- FIX: 21.to_string();
     -- FIX: var l = new List<int>();  // same as: List<int> l = new List<int>();
     -- FIX: MyFoo<string, MyBar<string, int>> foo = new MyFoo<string, MyBar<string, int>>();
     -- FIX: : GLib.List<GLib.Value>
+    -- FIX: public class ListClass : GLib.Object, Collection, List
     -- FIX: <> and <<>> operators
     -- FIX: int method_name(int arg1, Object arg2) { Object is not colored properly
-    -- FIX: proper coloring for: public class ListClass : GLib.Object, Collection, List
   },
   symbols = {
     ["class"] = "keyword",
