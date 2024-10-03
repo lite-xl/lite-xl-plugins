@@ -1485,6 +1485,16 @@
       "version": "0.1"
     },
     {
+      "description": "Syntax for the [Ring](https://ring-lang.net/) programming language",
+      "id": "language_ring",
+      "mod_version": "3",
+      "path": "plugins/language_ring.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
       "description": "Syntax for the [Rivet](https://github.com/rivet-lang/rivet) programming language",
       "id": "language_rivet",
       "mod_version": "3",
