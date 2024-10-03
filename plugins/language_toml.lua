@@ -6,28 +6,35 @@ syntax.add {
   name = "TOML",
   files = { "%.toml$" },
   comment = '#',
+
   patterns = {
-    { pattern = "#.-\n", type = "comment" },
-    { pattern = { '"""', '"""', '\\' }, type = "string" },
-    { pattern = { '"', '"', '\\' }, type = "string" },
-    { pattern = { "'''", "'''" }, type = "string" },
-    { pattern = { "'", "'" }, type = "string" },
-    { pattern = "[A-Za-z0-9_%.%-]+%s*%f[=]", type = "function" },
-    { pattern = "%[[A-Za-z0-9_%.%- ]+%]", type = "keyword" },
-    { pattern = "%[%[[A-Za-z0-9_%.%- ]+%]%]", type = "keyword" },
-    { pattern = "[%-+]?[0-9_]+%.[0-9_]+[eE][%-+]?[0-9_]+", type = "number" },
-    { pattern = "[%-+]?[0-9_]+%.[0-9_]+", type = "number" },
-    { pattern = "[%-+]?[0-9_]+[eE][%-+]?[0-9_]+", type = "number" },
-    { pattern = "[%-+]?[0-9_]+", type = "number" },
-    { pattern = "[%-+]?0x[0-9a-fA-F_]+", type = "number" },
-    { pattern = "[%-+]?0o[0-7_]+", type = "number" },
-    { pattern = "[%-+]?0b[01_]+", type = "number" },
-    { pattern = "[%-+]?nan", type = "number" },
-    { pattern = "[%-+]?inf", type = "number" },
-    { pattern = "[a-z]+", type = "symbol" },
+    { pattern = "#.*",                                type = "comment"  },
+
+    { pattern = { '"""', '"""', '\\' },               type = "string"   },
+    { pattern = { "'''", "'''"       },               type = "string"   },
+    { pattern = { '"',   '"',   '\\' },               type = "string"   },
+    { pattern = { "'",   "'"         },               type = "string"   },
+
+    { pattern = "[%w_%.%-]+%s*%f[=]",                 type = "function" },
+
+    { pattern = {"^%s*%[", "%]"},                     type = "keyword"  },
+
+    { pattern = "0x[%x_]+",                           type = "number"   },
+    { pattern = "0o[0-7_]+",                          type = "number"   },
+    { pattern = "0b[01_]+",                           type = "number"   },
+    { pattern = "%d[%d_]*%.?[%d_]*[eE][%-+]?[%d_]+",  type = "number"   },
+    { pattern = "%d[%d_]*%.?[$d_]*",                  type = "number"   },
+    { pattern = "%f[-+%w_][-+]%f[%w%.]",              type = "number"   },
+
+    { pattern = "[%+%-:TZ]",                          type = "operator" },
+    { pattern = "%a+",                                type = "symbol"   },
   },
+
   symbols = {
     ["true"] = "literal",
     ["false"] = "literal",
+
+    ["nan"]  = "number",
+    ["inf"]  = "number"
   },
 }
