@@ -15,8 +15,8 @@ syntax.add {
     { pattern = { '"', '"', '\\' },                                                        type = "string"   }, -- String, double apices
     { regex   = { '\\@?\\"', '\\"', '\\' },                                                type = "string"   }, -- Special string
     { pattern = { "'", "'", '\\' },                                                        type = "string"   }, -- String, apices
-    { pattern = "-?0x%x+",                                                                 type = "number"   }, -- ?
-    { pattern = "-?%d+[%d%.eE]*f?",                                                        type = "number"   }, -- ?
+    { pattern = "-?0x%x+",                                                                 type = "number"   }, -- Numbers
+    { regex   = "-?(?:\\d_?)+(?:.\\d+[eE]?)?f?",                                           type = "number"   }, -- Numbers
     { regex   = "\\w+(?=(?:\\s+\\w++\\s+\\=\\s+)|(?:\\s+\\w+\\s*[)]))",                    type = "function" }, -- Class name in class instance
     { regex   = "\\<(?:[\\w+][\\<\\w+\\>]\\,?\\s*)+\\>(?=[(]?[)]?[\\;\\s*])",              type = "keyword2" }, -- Generic Type
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                                                    type = "operator" }, -- Operators
@@ -30,7 +30,6 @@ syntax.add {
     { regex   = "^\\[.+\\]",                                                               type = "literal"  }, -- Attribute
     { regex   = "\\#\\w+(?=\\s?\\w*)",                                                     type = "keyword"  }, -- Preprocessor directive
     { pattern = "[%a_][%w_]*",                                                             type = "symbol"   }, -- Symbols
-    -- FIX: 21.to_string();
   },
   symbols = {
     ["class"] = "keyword",
