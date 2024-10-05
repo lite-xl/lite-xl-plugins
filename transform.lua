@@ -91,11 +91,11 @@ local function split(s)
 end
 
 
---- Function to call the transform command for each cursor
----@param document: the document
----@param func fun(cursor_index: number, start_line: number, start_col: number, end_line: number, end_col: number, selected_text: string)
----@param get_word boolean | nil if true the word under the cursor will be retreived if there is no selection for the current cursor, otherwise the cursor positions will be passed directly
-local function for_each_selection_of_doc(document, func, get_word)
+  --- Function to call the transform command for each cursor
+  ---@param document: the document
+  ---@param func fun(cursor_index: number, start_line: number, start_col: number, end_line: number, end_col: number, selected_text: string)
+  ---@param get_word boolean | nil if true the word under the cursor will be retreived if there is no selection for the current cursor, otherwise the cursor positions will be passed directly
+local function for_each_cursor(document, func, get_word)
   -- get_word default value 'true'
   get_word = get_word == nil or get_word
   for idx, line1, col1, line2, col2 in document:get_selections(true) do
@@ -108,15 +108,15 @@ local function for_each_selection_of_doc(document, func, get_word)
 end
 
 
----transforms the word or selection using the specified separator and clean function
----@param document: the document
----@param word_part_join_value string a string value to join the word parts with
----@param word_part_clean fun(word_part: string, i: number) | nil must return the cleaned word_part
+  ---transforms the word or selection using the specified separator and clean function
+  ---@param document: the document
+  ---@param word_part_join_value string a string value to join the word parts with
+  ---@param word_part_clean fun(word_part: string, i: number) | nil must return the cleaned word_part
 local function transform(document, word_part_join_value , word_part_clean)
     if word_part_clean == nil then
       word_part_clean = function (w,i) return w end
     end
-    for_each_selection_of_doc(
+    for_each_cursor(
       document,
       function(cursor_index, start_line, start_col, end_line, end_col, selected_text)
 
@@ -194,7 +194,7 @@ command.add("core.docview", {
 command.add("core.docview", {
   [command_names.uppercase] = function(dv)
     local document = dv.doc
-    for_each_selection_of_doc(
+    for_each_cursor(
       document,
       function (cursor_index, start_line, start_col, end_line, end_col, selected_text)
         document:replace_cursor(cursor_index,start_line, start_col, end_line, end_col,
@@ -211,7 +211,7 @@ command.add("core.docview", {
 command.add("core.docview", {
   [command_names.lowercase] = function(dv)
       local document = dv.doc
-      for_each_selection_of_doc(
+      for_each_cursor(
       document,
       function (cursor_index, start_line, start_col, end_line, end_col, selected_text)
         document:replace_cursor(cursor_index,start_line, start_col, end_line, end_col,
@@ -229,7 +229,7 @@ command.add("core.docview", {
 command.add("core.docview", {
   [command_names.capitalize_word] = function(dv)
     local document = dv.doc
-    for_each_selection_of_doc(
+    for_each_cursor(
       document,
       function (cursor_index, start_line, start_col, end_line, end_col, selected_text)
         document:replace_cursor(cursor_index, start_line, start_col, end_line, end_col,
@@ -250,7 +250,7 @@ command.add("core.docview", {
 command.add("core.docview", {
   [command_names.uppercase_next] = function(dv)
     local document = dv.doc
-    for_each_selection_of_doc(
+    for_each_cursor(
       document,
       function (cursor_index, start_line, start_col)
         document:replace_cursor(cursor_index, start_line, start_col, start_line, start_col+1,
@@ -270,7 +270,7 @@ command.add("core.docview", {
 command.add("core.docview", {
   [command_names.lowercase_next] = function(dv)
     local document = dv.doc
-    for_each_selection_of_doc(
+    for_each_cursor(
       document,
       function (cursor_index, start_line, start_col)
         document:replace_cursor(cursor_index, start_line, start_col, start_line, start_col+1,
