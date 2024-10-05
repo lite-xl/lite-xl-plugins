@@ -53,7 +53,7 @@ end
 -- allow the user to define "wordPartSeparators"
 
 
-local function get_selected_text(document, line1, col1, line2, col2)
+local function get_word_or_selection(document, line1, col1, line2, col2)
   -- if first position does not match second position
   if line1 ~= line2 or col1 ~= col2 then
 
@@ -90,45 +90,53 @@ local function split(s)
   return result
 end
 
+
+--- Function to call the transform command for each cursor
+---@param document: the document
+---@param func fun(cursor_index: number, start_line: number, start_col: number, end_line: number, end_col: number, selected_text: string)
+---@param get_word boolean | nil if true the word under the cursor will be retreived if there is no selection for the current cursor, otherwise the cursor positions will be passed directly
 local function for_each_selection_of_doc(document, func, get_word)
-    get_word = get_word == nil and true or get_word
-    for idx, line1, col1, line2, col2 in document:get_selections(true) do
-      if get_word then
-        -- args: cursor_index, start_line, start_col, end_line, end_col, selected_text
-        func(idx, get_selected_text(document, line1, col1, line2, col2))
-      else
-        func(idx, line1, col1, line2, col2, document:get_text(line1, col1, line2, col2))
-      end
+  -- get_word default value 'true'
+  get_word = get_word == nil or get_word
+  for idx, line1, col1, line2, col2 in document:get_selections(true) do
+    if get_word then
+      func(idx, get_word_or_selection(document, line1, col1, line2, col2))
+    else
+      func(idx, line1, col1, line2, col2, document:get_text(line1, col1, line2, col2))
     end
+  end
 end
 
 
 ---transforms the word or selection using the specified separator and clean function
----@param document core.doc: the document (dv.doc)
----@param word_part_join_value string: a string value to join the word parts with
+---@param document: the document
+---@param word_part_join_value string a string value to join the word parts with
 ---@param word_part_clean fun(word_part: string, i: number) | nil must return the cleaned word_part
 local function transform(document, word_part_join_value , word_part_clean)
     if word_part_clean == nil then
       word_part_clean = function (w,i) return w end
     end
-    for_each_selection_of_doc(document, function(cursor_index, start_line, start_col, end_line, end_col, selected_text)
+    for_each_selection_of_doc(
+      document,
+      function(cursor_index, start_line, start_col, end_line, end_col, selected_text)
 
-      --   split word parts
-      -- --------------------
-      -- by (lower)(upper)
-      selected_text = selected_text:gsub("([%l%d])([%u])", "%1_%2")
-      -- by single (upper)s
-      selected_text = selected_text:gsub("([%u%d])(%u)(%l)", "%1_%2%3")
-      local parts = split(selected_text)
+        --   split word parts
+        -- --------------------
+        -- by (lower)(upper)
+        selected_text = selected_text:gsub("([%l%d])([%u])", "%1_%2")
+        -- by single (upper)s
+        selected_text = selected_text:gsub("([%u%d])(%u)(%l)", "%1_%2%3")
+        local parts = split(selected_text)
 
-      -- clean each word part
-      for i,word_part in ipairs(parts) do
-        parts[i] = word_part_clean(word_part, i)
-      end
+        -- clean each word part
+        for i,word_part in ipairs(parts) do
+          parts[i] = word_part_clean(word_part, i)
+        end
 
-      local transformed_text = table.concat(parts, word_part_join_value)
-      document:replace_cursor(cursor_index,start_line,start_col,end_line,end_col, function () return transformed_text end)
-      document:move_to_cursor(cursor_index,0,#transformed_text)
+        -- replace text
+        local transformed_text = table.concat(parts, word_part_join_value)
+        document:replace_cursor(cursor_index,start_line,start_col,end_line,end_col, function() return transformed_text end)
+        document:move_to_cursor(cursor_index,0,#transformed_text)
     end)
 end
 
