@@ -6,8 +6,8 @@ syntax.add {
   files = { "%.ring$", "%.rh$", "%.rform$" },
   comment = "//",
   patterns = {
-    { pattern = "#.-\n",                  type = "comment"  },
-    { pattern = "//.-\n",                 type = "comment"  },
+    { pattern = "#.*",                    type = "comment"  },
+    { pattern = "//.*",                   type = "comment"  },
     { pattern = { "/%*", "%*/" },         type = "comment"  },
     { pattern = { '"', '"', '\\' },       type = "string"   },
     { pattern = { "'", "'", '\\' },       type = "string"   },
