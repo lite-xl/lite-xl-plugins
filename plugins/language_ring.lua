@@ -1,123 +1,73 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
+-- Keywords
+local keywords = {
+  "enablehashcomments", "disablehashcomments", "call", "class", "from", "get", "give",
+  "import", "load", "new", "package", "private", "changeringkeyword", "changeringoperator",
+  "loadsyntax", "endclass", "endpackage", "if", "but", "else", "elseif", "ok", "for",
+  "foreach", "to", "next", "catch", "step", "endfor", "while", "other", "end", "do",
+  "endwhile", "endswitch", "endtry", "try", "break", "bye", "continue", "default",
+  "endfunc", "endfunction", "return", "switch", "case", "on", "off", "again", "exit",
+  "loop", "done", "in", "func", "def"
+}
+
+-- Types using ring type hints library
+local types = {
+  "char", "unsigned", "signed", "int", "short", "long", "float", "double", "void",
+  "byte", "boolean", "string", "list", "number", "object", "public", "static",
+  "abstract", "protected", "override"
+}
+
+-- Special values
+local literals = {
+  "true", "false", "null"
+}
+
+-- Built-in functions
+local builtin_functions = {
+  "nl", "see", "put", "print"
+}
+
+local symbols = {}
+
+for _, keyword in ipairs(keywords) do
+  symbols[keyword:upper()] = "keyword"
+  symbols[keyword] = "keyword"
+end
+
+for _, type in ipairs(types) do
+  symbols[type:upper()] = "keyword2"
+  symbols[type] = "keyword2"
+end
+
+for _, literal in ipairs(literals) do
+  symbols[literal:upper()] = "literal"
+  symbols[literal] = "literal"
+end
+
+for _, func in ipairs(builtin_functions) do
+  symbols[func:upper()] = "function"
+  symbols[func] = "function"
+end
+
 syntax.add {
   name = "Ring",
   files = { "%.ring$", "%.rh$", "%.rform$" },
   comment = "//",
   patterns = {
-    { pattern = "#.*",                    type = "comment"  },
-    { pattern = "//.*",                   type = "comment"  },
-    { pattern = { "/%*", "%*/" },         type = "comment"  },
-    { pattern = { '"', '"', '\\' },       type = "string"   },
-    { pattern = { "'", "'", '\\' },       type = "string"   },
-    { pattern = { "`", "`" },             type = "string"   },
-    { pattern = "-?%d+[%d%.]*f?",         type = "number"   },
-    { pattern = "-?0x%x+",                type = "number"   },
-    { pattern = "[%+%-=/%*%^%%<>!~|&]",   type = "operator" },
-    { pattern = "[%a_][%w_]*%f[(]",       type = "function" },
-    { pattern = "[%a_][%w_]*",            type = "symbol"   },
-    { pattern = ":%a+",                   type = "literal" },
+    { pattern = "#.*",                  type = "comment"  },
+    { pattern = "//.*",                 type = "comment"  },
+    { pattern = { "/%*", "%*/" },       type = "comment"  },
+    { pattern = { '"', '"', '\\' },     type = "string"   },
+    { pattern = { "'", "'", '\\' },     type = "string"   },
+    { pattern = { "`", "`" },           type = "string"   },
+    { pattern = "-?%d+[%d%.]*f?",       type = "number"   },
+    { pattern = "-?0x%x+",              type = "number"   },
+    { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
+    { pattern = "[%a_][%w_]*%f[(]",     type = "function" },
+    { pattern = "[%a_][%w_]*",          type = "symbol"   },
+    { pattern = ":%a+",                 type = "literal"  },
   },
-  symbols = {
-    -- Keywords
-    ["enablehashcomments"] = "keyword",
-    ["disablehashcomments"] = "keyword",
-    ["call"] = "keyword",
-    ["class"] = "keyword",
-    ["from"] = "keyword",
-    ["get"] = "keyword",
-    ["give"] = "keyword",
-    ["import"] = "keyword",
-    ["load"] = "keyword",
-    ["new"] = "keyword",
-    ["package"] = "keyword",
-    ["private"] = "keyword",
-    ["changeringkeyword"] = "keyword",
-    ["changeringoperator"] = "keyword",
-    ["loadsyntax"] = "keyword",
-    ["endclass"] = "keyword",
-    ["endpackage"] = "keyword",
-
-    -- Control structures
-    ["if"] = "keyword",
-    ["but"] = "keyword",
-    ["else"] = "keyword",
-    ["elseif"] = "keyword",
-    ["ok"] = "keyword",
-    ["for"] = "keyword",
-    ["foreach"] = "keyword",
-    ["to"] = "keyword",
-    ["next"] = "keyword",
-    ["catch"] = "keyword",
-    ["step"] = "keyword",
-    ["endfor"] = "keyword",
-    ["while"] = "keyword",
-    ["other"] = "keyword",
-    ["end"] = "keyword",
-    ["do"] = "keyword",
-    ["endwhile"] = "keyword",
-    ["endswitch"] = "keyword",
-    ["endtry"] = "keyword",
-    ["try"] = "keyword",
-    ["break"] = "keyword",
-    ["bye"] = "keyword",
-    ["continue"] = "keyword",
-    ["default"] = "keyword",
-    ["endfunc"] = "keyword",
-    ["endfunction"] = "keyword",
-    ["return"] = "keyword",
-    ["switch"] = "keyword",
-    ["case"] = "keyword",
-    ["on"] = "keyword",
-    ["off"] = "keyword",
-    ["again"] = "keyword",
-    ["exit"] = "keyword",
-    ["loop"] = "keyword",
-    ["done"] = "keyword",
-    ["in"] = "keyword",
-
-    -- Built-in functions
-    ["nl"] = "function",
-    ["see"] = "function",
-    ["put"] = "function",
-    ["print"] = "function",
-
-    -- Types using ring type hints library
-    ["char"] = "keyword2",
-    ["unsigned"] = "keyword2",
-    ["signed"] = "keyword2",
-    ["int"] = "keyword2",
-    ["short"] = "keyword2",
-    ["long"] = "keyword2",
-    ["float"] = "keyword2",
-    ["double"] = "keyword2",
-    ["void"] = "keyword2",
-    ["byte"] = "keyword2",
-    ["boolean"] = "keyword2",
-    ["string"] = "keyword2",
-    ["list"] = "keyword2",
-    ["number"] = "keyword2",
-    ["object"] = "keyword2",
-    ["public"] = "keyword2",
-    ["static"] = "keyword2",
-    ["abstract"] = "keyword2",
-    ["protected"] = "keyword2",
-    ["override"] = "keyword2",
-
-    -- Special values
-    ["true"] = "literal",
-    ["false"] = "literal",
-    ["null"] = "literal",
-
-    -- Logical operators
-    ["and"] = "operator",
-    ["or"] = "operator",
-    ["not"] = "operator",
-
-    -- Special keywords
-    ["self"] = "keyword2",
-    ["func"] = "keyword",
-    ["def"] = "keyword",
-  }
+  symbols = symbols
 }
