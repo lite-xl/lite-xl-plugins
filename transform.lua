@@ -90,64 +90,59 @@ local function split(s)
   return result
 end
 
+  ---transforms the word or selection using the specified separator and clean function
+  ---@param document core.doc
+  ---@param word_part_join_value string
+  ---@param word_part_clean fun(word_part: string, i: number) | nil
+local function transform(document, word_part_join_value , word_part_clean)
 
-  --- Function to call the transform command for each cursor
-  ---@param document: the document
-  ---@param func fun(cursor_index: number, start_line: number, start_col: number, end_line: number, end_col: number, selected_text: string)
-  ---@param get_word boolean | nil if true the word under the cursor will be retreived if there is no selection for the current cursor, otherwise the cursor positions will be passed directly
-local function for_each_cursor(document, func, get_word)
-  -- get_word default value 'true'
-  get_word = get_word == nil or get_word
-  for idx, line1, col1, line2, col2 in document:get_selections(true) do
-    if get_word then
-      func(idx, get_word_or_selection(document, line1, col1, line2, col2))
-    else
-      func(idx, line1, col1, line2, col2, document:get_text(line1, col1, line2, col2))
+  if word_part_clean == nil then
+    word_part_clean = function (w,i) return w end
+  end
+
+  -- for each cursor ...                iterate backwards to avoid shifting the text
+  for cursor_index, line1, col1, line2, col2 in document:get_selections(true, true) do
+
+    local start_line, start_col, end_line, end_col, selected_text = get_word_or_selection(document, line1, col1, line2, col2)
+
+    --   split word parts
+    -- --------------------
+    -- by (lower)(upper)
+    selected_text = selected_text:gsub("([%l%d])([%u])", "%1_%2")
+    -- by single (upper)s
+    selected_text = selected_text:gsub("([%u%d])(%u)(%l)", "%1_%2%3")
+    local parts = split(selected_text)
+
+    -- clean each word part
+    for i,word_part in ipairs(parts) do
+      parts[i] = word_part_clean(word_part, i)
     end
+
+    -- replace text
+    local transformed_text = table.concat(parts, word_part_join_value)
+    document:replace_cursor(cursor_index,start_line,start_col,end_line,end_col, function() return transformed_text end)
+    document:move_to_cursor(cursor_index,0,#transformed_text)
   end
 end
 
-
-  ---transforms the word or selection using the specified separator and clean function
-  ---@param document: the document
-  ---@param word_part_join_value string a string value to join the word parts with
-  ---@param word_part_clean fun(word_part: string, i: number) | nil must return the cleaned word_part
-local function transform(document, word_part_join_value , word_part_clean)
-    if word_part_clean == nil then
-      word_part_clean = function (w,i) return w end
-    end
-    for_each_cursor(
-      document,
-      function(cursor_index, start_line, start_col, end_line, end_col, selected_text)
-
-        --   split word parts
-        -- --------------------
-        -- by (lower)(upper)
-        selected_text = selected_text:gsub("([%l%d])([%u])", "%1_%2")
-        -- by single (upper)s
-        selected_text = selected_text:gsub("([%u%d])(%u)(%l)", "%1_%2%3")
-        local parts = split(selected_text)
-
-        -- clean each word part
-        for i,word_part in ipairs(parts) do
-          parts[i] = word_part_clean(word_part, i)
-        end
-
-        -- replace text
-        local transformed_text = table.concat(parts, word_part_join_value)
-        document:replace_cursor(cursor_index,start_line,start_col,end_line,end_col, function() return transformed_text end)
-        document:move_to_cursor(cursor_index,0,#transformed_text)
-    end)
-end
-
 local function capitalize(word)
-  return word:sub(1, 1):upper() .. word:sub(2):lower()
+  return word:gsub("(%w)(%w*)", function(first, rest)
+    return first:upper() .. rest:lower()
+  end)
 end
 
 
 -- |----------------------------------|
 -- |        Transform Commands        |
 -- |----------------------------------|
+
+--   To PascalCase
+-- -----------------
+command.add("core.docview", {
+  [command_names.pascal_case] = function(dv)
+    transform(dv.doc, "", capitalize)
+  end,
+})
 
 --   To Snake_Case
 -- -----------------
@@ -173,14 +168,6 @@ command.add("core.docview", {
   end,
 })
 
---   To PascalCase
--- -----------------
-command.add("core.docview", {
-  [command_names.pascal_case] = function(dv)
-    transform(dv.doc, "", capitalize)
-  end,
-})
-
 --   To kebab-case
 -- -----------------
 command.add("core.docview", {
@@ -194,15 +181,14 @@ command.add("core.docview", {
 command.add("core.docview", {
   [command_names.uppercase] = function(dv)
     local document = dv.doc
-    for_each_cursor(
-      document,
-      function (cursor_index, start_line, start_col, end_line, end_col, selected_text)
-        document:replace_cursor(cursor_index,start_line, start_col, end_line, end_col,
+    for cursor_index, line1, col1, line2, col2 in document:get_selections(true, true) do
+      local start_line, start_col, end_line, end_col, selected_text = get_word_or_selection(document, line1, col1, line2, col2)
+      document:replace_cursor(cursor_index,start_line, start_col, end_line, end_col,
         function ()
           return selected_text:upper()
-        end)
-      end
-    )
+        end
+      )
+    end
   end,
 })
 
@@ -210,38 +196,35 @@ command.add("core.docview", {
 -- ----------------
 command.add("core.docview", {
   [command_names.lowercase] = function(dv)
-      local document = dv.doc
-      for_each_cursor(
-      document,
-      function (cursor_index, start_line, start_col, end_line, end_col, selected_text)
-        document:replace_cursor(cursor_index,start_line, start_col, end_line, end_col,
+    local document = dv.doc
+    for cursor_index, line1, col1, line2, col2 in document:get_selections(true, true) do
+      local start_line, start_col, end_line, end_col, selected_text = get_word_or_selection(document, line1, col1, line2, col2)
+      document:replace_cursor(cursor_index,start_line, start_col, end_line, end_col,
         function ()
           return selected_text:lower()
-        end)
-      end
-    )
+        end
+      )
+    end
   end,
 })
-
 
 --   Capitalize Word
 -- -------------------
 command.add("core.docview", {
   [command_names.capitalize_word] = function(dv)
     local document = dv.doc
-    for_each_cursor(
-      document,
-      function (cursor_index, start_line, start_col, end_line, end_col, selected_text)
-        document:replace_cursor(cursor_index, start_line, start_col, end_line, end_col,
+    for cursor_index, line1, col1, line2, col2 in document:get_selections(true, true) do
+      local start_line, start_col, end_line, end_col, selected_text = get_word_or_selection(document, line1, col1, line2, col2)
+      document:replace_cursor(cursor_index, start_line, start_col, end_line, end_col,
         function ()
           local words = split(selected_text)
           for i,word in ipairs(words) do
             words[i] = capitalize(word)
           end
           return table.concat(words," ")
-        end)
-      end
-    )
+        end
+      )
+    end
   end,
 })
 
@@ -250,18 +233,14 @@ command.add("core.docview", {
 command.add("core.docview", {
   [command_names.uppercase_next] = function(dv)
     local document = dv.doc
-    for_each_cursor(
-      document,
-      function (cursor_index, start_line, start_col)
-        document:replace_cursor(cursor_index, start_line, start_col, start_line, start_col+1,
+    for cursor_index, line1, col1 in document:get_selections(true, true) do
+      document:replace_cursor(cursor_index, line1, col1, line1, col1+1,
         function (text)
           return text:upper()
-        end)
-        document:move_to_cursor(cursor_index,0,1)
-      end,
-      -- get_word =
-      false
-    )
+        end
+      )
+      document:move_to_cursor(cursor_index,0,1)
+    end
   end,
 })
 
@@ -270,21 +249,15 @@ command.add("core.docview", {
 command.add("core.docview", {
   [command_names.lowercase_next] = function(dv)
     local document = dv.doc
-    for_each_cursor(
-      document,
-      function (cursor_index, start_line, start_col)
-        document:replace_cursor(cursor_index, start_line, start_col, start_line, start_col+1,
-        function (text)
-          return text:lower()
-        end)
-        document:move_to_cursor(cursor_index,0,1)
-      end,
-      -- get_word =
-      false
-    )
+    for cursor_index, line1, col1 in document:get_selections(true, true) do
+      document:replace_cursor(cursor_index, line1, col1, line1, col1+1,
+      function (text)
+        return text:lower()
+      end)
+      document:move_to_cursor(cursor_index,0,1)
+    end
   end,
 })
-
 
 -- not sure best way to add a keybind for both platforms
 keymap.add {
