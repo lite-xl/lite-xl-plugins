@@ -1,4 +1,6 @@
 -- mod-version:3
+-- Refrence: https://ring-lang.github.io/doc1.21.2/syntaxflexibility.html
+
 local syntax = require "core.syntax"
 
 -- Keywords
