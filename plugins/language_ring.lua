@@ -77,7 +77,7 @@ syntax.add {
     { pattern = "[Ff][Uu][Nn][Cc]()%s+()[%a_][%w_]*",     type = { "keyword", "normal", "function" } },
     { pattern = "[Cc][Ll][Aa][Ss][Ss]()%s+()[%a_][%w_]*", type = { "keyword", "normal", "function" } },   
     { pattern = "[%a_][%w_]*",          type = "symbol"   },
-    { pattern = "?",                    type = "keyword"  },
+    { pattern = "%?",                   type = "keyword"  },
     { pattern = ":[%a_][%w_]*",         type = "literal"  },
   },
   symbols = symbols
