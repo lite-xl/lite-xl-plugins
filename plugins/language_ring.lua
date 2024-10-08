@@ -57,6 +57,15 @@ for _, func in ipairs(builtin_functions) do
   symbols[func] = "function"
 end
 
+syntax.add {
+  name = "Ring String Interpolation",
+  files = "%.ring__string_interp$",
+  patterns = {
+    { pattern = {"%#{", "}", "\\"},     type="keyword", syntax = ".ring" },
+    { pattern = "[^ ]",                 type = "string"}
+  },
+  symbols = {}
+}
 
 syntax.add {
   name = "Ring",
@@ -66,9 +75,9 @@ syntax.add {
     { pattern = "#.*",                  type = "comment"  },
     { pattern = "//.*",                 type = "comment"  },
     { pattern = { "/%*", "%*/" },       type = "comment"  },
-    { pattern = { '"', '"', '\\' },     type = "string"   },
-    { pattern = { "'", "'", '\\' },     type = "string"   },
-    { pattern = { "`", "`" },           type = "string"   },
+    { pattern = { '"', '"', '\\' },     type = "string", syntax = ".ring__string_interp"   },
+    { pattern = { "'", "'", '\\' },     type = "string", syntax = ".ring__string_interp"   },
+    { pattern = { "`", "`" },           type = "string", syntax = ".ring__string_interp"   },
     { pattern = "-?%d+[%d%.]*f?",       type = "number"   },
     { pattern = "-?0x%x+",              type = "number"   },
     { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
