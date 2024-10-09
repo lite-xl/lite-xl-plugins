@@ -25,7 +25,7 @@ syntax.add {
         { pattern = '%(()[%a_][%w_/]*',                       type = { 'normal', 'literal' } },                       -- patterns that are like this: (my_function/subdir_1)
         { pattern = '-?0x%x+',                                type = 'number' },                                      -- Hexadecimal
         { pattern = '-?%d+[%d%.eE]*f?',                       type = 'number' },                                      -- Floating-point numbers
-        { pattern = '-?%.?%d+f?',                             type = 'number' },                                      -- Floating-point numberd
+        { pattern = '-?%.?%d+f?',                             type = 'number' },                                      -- Floating-point numbers
         { pattern = '[!%#%$%%&*+./%<=>%?@\\%^|%-~:]',         type = 'operator' },                                    -- Character classes
         { pattern = "[%a_'][%w_']*",                          type = 'normal' },                                      -- Normal
     },
