@@ -26,6 +26,7 @@ syntax.add {
     { regex   = "\\<\\w*\\>",                       type = "literal"  }, -- Function ?
     { regex   = "\\:\\s*\\w+",                      type = "keyword2" }, -- Field type
     { pattern = "[%+%-=/%*%^%%<>!~|&_:]",           type = "operator" }, -- Operators
+    { regex   = "\\#\\#",                           type = "keyword"  }, -- ##
     { regex   = [[\-\>(?=\s)]],                     type = "function" }, -- Function arrow
     { pattern = "-?[%a_][%w_]*%f[(]",               type = "function" }, -- Function name
     { pattern = "[%a_][%w_]*",                      type = "symbol"   }, -- ?
