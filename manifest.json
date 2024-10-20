@@ -2013,12 +2013,12 @@
       "version": "1.2"
     },
     {
-        "description": "A project template manager for Lite XL.",
-        "id": "ptm",
-        "mod_version": "3",
-        "name": "Project Template Manager",
-        "remote": "https://github.com/PerilousBooklet/lite-xl-ptm:f6695fa842af9d23769fdf25ad7fa9ebcfcb6e8d",
-        "version": "0.1.0"
+      "description": "A project template manager for Lite XL.",
+      "id": "ptm",
+      "mod_version": "3",
+      "name": "Project Template Manager",
+      "remote": "https://github.com/PerilousBooklet/lite-xl-ptm:f6695fa842af9d23769fdf25ad7fa9ebcfcb6e8d",
+      "version": "0.1.0"
     },
     {
       "description": "Turns Lite XL into a terminal based editor.",
