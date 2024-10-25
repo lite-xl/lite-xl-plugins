@@ -113,6 +113,10 @@ local extension_icons = {
   [".otf"]         = { "#dad8d4", "fa-font"                  },
   [".vim"]         = { "#8f00ff", "custom-vim"               },
   [".pdf"]         = { "#E53935", "fa-file_pdf_o"            },
+  [".jl"]          = { "#4063d8", "seti-julia"               },
+  [".mp4"]         = { "#e85e00", "oct-video"                },
+  [".jld2"]        = { "#888888", "fa-database"              },
+  [".ipynb"]       = { "#F37726", "seti-notebook"            },
 }
 
 
