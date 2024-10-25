@@ -2017,7 +2017,49 @@
       "id": "ptm",
       "mod_version": "3",
       "name": "Project Template Manager",
-      "remote": "https://github.com/PerilousBooklet/lite-xl-ptm:f6695fa842af9d23769fdf25ad7fa9ebcfcb6e8d",
+      "remote": "https://github.com/PerilousBooklet/lite-xl-ptm:ab51d951ffa66d4cc8eb1dd3d81517d1d431300c",
+      "version": "0.1.0"
+    },
+    {
+      "description": "A template module for C.",
+      "id": "ptm_c",
+      "mod_version": "3",
+      "remote": "https://github.com/PerilousBooklet/lite-xl-ptm:ab51d951ffa66d4cc8eb1dd3d81517d1d431300c",
+      "version": "0.1.0"
+    },
+    {
+      "description": "A template module for C++.",
+      "id": "ptm_cpp",
+      "mod_version": "3",
+      "remote": "https://github.com/PerilousBooklet/lite-xl-ptm:ab51d951ffa66d4cc8eb1dd3d81517d1d431300c",
+      "version": "0.1.0"
+    },
+    {
+      "description": "A template module for Java.",
+      "id": "ptm_java",
+      "mod_version": "3",
+      "remote": "https://github.com/PerilousBooklet/lite-xl-ptm:ab51d951ffa66d4cc8eb1dd3d81517d1d431300c",
+      "version": "0.1.0"
+    },
+    {
+      "description": "A template module for Minecraft Fabric.",
+      "id": "ptm_minecraft_fabric",
+      "mod_version": "3",
+      "remote": "https://github.com/PerilousBooklet/lite-xl-ptm:ab51d951ffa66d4cc8eb1dd3d81517d1d431300c",
+      "version": "0.1.0"
+    },
+    {
+      "description": "A template module for Minecraft Forge.",
+      "id": "ptm_minecraft_forge",
+      "mod_version": "3",
+      "remote": "https://github.com/PerilousBooklet/lite-xl-ptm:ab51d951ffa66d4cc8eb1dd3d81517d1d431300c",
+      "version": "0.1.0"
+    },
+    {
+      "description": "A metapackage for all template modules.",
+      "id": "meta_ptm",
+      "mod_version": "3",
+      "remote": "https://github.com/PerilousBooklet/lite-xl-ptm:ab51d951ffa66d4cc8eb1dd3d81517d1d431300c",
       "version": "0.1.0"
     },
     {
