@@ -4,6 +4,9 @@ local syntax = require "core.syntax"
 -- Language syntax reference
 -- https://gnome.pages.gitlab.gnome.org/vala/manual/overview.html
 
+-- https://devina.io/redos-checker
+-- https://redosdetector.com/?pattern=%5C%40%3F%5C%22&caseInsensitive=false&unicode=false
+
 syntax.add {
   name = "Vala",
   files = { "%.vala$" },
@@ -16,16 +19,24 @@ syntax.add {
     { regex   = { '\\@?\\"', '\\"', '\\' },                                                type = "string"   }, -- Special string
     { pattern = { "'", "'", '\\' },                                                        type = "string"   }, -- String, apices
     { pattern = "-?0x%x+",                                                                 type = "number"   }, -- Numbers
+    -- FIX: Vulnerable to REDO
     { regex   = "-?(?:\\d_?)+(?:.\\d+[eE]?)?f?",                                           type = "number"   }, -- Numbers
+    -- ?
     { regex   = "\\w+(?=(?:\\s+\\w++\\s+\\=\\s+)|(?:\\s+\\w+\\s*[)]))",                    type = "function" }, -- Class name in class instance
+    -- FIX: Vulnerable to REDO
     { regex   = "\\<(?:[\\w+][\\<\\w+\\>]\\,?\\s*)+\\>(?=[(]?[)]?[\\;\\s*])",              type = "keyword2" }, -- Generic Type
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                                                    type = "operator" }, -- Operators
     { pattern = "[%a_][%w_]*%f[(]",                                                        type = "function" }, -- Function
+    -- FIX: Vulnerable to REDO
     { regex   = [[\s?\:\s?(?:\w+\.?)+(?=\s?[{])]],                                         type = "keyword2" }, -- Inheritance
+    -- FIX: Vulnerable to REDO
     { regex   = [[\s?\:\s?(?:\w+(?:\.\w+)?(?:\<\w+\.\w+\>)?\s?\,?\s?)+(?=\s?[{])]],        type = "keyword2" }, -- Inheritance
+    -- FIX: Vulnerable to REDO
     { regex   = [[class()\s+\w+()\<.+\>(?=\s?\:)]],                                        type = { "keyword", "normal", "keyword2" } }, -- Generic Class Type
+    -- FIX: Vulnerable to REDO
     { regex   = [[interface()\s+\w+()\<.+\>(?=\s?\:)]],                                    type = { "keyword", "normal", "keyword2" } }, -- Generic Interface Type
     { regex   = "\\=\\>(?=[{])",                                                           type = "keyword"  }, -- Lambda
+    -- FIX: Vulnerable to REDO
     { regex   = "[A-Z][A-Z_]+(?=\\s*[)]|[\\;]|[\\,]|[\\s\\=])",                            type = "keyword2" }, -- Constants
     { regex   = "^\\[.+\\]",                                                               type = "literal"  }, -- Attribute
     { regex   = "\\#\\w+(?=\\s?\\w*)",                                                     type = "keyword"  }, -- Preprocessor directive
