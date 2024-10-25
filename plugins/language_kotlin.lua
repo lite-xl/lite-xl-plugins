@@ -22,6 +22,7 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]",              type = "operator" }, -- Operators
     { regex   = [[\?(?=\.)]],                        type = "operator" }, -- ?. operator
     { pattern = "[%a_][%w_]*%f[(]",                  type = "function" }, -- Function/Method/Class
+    { regex   = "`[\\w_\\s]+`(?=\\s*\\()",           type = "function" }, -- Test Method
     { regex   = [[let(?=\s\{)]],                     type = "function" }, -- ? operator
     { regex   = [[\?\:(?=\s?)]],                     type = "operator" }, -- elvis operator
     { regex   = [[this(?=\.?\@?)]],                  type = "keyword"  }, -- this keyword

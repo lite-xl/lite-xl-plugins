@@ -64,8 +64,10 @@
         "language_assembly_riscv": {},
         "language_assembly_x86": {},
         "language_autohotkey_v1": {},
+        "language_awk": {},
         "language_batch": {},
         "language_bazel": {},
+        "language_bend": {},
         "language_bib": {},
         "language_blade": {},
         "language_blueprint": {},
@@ -113,6 +115,7 @@
         "language_json": {},
         "language_jsx": {},
         "language_julia": {},
+        "language_kdl": {},
         "language_kotlin": {},
         "language_lilypond": {},
         "language_liquid": {},
@@ -232,11 +235,11 @@
       "version": "0.2"
     },
     {
-      "description": "Provides a build system, messages window, and easily clickable errors. Supports an internal build system, and `make`. *([screenshot](https://raw.githubusercontent.com/lite-xl/lite-xl-ide/main/screenshots/build.png))*",
+      "description": "Provides a build system, messages window, and easily clickable errors. Supports an internal build system, and `make`. *([screenshot](https://raw.githubusercontent.com/adamharrison/lite-xl-ide/main/screenshots/build.png))*",
       "id": "build",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-ide.git:95639db0f96d8d560d48fa525496329dcbadbbde",
-      "version": "0.1"
+      "remote": "https://github.com/lite-xl/lite-xl-ide.git:6edabe0f6e14cdc627a696f0d91f523290005ed0",
+      "version": "0.2"
     },
     {
       "description": "Centers document's content on the screen and adds zen mode support *([screenshot](https://user-images.githubusercontent.com/3920290/82127896-bf6e4500-97ae-11ea-97fc-ba9a552bc9a4.png))*",
@@ -255,7 +258,7 @@
     {
       "description": "Offers improvements such as highlighted comments and autocomplete for brackets, quotes and more. ([demo](https://s12.gifyu.com/images/Sckre.gif))",
       "id": "codeplus",
-      "mod_version": 3,
+      "mod_version": "3",
       "remote": "https://github.com/chqs-git/code-plus.git:b336999b707709df2ddcb865f664623c5beceabb",
       "version": "1.0"
     },
@@ -341,11 +344,11 @@
       "version": "0.1"
     },
     {
-      "description": "Provides a debugger integration, with pluggable backends. Currently supports only gdb. *([screenshot](https://raw.githubusercontent.com/lite-xl/lite-xl-ide/main/screenshots/debugger.png))*",
+      "description": "Provides a debugger integration, with pluggable backends. Currently supports only gdb. *([screenshot](https://raw.githubusercontent.com/adamharrison/lite-xl-ide/main/screenshots/debugger.png))*",
       "id": "debugger",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-ide.git:95639db0f96d8d560d48fa525496329dcbadbbde",
-      "version": "0.1"
+      "remote": "https://github.com/lite-xl/lite-xl-ide.git:6edabe0f6e14cdc627a696f0d91f523290005ed0",
+      "version": "0.2"
     },
     {
       "description": "Adds the current workspace and file to your Discord rich presence. Linux-only.",
@@ -530,8 +533,8 @@
       "description": "Shows \"git blame\" information of a line *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-gitblame/main/screenshot_1.png))*",
       "id": "gitblame",
       "mod_version": "3",
-      "remote": "https://github.com/juliardi/lite-xl-gitblame:0395fed18d3a779bc1eae26130f00a2eb23638ad",
-      "version": "0.2"
+      "remote": "https://github.com/juliardi/lite-xl-gitblame:922d6961ee87990c92adb8bc89d1ce18fe8e2ee0",
+      "version": "0.2.1"
     },
     {
       "description": "highlight changed lines from git *([screenshot](https://raw.githubusercontent.com/vincens2005/lite-xl-gitdiff-highlight/master/screenshot.png))*",
@@ -587,7 +590,7 @@
       "id": "indentguide",
       "mod_version": "3",
       "path": "plugins/indentguide.lua",
-      "version": "0.2"
+      "version": "0.3"
     },
     {
       "description": "Adds inter-process communication support, single-instance mode and tab drag and drop between instances.",
@@ -600,9 +603,17 @@
       "description": "Production and Early-Access OpenJDK Builds, from Oracle.",
       "id": "jdk",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
       "type": "library",
-      "version": "21.0.2"
+      "version": "22.0.1"
+    },
+    {
+      "description": "Simple *key HUD* for Lite XL",
+      "id": "keyhud",
+      "mod_version": "3",
+      "remote": "https://codeberg.org/Mandarancio/keyhud:77c95fed9756b0b20a78ca0f61f20b593787bf20",
+      "type": "plugin",
+      "version": "0.2.3"
     },
     {
       "description": "Exports the keymap to a JSON file.",
@@ -663,6 +674,16 @@
       "version": "0.1"
     },
     {
+      "description": "Syntax for the [Awk](https://en.wikipedia.org/wiki/AWK)(v1) programming language",
+      "id": "language_awk",
+      "mod_version": "3",
+      "path": "plugins/language_awk.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
       "description": "Syntax for Windows [Batch Files](https://en.wikipedia.org/wiki/Batch_file)",
       "id": "language_batch",
       "mod_version": "3",
@@ -677,6 +698,16 @@
       "id": "language_bazel",
       "mod_version": "3",
       "path": "plugins/language_bazel.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
+      "description": "Syntax for [Bend](https://higherorderco.com/) programming language files.",
+      "id": "language_bend",
+      "mod_version": "3",
+      "path": "plugins/language_bend.lua",
       "tags": [
         "language"
       ],
@@ -723,7 +754,7 @@
       "version": "0.1"
     },
     {
-      "description": "A syntax highlighter for the [Buzz programming language](https://buzz-lang.dev/) in lite-xl.",
+      "description": "Syntax for the [Buzz](https://buzz-lang.dev/) programming language.",
       "id": "language_buzz",
       "mod_version": "3",
       "path": "plugins/language_buzz.lua",
@@ -770,7 +801,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.2"
+      "version": "0.3"
     },
     {
       "description": "Syntax for the CMake build system language",
@@ -790,7 +821,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.2"
+      "version": "0.1"
     },
     {
       "description": "Syntax for the [Crystal](https://crystal-lang.org) programming language",
@@ -1120,7 +1151,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.2"
     },
     {
       "description": "Syntax for the [jiyu](https://github.com/machinamentum/jiyu) programming language",
@@ -1150,13 +1181,23 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for the [Julia](https://julialang.org/) programming language",
       "id": "language_julia",
       "mod_version": "3",
       "path": "plugins/language_julia.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
+      "description": "Syntax for the [KDL](https://kdl.dev) document language",
+      "id": "language_kdl",
+      "mod_version": "3",
+      "path": "plugins/language_kdl.lua",
       "tags": [
         "language"
       ],
@@ -1170,7 +1211,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "checksum": "08a9f8635b09a98cec9dfca8bb65f24fd7b6585c7e8308773e7ddff9a3e5a60f",
@@ -1301,7 +1342,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [Nix](https://nixos.wiki/wiki/Overview_of_the_Nix_Language) expression language",
@@ -1582,7 +1623,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [TypeScript](https://www.typescriptlang.org/) programming language, a typed dialect of JavaScript.",
@@ -1714,11 +1755,15 @@
       "version": "0.1"
     },
     {
-      "description": "Provides code completion (also known as IntelliSense) using the Language Server Protocol",
+      "description": "Provides intellisense by leveraging the LSP protocol.",
       "id": "lsp",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp:b1b77d143b2c6e3cd953b3573ea1a96dd61ff3bb",
-      "version": "0.7"
+      "name": "Language Server Protocol",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp.git:ed8345488ee97d3ee99605025303a40ec301a513",
+      "tags": [
+        "language server protocol"
+      ],
+      "version": "0.8"
     },
     {
       "description": "Completion menu kind/type icons for Lite XL LSP",
@@ -1731,15 +1776,22 @@
       "description": "Automatic configuration/binary download for LSP completion for C/C++ with clangd.",
       "id": "lsp_c",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
-      "version": "17.0.3"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
+      "version": "18.1.3"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for clojure with clojure-lsp.",
       "id": "lsp_clojure",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:e6460f2711c8a11495be2292e07ec894457b8c16",
-      "version": "2024.03.31"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
+      "version": "2024.04.22"
+    },
+    {
+      "description": "Automatic configuration/binary download for LSP completion for D with serve_d.",
+      "id": "lsp_d",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:975e96322c6b0e343395c56bf66360c3156dad42",
+      "version": "0.7.6"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Emmet with emmet-language-server.",
@@ -1749,32 +1801,32 @@
       "version": "2.5.0"
     },
     {
-      "description": "LSP support for JSON via vscode-json-languageserver with [additional patches](https://github.com/lite-xl/lite-xl-lsp-servers/patches/vscode-json-languageserver) for increased functionality.",
+      "description": "LSP support for JSON via vscode-json-languageserver with [additional patches](https://github.com/lite-xl/lite-xl-lsp-servers/tree/latest/patches/vscode-json-languageserver) for increased functionality.",
       "id": "lsp_json",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:69a24616439ea9078df9a7474a4b0cb82f3cf65c",
-      "version": "1.87.2.0.1"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
+      "version": "1.91.1.0.1"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Lua with lua-language-server (sumneko).",
       "id": "lsp_lua",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
-      "version": "3.7.4"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
+      "version": "3.9.3"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Java with jdtls.",
       "id": "lsp_java",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
-      "version": "1.33.0"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
+      "version": "1.37.0"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Python with Pyright.",
       "id": "lsp_python",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:71275f7e47a30ac0cbeb17706cea29a29c8267a7",
-      "version": "1.1.356"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
+      "version": "1.1.373"
     },
     {
       "description": "Automatic configuration/binary download for LSP linting for Javascript with quick-lint-js.",
@@ -1787,15 +1839,15 @@
       "description": "Automatic configuration/binary download for LSP completion for Rust with rust-analyzer.",
       "id": "lsp_rust",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:69a24616439ea9078df9a7474a4b0cb82f3cf65c",
-      "version": "20240325"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
+      "version": "20240715"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for TeX with texlab.",
       "id": "lsp_tex",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:71275f7e47a30ac0cbeb17706cea29a29c8267a7",
-      "version": "5.14.0"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
+      "version": "5.19.0"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Typescript and Javascript with typescript-language-server.",
@@ -1815,15 +1867,15 @@
       "description": "LSP support for YAML via yaml-language-server.",
       "id": "lsp_yaml",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:69a24616439ea9078df9a7474a4b0cb82f3cf65c",
-      "version": "1.14.0"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
+      "version": "1.15.0"
     },
     {
-      "description": "LSP support for Zig via zls.",
+      "description": "Automatic configuration/binary download for LSP completion for Zig via zls.",
       "id": "lsp_zig",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
-      "version": "0.11.0"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
+      "version": "0.13.0"
     },
     {
       "description": "Remaps mac modkeys `command/option` to `ctrl/alt`",
@@ -1851,7 +1903,7 @@
       "id": "minimap",
       "mod_version": "3",
       "path": "plugins/minimap.lua",
-      "version": "0.2"
+      "version": "0.3"
     },
     {
       "description": "Adds a motion-trail to the caret *([gif](https://user-images.githubusercontent.com/3920290/83256814-085ccb00-a1ab-11ea-9e35-e6633cbed1a9.gif))*",
@@ -1884,15 +1936,15 @@
       "mod_version": "3",
       "path": "plugins/nerdicons.lua",
       "type": "plugin",
-      "version": "1.2.2"
+      "version": "1.2.3"
     },
     {
-      "description": "Provides official NodeJs binaries.",
+      "description": "Official NodeJs builds.",
       "id": "nodejs",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:1df8be64ad87efa45341d8c3953df60d90f9539b",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
       "type": "library",
-      "version": "20.12.0"
+      "version": "20.15.1"
     },
     {
       "dependencies": {
@@ -1970,6 +2022,22 @@
       "name": "Multithreaded Project Search",
       "remote": "https://github.com/jgmdev/lite-xl-threads:9299a9a6b778cb34b12f0286b9162779920a9197",
       "version": "1.2"
+    },
+    {
+      "description": "A project template manager for Lite XL.",
+      "id": "ptm",
+      "mod_version": "3",
+      "name": "Project Template Manager",
+      "remote": "https://github.com/PerilousBooklet/lite-xl-ptm:f6695fa842af9d23769fdf25ad7fa9ebcfcb6e8d",
+      "version": "0.1.0"
+    },
+    {
+      "description": "Turns Lite XL into a terminal based editor.",
+      "id": "quetta",
+      "mod_version": "3",
+      "name": "Quetta",
+      "remote": "https://github.com/adamharrison/quetta.git:1b1ae07ae7cdcd04c8a23d42f401da9fbf68f34a",
+      "version": "0.52"
     },
     {
       "description": "Show nesting of parentheses with rainbow colours",
@@ -2141,13 +2209,13 @@
       "description": "An integrated terminal for lite-xl. *([screenshot](https://github.com/adamharrison/lite-xl-terminal/assets/1034518/eb8a72a0-ff61-4b95-b009-364ac2725f70))*",
       "id": "terminal",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-terminal.git:e4dc766969cacfe0be8920f3d859c8e823d0ae6a",
-      "version": "1.03"
+      "remote": "https://github.com/adamharrison/lite-xl-terminal.git:875c1efc67d2bbda4b329c35a6a9bcc408617c4d",
+      "version": "1.06"
     },
     {
       "description": "Allows you to play tetris directly in the editor.",
       "id": "tetris",
-      "mod_version": 3,
+      "mod_version": "3",
       "path": "plugins/tetris.lua",
       "tags": [
         "game"
@@ -2189,8 +2257,8 @@
       "description": "Todo tree viewer for annotations in code like `TODO`, `BUG`, `FIX`, `IMPROVEMENT`",
       "id": "todotreeview",
       "mod_version": "3",
-      "remote": "https://github.com/drmargarido/TodoTreeView:e222f7074cae607dec82fb191a4fb077e75886e2",
-      "version": "0.1.2"
+      "remote": "https://github.com/drmargarido/TodoTreeView:0b3937a0f0d761843df9b71cfea35884e839348b",
+      "version": "0.1.11"
     },
     {
       "description": "Toggles symbols between `snake_case` and `camelCase`",
@@ -2212,9 +2280,9 @@
       "description": "Tree-sitter bindings based on `lua-tree-sitter`",
       "id": "tree_sitter",
       "name": "Tree-sitter",
-      "remote": "https://github.com/xcb-xwii/lite-xl-tree-sitter:0aafd746d037e8334c26975a61acee7cf1c40da1",
+      "remote": "https://github.com/Evergreen-lxl/lite-xl-tree-sitter:9463aec4b09f6b9bb4c1f56fb5ab923335f4e554",
       "type": "library",
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     {
       "description": "Extend Lite XL's treeview menu *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-treeview-extender/main/screenshot.png))*",
@@ -2284,9 +2352,9 @@
       "description": "A simple library that provides a web client to fetch, and submit data via HTTP requests.",
       "id": "www",
       "mod_version": "3",
-      "remote": "https://github.com/adamharrison/lite-xl-www.git:aecc866c33b0a954fbd41a5de2842bb97f4ac45e",
+      "remote": "https://github.com/adamharrison/lite-xl-www.git:9372c39dafb2a0cbb21ac3b8f7ba420214872524",
       "type": "library",
-      "version": "0.1"
+      "version": "0.4"
     },
     {
       "description": "`pywal` integration with Lite XL.",
@@ -2303,8 +2371,8 @@
       "description": "A metapackage that provides the minimum functionalities for Lite XL to run as a minimal IDE.",
       "id": "ide",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
-      "version": "0.1"
+      "remote": "https://github.com/lite-xl/lite-xl-ide.git:6edabe0f6e14cdc627a696f0d91f523290005ed0",
+      "version": "0.2"
     },
     {
       "description": "A metapackage that turns Lite XL into an IDE for C/C++.",
