@@ -4,6 +4,8 @@ local syntax = require "core.syntax"
 -- Language syntax reference
 -- https://pdhonline.com/courses/e334/e334content.pdf
 
+-- Regex REDOs check tool: https://devina.io/redos-checker
+
 syntax.add {
   name = "PLC Structured Text IEC 61131-3",
   files = { "%.stx?$", "%.iecst$" },
@@ -14,7 +16,9 @@ syntax.add {
     { pattern = { "%(%*", "%*%)" },                         type = "comment"  }, -- Multi-line comment
     { pattern = { '"', '"', '\\' },                         type = "string"   }, -- String, quotation marks
     { pattern = { "'", "'", '\\' },                         type = "string"   }, -- String, apices
+    -- FIX: Vulnerable to REDO
     { regex   = "\\w+\\#[0-9]+m?s?",                        type = "number"   }, -- Time/Date formats
+    -- FIX: Vulnerable to REDO
     { regex   = "\\w+(?=[(])",                              type = "function" }, -- Function
     { pattern = "[%a_][%w_]*",                              type = "symbol"   }, -- Symbols
     { regex   = "^\\s*[A-Z]+_[A-Z]*\\s?\\;?\\s?",           type = "keyword"  }, -- Keyword
