@@ -19,24 +19,24 @@ syntax.add {
     { regex   = { '\\@?\\"', '\\"', '\\' },                                                type = "string"   }, -- Special string
     { pattern = { "'", "'", '\\' },                                                        type = "string"   }, -- String, apices
     { pattern = "-?0x%x+",                                                                 type = "number"   }, -- Numbers
-    -- FIX: Vulnerable to REDO
+    -- FIX: Vulnerable to REDOs
     { regex   = "-?(?:\\d_?)+(?:.\\d+[eE]?)?f?",                                           type = "number"   }, -- Numbers
     -- ?
     { regex   = "\\w+(?=(?:\\s+\\w++\\s+\\=\\s+)|(?:\\s+\\w+\\s*[)]))",                    type = "function" }, -- Class name in class instance
-    -- FIX: Vulnerable to REDO
+    -- FIX: Vulnerable to REDOs
     { regex   = "\\<(?:[\\w+][\\<\\w+\\>]\\,?\\s*)+\\>(?=[(]?[)]?[\\;\\s*])",              type = "keyword2" }, -- Generic Type
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                                                    type = "operator" }, -- Operators
     { pattern = "[%a_][%w_]*%f[(]",                                                        type = "function" }, -- Function
-    -- FIX: Vulnerable to REDO
+    -- FIX: Vulnerable to REDOs
     { regex   = [[\s?\:\s?(?:\w+\.?)+(?=\s?[{])]],                                         type = "keyword2" }, -- Inheritance
-    -- FIX: Vulnerable to REDO
+    -- FIX: Vulnerable to REDOs
     { regex   = [[\s?\:\s?(?:\w+(?:\.\w+)?(?:\<\w+\.\w+\>)?\s?\,?\s?)+(?=\s?[{])]],        type = "keyword2" }, -- Inheritance
-    -- FIX: Vulnerable to REDO
+    -- FIX: Vulnerable to REDOs
     { regex   = [[class()\s+\w+()\<.+\>(?=\s?\:)]],                                        type = { "keyword", "normal", "keyword2" } }, -- Generic Class Type
-    -- FIX: Vulnerable to REDO
+    -- FIX: Vulnerable to REDOs
     { regex   = [[interface()\s+\w+()\<.+\>(?=\s?\:)]],                                    type = { "keyword", "normal", "keyword2" } }, -- Generic Interface Type
     { regex   = "\\=\\>(?=[{])",                                                           type = "keyword"  }, -- Lambda
-    -- FIX: Vulnerable to REDO
+    -- FIX: Vulnerable to REDOs
     { regex   = "[A-Z][A-Z_]+(?=\\s*[)]|[\\;]|[\\,]|[\\s\\=])",                            type = "keyword2" }, -- Constants
     { regex   = "^\\[.+\\]",                                                               type = "literal"  }, -- Attribute
     { regex   = "\\#\\w+(?=\\s?\\w*)",                                                     type = "keyword"  }, -- Preprocessor directive
