@@ -1150,7 +1150,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1.2"
+      "version": "0.1.3"
     },
     {
       "description": "Syntax for the [jiyu](https://github.com/machinamentum/jiyu) programming language",
