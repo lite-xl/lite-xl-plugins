@@ -19,8 +19,8 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                                     type = "operator" },
     { pattern = "[%a_][%w_]*%f[(]",                                         type = "function" },
     { regex   = "(?:\\w++\\.?)+(?=\\s+\\w++\\s*\\=\\s*)",                   type = "function" }, -- Class name when creating an object
-    { regex   = "[A-Z][A-Z_\\d?]+(?=\\s*[)]|[\\;]|[\\,]|[\\s\\=]|[\\.])",   type = "keyword2" }, -- Constants
-    { pattern = "[%a_][%w_]*",                                              type = "symbol"   },
+    { regex   = "[A-Z](?:A-Z_\\d?)+(?=\\s*[)]|[\\;]|[\\,]|[\\s\\=]|[\\.])", type = "keyword2" }, -- Constants
+    { pattern = "[%a_][%w_]*",                                              type = "symbol"   }
   },
   symbols = {
     ["abstract"]      = "keyword",
