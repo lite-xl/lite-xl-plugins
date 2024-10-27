@@ -3,8 +3,8 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 syntax.add {
-    name = "Clojure", -- tested ok
-    comment = ";;",   -- tested ok
+    name = "Clojure",
+    comment = ";;",
     files = { 
         "%.clj$",
         "%.cljs$", 
@@ -12,23 +12,22 @@ syntax.add {
         "%.edn$",
     },
     patterns = {
-        { pattern = ';;.*',                                   type = 'comment' },                                     -- tested ok
-        { pattern = ';.*',                                    type = 'comment' },                                     -- tested ok
-        { pattern = { '#"', '"', '\\' },                      type = 'string' },                                      -- tested ok
-        { pattern = { '"', '"', '\\' },                       type = 'string' },                                      -- tested ok
-        { pattern = { '"""', '"""', '\\' },                   type = 'string' },                                      -- tested ok
-        { pattern = 'Retention()%s+()[%a_][%w_/]*',           type = { 'keyword', 'normal', 'literal' } },            -- tested ok
-        { pattern = ':[%a_][%w_/%-]*',                        type = 'keyword2' },                                    -- tested ok
-        { pattern = '[%a_][%w_]*()%.()[%a_][%w_/%-]*',        type = { 'keyword', 'operator', 'keyword2' } },
-        { pattern = "%(()def()%s+()[%a_][%w_%-]*",            type = { "normal", "keyword", "literal", 'literal' } }, -- tested ok
-        { pattern = "%(()def[%a_][%w_]*()%s+()[%a_][%w_%-]*", type = { "normal", "keyword", "literal", 'literal' } }, -- tested ok
-        { pattern = '%(()require()%s+()[%a_][%w_]*',          type = { 'normal', 'keyword', 'literal', 'literal' } }, -- tested ok
-        { pattern = '%(()[%a_][%w_/]*',                       type = { 'normal', 'literal' } },                       -- tested ok
-        { pattern = '-?0x%x+',                                type = 'number' },                                      -- tested ok
-        { pattern = '-?%d+[%d%.eE]*f?',                       type = 'number' },                                      -- tested ok
-        { pattern = '-?%.?%d+f?',                             type = 'number' },                                      -- tested ok
-        { pattern = '[!%#%$%%&*+./%<=>%?@\\%^|%-~:]',         type = 'operator' },                                    -- tested ok
-        { pattern = "[%a_'][%w_']*",                          type = 'normal' },                                      -- tested ok
+        { pattern = ';;.*',                                   type = 'comment' },                                     -- Single-line Comment
+        { pattern = ';.*',                                    type = 'comment' },                                     -- Single-line Comment
+        { pattern = { '#"', '"', '\\' },                      type = 'string' },                                      -- Multiline String
+        { pattern = { '"', '"', '\\' },                       type = 'string' },                                      -- Multiline String
+        { pattern = { '"""', '"""', '\\' },                   type = 'string' },                                      -- Multiline String
+        { pattern = ':[%a_][%w_/%-]*',                        type = 'keyword2' },                                    -- word after ':' a.k.a (Var metadata)
+        { pattern = '[%a_][%w_]*()%.()[%a_][%w_/%-]*',        type = { 'keyword', 'operator', 'keyword2' } },         -- Things like something.something
+        { pattern = "%(()def()%s+()[%a_][%w_%-]*",            type = { "normal", "keyword", "literal", 'literal' } }, -- function definition
+        { pattern = "%(()def[%a_][%w_]*()%s+()[%a_][%w_%-]*", type = { "normal", "keyword", "literal", 'literal' } }, -- function definition but with something along with def like: defn, defmacro etc.
+        { pattern = '%(()require()%s+()[%a_][%w_]*',          type = { 'normal', 'keyword', 'literal', 'literal' } }, -- highlight the word after require keyword
+        { pattern = '%(()[%a_][%w_/]*',                       type = { 'normal', 'literal' } },                       -- patterns that are like this: (my_function/subdir_1)
+        { pattern = '-?0x%x+',                                type = 'number' },                                      -- Hexadecimal
+        { pattern = '-?%d+[%d%.eE]*f?',                       type = 'number' },                                      -- Floating-point numbers
+        { pattern = '-?%.?%d+f?',                             type = 'number' },                                      -- Floating-point numbers
+        { pattern = '[!%#%$%%&*+./%<=>%?@\\%^|%-~:]',         type = 'operator' },                                    -- Character classes
+        { pattern = "[%a_'][%w_']*",                          type = 'normal' },                                      -- Normal
     },
     symbols = {
         ['def']        = 'keyword',  -- tested ok
