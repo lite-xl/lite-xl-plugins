@@ -4,7 +4,7 @@ local syntax = require "core.syntax"
 -- Language syntax reference
 -- https://pdhonline.com/courses/e334/e334content.pdf
 
--- Regex REDOss check tool: https://devina.io/redos-checker
+-- Regex REDOs check tool: https://devina.io/redos-checker
 
 syntax.add {
   name = "PLC Structured Text IEC 61131-3",
