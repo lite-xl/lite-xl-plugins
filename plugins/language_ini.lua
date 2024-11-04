@@ -4,7 +4,7 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "INI",
-  files = { "%.ini$", "%.inf$", "%.cfg$", "%.editorconfig$" },
+  files = { "%.ini$", "%.inf$", "%.cfg$", "%.editorconfig$", "%.theme$", "%.dockitem$" },
   comment = ';',
   patterns = {
     { pattern = ";.-\n", type = "comment" },
