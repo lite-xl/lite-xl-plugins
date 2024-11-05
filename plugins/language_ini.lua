@@ -7,8 +7,8 @@ syntax.add {
   files = { "%.ini$", "%.inf$", "%.cfg$", "%.editorconfig$", "%.theme$", "%.dockitem$" },
   comment = ';',
   patterns = {
-    { pattern = ";.-\n", type = "comment" },
-    { pattern = "#.-\n", type = "comment" },
+    { pattern = ";.*", type = "comment" },
+    { pattern = "#.*", type = "comment" },
     { pattern = { "%[", "%]" }, type = "keyword" },
 
     { pattern = { '"""', '"""', '\\' }, type = "string" },
