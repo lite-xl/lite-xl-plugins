@@ -137,6 +137,7 @@
         "language_php": {},
         "language_pico8": {},
         "language_pkgbuild": {},
+        "language_plantuml": {},
         "language_po": {},
         "language_powershell": {},
         "language_psql": {},
@@ -1418,6 +1419,16 @@
       "id": "language_pkgbuild",
       "mod_version": "3",
       "path": "plugins/language_pkgbuild.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
+      "description": "Syntax for [PlantUML](https://plantuml.com/).",
+      "id": "language_plantuml",
+      "mod_version": "3",
+      "path": "plugins/language_plantuml.lua",
       "tags": [
         "language"
       ],
