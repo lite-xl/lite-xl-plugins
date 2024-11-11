@@ -293,6 +293,14 @@
       "version": "0.1"
     },
     {
+      "description": "Diff library that yields.",
+      "id": "coro_diff",
+      "mod_version": "3",
+      "remote": "https://github.com/Guldoman/lite-xl-coro_diff:5f7d422cf6f03e958bbc32c714a81fc5aaef6970",
+      "type": "library",
+      "version": "0.1.1"
+    },
+    {
       "description": "Customize the caret in the editor",
       "id": "custom_caret",
       "mod_version": "3",
@@ -2041,6 +2049,14 @@
       "mod_version": "3",
       "path": "plugins/regexreplacepreview.lua",
       "version": "0.2"
+    },
+    {
+      "description": "Rename files in bulk",
+      "id": "renamer",
+      "mod_version": "3",
+      "name": "Renamer",
+      "remote": "https://github.com/Guldoman/lite-xl-renamer:49dfdcd8951b22f44515f0e9b70489e750b1c4a2",
+      "version": "0.1.0"
     },
     {
       "description": "Keep a list of recently closed tabs, and restore the tab in order on ctrl+shift+t.",
