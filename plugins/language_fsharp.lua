@@ -1,6 +1,7 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
+-- Language Syntax References
 -- https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/
 
 syntax.add {
