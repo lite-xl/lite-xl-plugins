@@ -75,7 +75,7 @@ syntax.add {
     { pattern = { "/%*", "%*/" },       type = "comment"  },
     { pattern = { '"', '"', '\\' },     type = "string", syntax = string_syntax },
     { pattern = { "'", "'", '\\' },     type = "string", syntax = string_syntax },
-    { pattern = { "`", "`" },           type = "string", syntax = string_syntax },
+    { pattern = { "`", "`", '\\' },     type = "string", syntax = string_syntax },
     { pattern = "-?%d+[%d%.]*f?",       type = "number"   },
     { pattern = "-?0x%x+",              type = "number"   },
     { pattern = "[%+%-=/%*%^%%<>!~|&]", type = "operator" },
