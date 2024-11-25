@@ -57,9 +57,7 @@ for _, func in ipairs(builtin_functions) do
   symbols[func] = "function"
 end
 
-syntax.add {
-  name = "Ring String Interpolation",
-  files = "%.ring__string_interp$",
+local string_syntax = {
   patterns = {
     { pattern = {"%#{", "}", "\\"},     type="keyword", syntax = ".ring" },
     { pattern = "[^ ]",                 type = "string"}
