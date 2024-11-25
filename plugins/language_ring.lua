@@ -60,7 +60,8 @@ end
 local string_syntax = {
   patterns = {
     { pattern = {"%#{", "}", "\\"},     type="keyword", syntax = ".ring" },
-    { pattern = "[^ ]",                 type = "string"}
+    { pattern = "[^#\"`']+",            type = "string"},
+    { pattern = "[#\"`']",              type = "string"}
   },
   symbols = {}
 }
