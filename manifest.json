@@ -581,6 +581,14 @@
       "version": "1.0"
     },
     {
+      "description": "Official Haxe builds.",
+      "id": "haxe",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:e6ff9c7e14ccb16c919ba4731666ff491a1c3fb3",
+      "type": "library",
+      "version": "4.3.6"
+    },
+    {
       "description": "Dark (or even Mica!) title bar for Lite XL",
       "id": "immersive-title",
       "mod_version": "3",
@@ -1818,6 +1826,13 @@
       "mod_version": "3",
       "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
       "version": "2.5.0"
+    },
+    {
+      "description": "Automatic configuration/binary download for LSP completion for Haxe with haxe-language-server.",
+      "id": "lsp_haxe",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:e6ff9c7e14ccb16c919ba4731666ff491a1c3fb3",
+      "version": "2.32.2"
     },
     {
       "description": "LSP support for JSON via vscode-json-languageserver with [additional patches](https://github.com/lite-xl/lite-xl-lsp-servers/tree/latest/patches/vscode-json-languageserver) for increased functionality.",
