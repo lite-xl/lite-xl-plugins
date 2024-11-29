@@ -1,7 +1,7 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
--- Language syntax reference
+-- Language syntax references
 -- https://pdhonline.com/courses/e334/e334content.pdf
 
 syntax.add {
@@ -14,10 +14,9 @@ syntax.add {
     { pattern = { "%(%*", "%*%)" },                         type = "comment"  }, -- Multi-line comment
     { pattern = { '"', '"', '\\' },                         type = "string"   }, -- String, quotation marks
     { pattern = { "'", "'", '\\' },                         type = "string"   }, -- String, apices
-    -- FIX: Vulnerable to REDOs
-    { regex   = "\\w+\\#[0-9]+m?s?",                        type = "number"   }, -- Time/Date formats
-    -- FIX: Vulnerable to REDOs
-    { regex   = "\\w+(?=[(])",                              type = "function" }, -- Function
+    { regex   = "\\s\\w+\\#[0-9]+[m|s]?",                   type = "number"   }, -- Time/Date formats
+    -- WIP: Vulnerable to REDOs
+    { regex   = "\\s*\\w+(?=[(])",                          type = "function" }, -- Function \s*\w+(?=[(])
     { pattern = "[%a_][%w_]*",                              type = "symbol"   }, -- Symbols
     { regex   = "^\\s*[A-Z]+_[A-Z]*\\s?\\;?\\s?",           type = "keyword"  }, -- Keyword
     { regex   = "\\:\\s*\\w+",                              type = "keyword2" }, -- Variable/Method Type
