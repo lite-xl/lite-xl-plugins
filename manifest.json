@@ -1566,14 +1566,14 @@
       "version": "0.1"
     },
     {
-      "description": "Syntax for PLC Structured Text IEC 61131-3 standard",
+      "description": "Syntax for PLC Structured Text IEC 61131-3 standard.",
       "id": "language_st",
       "mod_version": "3",
       "path": "plugins/language_st.lua",
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [Uxntal](https://wiki.xxiivv.com/site/uxntal) assembly language",
