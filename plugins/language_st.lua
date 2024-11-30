@@ -14,17 +14,15 @@ syntax.add {
     { pattern = { "%(%*", "%*%)" },                         type = "comment"  }, -- Multi-line comment
     { pattern = { '"', '"', '\\' },                         type = "string"   }, -- String, quotation marks
     { pattern = { "'", "'", '\\' },                         type = "string"   }, -- String, apices
-    { regex   = [[\w+#[0-9]+[ms]?]],                        type = "number"   }, -- Time/Date formats
+    { regex   = [[\w+#[0-9]+m?s?]],                         type = "number"   }, -- Time/Date formats
     { regex   = [[(?>[^(\W]+)(?=\()]],                      type = "function" }, -- Function
     { pattern = "[%a_][%w_]*",                              type = "symbol"   }, -- Symbols
-    { regex   = "^\\s*[A-Z]+_[A-Z]*\\s?\\;?\\s?",           type = "keyword"  }, -- Keyword
-    { regex   = "\\:\\s*\\w+",                              type = "keyword2" }, -- Variable/Method Type
-    { regex   = "(?:\\-|\\+)?\\d+\\.*(?:\\-|\\+)?\\d+",     type = "number"   }, -- Number Range
+    { regex   = [[:\s*\w+]],                                type = "keyword2" }, -- Variable/Method Type
+    { regex   = [[[-+]?\d+\.{2,4}[-+]?\d+]],                type = "number"   }, -- Number Range
     { pattern = "[%+%-=/%*%^%%<>!~|&:]",                    type = "operator" }, -- Operators
     { pattern = "-?0x%x+",                                  type = "number"   }, -- Number
     { pattern = "-?%d+[%deE]*f?",                           type = "number"   }, -- Number
     { pattern = "-?%.?%d+f?",                               type = "number"   }, -- Number
-    { regex   = "^\\w+()\\s(?:[A-Z]+[a-z]*\\_?)+(?=\\w*)",  type = { "normal", "function" } }, -- Function implementation
   },
   symbols = {
     ["PROGRAM"] = "keyword",
