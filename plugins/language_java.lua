@@ -9,27 +9,27 @@ syntax.add {
   files = { "%.java$" },
   comment = "//",
   patterns = {
-    { pattern = "//.*",                                       type = "comment"  },
-    { pattern = { "/%*", "%*/" },                             type = "comment"  },
-    { pattern = { '"', '"', '\\' },                           type = "string"   },
-    { pattern = { "'", "'", '\\' },                           type = "string"   },
-    { pattern = "'\\x%x?%x?%x?%x'",                           type = "string"   }, -- character hexadecimal escape sequence
-    { pattern = "'\\u%x%x%x%x'",                              type = "string"   }, -- character unicode escape sequence
-    { pattern = "'\\?.'",                                     type = "string"   }, -- character literal
-    { pattern = "-?0x%x+",                                    type = "number"   },
-    { pattern = "-?%d+[%d%.eE]*f?",                           type = "number"   },
-    { pattern = "-?%.?%d+f?",                                 type = "number"   },
-    { pattern = "[%+%-=/%*%^%%<>!~|&]",                       type = "operator" },
-    { pattern = "[%a_][%w_]*%f[(]",                           type = "function" },
-    { regex   = "(?>\\w+\\.?)+(?=\\s+\\w++\\s*\\=\\s*)",      type = "function" }, -- Class name when creating an object
-    { regex   = [[this(?=\.?\@?)]],                           type = "keyword"  }, -- this keyword
-    { regex   = "^\\@.+",                                     type = "keyword2" }, -- Annotations
-    { regex   = [[[a-zA-Z]+\@(?=\s?[a-zA-Z])]],               type = "keyword2" }, -- Annotations (this pattern is lower priority than the `this keyword` pattern)
-    { pattern = "import()%s+()[%w_.]+",                       type = { "keyword", "normal", "normal" } },
-    { regex   = "[A-Z](?:[A-Z_][\\d]*)+",                     type = "keyword2" }, -- Constants
-    { pattern = "[%a_][%w_]*",                                type = "symbol"   },
-    -- TODO: generic class instance pattern
-    -- FIX: class instance pattern like "ForgeConfigSpec.IntValue"
+    { pattern = "//.*",                                             type = "comment"  },
+    { pattern = { "/%*", "%*/" },                                   type = "comment"  },
+    { pattern = { '"', '"', '\\' },                                 type = "string"   },
+    { pattern = { "'", "'", '\\' },                                 type = "string"   },
+    { pattern = "'\\x%x?%x?%x?%x'",                                 type = "string"   }, -- character hexadecimal escape sequence
+    { pattern = "'\\u%x%x%x%x'",                                    type = "string"   }, -- character unicode escape sequence
+    { pattern = "'\\?.'",                                           type = "string"   }, -- character literal
+    { pattern = "-?0x%x+",                                          type = "number"   },
+    { pattern = "-?%d+[%d%.eE]*f?",                                 type = "number"   },
+    { pattern = "-?%.?%d+f?",                                       type = "number"   },
+    { pattern = "[%+%-=/%*%^%%<>!~|&]",                             type = "operator" },
+    { pattern = "[%a_][%w_]*%f[(]",                                 type = "function" },
+    { regex   = "(?>\\w+\\.?)+\\<.+?\\>(?=\\s+\\w+\\s*)?",          type = "function" }, -- Generic class name reference
+    { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)",                    type = "function" }, -- Class name reference
+    { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)?(?=\\s*\\{)",        type = "function" }, -- Class name
+    { regex   = [[this(?=\.?\@?)]],                                 type = "keyword"  }, -- this keyword
+    { regex   = "^\\s*\\@.+",                                       type = "keyword2" }, -- Annotations
+    { pattern = "import()%s+()[%w_.]+",                             type = { "keyword", "normal", "normal" } }, -- Import
+    { regex   = "[A-Z](?:[A-Z_][\\d]*)+",                           type = "keyword2" }, -- Constants
+    { pattern = "[%a_][%w_]*",                                      type = "symbol"   },
+    -- TODO: method reference operator (https://www.geeksforgeeks.org/double-colon-operator-in-java/)
   },
   symbols = {
     ["abstract"]      = "keyword",
