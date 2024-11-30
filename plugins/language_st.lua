@@ -14,7 +14,7 @@ syntax.add {
     { pattern = { "%(%*", "%*%)" },                         type = "comment"  }, -- Multi-line comment
     { pattern = { '"', '"', '\\' },                         type = "string"   }, -- String, quotation marks
     { pattern = { "'", "'", '\\' },                         type = "string"   }, -- String, apices
-    { regex   = "\\s\\w+\\#[0-9]+[m|s]?",                   type = "number"   }, -- Time/Date formats
+    { regex   = [[\w+#[0-9]+[ms]?]],                        type = "number"   }, -- Time/Date formats
     { regex   = "(?>[^(\\W]+)(?=\\()",                      type = "function" }, -- Function
     { pattern = "[%a_][%w_]*",                              type = "symbol"   }, -- Symbols
     { regex   = "^\\s*[A-Z]+_[A-Z]*\\s?\\;?\\s?",           type = "keyword"  }, -- Keyword
