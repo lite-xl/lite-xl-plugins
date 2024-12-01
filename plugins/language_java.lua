@@ -21,12 +21,12 @@ syntax.add {
     { pattern = "-?%.?%d+f?",                                       type = "number"   },
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                             type = "operator" },
     { pattern = "[%a_][%w_]*%f[(]",                                 type = "function" },
+    { pattern = "import()%s+()[%w_.]+",                             type = { "keyword", "normal", "normal" } }, -- Import
     { regex   = "(?>\\w+\\.?)+\\<.+?\\>(?=\\s+\\w+\\s*)?",          type = "function" }, -- Generic class name reference
     { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)",                    type = "function" }, -- Class name reference
     { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)?(?=\\s*\\{)",        type = "function" }, -- Class name
     { regex   = [[this(?=\.?\@?)]],                                 type = "keyword"  }, -- this keyword
     { regex   = "^\\s*\\@.+",                                       type = "keyword2" }, -- Annotations
-    { pattern = "import()%s+()[%w_.]+",                             type = { "keyword", "normal", "normal" } }, -- Import
     { regex   = "[A-Z](?:[A-Z_][\\d]*)+",                           type = "keyword2" }, -- Constants
     { pattern = "[%a_][%w_]*",                                      type = "symbol"   },
     -- TODO: method reference operator (https://www.geeksforgeeks.org/double-colon-operator-in-java/)
