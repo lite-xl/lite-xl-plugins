@@ -28,8 +28,9 @@ syntax.add {
     { regex   = [[this(?=\.?\@?)]],                                 type = "keyword"  }, -- this keyword
     { regex   = "^\\s*\\@.+",                                       type = "keyword2" }, -- Annotations
     { regex   = "[A-Z](?:[A-Z_][\\d]*)+",                           type = "keyword2" }, -- Constants
+    { pattern = "%:%:()%w+",                                        type = { "normal", "function" } }, -- Method reference with double colon operator
     { pattern = "[%a_][%w_]*",                                      type = "symbol"   },
-    -- TODO: method reference operator (https://www.geeksforgeeks.org/double-colon-operator-in-java/)
+    -- TODO: check all regex patterns for REDOs vulnerability
   },
   symbols = {
     ["abstract"]      = "keyword",
