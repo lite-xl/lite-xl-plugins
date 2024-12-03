@@ -1,15 +1,18 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
+-- Language Syntax References
+-- https://groovy-lang.org/syntax.html
+
 syntax.add {
   name = "Groovy",
-  files = { "%.groovy$" },
+  files = { "%.groovy$", "%.gvy$", "%.gy$", "%.gsh$" },
   comment = "//",
   block_comment = { "/*", "*/" },
   patterns = {
     { pattern = "//.*",                          type = "comment"  }, -- Single-line comment
     { pattern = { "/%*", "%*/" },                type = "comment"  }, -- Multi-line comment
-    { pattern = { '"', '"', '\\' },              type = "string"   }, -- String, double quotes
+    { pattern = { '"', '"', '\\' },              type = "string"   }, -- String, double quotes (also matches triple quotes for multi-line string)
     { pattern = { "'", "'", '\\' },              type = "string"   }, -- String, apices
     { pattern = { "%/", "%/", '\\' },            type = "string"   }, -- Slashy string
     { pattern = { "%$%/", "%/%$", '\\' },        type = "string"   }, -- Dollar slashy string
@@ -23,11 +26,10 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]",          type = "operator" }, -- Operators
     { pattern = "[%a_][%w_]*%f[(]",              type = "function" }, -- Function/Class/Method/...
     { pattern = "[%a_][%w_]*%f[%[]",             type = "function" }, -- Custom Type
-    { regex   = "[A-Z]+_?[A-Z]+",                type = "keyword2" }, -- Constants
+    { regex   = "[A-Z](?:[A-Z_][\\d]*)+",        type = "keyword2" }, -- Constants
     { pattern = "import()%s+()[%w_.]+",          type = { "keyword", "normal", "normal" } },
     { pattern = "[%a_][%w_]*",                   type = "symbol"   }, -- ?
-    { pattern = "[a-zA-Z]+%.+",                  type = "function" }, -- Lib path
-    -- TODO: .class.
+    -- TODO: .class
   },
   symbols = {
     -- Reserved keywords
