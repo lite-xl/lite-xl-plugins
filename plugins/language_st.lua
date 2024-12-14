@@ -14,10 +14,10 @@ syntax.add {
     { pattern = { "%(%*", "%*%)" },                         type = "comment"  }, -- Multi-line comment
     { pattern = { '"', '"', '\\' },                         type = "string"   }, -- String, quotation marks
     { pattern = { "'", "'", '\\' },                         type = "string"   }, -- String, apices
-    { regex   = [[\w+#[0-9]+m?s?]],                         type = "number"   }, -- Time/Date formats
+    { pattern = "%w+#[0-9]+m?s?",                           type = "number"   }, -- Time/Date formats
     { regex   = [[(?>[^(\W]+)(?=\()]],                      type = "function" }, -- Function
     { pattern = "[%a_][%w_]*",                              type = "symbol"   }, -- Symbols
-    { regex   = [[:\s*\w+]],                                type = "keyword2" }, -- Variable/Method Type
+    { pattern = ":%s*%w+",                                  type = "keyword2" }, -- Variable/Method Type
     { regex   = [[[-+]?\d+\.{2,4}[-+]?\d+]],                type = "number"   }, -- Number Range
     { pattern = "[%+%-=/%*%^%%<>!~|&:]",                    type = "operator" }, -- Operators
     { pattern = "-?0x%x+",                                  type = "number"   }, -- Number
