@@ -26,11 +26,10 @@ syntax.add {
     { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)",                    type = "function" }, -- Class name reference
     { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)?(?=\\s*\\{)",        type = "function" }, -- Class name
     { regex   = [[this(?=\.?\@?)]],                                 type = "keyword"  }, -- this keyword
-    { regex   = "^\\s*\\@.+",                                       type = "keyword2" }, -- Annotations
+    { pattern = "^%s*%@.+",                                         type = "keyword2" }, -- Annotations
     { regex   = "[A-Z](?:[A-Z_][\\d]*)+",                           type = "keyword2" }, -- Constants
     { pattern = "%:%:()%w+",                                        type = { "normal", "function" } }, -- Method reference with double colon operator
     { pattern = "[%a_][%w_]*",                                      type = "symbol"   },
-    -- TODO: check all regex patterns for REDOs vulnerability
   },
   symbols = {
     ["abstract"]      = "keyword",
