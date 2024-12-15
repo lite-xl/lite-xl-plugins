@@ -21,22 +21,17 @@ syntax.add {
     { pattern = "-?0x%x+",                                                                 type = "number"   }, -- Numbers
     { pattern = "-?%d+[%d%.eE]*f?",                                                        type = "number"   }, -- Numbers
     { pattern = "-?%.?%d+f?",                                                              type = "number"   }, -- Numbers
-    { regex   = "(?>\\w+\\.?)+\\<.+?\\>(?=\\s+\\w+\\s*)?",                                 type = "function" }, -- Generic class name reference
-    { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)",                                           type = "function" }, -- Class name reference
+    -- FIX: Vulnerable to REDOs
+    { regex   = "\\<(?:[\\w+][\\<\\w+\\>]\\,?\\s*)+\\>\\>*(?=[(]?[)]?[\\;\\s*])",          type = "keyword2" }, -- Generic Type
+    { regex   = "(?>\\w+\\.?)+\\,?\\<.+?\\>\\>*(?=\\s+\\w+\\s*)?",                         type = "function" }, -- Generic class name reference
+    -- FIX: it also matches var names with a following ,
+    { regex   = "(?>\\w+\\.?)+\\,?(?=\\s+\\w+\\s*)",                                       type = "function" }, -- Class name reference
+    -- FIX: it also matches var names with a following ,
     { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)?(?=\\s*\\{)",                               type = "function" }, -- Class name
     { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)?(?=\\s*\\:)",                               type = "function" }, -- Class name
-    -- FIX: Vulnerable to REDOs
-    { regex   = "\\<(?:[\\w+][\\<\\w+\\>]\\,?\\s*)+\\>(?=[(]?[)]?[\\;\\s*])",              type = "keyword2" }, -- Generic Type
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                                                    type = "operator" }, -- Operators
     { pattern = "[%a_][%w_]*%f[(]",                                                        type = "function" }, -- Function
-    -- FIX: Vulnerable to REDOs
-    { regex   = [[\s?\:\s?(?:\w+\.?)+(?=\s?[{])]],                                         type = "keyword2" }, -- Inheritance
-    -- FIX: Vulnerable to REDOs
-    { regex   = [[\s?\:\s?(?:\w+(?:\.\w+)?(?:\<\w+\.\w+\>)?\s?\,?\s?)+(?=\s?[{])]],        type = "keyword2" }, -- Inheritance
-    -- FIX: Vulnerable to REDOs
-    { regex   = [[class()\s+\w+()\<.+\>(?=\s?\:)]],                                        type = { "keyword", "normal", "keyword2" } }, -- Generic Class Type
-    -- FIX: Vulnerable to REDOs
-    { regex   = [[interface()\s+\w+()\<.+\>(?=\s?\:)]],                                    type = { "keyword", "normal", "keyword2" } }, -- Generic Interface Type
+    { pattern = "%s*%:%s*",                                                                type = "keyword" }, -- Inheritance
     { regex   = "\\=\\>(?=[{])",                                                           type = "keyword"  }, -- Lambda
     { regex   = "[A-Z](?:[A-Z_][\\d]*)+",                                                  type = "keyword2" }, -- Constants
     { pattern = "^%s*%[.*%]",                                                              type = "literal"  }, -- Attribute
