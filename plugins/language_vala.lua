@@ -16,13 +16,15 @@ syntax.add {
     { pattern = "//.*",                                                                    type = "comment"  }, -- Single-line comment
     { pattern = { "/%*", "%*/" },                                                          type = "comment"  }, -- Multi-line comment
     { pattern = { '"', '"', '\\' },                                                        type = "string"   }, -- String, double apices
-    { regex   = { '\\@?\\"', '\\"', '\\' },                                                type = "string"   }, -- Special string
+    { pattern = { '@?"', '"', '\\' },                                                      type = "string"   }, -- Special string
     { pattern = { "'", "'", '\\' },                                                        type = "string"   }, -- String, apices
     { pattern = "-?0x%x+",                                                                 type = "number"   }, -- Numbers
-    -- FIX: Vulnerable to REDOs
-    { regex   = "-?(?:\\d_?)+(?:.\\d+[eE]?)?f?",                                           type = "number"   }, -- Numbers
-    -- ?
-    { regex   = "\\w+(?=(?:\\s+\\w++\\s+\\=\\s+)|(?:\\s+\\w+\\s*[)]))",                    type = "function" }, -- Class name in class instance
+    { pattern = "-?%d+[%d%.eE]*f?",                                                        type = "number"   }, -- Numbers
+    { pattern = "-?%.?%d+f?",                                                              type = "number"   }, -- Numbers
+    { regex   = "(?>\\w+\\.?)+\\<.+?\\>(?=\\s+\\w+\\s*)?",                                 type = "function" }, -- Generic class name reference
+    { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)",                                           type = "function" }, -- Class name reference
+    { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)?(?=\\s*\\{)",                               type = "function" }, -- Class name
+    { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)?(?=\\s*\\:)",                               type = "function" }, -- Class name
     -- FIX: Vulnerable to REDOs
     { regex   = "\\<(?:[\\w+][\\<\\w+\\>]\\,?\\s*)+\\>(?=[(]?[)]?[\\;\\s*])",              type = "keyword2" }, -- Generic Type
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                                                    type = "operator" }, -- Operators
@@ -36,9 +38,8 @@ syntax.add {
     -- FIX: Vulnerable to REDOs
     { regex   = [[interface()\s+\w+()\<.+\>(?=\s?\:)]],                                    type = { "keyword", "normal", "keyword2" } }, -- Generic Interface Type
     { regex   = "\\=\\>(?=[{])",                                                           type = "keyword"  }, -- Lambda
-    -- FIX: Vulnerable to REDOs
-    { regex   = "[A-Z][A-Z_]+(?=\\s*[)]|[\\;]|[\\,]|[\\s\\=])",                            type = "keyword2" }, -- Constants
-    { regex   = "^\\[.+\\]",                                                               type = "literal"  }, -- Attribute
+    { regex   = "[A-Z](?:[A-Z_][\\d]*)+",                                                  type = "keyword2" }, -- Constants
+    { pattern = "^%s*%[.*%]",                                                              type = "literal"  }, -- Attribute
     { regex   = "\\#\\w+(?=\\s?\\w*)",                                                     type = "keyword"  }, -- Preprocessor directive
     { pattern = "[%a_][%w_]*",                                                             type = "symbol"   }, -- Symbols
   },
