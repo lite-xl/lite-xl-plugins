@@ -1894,8 +1894,8 @@
       "description": "Adds LSP snippets support to the snippets plugin",
       "id": "lsp_snippets",
       "mod_version": "3",
-      "remote": "https://github.com/vqns/lite-xl-snippets:1f0bba02bb3af6df9cb2ce72526851b427caf143",
-      "version": "1.1"
+      "remote": "https://github.com/vqns/lite-xl-snippets:87248a23c8ceb2507f46b3ca3689b32d35c9c709",
+      "version": "1.2"
     },
     {
       "description": "LSP support for YAML via yaml-language-server.",
