@@ -27,6 +27,7 @@ syntax.add {
     { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)?(?=\\s*\\{)",        type = "function" }, -- Class name
     { regex   = [[this(?=\.?\@?)]],                                 type = "keyword"  }, -- this keyword
     { pattern = "^%s*@.+",                                          type = "keyword2" }, -- Annotations
+    -- FIX: IEvent, IE should not be matched
     { regex   = "[A-Z](?:[A-Z_][\\d]*)+",                           type = "keyword2" }, -- Constants
     { pattern = "%:%:()%w+",                                        type = { "normal", "function" } }, -- Method reference with double colon operator
     { pattern = "[%a_][%w_]*",                                      type = "symbol"   },
