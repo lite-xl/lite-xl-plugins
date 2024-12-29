@@ -22,13 +22,12 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                             type = "operator" },
     { pattern = "[%a_][%w_]*%f[(]",                                 type = "function" },
     { pattern = "import()%s+()[%w_.]+",                             type = { "keyword", "normal", "normal" } }, -- Import
-    { regex   = "(?>\\w+\\.?)+\\<.+?\\>(?=\\s+\\w+\\s*)?",          type = "function" }, -- Generic class name reference
+    { regex   = "(?>\\w+\\.?)+\\<.+?\\>\\>*(?=\\s+\\w+\\s*)?",      type = "function" }, -- Generic class name reference (?>\w+\.?)+\<.+?\>\>*(?=\s+\w+\s*)?
     { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)",                    type = "function" }, -- Class name reference
     { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)?(?=\\s*\\{)",        type = "function" }, -- Class name
     { regex   = [[this(?=\.?\@?)]],                                 type = "keyword"  }, -- this keyword
     { pattern = "^%s*@.+",                                          type = "keyword2" }, -- Annotations
-    -- FIX: IEvent, IE should not be matched
-    { regex   = "[A-Z](?:[A-Z_][\\d]*)+",                           type = "keyword2" }, -- Constants
+    { regex   = "[A-Z](?:[A-Z_][\\d]*)+(?!\\w)",                    type = "keyword2" }, -- Constants
     { pattern = "%:%:()%w+",                                        type = { "normal", "function" } }, -- Method reference with double colon operator
     { pattern = "[%a_][%w_]*",                                      type = "symbol"   },
   },
