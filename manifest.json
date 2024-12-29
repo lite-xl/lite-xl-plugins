@@ -518,7 +518,7 @@
       "description": "formatters for various languages",
       "id": "formatter",
       "mod_version": "3",
-      "remote": "https://github.com/vincens2005/lite-formatters:c4f686556fdfeaa57c3553a1fd6865bb29434475",
+      "remote": "https://github.com/vincens2005/lite-formatters:5f91291b41faa3a479648358737884c5fcfc0d2e",
       "version": "0.2"
     },
     {
