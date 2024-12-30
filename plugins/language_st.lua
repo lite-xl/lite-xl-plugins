@@ -15,7 +15,7 @@ syntax.add {
     { pattern = { '"', '"', '\\' },                         type = "string"   }, -- String, quotation marks
     { pattern = { "'", "'", '\\' },                         type = "string"   }, -- String, apices
     { pattern = "%w+#[0-9]+m?s?",                           type = "number"   }, -- Time/Date formats
-    { regex   = [[(?>[^(\W]+)(?=\()]],                      type = "function" }, -- Function
+    { pattern = "[%a_][%w_]*%f[(]",                         type = "function" }, -- Function
     { pattern = "[%a_][%w_]*",                              type = "symbol"   }, -- Symbols
     { pattern = ":%s*%w+",                                  type = "keyword2" }, -- Variable/Method Type
     { regex   = [[[-+]?\d+\.{2,4}[-+]?\d+]],                type = "number"   }, -- Number Range
