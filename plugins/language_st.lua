@@ -17,7 +17,7 @@ syntax.add {
     { pattern = "%w+#[0-9]+m?s?",                           type = "number"   }, -- Time/Date formats
     { pattern = "[%a_][%w_]*%f[(]",                         type = "function" }, -- Function
     { pattern = "[%a_][%w_]*",                              type = "symbol"   }, -- Symbols
-    { regex   = "\\:\\s*(?:\\w+_?)+",                       type = "keyword2" }, -- Variable/Method Type
+    { pattern = ":%s*%w[%w_]*",                             type = "keyword2" }, -- Variable/Method Type
     { regex   = [[[-+]?\d+\.{2,4}[-+]?\d+]],                type = "number"   }, -- Number Range
     { pattern = "[%+%-=/%*%^%%<>!~|&:]",                    type = "operator" }, -- Operators
     { pattern = "-?0x%x+",                                  type = "number"   }, -- Number
