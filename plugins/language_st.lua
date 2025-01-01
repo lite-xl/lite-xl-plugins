@@ -1,7 +1,7 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
--- Language syntax references
+-- Language Syntax References
 -- https://pdhonline.com/courses/e334/e334content.pdf
 
 syntax.add {
