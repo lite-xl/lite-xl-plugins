@@ -24,7 +24,7 @@ syntax.add {
     { pattern = "import()%s+()[%w_.]+",                             type = { "keyword", "normal", "normal" } }, -- Import
     { regex   = "(?>\\w+\\.?)+\\<.+?\\>\\>*(?=\\s+\\w+\\s*)?",      type = "function" }, -- Generic class name reference (?>\w+\.?)+\<.+?\>\>*(?=\s+\w+\s*)?
     { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)",                    type = "function" }, -- Class name reference
-    { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)?(?=\\s*\\{)",        type = "function" }, -- Class name
+    { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)?(?=\\s*\\{|\\,)",    type = "function" }, -- Class name
     { regex   = [[this(?=\.?\@?)]],                                 type = "keyword"  }, -- this keyword
     { pattern = "^%s*@.+",                                          type = "keyword2" }, -- Annotations
     { regex   = "[A-Z](?:[A-Z_][\\d]*)+(?!\\w)",                    type = "keyword2" }, -- Constants
