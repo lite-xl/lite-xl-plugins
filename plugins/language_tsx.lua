@@ -5,10 +5,11 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "TypeScript with JSX",
-  files = { "%.tsx$" },
+  files = { "%.tsx$", "%.astro$" },
   comment = "//",
+  block_comment = { "/*", "*/" },
   patterns = {
-    { pattern = "//.-\n",               type = "comment"  },
+    { pattern = "//.*",                 type = "comment"  },
     { pattern = { "/%*", "%*/" },       type = "comment"  },
     { pattern = { '"', '"', '\\' },     type = "string"   },
     { pattern = { "'", "'", '\\' },     type = "string"   },

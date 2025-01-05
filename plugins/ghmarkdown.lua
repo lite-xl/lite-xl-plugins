@@ -1,8 +1,25 @@
 -- mod-version:3
 local core = require "core"
 local command = require "core.command"
+local common = require "core.common"
+local config = require "core.config"
 local keymap = require "core.keymap"
 
+config.plugins.ghmarkdown = common.merge({
+  -- Find information on how to generate your own token at
+  -- https://docs.github.com/en/rest/markdown/markdown?apiVersion=2022-11-28#render-a-markdown-document-in-raw-mode
+  github_token = "",
+  config_spec = {
+    name = "GHMarkdown",
+    {
+      label = "GitHub token",
+      description = "Enter your personal GitHub token",
+      path = "github_token",
+      type = "string",
+      default = ""
+    }
+  }
+}, config.plugins.ghmarkdown)
 
 local html = [[
 <html>
@@ -31,7 +48,9 @@ local html = [[
     <script>
       var xhr = new XMLHttpRequest;
       xhr.open("POST", "https://api.github.com/markdown/raw");
-      xhr.setRequestHeader("Content-Type", "text/plain");
+      xhr.setRequestHeader("content-type", "text/plain");
+      xhr.setRequestHeader("authorization", "Bearer ${token}");
+      xhr.setRequestHeader("x-github-api-version", "2022-11-28");
       xhr.onload = function() { document.body.innerHTML = xhr.responseText; };
       xhr.send("${content}");
     </script>
@@ -42,11 +61,17 @@ local html = [[
 
 command.add("core.docview!", {
   ["ghmarkdown:show-preview"] = function(dv)
+    if config.plugins.ghmarkdown.github_token == "" then
+      core.error "You need to provide your own GitHub token"
+      return
+    end
+
     local content = dv.doc:get_text(1, 1, math.huge, math.huge)
     local esc = { ['"'] = '\\"', ["\n"] = '\\n' }
     local text = html:gsub("${(.-)}", {
       title = dv:get_name(),
-      content = content:gsub(".", esc)
+      content = content:gsub(".", esc),
+      token = config.plugins.ghmarkdown.github_token
     })
 
     local htmlfile = core.temp_filename(".html")
