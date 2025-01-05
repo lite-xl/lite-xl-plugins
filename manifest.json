@@ -551,7 +551,7 @@
       "id": "ghmarkdown",
       "mod_version": "3",
       "path": "plugins/ghmarkdown.lua",
-      "version": "0.2"
+      "version": "0.3"
     },
     {
       "description": "Shows \"git blame\" information of a line *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-gitblame/main/screenshot_1.png))*",
