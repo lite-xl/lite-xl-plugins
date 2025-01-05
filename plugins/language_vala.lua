@@ -23,12 +23,14 @@ syntax.add {
     { pattern = "-?%.?%d+f?",                                                              type = "number"   }, -- Numbers
     -- FIX: Vulnerable to REDOs
     { regex   = "\\<(?:[\\w+][\\<\\w+\\>]\\,?\\s*)+\\>\\>*(?=[(]?[)]?[\\;\\s*])",          type = "keyword2" }, -- Generic Type
+    -- FIX: it also matches var names with a following ,
+    -- es. void my_sorting_algorithm(int[] data<SomethingLikeThat>, Comparator compare) {
     { regex   = "(?>\\w+\\.?)+\\,?\\<.+?\\>\\>*(?=\\s+\\w+\\s*)?",                         type = "function" }, -- Generic class name reference
     -- FIX: it also matches var names with a following ,
+    -- es. es. void my_sorting_algorithm(int[] data, Comparator compare) {
+    -- es. delegate int Comparator(int a, int b);
     { regex   = "(?>\\w+\\.?)+\\,?(?=\\s+\\w+\\s*)",                                       type = "function" }, -- Class name reference
-    -- FIX: it also matches var names with a following ,
-    { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)?(?=\\s*\\{)",                               type = "function" }, -- Class name
-    { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)?(?=\\s*\\:)",                               type = "function" }, -- Class name
+    { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)?(?=\\s*\\{|\\:)",                               type = "function" }, -- Class name
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                                                    type = "operator" }, -- Operators
     { pattern = "[%a_][%w_]*%f[(]",                                                        type = "function" }, -- Function
     { pattern = "%s*%:%s*",                                                                type = "keyword" }, -- Inheritance
