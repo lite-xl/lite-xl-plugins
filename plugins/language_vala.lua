@@ -33,7 +33,7 @@ syntax.add {
     { pattern = "[%a_][%w_]*%f[(]",                                                        type = "function" }, -- Function
     { pattern = "%s*%:%s*",                                                                type = "keyword" }, -- Inheritance
     { regex   = "\\=\\>(?=[{])",                                                           type = "keyword"  }, -- Lambda
-    { regex   = "[A-Z](?:[A-Z_][\\d]*)+",                                                  type = "keyword2" }, -- Constants
+    { regex   = "[A-Z](?:[A-Z_][\\d]*)+(?!\\w)",                                           type = "keyword2" }, -- Constants
     { pattern = "^%s*%[.*%]",                                                              type = "literal"  }, -- Attribute
     { regex   = "\\#\\w+(?=\\s?\\w*)",                                                     type = "keyword"  }, -- Preprocessor directive
     { pattern = "[%a_][%w_]*",                                                             type = "symbol"   }, -- Symbols
