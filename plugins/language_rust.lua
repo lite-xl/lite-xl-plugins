@@ -5,6 +5,7 @@ syntax.add {
   name = "Rust",
   files = { "%.rs$" },
   comment = "//",
+  block_comment = { "/*", "*/" },
   patterns = {
     { pattern = "//.-\n",                                          type = "comment"  },
     { pattern = { "/%*", "%*/" },                                  type = "comment"  },
