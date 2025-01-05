@@ -2392,7 +2392,10 @@
       "replaces": [
         "vibe"
       ],
-      "version": "0.1"
+      "tags": [
+        "deprecated"
+      ],
+      "version": "0.2"
     },
     {
       "description": "Audio visualizer for Lite XL",
