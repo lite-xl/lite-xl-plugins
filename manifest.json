@@ -2059,8 +2059,8 @@
       "version": "0.1"
     },
     {
-      "id": "previewer",
       "description": "Preview files and doc before before opening them",
+      "id": "previewer",
       "mod_version": "3",
       "remote": "https://codeberg.org/Mandarancio/lite-previewer:39c6c4667009f669bdc84a99360455c8e384bd4d",
       "type": "plugin",
