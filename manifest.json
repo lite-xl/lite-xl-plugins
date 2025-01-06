@@ -629,7 +629,7 @@
       "id": "ipc",
       "mod_version": "3",
       "path": "plugins/ipc.lua",
-      "version": "0.3"
+      "version": "0.4"
     },
     {
       "description": "Production and Early-Access OpenJDK Builds, from Oracle.",
