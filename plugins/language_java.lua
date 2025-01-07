@@ -22,10 +22,8 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                             type = "operator" },
     { pattern = "[%a_][%w_]*%f[(]",                                 type = "function" },
     { pattern = "^import()%s+()[%w_.]+",                            type = { "keyword", "normal", "normal" } }, -- Import
-    -- WIP: fixing class name reference pattern
-    { regex   = [[(?>\\w+\\.?)+\\<.+?\\>\\>*(?=\\s+.+\\s+\\=)]],    type = "function" }, -- Generic class name reference
-    -- WIP: fixing class name reference pattern
-    { regex   = [[(?>\\w+\\.?)+(?=\\s+.+[(?:\\s+\\=)|;])]],         type = "function" }, -- Class name reference
+    { regex   = [[(?>\w+\.?)+\<.+?\>\>*(?=\s+\w+(?>\s+\=|;))]],     type = "function" }, -- Generic class name reference
+    { regex   = [[(?>\w+\.?)+(?=\s+\w+(?>\s+\=|;))]],               type = "function" }, -- Class name reference
     { regex   = [[this(?=\.?\@?)]],                                 type = "keyword"  }, -- this keyword
     { pattern = "^%s*@.+",                                          type = "keyword2" }, -- Annotations
     { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",                     type = "keyword2" }, -- Constants

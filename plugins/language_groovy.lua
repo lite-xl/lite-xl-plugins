@@ -26,7 +26,7 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]",              type = "operator" }, -- Operators
     { pattern = "[%a_][%w_]*%f[(]",                  type = "function" }, -- Function/Method/Class/...
     { pattern = "[%a_][%w_]*%f[%[]",                 type = "function" }, -- Custom Type
-    { regex   = [[[A-Z](?:[A-Z_][\\d]*)+(?!\\w)]],   type = "keyword2" }, -- Constants
+    { regex   = [[[A-Z](?:[A-Z_][\d]*)+(?!\w)]],     type = "keyword2" }, -- Constants
     { pattern = "import()%s+()[%w_.]+",              type = { "keyword", "normal", "normal" } },
     { pattern = "[%a_][%w_]*",                       type = "symbol"   }, -- ?
     -- TODO: .class
