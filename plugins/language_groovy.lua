@@ -10,25 +10,25 @@ syntax.add {
   comment = "//",
   block_comment = { "/*", "*/" },
   patterns = {
-    { pattern = "//.*",                          type = "comment"  }, -- Single-line comment
-    { pattern = { "/%*", "%*/" },                type = "comment"  }, -- Multi-line comment
-    { pattern = { '"', '"', '\\' },              type = "string"   }, -- String, double quotes (also matches triple quotes for multi-line string)
-    { pattern = { "'", "'", '\\' },              type = "string"   }, -- String, apices
-    { pattern = { "%/", "%/", '\\' },            type = "string"   }, -- Slashy string
-    { pattern = { "%$%/", "%/%$", '\\' },        type = "string"   }, -- Dollar slashy string
-    { pattern = "'\\x%x?%x?%x?%x'",              type = "string"   }, -- character hexadecimal escape sequence
-    { pattern = "'\\u%x%x%x%x'",                 type = "string"   }, -- character unicode escape sequence
-    { pattern = "'\\?.'",                        type = "string"   }, -- character literal
-    { pattern = "-?0x%x+",                       type = "number"   }, -- ?
-    { pattern = "-?%d+[%d%.eE]*[a-zA-Z]?",       type = "number"   }, -- ?
-    { pattern = "-?%.?%d+",                      type = "number"   }, -- ?
-    { pattern = "-?[%d_+]+[a-zA-Z]?",            type = "number"   }, -- ?
-    { pattern = "[%+%-=/%*%^%%<>!~|&]",          type = "operator" }, -- Operators
-    { pattern = "[%a_][%w_]*%f[(]",              type = "function" }, -- Function/Class/Method/...
-    { pattern = "[%a_][%w_]*%f[%[]",             type = "function" }, -- Custom Type
-    { regex   = "[A-Z](?:[A-Z_][\\d]*)+(?!\\w)", type = "keyword2" }, -- Constants
-    { pattern = "import()%s+()[%w_.]+",          type = { "keyword", "normal", "normal" } },
-    { pattern = "[%a_][%w_]*",                   type = "symbol"   }, -- ?
+    { pattern = "//.*",                              type = "comment"  }, -- Single-line comment
+    { pattern = { "/%*", "%*/" },                    type = "comment"  }, -- Multi-line comment
+    { pattern = { '"', '"', '\\' },                  type = "string"   }, -- String, double quotes (also matches triple quotes for multi-line string)
+    { pattern = { "'", "'", '\\' },                  type = "string"   }, -- String, apices
+    { pattern = { "%/", "%/", '\\' },                type = "string"   }, -- Slashy string
+    { pattern = { "%$%/", "%/%$", '\\' },            type = "string"   }, -- Dollar slashy string
+    { pattern = "'\\x%x?%x?%x?%x'",                  type = "string"   }, -- character hexadecimal escape sequence
+    { pattern = "'\\u%x%x%x%x'",                     type = "string"   }, -- character unicode escape sequence
+    { pattern = "'\\?.'",                            type = "string"   }, -- character literal
+    { pattern = "-?0x%x+",                           type = "number"   }, -- ?
+    { pattern = "-?%d+[%d%.eE]*[a-zA-Z]?",           type = "number"   }, -- ?
+    { pattern = "-?%.?%d+",                          type = "number"   }, -- ?
+    { pattern = "-?[%d_+]+[a-zA-Z]?",                type = "number"   }, -- ?
+    { pattern = "[%+%-=/%*%^%%<>!~|&]",              type = "operator" }, -- Operators
+    { pattern = "[%a_][%w_]*%f[(]",                  type = "function" }, -- Function/Method/Class/...
+    { pattern = "[%a_][%w_]*%f[%[]",                 type = "function" }, -- Custom Type
+    { regex   = [[[A-Z](?:[A-Z_][\\d]*)+(?!\\w)]],   type = "keyword2" }, -- Constants
+    { pattern = "import()%s+()[%w_.]+",              type = { "keyword", "normal", "normal" } },
+    { pattern = "[%a_][%w_]*",                       type = "symbol"   }, -- ?
     -- TODO: .class
   },
   symbols = {

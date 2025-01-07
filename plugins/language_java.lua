@@ -21,13 +21,14 @@ syntax.add {
     { pattern = "-?%.?%d+f?",                                       type = "number"   },
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                             type = "operator" },
     { pattern = "[%a_][%w_]*%f[(]",                                 type = "function" },
-    { pattern = "import()%s+()[%w_.]+",                             type = { "keyword", "normal", "normal" } }, -- Import
-    { regex   = "(?>\\w+\\.?)+\\<.+?\\>\\>*(?=\\s+\\w+\\s*)?",      type = "function" }, -- Generic class name reference (?>\w+\.?)+\<.+?\>\>*(?=\s+\w+\s*)?
-    { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)",                    type = "function" }, -- Class name reference
-    { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)?(?=\\s*\\{|\\,)",    type = "function" }, -- Class name
+    { pattern = "^import()%s+()[%w_.]+",                            type = { "keyword", "normal", "normal" } }, -- Import
+    -- WIP: fixing class name reference pattern
+    { regex   = [[(?>\\w+\\.?)+\\<.+?\\>\\>*(?=\\s+.+\\s+\\=)]],    type = "function" }, -- Generic class name reference
+    -- WIP: fixing class name reference pattern
+    { regex   = [[(?>\\w+\\.?)+(?=\\s+.+[(?:\\s+\\=)|;])]],         type = "function" }, -- Class name reference
     { regex   = [[this(?=\.?\@?)]],                                 type = "keyword"  }, -- this keyword
     { pattern = "^%s*@.+",                                          type = "keyword2" }, -- Annotations
-    { regex   = "[A-Z](?:[A-Z_][\\d]*)+(?!\\w)",                    type = "keyword2" }, -- Constants
+    { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",                     type = "keyword2" }, -- Constants
     { pattern = "%:%:()%w+",                                        type = { "normal", "function" } }, -- Method reference with double colon operator
     { pattern = "[%a_][%w_]*",                                      type = "symbol"   },
   },

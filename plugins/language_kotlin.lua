@@ -26,14 +26,15 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]",              type = "operator" }, -- Operators
     { regex   = [[\?(?=\.)]],                        type = "operator" }, -- ?. operator
     { pattern = "[%a_][%w_]*%f[(]",                  type = "function" }, -- Function/Method/Class
-    { regex   = "`[\\w_\\s]+`(?=\\s*\\()",           type = "function" }, -- Test Method
+    { regex   = [[`[\\w_\\s]+`(?=\\s*\\()]],         type = "function" }, -- Test Method
     { regex   = [[let(?=\s\{)]],                     type = "function" }, -- ? operator
     { regex   = [[\?\:(?=\s?)]],                     type = "operator" }, -- elvis operator
     { regex   = [[this(?=\.?\@?)]],                  type = "keyword"  }, -- this keyword
     { pattern = "^%s*@.+",                           type = "keyword2" }, -- Annotations
     { regex   = [[[a-zA-Z]+\@(?=\s?[a-zA-Z])]],      type = "keyword2" }, -- Annotations (this pattern is lower priority than the `this keyword` pattern)
-    { pattern = "import()%s+()[%w_.]+",              type = { "keyword", "normal", "normal" } },
-    { regex   = "[A-Z](?:[A-Z_][\\d]*)+(?!\\w)",     type = "keyword2" }, -- Constants
+    { pattern = "^import()%s+()[%w_.]+",             type = { "keyword", "normal", "normal" } },
+    -- WIP: converting regex pattern to lua pattern
+    { regex   = [[[A-Z](?:[A-Z_][\\d]*)+(?!\\w)]],   type = "keyword2" }, -- Constants
     { pattern = "[%a_][%w_]*",                       type = "symbol"   }, -- ?
   },
   symbols = {
