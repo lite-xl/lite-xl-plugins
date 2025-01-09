@@ -4,8 +4,6 @@ local command = require "core.command"
 local keymap = require "core.keymap"
 local common = require "core.common"
 local config = require "core.config"
-local contextmenu = require "plugins.contextmenu"
-
 
 local platform_filelauncher
 if PLATFORM == "Windows" then
@@ -55,12 +53,25 @@ command.add("core.docview!", {
   end,
 })
 
+-- defer adding context menu item until all plugins have had
+-- a chance to turn it off/on
+local function add_context_menu()
+  if false == config.plugins.contextmenu then return end
 
-contextmenu:register("core.docview", {
-  contextmenu.DIVIDER,
-  { text = "Open Selection",  command = "open-selected:open-selected" }
-})
+  -- abort if contextmenu plugin isn't available
+  local found, contextmenu = pcall(require, "plugins.contextmenu")
+  if not found then
+    core.log("[openselected] no plugin.contextmenu, not adding context menu item.")
+    return
+  end
 
+  contextmenu:register("core.docview", {
+    contextmenu.DIVIDER,
+    { text = "Open Selection",  command = "open-selected:open-selected" }
+  })
+end
+-- Add context menu item after everything has been loaded
+core.add_thread(add_context_menu)
 
 keymap.add { ["ctrl+alt+o"] = "open-selected:open-selected" }
 
