@@ -18,6 +18,7 @@ syntax.add {
     { pattern = "-?%.?%d+",                                       type = "number"   },
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                           type = "operator" },
     { pattern = "[%a_][%w_]*%f[(]",                               type = "function" },
+    { regex   = "[A-Z][A-Z_]+",                                   type = "keyword2" },
     { pattern = "[%a_][%w_]*",                                    type = "symbol"   },
   },
   symbols = {
