@@ -1595,7 +1595,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.2"
+      "version": "0.3"
     },
     {
       "description": "Syntax for ssh & sshd config files",
