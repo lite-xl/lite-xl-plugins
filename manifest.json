@@ -1458,7 +1458,7 @@
       "version": "0.1"
     },
     {
-      "description": "Syntax for [PlantUML](https://plantuml.com/).",
+      "description": "Syntax for [PlantUML](https://plantuml.com/), a diagram description language.",
       "id": "language_plantuml",
       "mod_version": "3",
       "path": "plugins/language_plantuml.lua",
