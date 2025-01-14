@@ -125,6 +125,7 @@
         "language_marte": {},
         "language_meson": {},
         "language_miniscript": {},
+        "language_monkeyc": {},
         "language_moon": {},
         "language_nelua": {},
         "language_nginx": {},
@@ -1331,6 +1332,16 @@
       "id": "language_miniscript",
       "mod_version": "3",
       "path": "plugins/language_miniscript.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
+      "description": "Syntax for the [MonkeyC](https://developer.garmin.com/connect-iq/monkey-c/) programming language",
+      "id": "language_monkeyc",
+      "mod_version": "3",
+      "path": "plugins/language_monkeyc.lua",
       "tags": [
         "language"
       ],
