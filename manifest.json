@@ -1457,6 +1457,16 @@
       "version": "0.1"
     },
     {
+      "description": "Syntax for [PlantUML](https://plantuml.com/).",
+      "id": "language_plantuml",
+      "mod_version": "3",
+      "path": "plugins/language_plantuml.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
       "description": "Syntax for [PO](https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html) translation files",
       "id": "language_po",
       "mod_version": "3",
