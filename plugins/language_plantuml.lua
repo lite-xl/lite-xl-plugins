@@ -12,6 +12,7 @@ syntax.add {
   patterns = {
     { pattern = "^%@%w+", type = "keyword" }, -- ?
     --{ pattern = "", type = "" }, -- ?
+    -- FIX: match plantuml operators (es. -->, <--)
     { pattern = "[%+%-=/%*%^%%<>!~|&%?%:]",      type = "operator" }, -- Operators
     { pattern = "[%a_][%w_]*",                 type = "symbol"   } -- Everything else
   },
