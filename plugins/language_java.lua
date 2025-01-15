@@ -25,6 +25,7 @@ syntax.add {
     { regex   = [[(?>\w+\.?)+\<.+?\>\>*(?=\s+\w+(?>\s+\=|;|\)))]],  type = "function" }, -- Generic class name reference
     { regex   = [[(?>\w+\.?)+(?=\s+\w+(?>\s+\=|;|\)))]],            type = "function" }, -- Class name reference
     { regex   = [[this(?=\.?\@?)]],                                 type = "keyword"  }, -- this keyword
+    -- TODO: match something like: public String hello(@RequestParam(value="user", required=false, defaultValue="Mr") String user, Model model) {
     { pattern = "^%s*@.+",                                          type = "keyword2" }, -- Annotations
     { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",                     type = "keyword2" }, -- Constants
     { pattern = "%:%:()%w+",                                        type = { "normal", "function" } }, -- Method reference with double colon operator
