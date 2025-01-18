@@ -1991,9 +1991,9 @@
       "description": "Official NodeJs builds.",
       "id": "nodejs",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:953d391ae9b1dd4efd85d9931730bab71dbdc02e",
       "type": "library",
-      "version": "20.15.1"
+      "version": "22.13.0"
     },
     {
       "dependencies": {
