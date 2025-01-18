@@ -1,8 +1,8 @@
 -- mod-version:3
 local core = require "core"
 local command = require "core.command"
-local contextmenu = require "plugins.contextmenu"
 local keymap = require "core.keymap"
+local config = require "core.config"
 
 
 local function eval(str)
@@ -44,10 +44,24 @@ command.add("core.docview", {
   end,
 })
 
+-- defer adding context menu item until all plugins have had
+-- a chance to turn it off/on
+local function add_context_menu()
+  if false == config.plugins.contextmenu then return end
 
-contextmenu:register("core.docview", {
-  { text = "Evaluate Selected",  command = "eval:selected" }
-})
+  -- abort if contextmenu plugin isn't available
+  local found, contextmenu = pcall(require, "plugins.contextmenu")
+  if not found then
+    core.log("[eval] no plugin.contextmenu, not adding context menu item.")
+    return
+  end
+
+  contextmenu:register("core.docview", {
+    { text = "Evaluate Selected",  command = "eval:selected" }
+  })
+end
+-- Add context menu item after everything has been loaded
+core.add_thread(add_context_menu)
 
 
 keymap.add { ["ctrl+alt+return"] = "eval:selected" }
