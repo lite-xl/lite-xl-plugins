@@ -30,6 +30,7 @@ syntax.add {
     { regex   = [[let(?=\s\{)]],                     type = "function" }, -- ? operator
     { regex   = [[\?\:(?=\s?)]],                     type = "operator" }, -- elvis operator
     { regex   = [[this(?=\.?\@?)]],                  type = "keyword"  }, -- this keyword
+    -- TODO: check if it really needs the ^
     { pattern = "^%s*@.+",                           type = "keyword2" }, -- Annotations
     { regex   = [[[a-zA-Z]+\@(?=\s?[a-zA-Z])]],      type = "keyword2" }, -- Annotations (this pattern is lower priority than the `this keyword` pattern)
     { pattern = "^import()%s+()[%w_.]+",             type = { "keyword", "normal", "normal" } },

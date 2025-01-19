@@ -22,14 +22,18 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                             type = "operator" },
     { pattern = "[%a_][%w_]*%f[(]",                                 type = "function" },
     { pattern = "^import()%s+()[%w_.]+",                            type = { "keyword", "normal", "normal" } }, -- Import
+    -- FIX: rework
     { regex   = [[(?>\w+\.?)+\<.+?\>\>*(?=\s+\w+(?>\s+\=|;|\)))]],  type = "function" }, -- Generic class name reference
+    -- FIX: rework
     { regex   = [[(?>\w+\.?)+(?=\s+\w+(?>\s+\=|;|\)))]],            type = "function" }, -- Class name reference
     { regex   = [[this(?=\.?\@?)]],                                 type = "keyword"  }, -- this keyword
     -- TODO: match something like: public String hello(@RequestParam(value="user", required=false, defaultValue="Mr") String user, Model model) {
-    { pattern = "^%s*@.+",                                          type = "keyword2" }, -- Annotations
+    -- FIX: stop the pattern match after the last ) when the annotation doesn't begin at line/column n:1
+    { pattern = "%s*@.+",                                           type = "keyword2" }, -- Annotations
     { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",                     type = "keyword2" }, -- Constants
     { pattern = "%:%:()%w+",                                        type = { "normal", "function" } }, -- Method reference with double colon operator
     { pattern = "[%a_][%w_]*",                                      type = "symbol"   },
+    -- FIX: in SomeClassName.class .class should be matched as normal, not keyword
   },
   symbols = {
     ["abstract"]      = "keyword",
