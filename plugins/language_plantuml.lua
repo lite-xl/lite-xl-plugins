@@ -6,6 +6,7 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "Plantuml",
+  -- FIX: //... and /*...*/ are wrong!
   files = "%.puml$",
   comment = "//",
   block_comment = {"/*", "*/"},
