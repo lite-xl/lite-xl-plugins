@@ -25,6 +25,7 @@ local Scrollbar = require "core.scrollbar"
 -- General plugin settings
 config.plugins.minimap = common.merge({
   enabled = true,
+  always_visible = false,
   width = 100,
   instant_scroll = false,
   syntax_highlight = true,
@@ -53,6 +54,13 @@ config.plugins.minimap = common.merge({
       path = "enabled",
       type = "toggle",
       default = true
+    },
+    {
+      label = "Always Visible",
+      description = "Minimap is always visible.",
+      path = "always_visible",
+      type = "toggle",
+      default = false
     },
     {
       label = "Width",
@@ -311,7 +319,7 @@ function MiniMap:swap_to_status()
     self.expanded_size = self.original_expanded_size
     self.expanded_margin = self.original_expanded_margin
     self.was_enabled = false
-  elseif enabled and not self.was_enabled then
+  elseif enabled and (not self.was_enabled or config.plugins.minimap.always_visible) then
     self.force_status = "expanded"
     self.expanded_size = cached_settings.width
     self.expanded_margin = 0
@@ -339,6 +347,7 @@ end
 
 
 function MiniMap:is_minimap_enabled()
+  if config.plugins.minimap.always_visible then return true end
   if self.enabled ~= nil then return self.enabled end
   if not config.plugins.minimap.enabled then return false end
   if config.plugins.minimap.avoid_small_docs then
