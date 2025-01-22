@@ -535,7 +535,8 @@ function MiniMap:draw()
         local start = 1
         while true do
           -- find text followed spaces followed by newline
-          local s, e, w, eol = string.ufind(text, "[^%s]*()[ \t]*()\n?", start)
+          local success, s, e, w, eol = pcall(function() return string.ufind(text, "[^%s]*()[ \t]*()\n?", start) end)
+          if not success then break end
           if not s then break end
           local nchars = w - s
           start = e + 1
