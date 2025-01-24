@@ -1952,7 +1952,7 @@
       "id": "minimap",
       "mod_version": "3",
       "path": "plugins/minimap.lua",
-      "version": "0.3"
+      "version": "0.4"
     },
     {
       "description": "Adds a motion-trail to the caret *([gif](https://user-images.githubusercontent.com/3920290/83256814-085ccb00-a1ab-11ea-9e35-e6633cbed1a9.gif))*",
