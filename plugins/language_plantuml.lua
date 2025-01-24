@@ -5,17 +5,17 @@ local syntax = require "core.syntax"
 -- https://plantuml.com/
 
 syntax.add {
-  name = "Plantuml",
-  -- FIX: //... and /*...*/ are wrong!
-  files = "%.puml$",
-  comment = "//",
-  block_comment = {"/*", "*/"},
+  name = "PlantUML",
+  files = { "%.puml$", "%.plantuml$", "%.pu$", "%.iuml$", "%.wsd$" },
+  comment = "/'",
+  block_comment = { "/'", "'/" },
   patterns = {
-    { pattern = "^%@%w+", type = "keyword" }, -- ?
-    --{ pattern = "", type = "" }, -- ?
-    -- FIX: match plantuml operators (es. -->, <--)
-    { pattern = "[%+%-=/%*%^%%<>!~|&%?%:]",      type = "operator" }, -- Operators
-    { pattern = "[%a_][%w_]*",                 type = "symbol"   } -- Everything else
+    { pattern = "^%'.*$",                                type = "comment" }, -- Single-line comment
+    { pattern = { "^/'", "%'%/" } ,                      type = "comment" }, -- Multi-line comment
+    { pattern = "^%@%w+",                                type = "keyword" }, -- start... end...
+    -- FIX: match plantuml operators (es. -->, <--, o--, ...)
+    { pattern = "[%+%-=/%*%^%%<>!~|&%?%:]",              type = "operator" }, -- Operators
+    { pattern = "[%a_][%w_]*",                           type = "symbol"   }, -- Everything else
   },
   symbols = {
     ["true"] = "literal",
