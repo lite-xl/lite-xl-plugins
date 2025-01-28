@@ -1825,8 +1825,8 @@
       "description": "Automatic configuration/binary download for LSP completion for clojure with clojure-lsp.",
       "id": "lsp_clojure",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
-      "version": "2024.04.22"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:d8ab5f9a5adfa9fccc2361e5bb5141f17e5e7ca9",
+      "version": "2025.01.22"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for D with serve_d.",
@@ -1895,8 +1895,8 @@
       "description": "Automatic configuration/binary download for LSP completion for TeX with texlab.",
       "id": "lsp_tex",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
-      "version": "5.19.0"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:d8ab5f9a5adfa9fccc2361e5bb5141f17e5e7ca9",
+      "version": "5.22.0"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Typescript and Javascript with typescript-language-server.",
