@@ -2405,7 +2405,7 @@
       "description": "Plugin library that provides a set of re-usable components to more easily write UI elements for your plugins",
       "id": "widget",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-widgets:61789bdc87d52ba7838927af9aa2671efdcea185",
+      "remote": "https://github.com/lite-xl/lite-xl-widgets:dcf1c8c7087638b879d5c9c835686ccd79f963ec",
       "type": "library",
       "version": "0.2.1"
     },
