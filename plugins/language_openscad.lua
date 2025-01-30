@@ -1,6 +1,9 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
+-- Language Syntax References
+-- https://openscad.org/documentation.html#language-reference
+
 syntax.add {
   name = "OpenSCAD",
   files = {"%.scad$"},
@@ -83,7 +86,7 @@ syntax.add {
     ["search"]            = "function",
     ["version"]           = "function",
     ["version_num"]       = "function",
-    ["parent_module"]     = "function",    
+    ["parent_module"]     = "function",
     -- Math Functions
     ["abs"]               = "keyword",
     ["sign"]              = "keyword",
