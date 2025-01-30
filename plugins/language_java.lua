@@ -23,8 +23,10 @@ syntax.add {
     { pattern = "[%a_][%w_]*%f[(]",                                 type = "function" },
     { pattern = "^import()%s+()[%w_.]+",                            type = { "keyword", "normal", "normal" } }, -- Import
     -- FIX: rework
+    -- missing: public SomethingLikeThat<String> someRandomName() {}
     { regex   = [[(?>\w+\.?)+\<.+?\>\>*(?=\s+\w+(?>\s+\=|;|\)))]],  type = "function" }, -- Generic class name reference
     -- FIX: rework
+    -- missing: public SomethingLikeThat someRandomName() {}
     { regex   = [[(?>\w+\.?)+(?=\s+\w+(?>\s+\=|;|\)))]],            type = "function" }, -- Class name reference
     { regex   = [[this(?=\.?\@?)]],                                 type = "keyword"  }, -- this keyword
     -- TODO: match something like: public String hello(@RequestParam(value="user", required=false, defaultValue="Mr") String user, Model model) {
