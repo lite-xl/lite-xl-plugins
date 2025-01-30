@@ -37,10 +37,10 @@ syntax.add {
     -- Match variable expansions
     { pattern = "${.-}",                           type = "keyword2" },
     { pattern = "$[%d$%a_@*][%w_]*",               type = "keyword2" },
-    -- Functions
-    { pattern = "[%a_%-][%w_%-]*[%s]*%f[(]",       type = "function" },
     -- Everything else
     { pattern = "[%a_][%w_]*",                     type = "symbol"   },
+    -- Functions
+    { pattern = "[%a_%-][%w_%-]*[%s]*%f[(]",       type = "function" },
   },
   symbols = {
     ["case"]      = "keyword",
