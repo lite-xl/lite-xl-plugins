@@ -1870,9 +1870,9 @@
       "description": "Fully customizable modal editing for Lite XL",
       "mod_version": "3",
       "name": "modal",
-      "remote": "https://codeberg.org/Mandarancio/lite-modal:a770b1673b8cb2c5f80176c0a3529bdafe3e482a",
+      "remote": "https://codeberg.org/Mandarancio/lite-modal:17718c236aa3960e63bc8b2f5eef2e4c42565b78",
       "type": "plugin",
-      "version": "0.2"
+      "version": "0.4.0"
     },
     {
       "description": "Adds a motion-trail to the caret *([gif](https://user-images.githubusercontent.com/3920290/83256814-085ccb00-a1ab-11ea-9e35-e6633cbed1a9.gif))*",
