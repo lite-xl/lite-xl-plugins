@@ -4,6 +4,18 @@ local syntax = require "core.syntax"
 -- Language Syntax References
 -- https://docs.oracle.com/javase/specs/jls/se8/html/index.html
 
+-- TEMP: WIP examples
+-- public Something someRandomName() {}
+-- String somevar = new String();
+-- someMethodCall(String thatSameVar, String anotherSameVar);
+-- String someOtherVar;
+
+-- public Something<String> someRandomName() {}
+-- String<BuluBulu> anotherVar = new String<BuluBulu>();
+-- String<Buh> somevar = new String();
+-- someMethodCall(String<Buh> thatSameVar, String<Buh> anotherSameVar);
+-- String<Buh> someOtherVar;
+
 syntax.add {
   name = "Java",
   files = { "%.java$" },
@@ -22,12 +34,12 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                             type = "operator" },
     { pattern = "[%a_][%w_]*%f[(]",                                 type = "function" },
     { pattern = "^import()%s+()[%w_.]+",                            type = { "keyword", "normal", "normal" } }, -- Import
-    -- FIX: rework
-    -- missing: public SomethingLikeThat<String> someRandomName() {}
-    { regex   = [[(?>\w+\.?)+\<.+?\>\>*(?=\s+\w+(?>\s+\=|;|\)))]],  type = "function" }, -- Generic class name reference
-    -- FIX: rework
-    -- missing: public SomethingLikeThat someRandomName() {}
-    { regex   = [[(?>\w+\.?)+(?=\s+\w+(?>\s+\=|;|\)))]],            type = "function" }, -- Class name reference
+    { regex   = [[(?>\w+\.?)+\<.+?\>\>*(?=\s+\w+(?>\s+\=|;|,|\)))]],type = "function" }, -- Generic class name reference
+    -- WIP: the first %w+ needs a capt group
+    { pattern = "%w+%s+()%w+%<.*%>%s+()%w+%f[(]",                   type = { "keyword", "function", "function" } }, -- Class name reference 2
+    { regex   = [[(?>\w+\.?)+(?=\s+\w+(?>\s+\=|;|,|\)))]],          type = "function" }, -- Class name reference
+    -- WIP: the first %w+ needs a capt group
+    { pattern = "%w+%s+()%w+%s+()%w+%f[(]",                         type = { "keyword", "function", "function" } }, -- Class name reference 2
     { regex   = [[this(?=\.?\@?)]],                                 type = "keyword"  }, -- this keyword
     -- TODO: match something like: public String hello(@RequestParam(value="user", required=false, defaultValue="Mr") String user, Model model) {
     -- FIX: stop the pattern match after the last ) when the annotation doesn't begin at line/column n:1
