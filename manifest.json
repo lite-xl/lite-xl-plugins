@@ -813,7 +813,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for the [Carbon programming language](https://github.com/carbon-language/carbon-lang).",
@@ -843,7 +843,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.2"
+      "version": "0.2.1"
     },
     {
       "description": "Syntax for [Containerfile](https://github.com/containers/common/blob/main/docs/Containerfile.5.md)/[Dockerfile](https://docs.docker.com/engine/reference/builder/)",
@@ -1023,7 +1023,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for the [GABC](https://gregorio-project.github.io/gabc) music typesetting language",
@@ -1304,7 +1304,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for [MARTe2](https://vcis.f4e.europa.eu/marte2-docs/master/html/index.html) configuration language",
@@ -1324,7 +1324,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for the [MiniScript](https://miniscript.org) programming language",
@@ -1454,7 +1454,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for [PO](https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html) translation files",
@@ -1545,7 +1545,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for the [Rust](https://rust-lang.org/) programming language",
@@ -1595,7 +1595,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.2"
+      "version": "0.2.1"
     },
     {
       "description": "Syntax for ssh & sshd config files",
@@ -1605,7 +1605,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for PLC Structured Text IEC 61131-3 standard.",
