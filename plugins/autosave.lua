@@ -71,3 +71,13 @@ function Doc:on_text_change(type)
   end
   return on_text_change(self, type)
 end
+
+
+local function toggle_autosave()
+   config.plugins.autosave.enabled = not config.plugins.autosave.enabled
+end
+
+
+command.add(nil, {
+    ["autosave:toggle"] = function() toggle_autosave() end,
+})
