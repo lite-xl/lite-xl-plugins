@@ -21,32 +21,28 @@ syntax.add {
   files = { "%.java$" },
   comment = "//",
   patterns = {
-    { pattern = "//.*",                                             type = "comment"  },
-    { pattern = { "/%*", "%*/" },                                   type = "comment"  },
-    { pattern = { '"', '"', '\\' },                                 type = "string"   },
-    { pattern = { "'", "'", '\\' },                                 type = "string"   },
-    { pattern = "'\\x%x?%x?%x?%x'",                                 type = "string"   }, -- character hexadecimal escape sequence
-    { pattern = "'\\u%x%x%x%x'",                                    type = "string"   }, -- character unicode escape sequence
-    { pattern = "'\\?.'",                                           type = "string"   }, -- character literal
-    { pattern = "-?0x%x+",                                          type = "number"   },
-    { pattern = "-?%d+[%d%.eE]*f?",                                 type = "number"   },
-    { pattern = "-?%.?%d+f?",                                       type = "number"   },
-    { pattern = "[%+%-=/%*%^%%<>!~|&]",                             type = "operator" },
-    { pattern = "[%a_][%w_]*%f[(]",                                 type = "function" },
-    { pattern = "^import()%s+()[%w_.]+",                            type = { "keyword", "normal", "normal" } }, -- Import
-    { regex   = [[(?>\w+\.?)+\<.+?\>\>*(?=\s+\w+(?>\s+\=|;|,|\)))]],type = "function" }, -- Generic class name reference
-    -- WIP: the first %w+ needs a capt group
-    { pattern = "%w+%s+()%w+%<.*%>%s+()%w+%f[(]",                   type = { "keyword", "function", "function" } }, -- Class name reference 2
-    { regex   = [[(?>\w+\.?)+(?=\s+\w+(?>\s+\=|;|,|\)))]],          type = "function" }, -- Class name reference
-    -- WIP: the first %w+ needs a capt group
-    { pattern = "%w+%s+()%w+%s+()%w+%f[(]",                         type = { "keyword", "function", "function" } }, -- Class name reference 2
-    { regex   = [[this(?=\.?\@?)]],                                 type = "keyword"  }, -- this keyword
+    { pattern = "//.*",                                                     type = "comment"  },
+    { pattern = { "/%*", "%*/" },                                           type = "comment"  },
+    { pattern = { '"', '"', '\\' },                                         type = "string"   },
+    { pattern = { "'", "'", '\\' },                                         type = "string"   },
+    { pattern = "'\\x%x?%x?%x?%x'",                                         type = "string"   }, -- character hexadecimal escape sequence
+    { pattern = "'\\u%x%x%x%x'",                                            type = "string"   }, -- character unicode escape sequence
+    { pattern = "'\\?.'",                                                   type = "string"   }, -- character literal
+    { pattern = "-?0x%x+",                                                  type = "number"   },
+    { pattern = "-?%d+[%d%.eE]*f?",                                         type = "number"   },
+    { pattern = "-?%.?%d+f?",                                               type = "number"   },
+    { pattern = "[%+%-=/%*%^%%<>!~|&]",                                     type = "operator" },
+    { pattern = "[%a_][%w_]*%f[(]",                                         type = "function" },
+    { pattern = "^import()%s+()[%w_.]+",                                    type = { "keyword", "normal", "normal" } }, -- Import
+    -- TODO: add support for anything withing the <...>
+    { regex   = [[(?>(?>[A-Z]\w+_?\.?)+(?>\<(?>[\w_?]+)\>)?)+(?=\s+\w+)]],  type = "function" }, -- Class name reference
+    { regex   = [[this(?=\.?\@?)]],                                         type = "keyword"  }, -- this keyword
     -- TODO: match something like: public String hello(@RequestParam(value="user", required=false, defaultValue="Mr") String user, Model model) {
     -- FIX: stop the pattern match after the last ) when the annotation doesn't begin at line/column n:1
-    { pattern = "%s*@.+",                                           type = "keyword2" }, -- Annotations
-    { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",                     type = "keyword2" }, -- Constants
-    { pattern = "%:%:()%w+",                                        type = { "normal", "function" } }, -- Method reference with double colon operator
-    { pattern = "[%a_][%w_]*",                                      type = "symbol"   },
+    { pattern = "%s*@.+",                                                   type = "keyword2" }, -- Annotations
+    { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",                             type = "keyword2" }, -- Constants
+    { pattern = "%:%:()%w+",                                                type = { "normal", "function" } }, -- Method reference with double colon operator
+    { pattern = "[%a_][%w_]*",                                              type = "symbol"   },
     -- FIX: in SomeClassName.class .class should be matched as normal, not keyword
   },
   symbols = {
