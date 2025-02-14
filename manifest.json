@@ -422,7 +422,7 @@
       "id": "eval",
       "mod_version": "3",
       "path": "plugins/eval.lua",
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Adds Treesitter syntax highlighting support",
