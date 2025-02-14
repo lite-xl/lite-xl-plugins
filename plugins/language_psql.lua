@@ -3,7 +3,7 @@ local syntax = require "core.syntax"
 
 -- In sql symbols can be lower case and upper case
 local keywords = {
-  "CREATE", "SELECT", "INSERT", "INTO", "UPDATE",
+  "CREATE", "SELECT", "ADD", "INSERT", "INTO", "UPDATE",
   "DELETE", "TABLE", "DROP", "VALUES", "NOT",
   "NULL", "PRIMARY", "KEY", "REFERENCES",
   "DEFAULT", "UNIQUE", "CONSTRAINT", "CHECK",
