@@ -279,6 +279,13 @@
       "mod_version": "3",
       "path": "plugins/colorpreview.lua",
       "version": "0.2"
+    }, 
+    {
+      "description": "Simple Plugin Installer for installing plugins faster",
+      "id": "lite-xl-pkg",
+      "mod_version": "3",
+      "remote": "https://github.com/nia-cloud-official/lite-xl-pkg/",
+      "version": "0.1"
     },
     {
       "description": "A console for running external commands and capturing their output *([gif](https://user-images.githubusercontent.com/3920290/81343656-49325a00-90ad-11ea-8647-ff39d8f1d730.gif))*",
