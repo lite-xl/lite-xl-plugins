@@ -12,12 +12,12 @@ syntax.add {
   patterns = {
     { pattern = "^%'.*$",                                type = "comment" }, -- Single-line comment
     { pattern = { "^/'", "%'%/" } ,                      type = "comment" }, -- Multi-line comment
-    { pattern = "^%@%w+",                                type = "keyword" }, -- start... end...
-    -- FIX: match plantuml operators (es. -->, <--, o--, ...)
-    { pattern = "[%+%-=/%*%^%%<>!~|&%?%:]",              type = "operator" }, -- Operators
+    { pattern = "^%@%w+",                                type = "keyword2" }, -- start... end...
+    { pattern = "",                                      type = "operator" }, -- Operators
     { pattern = "[%a_][%w_]*",                           type = "symbol"   }, -- Everything else
   },
   symbols = {
     ["true"] = "literal",
+    ["false"] = "literal",
   }
 }
