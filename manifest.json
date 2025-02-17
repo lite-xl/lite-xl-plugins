@@ -2025,7 +2025,7 @@
       "id": "rainbowparen",
       "mod_version": "4",
       "path": "plugins/rainbowparen.lua",
-      "version": "0.1.1"
+      "version": "0.1.2"
     },
     {
       "description": "Allows for you to write a regex and its replacement in one go, and live preview the results.",
