@@ -1748,14 +1748,15 @@
       "version": "0.1"
     },
     {
+      "checksum": "fec5394fadc4b140988ef61cdc7ccc2b5836c1bc4f527cc3b5869cad60cd79d3",
       "description": "Syntax for the [Yuescript](https://yuescript.org/) programming language",
       "id": "language_yuescript",
       "mod_version": "3",
-      "remote": "https://codeberg.org/pgmtx/lite-plugin-yuescript:0b0a68c8a2066b8270b2e85d94711c2eb033410e",
       "tags": [
         "language"
       ],
       "version": "0.1"
+      "url": "https://codeberg.org/pgmtx/lite-plugin-yuescript/raw/commit/0b0a68c8a2066b8270b2e85d94711c2eb033410e/language_yuescript.lua"
     },
     {
       "description": "Syntax for the [Zig](https://ziglang.org/) programming language",
