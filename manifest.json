@@ -1404,7 +1404,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [OpenSCAD](https://openscad.org/) programming language",
