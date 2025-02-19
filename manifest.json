@@ -1284,7 +1284,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [Lox](http://craftinginterpreters.com/the-lox-language.html) programming language, featured in the book '[Crafting Interpreters](http://craftinginterpreters.com/)'.",
