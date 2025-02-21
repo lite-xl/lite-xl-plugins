@@ -1748,7 +1748,7 @@
       "version": "0.1"
     },
     {
-      "checksum": "fec5394fadc4b140988ef61cdc7ccc2b5836c1bc4f527cc3b5869cad60cd79d3",
+      "checksum": "9694b88c585d35ad37cdcd4278839710e9c3c64d8420538862213b56cd032911",
       "description": "Syntax for the [Yuescript](https://yuescript.org/) programming language",
       "id": "language_yuescript",
       "mod_version": "3",
