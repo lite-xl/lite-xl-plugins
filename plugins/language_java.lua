@@ -19,19 +19,20 @@ syntax.add {
     { pattern = "-?0x%x+",                                                                type = "number"   },
     { pattern = "-?%d+[%d%.eE]*f?",                                                       type = "number"   },
     { pattern = "-?%.?%d+f?",                                                             type = "number"   },
+    { pattern = "%<.+%>",                                                                 type = "keyword2" }, -- Generic type
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                                                   type = "operator" },
     { pattern = "[%a_][%w_]*%f[(]",                                                       type = "function" },
     { pattern = "^import()%s+()[%w_.]+",                                                  type = { "keyword", "normal", "normal" } }, -- Import
-    { regex   = [[(?>(?>[A-Z]\w+_?\.?)+(?>\<(?>[\w_?\s?]+)\>)?)+(?=(?>\s+\w+)|[(])]],     type = "function" }, -- Class name reference
+    -- FIX: generic class with anything inside <>
+    -- { regex   = [[(?>(?>[A-Z]\w+_?\.?)+(?>\<(?>[\w_?\s?]+)\>)?)+(?=(?>\s+\w+)|[(])]],     type = "function" }, -- Class name reference
     { regex   = [[this(?=\.?\@?)]],                                                       type = "keyword"  }, -- this keyword
-    -- FIX: look at the Terrafirmacraft java file
-    { pattern = "^%s*%@.+%)$",                                                            type = "keyword2" }, -- Annotation (at line start)
+    { pattern = "^%s*%@.+%)",                                                             type = "keyword2" }, -- Annotation (at line start)
     { regex   = [[\s*\@.+\)(?=\s+\w+)]],                                                  type = "keyword2" }, -- Annotation (at line middle)
     { pattern = "%@%w+",                                                                  type = "keyword2" }, -- Annotation (like: final @Nullable String something;)
     { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",                                           type = "keyword2" }, -- Constants
     { pattern = "%:%:()%w+",                                                              type = { "normal", "function" } }, -- Method reference with double colon operator
+    { pattern = "%.class",                                                                type = "normal"   }, -- .class should be colored as normal
     { pattern = "[%a_][%w_]*",                                                            type = "symbol"   },
-    -- FIX: in SomeClassName.class .class should be matched as normal, not keyword
   },
   symbols = {
     ["abstract"]      = "keyword",

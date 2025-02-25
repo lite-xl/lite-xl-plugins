@@ -28,8 +28,8 @@ syntax.add {
     { pattern = "[%a_][%w_]*%f[%[]",                 type = "function" }, -- Custom Type
     { regex   = [[[A-Z](?:[A-Z_][\d]*)+(?!\w)]],     type = "keyword2" }, -- Constants
     { pattern = "import()%s+()[%w_.]+",              type = { "keyword", "normal", "normal" } },
+    { pattern = "%.class",                           type = "normal"   }, -- .class should be colored as normal
     { pattern = "[%a_][%w_]*",                       type = "symbol"   }, -- ?
-    -- TODO: .class
   },
   symbols = {
     -- Reserved keywords
