@@ -635,9 +635,9 @@
       "description": "Production and Early-Access OpenJDK Builds, from Oracle.",
       "id": "jdk",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:a1d66e32f0b4ac1066fcf7376d3c018871988b90",
       "type": "library",
-      "version": "22.0.1"
+      "version": "23.0.2"
     },
     {
       "description": "Simple *key HUD* for Lite XL",
@@ -1829,15 +1829,15 @@
       "description": "Automatic configuration/binary download for LSP completion for C/C++ with clangd.",
       "id": "lsp_c",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
-      "version": "18.1.3"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:a1d66e32f0b4ac1066fcf7376d3c018871988b90",
+      "version": "19.1.2"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for clojure with clojure-lsp.",
       "id": "lsp_clojure",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:d8ab5f9a5adfa9fccc2361e5bb5141f17e5e7ca9",
-      "version": "2025.01.22"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:a1d66e32f0b4ac1066fcf7376d3c018871988b90",
+      "version": "2025.03.07"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for D with serve_d.",
@@ -1850,8 +1850,8 @@
       "description": "Automatic configuration/binary download for LSP completion for Emmet with emmet-language-server.",
       "id": "lsp_emmet",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
-      "version": "2.5.0"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:a1d66e32f0b4ac1066fcf7376d3c018871988b90",
+      "version": "2.6.1"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Haxe with haxe-language-server.",
@@ -1864,22 +1864,22 @@
       "description": "LSP support for JSON via vscode-json-languageserver with [additional patches](https://github.com/lite-xl/lite-xl-lsp-servers/tree/latest/patches/vscode-json-languageserver) for increased functionality.",
       "id": "lsp_json",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
-      "version": "1.91.1.0.1"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:a1d66e32f0b4ac1066fcf7376d3c018871988b90",
+      "version": "1.97.2.0.1"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Lua with lua-language-server (sumneko).",
       "id": "lsp_lua",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
-      "version": "3.9.3"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:a1d66e32f0b4ac1066fcf7376d3c018871988b90",
+      "version": "3.13.9"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Java with jdtls.",
       "id": "lsp_java",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
-      "version": "1.37.0"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:a1d66e32f0b4ac1066fcf7376d3c018871988b90",
+      "version": "1.45.0"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Python with Pyright.",
@@ -1913,8 +1913,8 @@
       "description": "Automatic configuration/binary download for LSP completion for Typescript and Javascript with typescript-language-server.",
       "id": "lsp_typescript",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
-      "version": "4.3.3"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:a1d66e32f0b4ac1066fcf7376d3c018871988b90",
+      "version": "4.3.4"
     },
     {
       "description": "Adds LSP snippets support to the snippets plugin",
