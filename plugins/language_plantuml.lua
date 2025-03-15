@@ -4,6 +4,28 @@ local syntax = require "core.syntax"
 -- Language Syntax Reference
 -- https://plantuml.com/
 
+-- WIP: class
+-- TODO: usecase
+-- TODO: sequence
+-- TODO: activity
+-- TODO: component
+-- TODO: state
+-- TODO: object
+-- TODO: deployment
+-- TODO: timing
+-- TODO: ER
+
+-- FUTURE_TODO: regex
+-- FUTURE_TODO: wireframe
+-- FUTURE_TODO: archimate
+-- FUTURE_TODO: gantt
+-- FUTURE_TODO: chronology
+-- FUTURE_TODO: mindmap
+-- FUTURE_TODO: WBS
+-- FUTURE_TODO: EBNF
+-- FUTURE_TODO: JSON
+-- FUTURE_TODO: YAML
+
 syntax.add {
   name = "PlantUML",
   files = { "%.puml$", "%.plantuml$", "%.pu$", "%.iuml$", "%.wsd$" },
@@ -19,15 +41,17 @@ syntax.add {
     { pattern = "%.+%|?%>?",                                           type = "operator" }, -- Arrow operator
     { pattern = "%<?%|?%.+",                                           type = "operator" }, -- Arrow operator
     { pattern = "[%*ox$#$}%+%^]%-+",                                   type = "operator" }, -- Arrow operator
+    { regex   = [[\-+(?>left)|(?>right)|(?>up)|(?>down)\-+\>]],        type = "operator" }, -- Arrow operator
+    { regex   = [[\-+(?>l)|(?>r)\-+\>]],                               type = "operator" }, -- Arrow operator
     { pattern = "%<%<%w+%>%>",                                         type = "keyword2" }, -- Key
-    -- FIX: mustn't extend beyond eventual parenthesis
-    { pattern = "%:%s*.+$",                                            type = "keyword2" }, -- Attribute/Comment
+    -- FIX: the "::" completely messes up the attr/comment and the string patterns
+    { regex   = [[\:\s*.+(?=\)|\]|\})]],                               type = "keyword2" }, -- Attribute/Comment/Type
     { pattern = "^%!.+",                                               type = "keyword2" }, -- ?
-    -- TODO: type
-    -- TODO: accessibility modifiers
-    { pattern = "^%(%s*%)",                                            type = "keyword" }, -- Abbreviations
-    { pattern = "^%<%s*%>",                                            type = "keyword" }, -- Abbreviations
+    { pattern = "[%-%#%~%+]",                                          type = "operator" }, -- Accessibility modifiers
+    { pattern = "^%(%s*%)",                                            type = "keyword"  }, -- Abbreviations
+    { pattern = "^%<%s*%>",                                            type = "keyword"  }, -- Abbreviations
     { pattern = "[%a_][%w_]*",                                         type = "symbol"   }, -- Everything else
+    -- FIX: dots in es: "package A.B.C.D {" should be normal, not operator
   },
   symbols = {
     -- Literals
@@ -39,6 +63,8 @@ syntax.add {
     ["annotation"] = "keyword",
     ["circle"] = "keyword",
     ["class"] = "keyword",
+    ["object"] = "keyword",
+    ["json"] = "keyword",
     ["diamond"] = "keyword",
     ["entity"] = "keyword",
     ["enum"] = "keyword",
