@@ -571,6 +571,12 @@
       "version": "1.0"
     },
     {
+      "description": "A high performance (10-20x) version of `projectsearch`.",
+      "id": "hpprojectsearch",
+      "mod_version": "4",
+      "remote": "https://github.com/adamharrison/lite-xl-highperf.git"
+    },
+    {
       "description": "Dark (or even Mica!) title bar for Lite XL",
       "id": "immersive-title",
       "mod_version": "3",
