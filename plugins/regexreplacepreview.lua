@@ -112,32 +112,34 @@ local function regex_replace_file(view, pattern, old_lines, raw, start_line, end
     for i = (start_line or 1), (end_line or #doc.lines) do
       local new_text, matches, rmatches
       local old_text = old_lines[i] or doc.lines[i]
-      local old_length = #old_text
-      if replacement then
-        new_text, matches, rmatches = substitute(re, old_text, replacement)
-      end
-      if matches and #matches > 0 then
-        old_lines[i] = old_text
-        replace_line(i, new_text)
-        if line_scroll == nil then
-          line_scroll = i
-          doc:set_selection(i, rmatches[1][1], i, rmatches[1][2])
+      if old_text then
+        local old_length = #old_text
+        if replacement then
+          new_text, matches, rmatches = substitute(re, old_text, replacement)
         end
-      elseif old_lines[i] then
-        replace_line(i, old_lines[i])
-        old_lines[i] = nil
-      end
-      if not replacement then
-        local s,e = regex_match(re, old_text)
-        if s then
-          line_scroll = i
-          doc:set_selection(i, s, i, e)
-          break
+        if matches and #matches > 0 then
+          old_lines[i] = old_text
+          replace_line(i, new_text)
+          if line_scroll == nil then
+            line_scroll = i
+            doc:set_selection(i, rmatches[1][1], i, rmatches[1][2])
+          end
+        elseif old_lines[i] then
+          replace_line(i, old_lines[i])
+          old_lines[i] = nil
+        end
+        if not replacement then
+          local s,e = regex_match(re, old_text)
+          if s then
+            line_scroll = i
+            doc:set_selection(i, s, i, e + 1)
+            break
+          end
         end
       end
-    end
-    if line_scroll then
-      view:scroll_to_line(line_scroll, true)
+      if line_scroll then
+        view:scroll_to_line(line_scroll, true)
+      end
     end
   end
   if replacement == nil then
