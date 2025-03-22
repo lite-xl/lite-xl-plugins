@@ -23,8 +23,8 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                                                   type = "operator" },
     { pattern = "[%a_][%w_]*%f[(]",                                                       type = "function" },
     { pattern = "^import()%s+()[%w_.]+",                                                  type = { "keyword", "normal", "normal" } }, -- Import
-    -- FIX: generic class with anything inside <>
-    -- { regex   = [[(?>(?>[A-Z]\w+_?\.?)+(?>\<(?>[\w_?\s?]+)\>)?)+(?=(?>\s+\w+)|[(])]],     type = "function" }, -- Class name reference
+    -- FIX: see ./examples/example.java
+    { regex   = [[(?>(?>[A-Z]\w+_?\.?)+(?>\<.+\>(?=\s+))?)+(?=(?>\s+\w+)|[(])]],          type = "function" }, -- Class name reference
     { regex   = [[this(?=\.?\@?)]],                                                       type = "keyword"  }, -- this keyword
     { pattern = "^%s*%@.+%)",                                                             type = "keyword2" }, -- Annotation (at line start)
     { regex   = [[\s*\@.+\)(?=\s+\w+)]],                                                  type = "keyword2" }, -- Annotation (at line middle)
