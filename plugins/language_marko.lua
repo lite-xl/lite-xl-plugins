@@ -1,6 +1,10 @@
--- Made by: https://github.com/rohanvashisht1234
+-- Made by: https://github.com/RohanVashisht1234
 
 -- mod-version:3
+
+-- Language Syntax Reference
+-- https://markojs.com/docs/syntax/
+
 -- Syntax definition for Marko.js
 
 local syntax = require "core.syntax"
