@@ -1812,11 +1812,11 @@
       "id": "lsp",
       "mod_version": "3",
       "name": "Language Server Protocol",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp.git:ed8345488ee97d3ee99605025303a40ec301a513",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp.git:b2523423b34712dd5cefc5d7ee6f7a500f4ac2ed",
       "tags": [
         "language server protocol"
       ],
-      "version": "0.8"
+      "version": "0.9"
     },
     {
       "description": "Completion menu kind/type icons for Lite XL LSP",
