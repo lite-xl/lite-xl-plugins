@@ -3,7 +3,7 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "Ruby",
-  files = { "%.rb$", "%.gemspec$", "^Gemfile$", "^Gemfile%.lock$" },
+  files = { "%.rb$", PATHSEP .. "%.gemspec$", PATHSEP .. "Gemfile$", PATHSEP .. "Gemfile%.lock$" },
   headers = "^#!.*[ /]ruby",
   comment = "#",
   patterns = {

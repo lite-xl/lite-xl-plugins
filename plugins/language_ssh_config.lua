@@ -3,10 +3,10 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "SSH config",
-  files = { "sshd?/?_?config$" },
+  files = { PATHSEP .. "sshd?" .. PATHSEP .. "?_?config$" },
   comment = '#',
   patterns = {
-    { pattern = "#.*\n",        type = "comment"  },
+    { pattern = "#.*",          type = "comment"  },
     { pattern = "%d+",          type = "number"   },
     { pattern = "[%a_][%w_]*",  type = "symbol"   },
     { pattern = "@",            type = "operator" },
@@ -45,7 +45,6 @@ syntax.add {
     ["RekeyLimit"]                   = "keyword",
     ["SendEnv"]                      = "keyword",
     ["HashKnownHosts"]               = "keyword",
-    ["GSSAPIAuthentication"]         = "keyword",
 
     -- sshd config
     ["Subsystem"]                    = "keyword2",

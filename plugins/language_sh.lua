@@ -3,15 +3,15 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "Shell script",
-  files = { "%.sh$", "%.bash$", "^%.bashrc$", "^%.bash_profile$", "^%.profile$", "%.zsh$", "%.fish$" },
+  files = { "%.sh$", "%.bash$", PATHSEP .. "%.bashrc$", PATHSEP .. "%.bash_profile$", PATHSEP .. "%.profile$", "%.zsh$", "%.fish$" },
   headers = "^#!.*bin.*sh\n",
   comment = "#",
   patterns = {
     -- $# is a bash special variable and the '#' shouldn't be interpreted
     -- as a comment.
-    { pattern = "$[%a_@*#][%w_]*",                type = "keyword2" },
+    { pattern = "%$[%a_@*#][%w_]*",               type = "keyword2" },
     -- Comments
-    { pattern = "#.*\n",                          type = "comment"  },
+    { pattern = "#.*",                            type = "comment"  },
     -- Strings
     { pattern = { '"', '"', '\\' },               type = "string"   },
     { pattern = { "'", "'", '\\' },               type = "string"   },
@@ -35,8 +35,8 @@ syntax.add {
     -- Match variable assignments
     { pattern = "[_%a][%w_]+%f[%+=]",              type = "keyword2" },
     -- Match variable expansions
-    { pattern = "${.-}",                           type = "keyword2" },
-    { pattern = "$[%d$%a_@*][%w_]*",               type = "keyword2" },
+    { pattern = "%${.-}",                          type = "keyword2" },
+    { pattern = "%$[%d%$%a_@*][%w_]*",             type = "keyword2" },
     -- Everything else
     { pattern = "[%a_][%w_]*",                     type = "symbol"   },
     -- Functions
