@@ -54,7 +54,7 @@ syntax.add {
     { pattern = "%w+%s+%w+%s*()%f[(]",                        type = { "function", "normal" } },
     { pattern = "%w+()%<.*%>()%s+%w+%s*()%f[(]",              type = { "function", "keyword2", "function", "normal" } },
     -- other
-    -- TODO: see if therea are regex patterns that can be converted to lua patterns
+    -- TODO: see if there are regex patterns that can be converted to lua patterns
     { regex   = [[this(?=\.?\@?)]],                           type = "keyword"  }, -- this keyword
     { pattern = "^%s*%@.+%)",                                 type = "keyword2" }, -- Annotation (at line start)
     { regex   = [[\s*\@.+\)(?=\s+\w+)]],                      type = "keyword2" }, -- Annotation (at line middle)
