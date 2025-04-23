@@ -328,8 +328,8 @@
       "description": "PerilousBooklet's treeview icons for software developers.",
       "id": "devicons",
       "mod_version": "3",
-      "remote": "https://github.com/PerilousBooklet/lite-xl-devicons:31d735b09b9126e4ce1b1fd76deb9f53a60ef684",
-      "version": "1.1.0"
+      "remote": "https://github.com/PerilousBooklet/lite-xl-devicons:4e6f401ba6689aca74822f08ba1d387027df6c9b",
+      "version": "1.2.0"
     },
     {
       "description": "Add end tags in variety of languages. Similar to [Vim Endwise](https://github.com/tpope/vim-endwise)",
