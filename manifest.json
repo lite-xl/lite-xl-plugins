@@ -1966,8 +1966,8 @@
       "version": "0.4"
     },
     {
-      "id": "modal",
       "description": "Fully customizable modal editing for Lite XL",
+      "id": "modal",
       "mod_version": "3",
       "name": "modal",
       "remote": "https://codeberg.org/Mandarancio/lite-modal:cba946509cde63ce97cb80d756219ba335c205b8",
