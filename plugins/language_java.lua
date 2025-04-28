@@ -24,36 +24,36 @@ syntax.add {
     { pattern = "^import()%s+()[%w_.]+",                      type = { "keyword", "normal", "normal" } }, -- Import
     -- Class name reference, ;
     { pattern = "^%w+%s*()%w+%s*%;",                          type = { "function", "normal" } },
-    { pattern = "^%w+%s*()%<.*%>()%s*%w+%s*%;",               type = { "function", "keyword2", "normal" } },
+    { pattern = "^%w+%s*()%<.-%>()%s*%w+%s*%;",               type = { "function", "keyword2", "normal" } },
     -- Class name reference, =
     { pattern = "%w+%s*()%w+%s*()%=",                         type = { "function", "normal", "operator" } },
-    { pattern = "%w+%s*()%<.*%>()%s*%w+%s*()%=",              type = { "function", "keyword2", "normal", "operator" } },
+    { pattern = "%w+%s*()%<.-%>()%s*%w+%s*()%=",              type = { "function", "keyword2", "normal", "operator" } },
     -- Class name reference, new
-    { pattern = "new()%s*%w+()%<.*%>()%f[(]",                 type = { "keyword", "function", "keyword2", "normal" } },
+    { pattern = "new()%s*%w+()%<.-%>()%f[(]",                 type = { "keyword", "function", "keyword2", "normal" } },
     { pattern = "new()%s*%w+()%f[(]",                         type = { "keyword", "function", "normal" } },
-    -- Class name reference, ( then ,
+    -- FIX: Class name reference, ( then ,
     { pattern = "%(%s*()%w+%s*()%w+%s*%,",                    type = { "normal", "function", "normal" } },
-    { pattern = "%(%s*()%w+()%<.*%>()%s*%w+%s*%,",            type = { "normal", "function", "keyword2", "normal" } },
+    { pattern = "%(%s*()%w+()%<.-%>()%s*%w+%s*%,",            type = { "normal", "function", "keyword2", "normal" } },
     -- Class name reference, (final then ,
-    { pattern = "%(%s*()final%s*()%w+()%<.*%>()%s*%w+%s*%,",    type = { "normal", "keyword", "function", "keyword2", "normal" } },
-    { pattern = "%(%s*()final%s*()%w+%s*()%w+%s*%,",            type = { "normal", "keyword", "function", "normal" } },
+    { pattern = "%(%s*()final%s*()%w+()%<.-%>()%s*%w+%s*%,",  type = { "normal", "keyword", "function", "keyword2", "normal" } },
+    { pattern = "%(%s*()final%s*()%w+%s*()%w+%s*%,",          type = { "normal", "keyword", "function", "normal" } },
     -- Class name reference, , then ,
     { pattern = "%s*()%w+%s+()%w+%s*%,",                      type = { "normal", "function", "normal" } },
-    { pattern = "%s*()%w+()%<.*%>()%s+%w+%s*%,",              type = { "normal", "function", "keyword2", "normal" } },
-    -- FIX: Class name reference, , then )
+    { pattern = "%s*()%w+()%<.-%>()%s+%w+%s*%,",              type = { "normal", "function", "keyword2", "normal" } },
+    -- Class name reference, , then )
     { pattern = "%s*()%w+()%s+%w+%s*%)",                      type = { "normal", "function", "normal" } },
-    { pattern = "%,%s*()%w+()%<.*%>()%s+w+%s*%)",             type = { "normal", "function", "keyword2", "normal" } },
+    { pattern = "%s*()%w+()%<.-%>()%s+%w+%s*%)",              type = { "normal", "function", "keyword2", "normal" } },
     -- Class name reference, ( then )
     { pattern = "%(%s*()%w+%s*()%w+%s*%)",                    type = { "normal", "function", "normal" } },
-    { pattern = "%(%s*()%w+()%<.*%>()%s*()%w+%s*%)",          type = { "normal", "function", "keyword2", "normal" } },
+    { pattern = "%(%s*()%w+()%<.-%>()%s*()%w+%s*%)",          type = { "normal", "function", "keyword2", "normal" } },
     -- ?
-    { pattern = "%s*()%w+()%<.*%>()%s+w+%s*%)",               type = { "normal", "function", "keyword2", "normal" } },
+    { pattern = "%s*()%w+()%<.-%>()%s+w+%s*%)",               type = { "normal", "function", "keyword2", "normal" } },
     -- Array
     { pattern = "%w+()%[()%d*()%]",                           type = { "function", "normal", "number", "normal" } },
     -- Class name reference, method
     { pattern = "%w+%s+%w+%s*()%f[(]",                        type = { "function", "normal" } },
-    { pattern = "%w+()%<.*%>()%s+%w+%s*()%f[(]",              type = { "function", "keyword2", "function", "normal" } },
-    -- other
+    { pattern = "%w+()%<.-%>()%s+%w+%s*()%f[(]",              type = { "function", "keyword2", "function", "normal" } },
+    -- Other patterns
     -- TODO: see if there are regex patterns that can be converted to lua patterns
     { regex   = [[this(?=\.?\@?)]],                           type = "keyword"  }, -- this keyword
     { pattern = "^%s*%@.+%)",                                 type = "keyword2" }, -- Annotation (at line start)
