@@ -4,9 +4,6 @@ local syntax = require "core.syntax"
 -- Language syntax reference
 -- https://gnome.pages.gitlab.gnome.org/vala/manual/overview.html
 
--- https://devina.io/redos-checker
--- https://redosdetector.com/?pattern=%5C%40%3F%5C%22&caseInsensitive=false&unicode=false
-
 syntax.add {
   name = "Vala",
   files = { "%.vala$" },
@@ -21,22 +18,23 @@ syntax.add {
     { pattern = "-?0x%x+",                                                                 type = "number"   }, -- Numbers
     { pattern = "-?%d+[%d%.eE]*f?",                                                        type = "number"   }, -- Numbers
     { pattern = "-?%.?%d+f?",                                                              type = "number"   }, -- Numbers
-    -- FIX: Vulnerable to REDOs
+    -- TODO: replace with multi-token lua patterns
     { regex   = "\\<(?:[\\w+][\\<\\w+\\>]\\,?\\s*)+\\>\\>*(?=[(]?[)]?[\\;\\s*])",          type = "keyword2" }, -- Generic Type
-    -- FIX: it also matches var names with a following ,
-    -- es. void my_sorting_algorithm(int[] data<SomethingLikeThat>, Comparator compare) {
+    -- TODO: replace with multi-token lua patterns
     { regex   = "(?>\\w+\\.?)+\\,?\\<.+?\\>\\>*(?=\\s+\\w+\\s*)?",                         type = "function" }, -- Generic class name reference
-    -- FIX: it also matches var names with a following ,
-    -- es. es. void my_sorting_algorithm(int[] data, Comparator compare) {
-    -- es. delegate int Comparator(int a, int b);
+    -- TODO: replace with multi-token lua patterns
     { regex   = "(?>\\w+\\.?)+\\,?(?=\\s+\\w+\\s*)",                                       type = "function" }, -- Class name reference
-    { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)?(?=\\s*\\{|\\:)",                               type = "function" }, -- Class name
+    -- TODO: replace with multi-token lua patterns
+    { regex   = "(?>\\w+\\.?)+(?=\\s+\\w+\\s*)?(?=\\s*\\{|\\:)",                           type = "function" }, -- Class name
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                                                    type = "operator" }, -- Operators
     { pattern = "[%a_][%w_]*%f[(]",                                                        type = "function" }, -- Function
-    { pattern = "%s*%:%s*",                                                                type = "keyword" }, -- Inheritance
+    { pattern = "%s*%:%s*",                                                                type = "keyword"  }, -- Inheritance
+    -- TODO: replace with multi-token lua patterns ?
     { regex   = "\\=\\>(?=[{])",                                                           type = "keyword"  }, -- Lambda
+    -- TODO: replace with lua patterns
     { regex   = "[A-Z](?:[A-Z_][\\d]*)+(?!\\w)",                                           type = "keyword2" }, -- Constants
     { pattern = "^%s*%[.*%]",                                                              type = "literal"  }, -- Attribute
+    -- TODO: replace with multi-token lua patterns ?
     { regex   = "\\#\\w+(?=\\s?\\w*)",                                                     type = "keyword"  }, -- Preprocessor directive
     { pattern = "[%a_][%w_]*",                                                             type = "symbol"   }, -- Symbols
   },
