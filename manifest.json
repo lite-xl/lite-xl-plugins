@@ -589,6 +589,14 @@
       "version": "0.1"
     },
     {
+      "description": "Official Go builds.",
+      "id": "golang",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:6eea7cf124baad8e7abad6e388c7a16f6f6a98f2",
+      "type": "library",
+      "version": "1.24.2"
+    },
+    {
       "description": "Graphical filepicker using zenity or kdialog.",
       "id": "gui_filepicker",
       "mod_version": "3",
@@ -1852,6 +1860,13 @@
       "mod_version": "3",
       "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:a1d66e32f0b4ac1066fcf7376d3c018871988b90",
       "version": "2.6.1"
+    },
+    {
+      "description": "Automatic configuration/binary download for LSP completion for Go with gopls.",
+      "id": "lsp_go",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:6eea7cf124baad8e7abad6e388c7a16f6f6a98f2",
+      "version": "0.18.1"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Haxe with haxe-language-server.",
