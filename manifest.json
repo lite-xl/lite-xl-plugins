@@ -321,6 +321,9 @@
       "id": "font_devicons",
       "mod_version": "3",
       "remote": "https://github.com/PerilousBooklet/lite-xl-devicons:e78f2374a1f4de5d0f324af46a07c2f9ffa7ccef",
+      "tags": [
+        "deprecated"
+      ],
       "type": "font",
       "version": "1.0.0"
     },
@@ -329,6 +332,9 @@
       "id": "devicons",
       "mod_version": "3",
       "remote": "https://github.com/PerilousBooklet/lite-xl-devicons:e78f2374a1f4de5d0f324af46a07c2f9ffa7ccef",
+      "tags": [
+        "deprecated"
+      ],
       "version": "1.0.0"
     },
     {
