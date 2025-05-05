@@ -1,6 +1,7 @@
 -- mod-version:3
 
 local command = require "core.command"
+local common = require "core.common"
 local core = require "core"
 
 --[[
@@ -270,9 +271,20 @@ local unpack = table.unpack
 local pack = function(...) return {n = select("#", ...), ...} end
 
 local break_funcs = {}
+local breakpoint_idx = 1
+local line_breakpoints = 0
+local debug_hook
 
 local function cmd_break(func_name)
+   if func_name:find(":") then
+      local filename, linenum = func_name:match("^(.+):(.+)$")
+      filename = common.normalize_path(system.absolute_path(common.home_expand(filename)))
+      func_name = filename..":"..linenum
+      if tonumber(linenum) then line_breakpoints = line_breakpoints + 1 end
+   end
    table.insert(break_funcs, func_name)
+   break_funcs[func_name] = true
+   debug.sethook(debug_hook(0), "crl")
    return false
 end
 
@@ -281,9 +293,26 @@ local function cmd_delete(index)
    if index > #break_funcs then
       dbg_writeln(COLOR_RED.."Error:"..COLOR_RESET.." no breakpoint "..index)
    else
-      table.remove(break_funcs, index)
+      local func_name = table.remove(break_funcs, index)
+      break_funcs[func_name] = nil
+      if func_name:find(":%d+$") then line_breakpoints = line_breakpoints - 1 end
+      if #break_funcs == 0 then debug.sethook() end
    end
    return false
+end
+
+local function cmd_list_breakpoint()
+   for i, func_name in ipairs(break_funcs) do
+      local pretty_name
+      if func_name:find(":") then
+         local filename, linenum = func_name:match("^(.+):(.+)$")
+         local linenum_color = tonumber(linenum) and COLOR_YELLOW or COLOR_BLUE
+         pretty_name = COLOR_BLUE..filename..COLOR_RESET..":"..linenum_color..linenum
+      else
+         pretty_name = COLOR_BLUE..func_name
+      end
+      dbg.writeln("%s % 4d: %s", COLOR_RESET, i, pretty_name)
+   end
 end
 
 local function cmd_step()
@@ -434,6 +463,7 @@ local function cmd_help()
       .. COLOR_BLUE.."  c"..COLOR_YELLOW.."(ontinue)"..GREEN_CARET.."continue execution\n"
       .. COLOR_BLUE.."  b"..COLOR_YELLOW.."(reak) "..COLOR_BLUE.."[[file:]function]"..GREEN_CARET.."set breakpoint at specified function\n"
       .. COLOR_BLUE.."  d"..COLOR_YELLOW.."(elete) "..COLOR_BLUE.."[index]"..GREEN_CARET.."remove breakpoint\n"
+      .. COLOR_BLUE.."  r"..COLOR_YELLOW.."(list)"..GREEN_CARET.."list all breakpoints\n"
       .. COLOR_BLUE.."  s"..COLOR_YELLOW.."(tep)"..GREEN_CARET.."step forward by one line (into functions)\n"
       .. COLOR_BLUE.."  n"..COLOR_YELLOW.."(ext)"..GREEN_CARET.."step forward by one line (skipping over functions)\n"
       .. COLOR_BLUE.."  f"..COLOR_YELLOW.."(inish)"..GREEN_CARET.."step forward until exiting the current function\n"
@@ -474,9 +504,9 @@ local function split(inputstr, sep)
    return t
 end
 
-local function debug_hook(offset, reason)
+function debug_hook(offset, reason)
    local function trace (event, line)
-      if event == "line" then
+      if line_breakpoints == 0 and event == "line" then
          return
       end
 
@@ -485,8 +515,13 @@ local function debug_hook(offset, reason)
       if #s.namewhat > 0 then
          local i = split(s.short_src, "/")
          local long_name = i[#i]..":"..s.name
+         local longer_name = s.short_src..":"..s.name
+         local long_linenum = i[#i]..":"..s.currentline
+         local longer_linenum = s.short_src..":"..s.currentline
 
-         if in_array(break_funcs, long_name) or in_array(break_funcs, s.name) then
+         if break_funcs[longer_name] or break_funcs[longer_linenum]
+            or break_funcs[long_name] or break_funcs[long_linenum]
+            or break_funcs[s.name] then
             offset = offset - 1
             repl(reason)
          end
@@ -494,17 +529,17 @@ local function debug_hook(offset, reason)
    end
    return trace
 end
-debug.sethook(debug_hook(0), "crl")
 
 local function cmd_continue()
 
-   return true, debug_hook
+   return true, #break_funcs > 0 and debug_hook or nil
 end
 
 local commands = {
    ["^c$"] = cmd_continue,
    ["^b%s+(.*)$"] = cmd_break,
    ["^d%s+(%d*)$"] = cmd_delete,
+   ["^r$"] = cmd_list_breakpoint,
    ["^s$"] = cmd_step,
    ["^n$"] = cmd_next,
    ["^f$"] = cmd_finish,
@@ -520,6 +555,7 @@ local commands = {
 }
 
 local function match_command(line)
+   line = line:match("^%s*(.-)%s*$")
    for pat, func in pairs(commands) do
       -- Return the matching command and capture argument.
       if line:find(pat) then return func, line:match(pat) end
