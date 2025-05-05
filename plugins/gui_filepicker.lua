@@ -36,10 +36,10 @@ local function dialog(kdialogFlags, zenityFlags, callback)
 	if utility == "kdialog" then
 		flags = kdialogFlags
 	end
-
+  
 	local proc, proc_err = process.start({
 		utility,
-		table.unpack(flags)
+		table.unpack(flags),
 	})
 
 	if not proc then
@@ -70,12 +70,21 @@ end
 
 command.add(nil, {
 	["gui-filepicker:open-file"] = function()
+		local project_dir = core.project_dir
+		if project_dir and project_dir ~= "" then
+			project_dir = project_dir .. PATHSEP
+		else
+			project_dir = "~/"
+		end
+		
 		dialog(
 			{
-				"--getopenfilename"
+				"--getopenfilename",
 			},
 			{
-				"--file-selection"
+				"--file-selection",
+				"--filename",
+				project_dir,
 			},
 			function(abs_path)
 				core.root_view:open_doc(core.open_doc(common.home_expand(abs_path)))
@@ -86,11 +95,11 @@ command.add(nil, {
 	["gui-filepicker:open-project-folder"] = function()
 		dialog(
 			{
-				"--getexistingdirectory"
+				"--getexistingdirectory",
 			},
 			{
-					"--file-selection",
-					"--directory"
+				"--file-selection",
+				"--directory",
 			},
 			function(abs_path)
 				if abs_path == core.project_dir then
@@ -104,11 +113,11 @@ command.add(nil, {
 	["gui-filepicker:change-project-folder"] = function()
 		dialog(
 			{
-				"--getexistingdirectory"
+				"--getexistingdirectory",
 			},
 			{
 				"--file-selection",
-				"--directory"
+				"--directory",
 			},
 			function(abs_path)
 				if abs_path == core.project_dir then
@@ -128,7 +137,7 @@ command.add(nil, {
 			},
 			{
 				"--file-selection",
-				"--directory"
+				"--directory",
 			},
 			function(abs_path)
 				if abs_path == core.project_dir then
@@ -142,15 +151,23 @@ command.add(nil, {
 
 command.add("core.docview", {
 	["gui-filepicker:save-as"] = function(dv)
+		local project_dir = core.project_dir
+		if project_dir and project_dir ~= "" then
+			project_dir = project_dir .. PATHSEP
+		else
+			project_dir = "~/"
+		end
+		
+		local filename = dv.doc.filename or "new_file"
 		dialog(
 			{
-				"--getsavefilename"
+				"--getsavefilename",
 			},
 			{
 				"--file-selection",
 				"--save",
 				"--filename",
-				dv.doc.filename or "new_file"
+				project_dir .. filename,
 			},
 			function(abs_path)
 				dv.doc:save(abs_path, abs_path)
