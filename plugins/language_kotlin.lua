@@ -1,9 +1,13 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
+-- Language Syntax References
+-- https://kotlinlang.org/docs/basic-syntax.html
+-- https://kotlinlang.org/docs/keyword-reference.html
+
 syntax.add {
   name = "Kotlin",
-  files = { "%.kt$" },
+  files = { "%.kts?$", "%.klib$" },
   comment = "//",
   block_comment = { "/*", "*/" },
   patterns = {
@@ -22,15 +26,17 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]",              type = "operator" }, -- Operators
     { regex   = [[\?(?=\.)]],                        type = "operator" }, -- ?. operator
     { pattern = "[%a_][%w_]*%f[(]",                  type = "function" }, -- Function/Method/Class
-    { regex   = "`[\\w_\\s]+`(?=\\s*\\()",           type = "function" }, -- Test Method
+    { regex   = [[`[\w_\s]+`(?=\s*\()]],             type = "function" }, -- Test Method
     { regex   = [[let(?=\s\{)]],                     type = "function" }, -- ? operator
     { regex   = [[\?\:(?=\s?)]],                     type = "operator" }, -- elvis operator
     { regex   = [[this(?=\.?\@?)]],                  type = "keyword"  }, -- this keyword
-    { regex   = "\\@\\w+",                           type = "keyword2" }, -- Annotations
-    { regex   = [[[a-zA-Z]+\@(?=\s?[a-zA-Z])]],      type = "keyword2" }, -- Annotations (this pattern is lower priority than the `this keyword` pattern)
-    { regex   = "[A-Z][A-Z_]+",                      type = "keyword2" }, -- Constants, FULL UPPERCASE
-    { pattern = "import()%s+()[%w_.]+",              type = { "keyword", "normal", "normal" } },
+    { pattern = "^%s*%@.+%)",                        type = "keyword2" }, -- Annotation (at line start)
+    { regex   = [[\s*\@.+\)(?=\s+\w+)]],             type = "keyword2" }, -- Annotation (at line middle)
+    { pattern = "%@%w+",                             type = "keyword2" }, -- Annotation (like: final @Nullable String something;)
+    { pattern = "^import()%s+()[%w_.]+",             type = { "keyword", "normal", "normal" } },
+    { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",      type = "keyword2" }, -- Constants
     { pattern = "[%a_][%w_]*",                       type = "symbol"   }, -- ?
+    -- TODO: class references
   },
   symbols = {
     -- Hard keywords
