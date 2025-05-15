@@ -195,7 +195,7 @@ syntax.add {
 
 syntax.add {
   name = "Go",
-  files = { "go%.mod" },
+  files = { PATHSEP .. "go%.mod" },
   comment = "//",
   patterns = {
     { pattern = "//.-\n", type = "comment"},
@@ -218,7 +218,7 @@ syntax.add {
 
 syntax.add {
   name = "Go",
-  files = { "go%.sum" },
+  files = { PATHSEP .. "go%.sum" },
   patterns = {
     { pattern = "%S+() v[^/]-() h1:()%S+()=",
       type = { "string", "keyword", "normal", "string", "normal" }

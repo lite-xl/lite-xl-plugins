@@ -9,7 +9,7 @@ style.syntax["exclude"] = { common.color "#F36161" }
 
 syntax.add {
   name = ".ignore file",
-  files = { "%..*ignore$" },
+  files = { PATHSEP .. "%..*ignore$" },
   comment = "#",
   patterns = {
     { regex = "^ *#.*$",            type = "comment" },
