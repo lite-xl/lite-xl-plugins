@@ -18,24 +18,20 @@ syntax.add {
     { pattern = "'\\?.'",                                     type = "string"   }, -- character literal
     { pattern = "-?0x%x+",                                    type = "number"   }, -- Number, hexadecimal
     { pattern = "-?%d+[%d%.eE]*f?",                           type = "number"   }, -- Number, exponential
-    { pattern = "-?%.?%d+f?",                                 type = "number"   }, -- Number
+    -- FIX: int, float, long, double
+    { pattern = "-?%d+%.?%d*[lLfFdD]?",                       type = "number"   }, -- Number
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                       type = "operator" }, -- Operator
     { pattern = "[%a_][%w_]*%f[(]",                           type = "function" }, -- Method
     { pattern = "^import()%s+()[%w_.]+",                      type = { "keyword", "normal", "normal" } }, -- Import
     -- Class name reference, ;
-    { pattern = "^%s*()return()%s*%.-()%;$",                  type = { "normal", "keyword", "symbol", "normal" } }, -- Fix class name reference, ; pattern
-    { pattern = "^%w+%s*()%w+%s*%;",                          type = { "function", "normal" } },
-    { pattern = "^%w+%s*()%<.-%>()%s*%w+%s*%;",               type = { "function", "keyword2", "normal" } },
-    -- FIX: valid only when preceded by a single keyword (es. private), when using more than one (es. private static) it breaks
+    { pattern = "^%s*()return()%s*%.-()%;$",                  type = { "normal", "keyword", "symbol", "normal" } },
+    { pattern = "^%s*[A-Z]%w+%s*()%w+%s*%;",                  type = { "function", "normal" } },
+    { pattern = "^%s*%w+()%<.-%>()%s*%w+%s*%;",               type = { "function", "keyword2", "normal" } },
+    -- FIX
     { pattern = "^%s*%w+%s*()%w+()%<.-%>()%s*%w+%s*%;",       type = { "keyword", "function", "keyword2", "normal" } },
     { pattern = "^%s*%w+%s*()%w+%s*()%w+%s*%;",               type = { "keyword", "function", "normal" } },
     -- Class name reference, =
-    -- FIX: paramClassDiagramTextToWrap = builder.toString();
-    -- FIX: return paramClassDiagramTextToWrap;
-    -- FIX: classDiagramText = createAsciidocWrappedDiagramText(classDiagramText);
-    -- FIX: IOUtils.write(classDiagramText, outputStream, getEncoding());
-    -- FIX: this.outputFilename = outputFilename;
-    -- FIX: if (whitelistRegexp == null || "".equals(whitelistRegexp)) {
+    -- FIX
     { pattern = "%w+%s*()%w+%s*()%=",                         type = { "function", "normal", "operator" } },
     { pattern = "%w+%s*()%<.-%>()%s*%w+%s*()%=",              type = { "function", "keyword2", "normal", "operator" } },
     -- Class name reference, new
@@ -62,19 +58,17 @@ syntax.add {
     { pattern = "%w+%s+()%w+%s*()%f[(]",                      type = { "keyword", "function", "normal" } },
     { pattern = "%w+()%<.-%>()%s+%w+%s*()%f[(]",              type = { "function", "keyword2", "function", "normal" } },
     -- Other patterns
-    -- TODO: see if there are regex patterns that can be converted to lua patterns
     { regex   = [[this(?=\.?\@?)]],                           type = "keyword"  }, -- this keyword
     { pattern = "^%s*%@.+%)",                                 type = "keyword2" }, -- Annotation (at line start)
     { regex   = [[\s*\@.+\)(?=\s+\w+)]],                      type = "keyword2" }, -- Annotation (at line middle)
     { pattern = "%@%w+",                                      type = "keyword2" }, -- Annotation (like: final @Nullable String something;)
+    -- FIX: SQUID_ works but not SQUID
     { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",               type = "keyword2" }, -- Constants
     { pattern = "%:%:()%w+",                                  type = { "normal", "function" } }, -- Method reference with double colon operator
     { pattern = "%.class",                                    type = "normal"   }, -- .class should be colored as normal
     { pattern = "[%a_][%w_]*",                                type = "symbol"   }, -- Symbols
-    -- WIP: check for missing syntaxes by opening an example Java project
     -- TODO: check if there are redundant/overlapping patterns
-    -- TODO: private final VisibilityType maxVisibilityMethods = VisibilityType.PRIVATE;
-    --       in this case VisibilityType should be colored as function
+    -- WIP: check for missing syntaxes by opening an example Java project
   },
   symbols = {
     ["abstract"]      = "keyword",

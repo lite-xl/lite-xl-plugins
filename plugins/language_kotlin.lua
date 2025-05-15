@@ -36,6 +36,7 @@ syntax.add {
     { pattern = "^import()%s+()[%w_.]+",             type = { "keyword", "normal", "normal" } },
     { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",      type = "keyword2" }, -- Constants
     { pattern = "[%a_][%w_]*",                       type = "symbol"   }, -- ?
+    -- TODO: class references
   },
   symbols = {
     -- Hard keywords
