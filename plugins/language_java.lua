@@ -23,38 +23,38 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                       type = "operator" }, -- Operator
     { pattern = "[%a_][%w_]*%f[(]",                           type = "function" }, -- Method
     { pattern = "^import()%s+()[%w_.]+",                      type = { "keyword", "normal", "normal" } }, -- Import
-    -- Class name reference, ;
+    -- Class name reference: ;
     { pattern = "^%s*()return()%s*%.-()%;$",                  type = { "normal", "keyword", "symbol", "normal" } },
     { pattern = "^%s*[A-Z]%w+%s*()%w+%s*%;",                  type = { "function", "normal" } },
     { pattern = "^%s*%w+()%<.-%>()%s*%w+%s*%;",               type = { "function", "keyword2", "normal" } },
     -- FIX
     { pattern = "^%s*%w+%s*()%w+()%<.-%>()%s*%w+%s*%;",       type = { "keyword", "function", "keyword2", "normal" } },
     { pattern = "^%s*%w+%s*()%w+%s*()%w+%s*%;",               type = { "keyword", "function", "normal" } },
-    -- Class name reference, =
+    -- Class name reference: =
     -- FIX
     { pattern = "%w+%s*()%w+%s*()%=",                         type = { "function", "normal", "operator" } },
     { pattern = "%w+%s*()%<.-%>()%s*%w+%s*()%=",              type = { "function", "keyword2", "normal", "operator" } },
-    -- Class name reference, new
+    -- Class name reference: new
     { pattern = "new()%s*%w+()%<.-%>()%f[(]",                 type = { "keyword", "function", "keyword2", "normal" } },
     { pattern = "new()%s*%w+()%f[(]",                         type = { "keyword", "function", "normal" } },
-    -- Class name reference, ( then ,
+    -- Class name reference: ( then ,
     { pattern = "%(%s*()%w+%s*()%w+%s*%,",                    type = { "normal", "function", "normal" } },
     { pattern = "%(%s*()%w+()%<.-%>()%s*%w+%s*%,",            type = { "normal", "function", "keyword2", "normal" } },
-    -- Class name reference, (final then ,
+    -- Class name reference: (final then ,
     { pattern = "%(%s*()final%s*()%w+()%<.-%>()%s*%w+%s*%,",  type = { "normal", "keyword", "function", "keyword2", "normal" } },
     { pattern = "%(%s*()final%s*()%w+%s*()%w+%s*%,",          type = { "normal", "keyword", "function", "normal" } },
-    -- Class name reference, , then ,
+    -- Class name reference: , then ,
     { pattern = "%s*()%w+%s+()%w+%s*%,",                      type = { "normal", "function", "normal" } },
     { pattern = "%s*()%w+()%<.-%>()%s+%w+%s*%,",              type = { "normal", "function", "keyword2", "normal" } },
-    -- Class name reference, , then )
+    -- Class name reference: , then )
     { pattern = "%s*()%w+()%s+%w+%s*%)",                      type = { "normal", "function", "normal" } },
     { pattern = "%s*()%w+()%<.-%>()%s+%w+%s*%)",              type = { "normal", "function", "keyword2", "normal" } },
-    -- Class name reference, ( then )
+    -- Class name reference: ( then )
     { pattern = "%(%s*()%w+%s*()%w+%s*%)",                    type = { "normal", "function", "normal" } },
     { pattern = "%(%s*()%w+()%<.-%>()%s*()%w+%s*%)",          type = { "normal", "function", "keyword2", "normal" } },
     -- Array
     { pattern = "%w+()%[()%d*()%]",                           type = { "function", "normal", "number", "normal" } },
-    -- Class name reference, method
+    -- Class name reference: method
     { pattern = "%w+%s+()%w+%s*()%f[(]",                      type = { "keyword", "function", "normal" } },
     { pattern = "%w+()%<.-%>()%s+%w+%s*()%f[(]",              type = { "function", "keyword2", "function", "normal" } },
     -- Other patterns
@@ -62,7 +62,7 @@ syntax.add {
     { pattern = "^%s*%@.+%)",                                 type = "keyword2" }, -- Annotation (at line start)
     { regex   = [[\s*\@.+\)(?=\s+\w+)]],                      type = "keyword2" }, -- Annotation (at line middle)
     { pattern = "%@%w+",                                      type = "keyword2" }, -- Annotation (like: final @Nullable String something;)
-    -- FIX: SQUID_ works but not SQUID
+    -- WIP: constants
     { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",               type = "keyword2" }, -- Constants
     { pattern = "%:%:()%w+",                                  type = { "normal", "function" } }, -- Method reference with double colon operator
     { pattern = "%.class",                                    type = "normal"   }, -- .class should be colored as normal
