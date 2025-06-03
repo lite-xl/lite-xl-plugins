@@ -458,11 +458,12 @@
       "version": "0.2"
     },
     {
-      "description": "Adds Treesitter syntax highlighting support",
+      "description": "🌳 Treesitter support for Lite XL.",
       "id": "evergreen",
       "mod_version": "3",
-      "remote": "https://github.com/TorchedSammy/Evergreen.lxl:e5e6ade897a6316fbe6fc610520d195e27737912",
-      "version": "0.2"
+      "name": "Evergreen.lxl",
+      "remote": "https://github.com/TorchedSammy/Evergreen.lxl.git:ad4cd867984e692eccdf89b92d550d4d8898d75e",
+      "version": "0.3"
     },
     {
       "description": "Runs selected text through shell command and replaces with result",
