@@ -1322,6 +1322,17 @@
       "version": "0.1.1"
     },
     {
+      "description": "Syntax for the man manuals page languages",
+      "id": "language_man",
+      "mod_version": "3",
+      "path": "plugins/language_man.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+
+    {
       "description": "Syntax for [MARTe2](https://vcis.f4e.europa.eu/marte2-docs/master/html/index.html) configuration language",
       "id": "language_marte",
       "mod_version": "3",
