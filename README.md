@@ -335,6 +335,6 @@ to follow with `extra.follow_branch`.*
 | [`net`](https://github.com/jgmdev/lite-xl-net)*                                              | Add support for TCP and UDP sockets using SDL_net.                                                           |
 | [`nodejs`](https://github.com/lite-xl/lite-xl-lsp-servers.git)*                              | Official NodeJs builds.                                                                                      |
 | [`thread`](https://github.com/jgmdev/lite-xl-threads)*                                       | Supports spawning true os-threads.                                                                           |
-| [`tree_sitter`](https://github.com/Evergreen-lxl/lite-xl-tree-sitter)*                       | Tree-sitter bindings based on `lua-tree-sitter`                                                              |
+| [`tree_sitter`](https://github.com/Evergreen-lxl/lite-xl-tree-sitter.git)*                   | Tree-sitter bindings based on `lua-tree-sitter`                                                              |
 | [`widget`](https://github.com/lite-xl/lite-xl-widgets)*                                      | Plugin library that provides a set of re-usable components to more easily write UI elements for your plugins |
 | [`www`](https://github.com/adamharrison/lite-xl-www.git)*                                    | A simple library that provides a web client to fetch, and submit data via HTTP requests.                     |
