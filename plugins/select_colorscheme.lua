@@ -11,7 +11,7 @@ local PATH_CONFIG = USERDIR .. "/color_settings.lua"
 local Settings = {}
 Settings.color_scheme = ""
 Settings.color_list = {}
-local color_default = {name = "Default", module = "core.style"}
+local color_default = {name = "default", module = "core.style"}
 local plugin_enable = false
 
 --  =========================Proxy method==========================
