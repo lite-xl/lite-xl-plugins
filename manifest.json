@@ -2074,7 +2074,7 @@
       "id": "select_colorscheme",
       "mod_version": "3",
       "path": "plugins/select_colorscheme.lua",
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Highlights regions of code that match the current selection *([screenshot](https://user-images.githubusercontent.com/3920290/80710883-5f597c80-8ae7-11ea-97f0-76dfacc08439.png))*",
