@@ -1553,6 +1553,16 @@
       "version": "0.4.5"
     },
     {
+      "description": "Syntax for the [Roc](http://www.roc-lang.org/) programming language",
+      "id": "language_roc",
+      "mod_version": "3",
+      "remote": "https://github.com/0riginaln0/lite-xl-roc:210dfc8988cb7e85fafa433dd78e264cb2f3bd5a",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
       "description": "Syntax for the [Ruby](https://www.ruby-lang.org/) programming language",
       "id": "language_ruby",
       "mod_version": "3",
