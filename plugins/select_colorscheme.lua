@@ -9,9 +9,8 @@ local CommandView = require "core.commandview"
 local PATH_CONFIG = USERDIR .. "/color_settings.lua"
 
 local Settings = {}
-Settings.color_scheme = ""
+Settings.color_scheme = "default"
 Settings.color_list = {}
-local color_default = {name = "default", module = "core.style"}
 local plugin_enable = false
 
 --  =========================Proxy method==========================
@@ -49,19 +48,15 @@ function Settings:make_color_list()
       table.insert(self.color_list, filename:match("(.-)%.lua$"))
     end
   end
-  table.insert(self.color_list, color_default.name)
 end
 
 function Settings:is_change_color(color_name)
   return not (self.color_scheme == color_name)
 end
 
-function Settings:get_color_scheme()
-  return (self.color_scheme == "") and color_default.name or self.color_scheme
-end
 
 local function make_color_module_name(name)
-  return (name == color_default.name) and color_default.module or "colors."..name
+  return  "colors."..name
 end
 
 function Settings:change_color(name)
@@ -102,9 +97,9 @@ local function table_remove_value(list, value)
 end
 -- ----------------------------------------------------------------
 local function normalize_color_list(list)
-  table_remove_value(list, Settings:get_color_scheme())
+  table_remove_value(list, Settings.color_scheme)
   table.sort(list, function(a, b) return string.lower(a) > string.lower(b) end)
-  return {Settings:get_color_scheme(), table.unpack(list)}
+  return {Settings.color_scheme, table.unpack(list)}
 end
 --  =========================Add Commands==========================
 local color_scheme_submit = function(text, item)
