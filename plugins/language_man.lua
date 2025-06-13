@@ -70,38 +70,78 @@ syntax.add {
 		"%.g?roff$", "%.tmac$", "%.mmse$", "%.mom$"
 	},
   patterns = append(append({}, table.unpack(default_sh)),
-    { pattern = "\\()%-", type = { "operator", "normal"}},
     -- .TH title section date source manual 
     {
-      pattern = "^%s*%.TH".."()%s+[%u%d-]+".."()%s+[1-8]".."()%s+%d%d%d%d%-%d%d%-%d%d".."().*",
+      pattern = "^%.TH".."()%s+[%u%d-]+".."()%s+[1-8]".."()%s+%d%d%d%d%-%d%d%-%d%d".."().*",
       type = { "keyword", "roff_bold", "number", "roff_italic", "literal" }
     },
     --headings and sub-headings
-    { pattern = "^%s*%.S[HS]%s()[%w ]+", type = { "keyword", "literal" }},
+    { pattern = "^%.S[HS]%s()[%w ]+", type = { "keyword", "literal" }},
     --fonts (bold, italic)
-    { pattern = "^%s*%.BI()%s+[^%s]+()%s*[^%s]+().+", type = {"function", "roff_bold", "roff_italic", "roff_bold_italic"}},
-    { pattern = "^%s*%.IB()%s+[^%s]+()%s*[^%s]+().+", type = {"function", "roff_italic", "roff_bold", "roff_bold_italic" }},
-    { pattern = "^%s*%.RB()%s+[^%s]+()%s*[^%s]+().+", type = {"function", "normal", "roff_bold" }},
-    { pattern = "^%s*%.RI()%s+[^%s]+()%s*[^%s]+().+", type = {"function", "normal", "roff_italic" }},
-    { pattern = "^%s*%.B().*",                        type = {"function", "roff_bold" }},
-    { pattern = "^%s*%.I().*",                        type = {"function", "roff_italic" }},
-    { pattern = { "\\fI", "\\f[PR]" },                type = "roff_italic" },
-    { pattern = { "\\fB", "\\f[PR]" },                type = "roff_bold" },
+    { pattern = "^%.BI()%s+[^%s]+()%s*[^%s]+().+", type = { "function", "roff_bold", "roff_italic", "roff_bold_italic" }},
+    { pattern = "^%.IB()%s+[^%s]+()%s*[^%s]+().+", type = { "function", "roff_italic", "roff_bold", "roff_bold_italic" }},
+    { pattern = "^%.RB()%s+[^%s]+()%s*[^%s]+().+", type = { "function", "normal", "roff_bold" }},
+    { pattern = "^%.RI()%s+[^%s]+()%s*[^%s]+().+", type = { "function", "normal", "roff_italic" }},
+    { pattern = "^%.B().*",                        type = { "function", "roff_bold" }},
+    { pattern = "^%.I().*",                        type = { "function", "roff_italic" }},
+    { pattern = { "\\fI", "\\f[PR]" },             type = "roff_italic" },
+    { pattern = { "\\fB", "\\f[PR]" },             type = "roff_bold" },
+    -- escaping
+    { pattern = "\\().", type = { "comment", "normal" }},
+    -- exmaples (tecnically no syntax hightliht on man but useful to check if the example is correct)
+    { pattern = { "^%.EX%s+[%.']\\\"%s+html%s*\n",  "^%.EE%s*\n" }, type = "string", syntax = ".html" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+caddyfile",  "^%.EE%s*\n" }, type = "string", syntax = "Caddyfile" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+c++",        "^%.EE%s*\n" }, type = "string", syntax = ".cpp" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+cpp",        "^%.EE%s*\n" }, type = "string", syntax = ".cpp" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+python",     "^%.EE%s*\n" }, type = "string", syntax = ".py" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+ruby",       "^%.EE%s*\n" }, type = "string", syntax = ".rb" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+perl",       "^%.EE%s*\n" }, type = "string", syntax = ".pl" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+php",        "^%.EE%s*\n" }, type = "string", syntax = ".php" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+javascript", "^%.EE%s*\n" }, type = "string", syntax = ".js" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+json",       "^%.EE%s*\n" }, type = "string", syntax = ".js" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+html",       "^%.EE%s*\n" }, type = "string", syntax = ".html" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+ini",        "^%.EE%s*\n" }, type = "string", syntax = ".ini" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+xml",        "^%.EE%s*\n" }, type = "string", syntax = ".xml" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+css",        "^%.EE%s*\n" }, type = "string", syntax = ".css" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+lua",        "^%.EE%s*\n" }, type = "string", syntax = ".lua" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+bash",       "^%.EE%s*\n" }, type = "string", syntax = ".sh" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+sh",         "^%.EE%s*\n" }, type = "string", syntax = ".sh" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+java",       "^%.EE%s*\n" }, type = "string", syntax = ".java" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+c#",         "^%.EE%s*\n" }, type = "string", syntax = ".cs" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+cmake",      "^%.EE%s*\n" }, type = "string", syntax = ".cmake" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+d",          "^%.EE%s*\n" }, type = "string", syntax = ".d" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+glsl",       "^%.EE%s*\n" }, type = "string", syntax = ".glsl" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+c",          "^%.EE%s*\n" }, type = "string", syntax = ".c" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+julia",      "^%.EE%s*\n" }, type = "string", syntax = ".jl" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+rust",       "^%.EE%s*\n" }, type = "string", syntax = ".rs" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+dart",       "^%.EE%s*\n" }, type = "string", syntax = ".dart" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+v",          "^%.EE%s*\n" }, type = "string", syntax = ".v" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+toml",       "^%.EE%s*\n" }, type = "string", syntax = ".toml" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+yaml",       "^%.EE%s*\n" }, type = "string", syntax = ".yaml" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+nim",        "^%.EE%s*\n" }, type = "string", syntax = ".nim" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+typescript", "^%.EE%s*\n" }, type = "string", syntax = ".ts" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+rescript",   "^%.EE%s*\n" }, type = "string", syntax = ".res" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+moon",       "^%.EE%s*\n" }, type = "string", syntax = ".moon" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+go",         "^%.EE%s*\n" }, type = "string", syntax = ".go" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+lobster",    "^%.EE%s*\n" }, type = "string", syntax = ".lobster" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+liquid",     "^%.EE%s*\n" }, type = "string", syntax = ".liquid" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+markdown",   "^%.EE%s*\n" }, type = "string", syntax = ".md" },
+    { pattern = { "^%.EX%s+[%.']\\\"%s+md",         "^%.EE%s*\n" }, type = "string", syntax = ".md" },
+    { pattern = { "^%.EX%s*\n", "^%.EE%s*\n" }, type = "string" },
     --paragraphs
     { regex = [[^\s*\.(?:[TIP]?P)\s]],               type = "keyword2" },
     { regex = [[^\s*\.(?:R[SE]|PD|sp|in|nf|fi)\s]],  type = "keyword2" },
     --misc
-    { regex = [[^\s*['\.]\\"]],                      type = "comment" },
-    { pattern = { "'", "'" },                        type = "literal" },
+    { regex = [[^\s*['\.]\\".+]],                      type = "comment" },
     { pattern = "\\f(CW)().*()\\fR", type = {"operator", "literal", "operator"}},
-    { pattern = { "%.TS", "%.TE" }, type = "keyword2", syntax = ".tbl"}
+    { pattern = { "%.TS", "%.TE" }, type = "keyword2", syntax = ".tbl"},
+    { pattern = { "'", "'" },                        type = "literal" }
   ),
 	symbols = {
-    [ "^%.TH" ] = "keyword",
     [ "\\fI" ] = "operator",
     [ "\\fB" ] = "operator",
     [ "\\fP" ] = "operator",
-    [ "\\fR" ] = "operator"
+    [ "\\fR" ] = "operator",
 	},
 }
 
@@ -179,4 +219,3 @@ core.add_thread(function()
     coroutine.yield(1)
   end
 end)
-
