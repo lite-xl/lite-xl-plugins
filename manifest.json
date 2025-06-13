@@ -459,11 +459,12 @@
       "version": "0.2"
     },
     {
-      "description": "Adds Treesitter syntax highlighting support",
+      "description": "🌳 Treesitter support for Lite XL.",
       "id": "evergreen",
       "mod_version": "3",
-      "remote": "https://github.com/TorchedSammy/Evergreen.lxl:e5e6ade897a6316fbe6fc610520d195e27737912",
-      "version": "0.2"
+      "name": "Evergreen.lxl",
+      "remote": "https://github.com/Evergreen-lxl/Evergreen.lxl.git:7856f897c044e86ab93e27a60e9da8f490a47e4e",
+      "version": "0.3.1"
     },
     {
       "description": "Runs selected text through shell command and replaces with result",
@@ -2398,9 +2399,9 @@
       "description": "Tree-sitter bindings based on `lua-tree-sitter`",
       "id": "tree_sitter",
       "name": "Tree-sitter",
-      "remote": "https://github.com/Evergreen-lxl/lite-xl-tree-sitter:9463aec4b09f6b9bb4c1f56fb5ab923335f4e554",
+      "remote": "https://github.com/Evergreen-lxl/lite-xl-tree-sitter.git:dd494daf8359a7ed122b6488eafc604f1446ba8e",
       "type": "library",
-      "version": "0.1.1"
+      "version": "0.1.2"
     },
     {
       "description": "Extend Lite XL's treeview menu *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-treeview-extender/main/screenshot.png))*",
