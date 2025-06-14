@@ -13,8 +13,8 @@ syntax.add {
   comment = "#",
   patterns = {
     { regex = "^ *#.*$",            type = "comment" },
-    { regex = { "(?=^ *!.)", "$" }, type = "ignore"  },
-    { regex = { "(?=.)", "$" },     type = "exclude" },
+    { regex = { "(?=^ *!.)", "\n" }, type = "ignore"  },
+    { regex = { "(?=.)", "\n" },     type = "exclude" },
   },
   symbols = {}
 }

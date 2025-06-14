@@ -1178,7 +1178,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1.1"
+      "version": "0.1.2"
     },
     {
       "description": "Syntax for [ini](https://en.wikipedia.org/wiki/INI_file) files",
