@@ -298,9 +298,9 @@
       "description": "Diff library that yields.",
       "id": "coro_diff",
       "mod_version": "3",
-      "remote": "https://github.com/Guldoman/lite-xl-coro_diff:5f7d422cf6f03e958bbc32c714a81fc5aaef6970",
+      "remote": "https://github.com/Guldoman/lite-xl-coro_diff.git:ba097ce3831ae9830eb4027ea1b99b1962b8e3dc",
       "type": "library",
-      "version": "0.1.1"
+      "version": "0.1.2"
     },
     {
       "description": "Customize the caret in the editor",
