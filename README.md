@@ -325,7 +325,7 @@ to follow with `extra.follow_branch`.*
 
 | Library                                                                                      | Description                                                                                                  |
 | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| [`coro_diff`](https://github.com/Guldoman/lite-xl-coro_diff)*                                | Diff library that yields.                                                                                    |
+| [`coro_diff`](https://github.com/Guldoman/lite-xl-coro_diff.git)*                            | Diff library that yields.                                                                                    |
 | [`encoding`](https://github.com/jgmdev/lite-xl-encoding)*                                    | Add support for detecting file and string encodings as converting between them.                              |
 | [`font_nonicons`](plugins/font_nonicons.lua?raw=1)                                           | [Nonicons](https://github.com/yamatsum/nonicons/) font with mapping                                          |
 | [`font_symbols_nerdfont_mono_regular`](plugins/font_symbols_nerdfont_mono_regular.lua?raw=1) | [Nerd Font Symbols](https://github.com/ryanoasis/nerd-fonts/) font with mapping                              |
