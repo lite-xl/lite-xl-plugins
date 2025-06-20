@@ -1561,7 +1561,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.2"
+      "version": "0.2.0"
     },
     {
       "description": "Syntax for the [Ruby](https://www.ruby-lang.org/) programming language",
