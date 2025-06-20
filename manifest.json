@@ -1557,7 +1557,7 @@
       "description": "Syntax for the [Roc](http://www.roc-lang.org/) programming language",
       "id": "language_roc",
       "mod_version": "3",
-      "remote": "https://github.com/0riginaln0/lite-xl-roc:125d9067edd7ef8033ef9b000deb3efe25e6977d",
+      "remote": "https://github.com/0riginaln0/lite-xl-roc:8adac450aa4f7a13fd6dcc49202539d34cb03800",
       "tags": [
         "language"
       ],
