@@ -92,7 +92,7 @@ for _, literal in ipairs(LITERALS) do
   SYMBOLS[literal] = "literal"
 end
 syntax_highlight.add {
-  name = "Bazel",
+  name = "Starlark",
   files = {"%.bazel$","%.bzl$"},
   comment = "#",
   patterns = PATTERNS,
