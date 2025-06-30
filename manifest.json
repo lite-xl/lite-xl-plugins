@@ -66,7 +66,6 @@
         "language_autohotkey_v1": {},
         "language_awk": {},
         "language_batch": {},
-        "language_bazel": {},
         "language_bend": {},
         "language_bib": {},
         "language_blade": {},
@@ -149,6 +148,7 @@
         "language_scala": {},
         "language_sh": {},
         "language_ssh_config": {},
+        "language_starlark": {},
         "language_swift": {},
         "language_tal": {},
         "language_tcl": {},
@@ -168,7 +168,7 @@
       "id": "meta_languages",
       "mod_version": "3",
       "type": "meta",
-      "version": "0.1.18"
+      "version": "0.1.19"
     },
     {
       "description": "Align multiple carets and selections *([clip](https://user-images.githubusercontent.com/2798487/165631951-532f8d24-d596-4dd0-9d21-ff53c71ed32f.mp4))*",
@@ -687,16 +687,6 @@
       "id": "language_batch",
       "mod_version": "3",
       "path": "plugins/language_batch.lua",
-      "tags": [
-        "language"
-      ],
-      "version": "0.1"
-    },
-    {
-      "description": "Syntax for [Bazel](https://bazel.build/) build tool files.",
-      "id": "language_bazel",
-      "mod_version": "3",
-      "path": "plugins/language_bazel.lua",
       "tags": [
         "language"
       ],
@@ -1563,6 +1553,17 @@
         "language"
       ],
       "version": "0.1"
+    },
+    {
+      "description": "Syntax for [Bazel](https://bazel.build/) build tool files.",
+      "id": "language_bazel",
+      "mod_version": "3",
+      "path": "plugins/language_starlark.lua",
+      "tags": [
+        "language"
+      ],
+      "provides": ["language_bazel"],
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [Uxntal](https://wiki.xxiivv.com/site/uxntal) assembly language",

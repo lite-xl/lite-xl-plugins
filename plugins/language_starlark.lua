@@ -76,7 +76,6 @@ local PATTERNS = {
   { pattern = "[!%-/*?:=><]",     type = "operator" },  -- tested ok
   { pattern = "-?%d+[%d%.eE_]*",  type = "number"   },  -- tested ok
   { pattern = '[%a_][%w_]*%f[(]', type = 'function' },  -- tested ok
-  { pattern = "-?%d+[%d%.eE_]*",  type = "number"   },  -- tested ok
   { pattern = "[%a_][%w_]*",      type = "normal"   }   -- tested ok
 }
 ------------------
