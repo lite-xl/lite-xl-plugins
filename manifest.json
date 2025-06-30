@@ -1562,7 +1562,7 @@
       "tags": [
         "language"
       ],
-      "provides": ["language_bazel"],
+      "replaces": ["language_bazel"],
       "version": "0.2"
     },
     {
