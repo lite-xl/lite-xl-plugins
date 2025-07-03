@@ -33,13 +33,14 @@ command.add("core.docview", {
   end,
 
   ["eval:selected"] = function(dv)
-    if dv.doc:has_selection() then
-      local text = dv.doc:get_text(dv.doc:get_selection())
-      dv.doc:text_input(eval(text))
-    else
-      local line = dv.doc:get_selection()
-      local text = dv.doc.lines[line]
-      dv.doc:insert(line+1, 0, "= " .. eval(text) .. "\n")
+    for idx, line1, col1, line2, col2 in dv.doc:get_selections() do
+      if line1 ~= line2 or col1 ~= col2 then
+        local text = dv.doc:get_text(line1, col1, line2, col2)
+        dv.doc:text_input(eval(text), idx)
+      else
+        local text = dv.doc.lines[line1]
+        dv.doc:replace_cursor(idx, line1, 0, line1, #text, eval)
+      end
     end
   end,
 })

@@ -141,6 +141,7 @@
         "language_psql": {},
         "language_r": {},
         "language_rescript": {},
+        "language_ring": {},
         "language_rivet": {},
         "language_ruby": {},
         "language_rust": {},
@@ -148,6 +149,7 @@
         "language_scala": {},
         "language_sh": {},
         "language_ssh_config": {},
+        "language_st": {},
         "language_starlark": {},
         "language_swift": {},
         "language_tal": {},
@@ -168,7 +170,7 @@
       "id": "meta_languages",
       "mod_version": "3",
       "type": "meta",
-      "version": "0.1.19"
+      "version": "0.1.21"
     },
     {
       "description": "Align multiple carets and selections *([clip](https://user-images.githubusercontent.com/2798487/165631951-532f8d24-d596-4dd0-9d21-ff53c71ed32f.mp4))*",
@@ -293,6 +295,14 @@
       "version": "0.1"
     },
     {
+      "description": "Diff library that yields.",
+      "id": "coro_diff",
+      "mod_version": "3",
+      "remote": "https://github.com/Guldoman/lite-xl-coro_diff.git:ba097ce3831ae9830eb4027ea1b99b1962b8e3dc",
+      "type": "library",
+      "version": "0.1.2"
+    },
+    {
       "description": "Customize the caret in the editor",
       "id": "custom_caret",
       "mod_version": "3",
@@ -311,6 +321,9 @@
       "id": "font_devicons",
       "mod_version": "3",
       "remote": "https://github.com/PerilousBooklet/lite-xl-devicons:e78f2374a1f4de5d0f324af46a07c2f9ffa7ccef",
+      "tags": [
+        "deprecated"
+      ],
       "type": "font",
       "version": "1.0.0"
     },
@@ -319,6 +332,9 @@
       "id": "devicons",
       "mod_version": "3",
       "remote": "https://github.com/PerilousBooklet/lite-xl-devicons:e78f2374a1f4de5d0f324af46a07c2f9ffa7ccef",
+      "tags": [
+        "deprecated"
+      ],
       "version": "1.0.0"
     },
     {
@@ -358,11 +374,26 @@
       "version": "0.2"
     },
     {
-      "description": "Provides basic drag and drop of selected text (in same document)",
+      "description": "Provides drag and drop of selected text (in same document)",
+      "extra": {
+        "author": "SwissalpS",
+        "license": "MIT"
+      },
       "id": "dragdropselected",
       "mod_version": "3",
+      "name": "Drag n' Drop Selected",
       "path": "plugins/dragdropselected.lua",
-      "version": "0.2"
+      "tags": [
+        "DnD",
+        "mouse",
+        "copy",
+        "duplicate",
+        "move",
+        "selection",
+        "drag",
+        "drop"
+      ],
+      "version": "20230616.094245"
     },
     {
       "description": "Adds a popup that displays the curve of Penner-styled easing functions.",
@@ -416,7 +447,7 @@
       "description": "Graphs y=x equations.",
       "id": "equationgrapher",
       "mod_version": "3",
-      "remote": "https://github.com/thacuber2a03/equationgrapher:7b17d8de47ab5c40019c1910a303340b5176e105",
+      "remote": "https://github.com/thacuber2a03/equationgrapher:11eaf773ab2747947e81e6d404a6f497a77e3490",
       "version": "0.2"
     },
     {
@@ -424,14 +455,15 @@
       "id": "eval",
       "mod_version": "3",
       "path": "plugins/eval.lua",
-      "version": "0.1"
+      "version": "0.2"
     },
     {
-      "description": "Adds Treesitter syntax highlighting support",
+      "description": "🌳 Treesitter support for Lite XL.",
       "id": "evergreen",
       "mod_version": "3",
-      "remote": "https://github.com/TorchedSammy/Evergreen.lxl:e5e6ade897a6316fbe6fc610520d195e27737912",
-      "version": "0.2"
+      "name": "Evergreen.lxl",
+      "remote": "https://github.com/Evergreen-lxl/Evergreen.lxl.git:7856f897c044e86ab93e27a60e9da8f490a47e4e",
+      "version": "0.3.1"
     },
     {
       "description": "Runs selected text through shell command and replaces with result",
@@ -526,7 +558,7 @@
       "id": "ghmarkdown",
       "mod_version": "3",
       "path": "plugins/ghmarkdown.lua",
-      "version": "0.2"
+      "version": "0.3"
     },
     {
       "description": "Shows \"git blame\" information of a line *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-gitblame/main/screenshot_1.png))*",
@@ -564,11 +596,27 @@
       "version": "0.1"
     },
     {
+      "description": "Official Go builds.",
+      "id": "golang",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:6eea7cf124baad8e7abad6e388c7a16f6f6a98f2",
+      "type": "library",
+      "version": "1.24.2"
+    },
+    {
       "description": "Graphical filepicker using zenity or kdialog.",
       "id": "gui_filepicker",
       "mod_version": "3",
       "path": "plugins/gui_filepicker.lua",
       "version": "1.0"
+    },
+    {
+      "description": "Official Haxe builds.",
+      "id": "haxe",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:e6ff9c7e14ccb16c919ba4731666ff491a1c3fb3",
+      "type": "library",
+      "version": "4.3.6"
     },
     {
       "description": "Dark (or even Mica!) title bar for Lite XL",
@@ -596,15 +644,15 @@
       "id": "ipc",
       "mod_version": "3",
       "path": "plugins/ipc.lua",
-      "version": "0.3"
+      "version": "0.4"
     },
     {
       "description": "Production and Early-Access OpenJDK Builds, from Oracle.",
       "id": "jdk",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:a1d66e32f0b4ac1066fcf7376d3c018871988b90",
       "type": "library",
-      "version": "22.0.1"
+      "version": "23.0.2"
     },
     {
       "description": "Simple *key HUD* for Lite XL",
@@ -770,7 +818,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for the [Carbon programming language](https://github.com/carbon-language/carbon-lang).",
@@ -800,7 +848,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.2"
+      "version": "0.2.1"
     },
     {
       "description": "Syntax for [Containerfile](https://github.com/containers/common/blob/main/docs/Containerfile.5.md)/[Dockerfile](https://docs.docker.com/engine/reference/builder/)",
@@ -926,7 +974,7 @@
       "description": "Syntax for the [env](https://hexdocs.pm/dotenvy/dotenv-file-format.html) (dotenv) files",
       "id": "language_env",
       "mod_version": "3",
-      "remote": "https://github.com/anthonyaxenov/lite-xl-env-syntax:89a4274af6a786963930d7a8fb542dfe61daa801",
+      "path": "plugins/language_env.lua",
       "tags": [
         "language"
       ],
@@ -940,7 +988,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for the [fe](https://github.com/rxi/fe) programming language",
@@ -980,7 +1028,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for the [GABC](https://gregorio-project.github.io/gabc) music typesetting language",
@@ -1030,7 +1078,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for the [GraphQL](https://graphql.org/) query language, and server-side runtime for executing queries using a type system.",
@@ -1060,7 +1108,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.2"
+      "version": "0.2.1"
     },
     {
       "description": "Syntax for the [Hare](https://harelang.org) programming language",
@@ -1110,17 +1158,17 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for [.gitignore](https://git-scm.com/docs/gitignore), [.dockerignore](https://docs.docker.com/engine/reference/builder/#dockerignore-file) and some other `.*ignore` files",
       "id": "language_ignore",
       "mod_version": "3",
-      "remote": "https://github.com/anthonyaxenov/lite-xl-ignore-syntax:3a9a5e0ae03b82358473da5d1c6012944d65ea95",
+      "path": "plugins/language_ignore.lua",
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for [ini](https://en.wikipedia.org/wiki/INI_file) files",
@@ -1130,7 +1178,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.3"
     },
     {
       "description": "Syntax for the [Java](https://en.wikipedia.org/wiki/Java_\\(programming_language\\)) programming language",
@@ -1140,7 +1188,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1.2"
+      "version": "0.1.3"
     },
     {
       "description": "Syntax for the [jiyu](https://github.com/machinamentum/jiyu) programming language",
@@ -1241,7 +1289,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [Lox](http://craftinginterpreters.com/the-lox-language.html) programming language, featured in the book '[Crafting Interpreters](http://craftinginterpreters.com/)'.",
@@ -1261,7 +1309,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for [MARTe2](https://vcis.f4e.europa.eu/marte2-docs/master/html/index.html) configuration language",
@@ -1281,7 +1329,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for the [MiniScript](https://miniscript.org) programming language",
@@ -1361,7 +1409,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [OpenSCAD](https://openscad.org/) programming language",
@@ -1411,7 +1459,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for [PO](https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html) translation files",
@@ -1451,7 +1499,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for [R](https://www.r-project.org/) scripting language",
@@ -1475,6 +1523,16 @@
       "version": "0.1"
     },
     {
+      "description": "Syntax for the [Ring](https://ring-lang.net/) programming language",
+      "id": "language_ring",
+      "mod_version": "3",
+      "path": "plugins/language_ring.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
       "description": "Syntax for the [Rivet](https://github.com/rivet-lang/rivet) programming language",
       "id": "language_rivet",
       "mod_version": "3",
@@ -1492,7 +1550,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
     },
     {
       "description": "Syntax for the [Rust](https://rust-lang.org/) programming language",
@@ -1542,7 +1600,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.2"
+      "version": "0.2.3"
     },
     {
       "description": "Syntax for ssh & sshd config files",
@@ -1552,7 +1610,17 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.1.1"
+    },
+    {
+      "description": "Syntax for PLC Structured Text IEC 61131-3 standard.",
+      "id": "language_st",
+      "mod_version": "3",
+      "path": "plugins/language_st.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.2"
     },
     {
       "description": "Syntax for [Bazel](https://bazel.build/) build tool files.",
@@ -1696,6 +1764,17 @@
       "version": "0.1"
     },
     {
+      "checksum": "9694b88c585d35ad37cdcd4278839710e9c3c64d8420538862213b56cd032911",
+      "description": "Syntax for the [Yuescript](https://yuescript.org/) programming language",
+      "id": "language_yuescript",
+      "mod_version": "3",
+      "tags": [
+        "language"
+      ],
+      "url": "https://codeberg.org/pgmtx/lite-plugin-yuescript/raw/commit/0b0a68c8a2066b8270b2e85d94711c2eb033410e/language_yuescript.lua",
+      "version": "0.1"
+    },
+    {
       "description": "Syntax for the [Zig](https://ziglang.org/) programming language",
       "id": "language_zig",
       "mod_version": "3",
@@ -1749,11 +1828,11 @@
       "id": "lsp",
       "mod_version": "3",
       "name": "Language Server Protocol",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp.git:ed8345488ee97d3ee99605025303a40ec301a513",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp.git:122e3f09dbf811fe94618fe5d048950103a19612",
       "tags": [
         "language server protocol"
       ],
-      "version": "0.8"
+      "version": "0.10"
     },
     {
       "description": "Completion menu kind/type icons for Lite XL LSP",
@@ -1766,15 +1845,15 @@
       "description": "Automatic configuration/binary download for LSP completion for C/C++ with clangd.",
       "id": "lsp_c",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
-      "version": "18.1.3"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:a1d66e32f0b4ac1066fcf7376d3c018871988b90",
+      "version": "19.1.2"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for clojure with clojure-lsp.",
       "id": "lsp_clojure",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:b4e1929f6fea6a21e2706ebfb6cb28c48453357d",
-      "version": "2024.04.22"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:a1d66e32f0b4ac1066fcf7376d3c018871988b90",
+      "version": "2025.03.07"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for D with serve_d.",
@@ -1787,29 +1866,43 @@
       "description": "Automatic configuration/binary download for LSP completion for Emmet with emmet-language-server.",
       "id": "lsp_emmet",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
-      "version": "2.5.0"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:a1d66e32f0b4ac1066fcf7376d3c018871988b90",
+      "version": "2.6.1"
+    },
+    {
+      "description": "Automatic configuration/binary download for LSP completion for Go with gopls.",
+      "id": "lsp_go",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:6eea7cf124baad8e7abad6e388c7a16f6f6a98f2",
+      "version": "0.18.1"
+    },
+    {
+      "description": "Automatic configuration/binary download for LSP completion for Haxe with haxe-language-server.",
+      "id": "lsp_haxe",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:aae96e435bf34e890c5945638e7ba05fab4abfe5",
+      "version": "2.34.1"
     },
     {
       "description": "LSP support for JSON via vscode-json-languageserver with [additional patches](https://github.com/lite-xl/lite-xl-lsp-servers/tree/latest/patches/vscode-json-languageserver) for increased functionality.",
       "id": "lsp_json",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
-      "version": "1.91.1.0.1"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:a1d66e32f0b4ac1066fcf7376d3c018871988b90",
+      "version": "1.97.2.0.1"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Lua with lua-language-server (sumneko).",
       "id": "lsp_lua",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
-      "version": "3.9.3"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:a1d66e32f0b4ac1066fcf7376d3c018871988b90",
+      "version": "3.13.9"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Java with jdtls.",
       "id": "lsp_java",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
-      "version": "1.37.0"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:a1d66e32f0b4ac1066fcf7376d3c018871988b90",
+      "version": "1.45.0"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Python with Pyright.",
@@ -1836,22 +1929,22 @@
       "description": "Automatic configuration/binary download for LSP completion for TeX with texlab.",
       "id": "lsp_tex",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
-      "version": "5.19.0"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:d8ab5f9a5adfa9fccc2361e5bb5141f17e5e7ca9",
+      "version": "5.22.0"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Typescript and Javascript with typescript-language-server.",
       "id": "lsp_typescript",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers:89efc5642cb9abcd9023c8e5ef3dba85b399884e",
-      "version": "4.3.3"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:a1d66e32f0b4ac1066fcf7376d3c018871988b90",
+      "version": "4.3.4"
     },
     {
       "description": "Adds LSP snippets support to the snippets plugin",
       "id": "lsp_snippets",
       "mod_version": "3",
-      "remote": "https://github.com/vqns/lite-xl-snippets:1f0bba02bb3af6df9cb2ce72526851b427caf143",
-      "version": "1.1"
+      "remote": "https://github.com/vqns/lite-xl-snippets:87248a23c8ceb2507f46b3ca3689b32d35c9c709",
+      "version": "1.2"
     },
     {
       "description": "LSP support for YAML via yaml-language-server.",
@@ -1893,7 +1986,16 @@
       "id": "minimap",
       "mod_version": "3",
       "path": "plugins/minimap.lua",
-      "version": "0.2"
+      "version": "0.4"
+    },
+    {
+      "description": "Fully customizable modal editing for Lite XL",
+      "id": "modal",
+      "mod_version": "3",
+      "name": "modal",
+      "remote": "https://codeberg.org/Mandarancio/lite-modal:cba946509cde63ce97cb80d756219ba335c205b8",
+      "type": "plugin",
+      "version": "0.4.0"
     },
     {
       "description": "Adds a motion-trail to the caret *([gif](https://user-images.githubusercontent.com/3920290/83256814-085ccb00-a1ab-11ea-9e35-e6633cbed1a9.gif))*",
@@ -1926,15 +2028,15 @@
       "mod_version": "3",
       "path": "plugins/nerdicons.lua",
       "type": "plugin",
-      "version": "1.2.3"
+      "version": "1.2.4"
     },
     {
       "description": "Official NodeJs builds.",
       "id": "nodejs",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:752ec6e3b9280425a5190ec69cf1b8bc6432136c",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:953d391ae9b1dd4efd85d9931730bab71dbdc02e",
       "type": "library",
-      "version": "20.15.1"
+      "version": "22.13.0"
     },
     {
       "dependencies": {
@@ -1989,6 +2091,14 @@
       "version": "0.1"
     },
     {
+      "description": "Preview files and doc before before opening them",
+      "id": "previewer",
+      "mod_version": "3",
+      "remote": "https://codeberg.org/Mandarancio/lite-previewer:39c6c4667009f669bdc84a99360455c8e384bd4d",
+      "type": "plugin",
+      "version": "0.1.1"
+    },
+    {
       "description": "Adds middle mouse click copy/paste (primary selection). To use this plugin, `xclip` must be installed.",
       "id": "primary_selection",
       "mod_version": "3",
@@ -2014,6 +2124,14 @@
       "version": "1.2"
     },
     {
+      "description": "A project template manager for Lite XL.",
+      "id": "ptm",
+      "mod_version": "3",
+      "name": "Project Template Manager",
+      "remote": "https://github.com/PerilousBooklet/lite-xl-ptm:f6695fa842af9d23769fdf25ad7fa9ebcfcb6e8d",
+      "version": "0.1.0"
+    },
+    {
       "description": "Turns Lite XL into a terminal based editor.",
       "id": "quetta",
       "mod_version": "3",
@@ -2034,6 +2152,14 @@
       "mod_version": "3",
       "path": "plugins/regexreplacepreview.lua",
       "version": "0.2"
+    },
+    {
+      "description": "Rename files in bulk",
+      "id": "renamer",
+      "mod_version": "3",
+      "name": "Renamer",
+      "remote": "https://github.com/Guldoman/lite-xl-renamer:49dfdcd8951b22f44515f0e9b70489e750b1c4a2",
+      "version": "0.1.0"
     },
     {
       "description": "Keep a list of recently closed tabs, and restore the tab in order on ctrl+shift+t.",
@@ -2262,9 +2388,9 @@
       "description": "Tree-sitter bindings based on `lua-tree-sitter`",
       "id": "tree_sitter",
       "name": "Tree-sitter",
-      "remote": "https://github.com/Evergreen-lxl/lite-xl-tree-sitter:9463aec4b09f6b9bb4c1f56fb5ab923335f4e554",
+      "remote": "https://github.com/Evergreen-lxl/lite-xl-tree-sitter.git:dd494daf8359a7ed122b6488eafc604f1446ba8e",
       "type": "library",
-      "version": "0.1.1"
+      "version": "0.1.2"
     },
     {
       "description": "Extend Lite XL's treeview menu *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-treeview-extender/main/screenshot.png))*",
@@ -2306,7 +2432,10 @@
       "replaces": [
         "vibe"
       ],
-      "version": "0.1"
+      "tags": [
+        "deprecated"
+      ],
+      "version": "0.2"
     },
     {
       "description": "Audio visualizer for Lite XL",

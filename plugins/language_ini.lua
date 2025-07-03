@@ -4,11 +4,11 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "INI",
-  files = { "%.ini$", "%.inf$", "%.cfg$", "%.editorconfig$" },
+  files = { "%.ini$", "%.inf$", "%.cfg$", PATHSEP .. "%.editorconfig$", "%.theme$", "%.dockitem$", "%.desktop$" },
   comment = ';',
   patterns = {
-    { pattern = ";.-\n", type = "comment" },
-    { pattern = "#.-\n", type = "comment" },
+    { pattern = ";.*", type = "comment" },
+    { pattern = "#.*", type = "comment" },
     { pattern = { "%[", "%]" }, type = "keyword" },
 
     { pattern = { '"""', '"""', '\\' }, type = "string" },

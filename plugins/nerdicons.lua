@@ -62,6 +62,10 @@ local previous_scale = SCALE
 
 
 local extension_icons = {
+  [".hxml"]        = { "#d3d3d3", "seti-config"              }, -- Haxe
+  [".hx"]          = { "#f68712", "seti-haxe"                },
+  [".d"]           = { "#ff3333", "dev-dlang"                }, -- D
+  [".di"]          = { "#ff6666", "dev-dlang"                },
   [".lua"]         = { "#405af0", "seti-lua"                 },
   [".md"]          = { "#519aba", "dev-markdown"             }, -- Markdown
   [".powershell"]  = { "#519aba", "cod-terminal_powershell"  },
