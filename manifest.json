@@ -1556,7 +1556,7 @@
     },
     {
       "description": "Syntax for [Bazel](https://bazel.build/) build tool files.",
-      "id": "language_bazel",
+      "id": "language_starlark",
       "mod_version": "3",
       "path": "plugins/language_starlark.lua",
       "tags": [
