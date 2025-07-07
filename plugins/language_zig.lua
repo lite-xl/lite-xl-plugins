@@ -87,6 +87,7 @@ syntax.add {
     ["f16"] = "keyword2",
     ["f32"] = "keyword2",
     ["f64"] = "keyword2",
+    ["f80"] = "keyword2",
     ["f128"] = "keyword2",
     ["void"]            = "keyword2",
     ["c_void"]          = "keyword2",
