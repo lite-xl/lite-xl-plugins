@@ -12,8 +12,8 @@ syntax.add {
     { pattern = "$%(.-%)",                type = "symbol"   },
     { pattern = "%f[%w_][%d%.]+%f[^%w_]", type = "number"   },
     { regex = [[^\s*+[^:#=\s]+\s*+()(?::{1,3}|[?+!])?=]], type = { "literal", "operator" } },
-    { regex = [[^\s*+\.[^:=]+\s*+():]],   type = { "keyword2", "operator" } },
-    { regex = [[^\s*+[^:=]+\s*+():]],     type = { "function", "operator" } },
+    { regex = [[^\s*+\.[^:=]+\s*+()::?]], type = { "keyword2", "operator" } },
+    { regex = [[^\s*+[^:=]+\s*+()::?]],   type = { "function", "operator" } },
     { pattern = "-?[^%s:#=+?!]+%f[%s]",   type = "normal" },
   },
   symbols = {
