@@ -11,8 +11,9 @@ syntax.add {
     { pattern = "$[@^<%%?+|*]",           type = "keyword2" },
     { pattern = "$%(.-%)",                type = "symbol"   },
     { pattern = "%f[%w_][%d%.]+%f[^%w_]", type = "number"   },
-    { pattern = "%..*:",                  type = "keyword2" },
-    { pattern = ".*:",                    type = "function" },
+    { regex = [[^\s*+[^:#=\s]+\s*+()(?::{1,3}|[?+!])?=]], type = { "literal", "operator" } },
+    { regex = [[^\s*+\.[^:=]+\s*+():]],   type = { "keyword2", "operator" } },
+    { regex = [[^\s*+[^:=]+\s*+():]],     type = { "function", "operator" } },
   },
   symbols = {
   },
