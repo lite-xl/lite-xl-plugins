@@ -30,8 +30,8 @@ local closers = {
 }
 
 local old_tokenize = DocView.tokenize
-function DocView:tokenize(line)
-  if not config.plugins.rainbowparen.enabled then return old_tokenize(self, line) end
+function DocView:tokenize(line, ...)
+  if not config.plugins.rainbowparen.enabled then return old_tokenize(self, line, ...) end
   if not self.parenstack then self.parenstack = {} end
   local parenstack = self.parenstack[line-1] or ""
   local t = self:accumulate_tokens(old_tokenize(self, line), function(output, text, token_style)
