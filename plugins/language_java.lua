@@ -16,24 +16,32 @@ syntax.add {
     { pattern = "'\\x%x?%x?%x?%x'",                           type = "string"   }, -- character hexadecimal escape sequence
     { pattern = "'\\u%x%x%x%x'",                              type = "string"   }, -- character unicode escape sequence
     { pattern = "'\\?.'",                                     type = "string"   }, -- character literal
-    { pattern = "-?0x%x+",                                    type = "number"   }, -- Number, hexadecimal
-    { pattern = "-?%d+[%d%.eE]*f?",                           type = "number"   }, -- Number, exponential
-    -- FIX: int, float, long, double
-    { pattern = "-?%d+%.?%d*[lLfFdD]?",                       type = "number"   }, -- Number
+    { pattern = "-?0x%x+",                                    type = "number"   }, -- Number: hexadecimal
+    { pattern = "-?%d+[%d%.eE]*[fFdD]?",                      type = "number"   }, -- Number: exponential, float/double
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                       type = "operator" }, -- Operator
     { pattern = "[%a_][%w_]*%f[(]",                           type = "function" }, -- Method
     { pattern = "^import()%s+()[%w_.]+",                      type = { "keyword", "normal", "normal" } }, -- Import
-    -- Class name reference: ;
-    { pattern = "^%s*()return()%s*%.-()%;$",                  type = { "normal", "keyword", "symbol", "normal" } },
+    -- Constants
+    { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",               type = "keyword2" },
+    -- Class name reference: ; (single accessibility modifier)
+    { pattern = "^%s*()return()%s*%.-()%;$",                  type = { "normal", "function", "symbol", "normal" } },
     { pattern = "^%s*[A-Z]%w+%s*()%w+%s*%;",                  type = { "function", "normal" } },
     { pattern = "^%s*%w+()%<.-%>()%s*%w+%s*%;",               type = { "function", "keyword2", "normal" } },
-    -- FIX
+    -- Class name reference: ; (multiple accessibility modifiers)
+    { pattern = "%s*[A-Z]%w+%s*()[A-Z_]+()%s*%;",             type = { "function", "keyword2", "normal" } },
+    { pattern = "%s*[A-Z]%w+()%<.-%>()%s*[A-Z_]+()%s*%;",     type = { "function", "keyword2", "keyword2", "normal" } },
+    { pattern = "%s*[A-Z]%w+%s*()[%w_]+%s*%;",                type = { "function", "normal" } },
+    { pattern = "%s*[A-Z]%w+()%<.-%>()%s*[%w_]+%s*%;",        type = { "function", "keyword2", "normal" } },
+    -- es. private String classBlacklistRegexp;
+    -- es. private String<> classBlacklistRegexp;
+    -- es. private String<SomeClass> classBlacklistRegexp;
     { pattern = "^%s*%w+%s*()%w+()%<.-%>()%s*%w+%s*%;",       type = { "keyword", "function", "keyword2", "normal" } },
     { pattern = "^%s*%w+%s*()%w+%s*()%w+%s*%;",               type = { "keyword", "function", "normal" } },
     -- Class name reference: =
-    -- FIX
+    { pattern = "%w+%s*()[A-Z_]+%s*()%=",                     type = { "function", "keyword2", "operator" } },
+    { pattern = "%w+()%<.-%>()%s*[A-Z_]+%s*()%=",             type = { "function", "keyword2", "keyword2", "operator" } },
     { pattern = "%w+%s*()%w+%s*()%=",                         type = { "function", "normal", "operator" } },
-    { pattern = "%w+%s*()%<.-%>()%s*%w+%s*()%=",              type = { "function", "keyword2", "normal", "operator" } },
+    { pattern = "%w+()%<.-%>()%s*%w+%s*()%=",                 type = { "function", "keyword2", "normal", "operator" } },
     -- Class name reference: new
     { pattern = "new()%s*%w+()%<.-%>()%f[(]",                 type = { "keyword", "function", "keyword2", "normal" } },
     { pattern = "new()%s*%w+()%f[(]",                         type = { "keyword", "function", "normal" } },
@@ -51,19 +59,18 @@ syntax.add {
     { pattern = "%s*()%w+()%<.-%>()%s+%w+%s*%)",              type = { "normal", "function", "keyword2", "normal" } },
     -- Class name reference: ( then )
     { pattern = "%(%s*()%w+%s*()%w+%s*%)",                    type = { "normal", "function", "normal" } },
-    { pattern = "%(%s*()%w+()%<.-%>()%s*()%w+%s*%)",          type = { "normal", "function", "keyword2", "normal" } },
+    { pattern = "%(%s*()%w+()%<.-%>()%s*()%w+%s*%)",          type = { "normal", "function", "keyword2", "normal", "normal" } },
     -- Array
     { pattern = "%w+()%[()%d*()%]",                           type = { "function", "normal", "number", "normal" } },
     -- Class name reference: method
-    { pattern = "%w+%s+()%w+%s*()%f[(]",                      type = { "keyword", "function", "normal" } },
+    -- es. public String SomeClass(
+    { pattern = "%w+%s+()%w+%s*()%f[(]",                      type = { "function", "function", "normal" } },
     { pattern = "%w+()%<.-%>()%s+%w+%s*()%f[(]",              type = { "function", "keyword2", "function", "normal" } },
     -- Other patterns
-    { regex   = [[this(?=\.?\@?)]],                           type = "keyword"  }, -- this keyword
-    { pattern = "^%s*%@.+%)",                                 type = "keyword2" }, -- Annotation (at line start)
-    { regex   = [[\s*\@.+\)(?=\s+\w+)]],                      type = "keyword2" }, -- Annotation (at line middle)
+    { pattern = "this()%s*.*$",                               type = { "keyword", "normal" } }, -- Import
+    -- { pattern = "^%s*%@.+%)",                                 type = "keyword2" }, -- Annotation (at line start)
+    -- { regex   = [[\s*\@.+\)(?=\s+\w+)]],                      type = "keyword2" }, -- Annotation (at line middle)
     { pattern = "%@%w+",                                      type = "keyword2" }, -- Annotation (like: final @Nullable String something;)
-    -- WIP: constants
-    { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",               type = "keyword2" }, -- Constants
     { pattern = "%:%:()%w+",                                  type = { "normal", "function" } }, -- Method reference with double colon operator
     { pattern = "%.class",                                    type = "normal"   }, -- .class should be colored as normal
     { pattern = "[%a_][%w_]*",                                type = "symbol"   }, -- Symbols
