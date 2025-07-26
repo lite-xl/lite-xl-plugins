@@ -24,33 +24,35 @@ syntax.add {
     -- Constants
     { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",               type = "keyword2" },
     -- Class name reference: ; (single accessibility modifier)
-    { pattern = "^%s*()return()%s*%.-()%;$",                  type = { "normal", "function", "symbol", "normal" } },
-    { pattern = "^%s*[A-Z]%w+%s*()%w+%s*%;",                  type = { "function", "normal" } },
-    { pattern = "^%s*%w+()%<.-%>()%s*%w+%s*%;",               type = { "function", "keyword2", "normal" } },
+    -- WIP: return ...
+    { pattern = "^%s*()return()%s+[A-Z]%w+()%s+.-()%;",       type = { "normal", "symbol", "function", "normal", "normal" } },
+    { pattern = "^%s*()return()%s+[A-Z][A-Z_]+()%;",          type = { "normal", "symbol", "keyword2", "normal" } },
+    { pattern = "^%s*[A-Z]%w+%s+()%w+%s*%;",                  type = { "function", "normal" } },
+    { pattern = "^%s*%w+()%<.-%>()%s+%w+%s*%;",               type = { "function", "keyword2", "normal" } },
     -- Class name reference: ; (multiple accessibility modifiers)
-    { pattern = "%s*[A-Z]%w+%s*()[A-Z_]+()%s*%;",             type = { "function", "keyword2", "normal" } },
-    { pattern = "%s*[A-Z]%w+()%<.-%>()%s*[A-Z_]+()%s*%;",     type = { "function", "keyword2", "keyword2", "normal" } },
-    { pattern = "%s*[A-Z]%w+%s*()[%w_]+%s*%;",                type = { "function", "normal" } },
-    { pattern = "%s*[A-Z]%w+()%<.-%>()%s*[%w_]+%s*%;",        type = { "function", "keyword2", "normal" } },
+    { pattern = "%s*[A-Z]%w+%s+()[A-Z_]+()%s*%;",             type = { "function", "keyword2", "normal" } },
+    { pattern = "%s*[A-Z]%w+()%<.-%>()%s+[A-Z_]+()%s*%;",     type = { "function", "keyword2", "keyword2", "normal" } },
+    { pattern = "%s*[A-Z]%w+%s+()[%w_]+%s*%;",                type = { "function", "normal" } },
+    { pattern = "%s*[A-Z]%w+()%<.-%>()%s+[%w_]+%s*%;",        type = { "function", "keyword2", "normal" } },
     -- es. private String classBlacklistRegexp;
     -- es. private String<> classBlacklistRegexp;
     -- es. private String<SomeClass> classBlacklistRegexp;
-    { pattern = "^%s*%w+%s*()%w+()%<.-%>()%s*%w+%s*%;",       type = { "keyword", "function", "keyword2", "normal" } },
-    { pattern = "^%s*%w+%s*()%w+%s*()%w+%s*%;",               type = { "keyword", "function", "normal" } },
+    { pattern = "^%s*%w+%s+()%w+()%<.-%>()%s*%w+%s*%;",       type = { "keyword", "function", "keyword2", "normal" } },
+    { pattern = "^%s*%w+%s+()%w+%s*()%w+%s*%;",               type = { "keyword", "function", "normal" } },
     -- Class name reference: =
-    { pattern = "%w+%s*()[A-Z_]+%s*()%=",                     type = { "function", "keyword2", "operator" } },
-    { pattern = "%w+()%<.-%>()%s*[A-Z_]+%s*()%=",             type = { "function", "keyword2", "keyword2", "operator" } },
-    { pattern = "%w+%s*()%w+%s*()%=",                         type = { "function", "normal", "operator" } },
-    { pattern = "%w+()%<.-%>()%s*%w+%s*()%=",                 type = { "function", "keyword2", "normal", "operator" } },
+    { pattern = "%w+%s+()[A-Z_]+%s*()%=",                     type = { "function", "keyword2", "operator" } },
+    { pattern = "%w+()%<.-%>()%s+[A-Z_]+%s*()%=",             type = { "function", "keyword2", "keyword2", "operator" } },
+    { pattern = "%w+%s+()%w+%s*()%=",                         type = { "function", "normal", "operator" } },
+    { pattern = "%w+()%<.-%>()%s+%w+%s*()%=",                 type = { "function", "keyword2", "normal", "operator" } },
     -- Class name reference: new
-    { pattern = "new()%s*%w+()%<.-%>()%f[(]",                 type = { "keyword", "function", "keyword2", "normal" } },
-    { pattern = "new()%s*%w+()%f[(]",                         type = { "keyword", "function", "normal" } },
+    { pattern = "new()%s+%w+()%<.-%>()%f[(]",                 type = { "keyword", "function", "keyword2", "normal" } },
+    { pattern = "new()%s+%w+()%f[(]",                         type = { "keyword", "function", "normal" } },
     -- Class name reference: ( then ,
-    { pattern = "%(%s*()%w+%s*()%w+%s*%,",                    type = { "normal", "function", "normal" } },
-    { pattern = "%(%s*()%w+()%<.-%>()%s*%w+%s*%,",            type = { "normal", "function", "keyword2", "normal" } },
+    { pattern = "%(%s*()%w+%s+()%w+%s*%,",                    type = { "normal", "function", "normal" } },
+    { pattern = "%(%s*()%w+()%<.-%>()%s+%w+%s*%,",            type = { "normal", "function", "keyword2", "normal" } },
     -- Class name reference: (final then ,
-    { pattern = "%(%s*()final%s*()%w+()%<.-%>()%s*%w+%s*%,",  type = { "normal", "keyword", "function", "keyword2", "normal" } },
-    { pattern = "%(%s*()final%s*()%w+%s*()%w+%s*%,",          type = { "normal", "keyword", "function", "normal" } },
+    { pattern = "%(%s*()final%s*()%w+()%<.-%>()%s+%w+%s*%,",  type = { "normal", "keyword", "function", "keyword2", "normal" } },
+    { pattern = "%(%s*()final%s*()%w+%s+()%w+%s*%,",          type = { "normal", "keyword", "function", "normal" } },
     -- Class name reference: , then ,
     { pattern = "%s*()%w+%s+()%w+%s*%,",                      type = { "normal", "function", "normal" } },
     { pattern = "%s*()%w+()%<.-%>()%s+%w+%s*%,",              type = { "normal", "function", "keyword2", "normal" } },
@@ -58,8 +60,8 @@ syntax.add {
     { pattern = "%s*()%w+()%s+%w+%s*%)",                      type = { "normal", "function", "normal" } },
     { pattern = "%s*()%w+()%<.-%>()%s+%w+%s*%)",              type = { "normal", "function", "keyword2", "normal" } },
     -- Class name reference: ( then )
-    { pattern = "%(%s*()%w+%s*()%w+%s*%)",                    type = { "normal", "function", "normal" } },
-    { pattern = "%(%s*()%w+()%<.-%>()%s*()%w+%s*%)",          type = { "normal", "function", "keyword2", "normal", "normal" } },
+    { pattern = "%(%s*()%w+%s+()%w+%s*%)",                    type = { "normal", "function", "normal" } },
+    { pattern = "%(%s*()%w+()%<.-%>()%s+()%w+%s*%)",          type = { "normal", "function", "keyword2", "normal", "normal" } },
     -- Array
     { pattern = "%w+()%[()%d*()%]",                           type = { "function", "normal", "number", "normal" } },
     -- Class name reference: method
