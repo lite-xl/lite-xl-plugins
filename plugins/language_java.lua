@@ -21,12 +21,10 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                       type = "operator" }, -- Operator
     { pattern = "[%a_][%w_]*%f[(]",                           type = "function" }, -- Method
     { pattern = "^import()%s+()[%w_.]+",                      type = { "keyword", "normal", "normal" } }, -- Import
-    -- Constants
-    { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",               type = "keyword2" },
+    { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",               type = "keyword2" }, -- Constants
     -- Class name reference: ; (single accessibility modifier)
-    -- WIP: return ...
-    { pattern = "^%s*()return()%s+[A-Z]%w+()%s+.-()%;",       type = { "normal", "symbol", "function", "normal", "normal" } },
-    { pattern = "^%s*()return()%s+[A-Z][A-Z_]+()%;",          type = { "normal", "symbol", "keyword2", "normal" } },
+    { pattern = "return()%s+()[A-Z]%w+()%s+.-()%;",     type = { "symbol", "normal", "function", "normal", "normal" } },
+    { pattern = "return()%s+()[A-Z][A-Z_]+()%;",        type = { "symbol", "normal", "keyword2", "normal" } },
     { pattern = "^%s*[A-Z]%w+%s+()%w+%s*%;",                  type = { "function", "normal" } },
     { pattern = "^%s*%w+()%<.-%>()%s+%w+%s*%;",               type = { "function", "keyword2", "normal" } },
     -- Class name reference: ; (multiple accessibility modifiers)
