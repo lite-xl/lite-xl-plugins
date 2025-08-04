@@ -329,8 +329,8 @@ to follow with `extra.follow_branch`.*
 | [`encoding`](https://github.com/jgmdev/lite-xl-encoding)*                                    | Add support for detecting file and string encodings as converting between them.                              |
 | [`font_nonicons`](plugins/font_nonicons.lua?raw=1)                                           | [Nonicons](https://github.com/yamatsum/nonicons/) font with mapping                                          |
 | [`font_symbols_nerdfont_mono_regular`](plugins/font_symbols_nerdfont_mono_regular.lua?raw=1) | [Nerd Font Symbols](https://github.com/ryanoasis/nerd-fonts/) font with mapping                              |
-| [`golang`](https://github.com/lite-xl/lite-xl-lsp-servers)*                                  | Official Go builds.                                                                                          |
-| [`haxe`](https://github.com/lite-xl/lite-xl-lsp-servers)*                                    | Official Haxe builds.                                                                                        |
+| [`golang`](https://github.com/lite-xl/lite-xl-lsp-servers.git)*                              | Official Go builds.                                                                                          |
+| [`haxe`](https://github.com/lite-xl/lite-xl-lsp-servers.git)*                                | Official Haxe builds.                                                                                        |
 | [`jdk`](https://github.com/lite-xl/lite-xl-lsp-servers.git)*                                 | Production and Early-Access OpenJDK Builds, from Oracle.                                                     |
 | [`net`](https://github.com/jgmdev/lite-xl-net)*                                              | Add support for TCP and UDP sockets using SDL_net.                                                           |
 | [`nodejs`](https://github.com/lite-xl/lite-xl-lsp-servers.git)*                              | Official NodeJs builds.                                                                                      |
