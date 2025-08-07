@@ -130,12 +130,12 @@ if psql_found then
   -- SQL strings
   sql_strings = {
     {
-        regex  = { '"(?=[\\s(]*(?i:'..sql_regex..')\\s+)', '"', '\\' },
+        regex  = { [["(?=[\s(]*(?i:]]..sql_regex..[[)\s+)]], [["]], [[\]] },
         syntax = syntax_phpsql,
         type   = "string"
     },
     {
-        regex  = { "'(?=[\\s(]*(?i:"..sql_regex..")\\s+)", '\'', '\\' },
+        regex  = { [['(?=[\s(]*(?i:]]..sql_regex..[[)\s+)]], [[']], [[\]] },
         syntax = '.sql',
         type   = "string"
     },
@@ -339,8 +339,8 @@ syntax.add {
   patterns = {
     {
       regex = {
-        "<\\?php\\s+",
-        "(?:\\?>|(?=`{3}))" -- end if inside markdown code tags
+        [[<\?php\s+]],
+        [[(?:\?>|(?=`{3}))]] -- end if inside markdown code tags
       },
       syntax = ".phps",
       type = "keyword2"
@@ -383,7 +383,7 @@ syntax.add {
     { pattern = "[/<>=]",                  type = "operator" },
     -- match markdown code tags to be able to end php highlighting
     -- when inside the subsyntax .phps
-    { regex = "(?=`{3})",                  type = "string"   }
+    { regex = [[(?=`{3})]],                  type = "string"   }
   },
   symbols = {},
 }
