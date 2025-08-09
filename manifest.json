@@ -2196,6 +2196,13 @@
       "version": "0.1"
     },
     {
+      "description": "Displays selection length in status bar",
+      "id": "sel_length",
+      "mod_version": "3",
+      "path": "plugins/sel_length.lua",
+      "version": "0.1"
+    },
+    {
       "description": "Select a color theme, like VScode, Sublime Text.(plugin saves changes)",
       "id": "select_colorscheme",
       "mod_version": "3",
