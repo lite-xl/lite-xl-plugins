@@ -1238,7 +1238,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [KDL](https://kdl.dev) document language",
