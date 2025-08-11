@@ -3,23 +3,26 @@
 -- Shows the selection length on statusbar
 local core = require "core"
 local StatusView = require "core.statusview"
+local CommandView = require "core.commandview"
+local DocView = require "core.docview"
 
 core.status_view:add_item({
-	predicate = StatusView.predicate_docview,
-	name = "doc:sel_length",
+	predicate = function()
+		return core.active_view:is(DocView)
+			and not core.active_view:is(CommandView)
+	end,
+	name = "status:sel_length",
 	alignment = StatusView.Item.LEFT,
 	get_item = function()
 		local dv = core.active_view
-		-- To fix crash
-		-- e.g. search_ui dir selection causes crash otherwise
-		if dv.doc == nil then return {} end
+		local selection_count = #dv.doc.selections/4
 		local selection_length = 0
-		local selection_count = 0
 		-- Go through all the selections or carets in the docview
 		for _, line1, col1, line2, col2 in dv.doc:get_selections() do
-			local selection = dv.doc:get_text(line1, col1, line2, col2)
-			selection_length = selection_length + string.len(selection)
-			selection_count = selection_count + 1
+			if line1 ~= line2 or col1 ~= col2 then
+				local selection = dv.doc:get_text(line1, col1, line2, col2)
+				selection_length = selection_length + string.len(selection)
+			end
 		end
 
 		-- If selection length is zero, don't bother showing any status
