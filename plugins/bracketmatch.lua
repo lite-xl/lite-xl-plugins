@@ -118,10 +118,11 @@ local function update_state(line_limit)
 
   -- reset if we don't have a document (eg. DocView isn't focused)
   local doc = core.active_view.doc
-  if not doc or not doc.higlighter then
+  if not doc or not doc.highlighter then
     state = {}
     return
   end
+
 
   -- early exit if nothing has changed since the last call
   local line, col = core.active_view:get_selection()
