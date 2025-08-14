@@ -6,6 +6,40 @@ local StatusView = require "core.statusview"
 local CommandView = require "core.commandview"
 local DocView = require "core.docview"
 
+local cache = setmetatable({}, { __mode = "k" })
+local function get_selection_size(doc, line1, col1, line2, col2)
+	-- The selection cache gets invalidated when the document changes
+	local change_id = doc:get_change_id()
+	if not cache[doc] or cache[doc].id ~= change_id then
+		cache[doc] = { id = change_id, selections = {} }
+	end
+
+	local sel_cache = cache[doc].selections
+	local selection_name = string.format("%d:%d-%d:%d", line1, col1, line2, col2)
+	if not sel_cache[selection_name] then
+		local total_len = 0
+		-- Calculate selection length by going through selected line/lines
+		for i = line1, line2 do
+			local len
+			if line1 == line2 then
+				len = col2 - col1
+			else
+				if i == line1 then
+					len = #doc.lines[i] - col1
+				elseif i == line2 then
+					len = col2
+				else
+					len = #doc.lines[i]
+				end
+			end
+			total_len = total_len + len
+		end
+		sel_cache[selection_name] = total_len
+	end
+
+	return sel_cache[selection_name]
+end
+
 core.status_view:add_item({
 	predicate = function()
 		return core.active_view:is(DocView)
@@ -18,10 +52,9 @@ core.status_view:add_item({
 		local selection_count = #dv.doc.selections/4
 		local selection_length = 0
 		-- Go through all the selections or carets in the docview
-		for _, line1, col1, line2, col2 in dv.doc:get_selections() do
+		for _, line1, col1, line2, col2 in dv.doc:get_selections(true) do
 			if line1 ~= line2 or col1 ~= col2 then
-				local selection = dv.doc:get_text(line1, col1, line2, col2)
-				selection_length = selection_length + string.len(selection)
+				selection_length = selection_length + get_selection_size(dv.doc, line1, col1, line2, col2)
 			end
 		end
 
@@ -40,4 +73,3 @@ core.status_view:add_item({
 	tooltip = "selection length",
 	separator = core.status_view.separator2
 })
-
