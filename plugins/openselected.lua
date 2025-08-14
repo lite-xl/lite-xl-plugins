@@ -31,15 +31,43 @@ config.plugins.openselected = common.merge({
   }
 }, config.plugins.openselected)
 
+local function select_word_under_cursor(doc)
+  local line, col = doc:get_selection() -- will be cursor if no selection
+  local text = doc.lines[line]
+  local pattern = "[%s'\"]"
+
+  if not text or text == "" then return nil end
+
+  -- move left until non-word char
+  local start_col = col
+  while start_col > 1 and not text:sub(start_col - 1, start_col - 1):match(pattern) do
+    start_col = start_col - 1
+  end
+
+  -- move right until non-word char
+  local end_col = col
+  while end_col <= #text and not text:sub(end_col, end_col):match(pattern) do
+    end_col = end_col + 1
+  end
+
+  doc:set_selection(line, end_col, line, start_col)
+  return doc:get_text(doc:get_selection())
+end
+
 command.add("core.docview!", {
   ["open-selected:open-selected"] = function(dv)
     local doc = dv.doc
-    if not doc:has_selection() then
-      core.error("No text selected")
-      return
-    end
+    local text
 
-    local text = doc:get_text(doc:get_selection())
+    if not doc:has_selection() then
+      text = select_word_under_cursor(doc)
+      if not text or text == "" then
+        core.error("No text found at cursor")
+        return
+      end
+    else
+      text = doc:get_text(doc:get_selection())
+    end
 
     -- trim whitespace from the ends
     text = text:match( "^%s*(.-)%s*$" )
@@ -62,5 +90,5 @@ contextmenu:register("core.docview", {
 })
 
 
-keymap.add { ["ctrl+alt+o"] = "open-selected:open-selected" }
+keymap.add { ["ctrl+shift+o"] = "open-selected:open-selected" }
 
