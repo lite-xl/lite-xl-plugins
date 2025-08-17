@@ -34,22 +34,12 @@ config.plugins.openselected = common.merge({
 local function select_word_under_cursor(doc)
   local line, col = doc:get_selection() -- will be cursor if no selection
   local text = doc.lines[line]
-  local pattern = "[%s'\"]"
+  local pattern = "%s'\""
 
-  if not text or text == "" then return nil end
+  if not text or text == "\n" then return nil end
 
-  -- move left until non-word char
-  local start_col = col
-  while start_col > 1 and not text:sub(start_col - 1, start_col - 1):match(pattern) do
-    start_col = start_col - 1
-  end
-
-  -- move right until non-word char
-  local end_col = col
-  while end_col <= #text and not text:sub(end_col, end_col):match(pattern) do
-    end_col = end_col + 1
-  end
-
+  local start_col = text:sub(1,col):find("[^"..pattern.."]")
+  local end_col = col + text:sub(col, #text):find("["..pattern.."]") - 1
   doc:set_selection(line, end_col, line, start_col)
   return doc:get_text(doc:get_selection())
 end
@@ -90,5 +80,4 @@ contextmenu:register("core.docview", {
 })
 
 
-keymap.add { ["ctrl+shift+o"] = "open-selected:open-selected" }
-
+keymap.add { ["ctrl+alt+o"] = "open-selected:open-selected" }
