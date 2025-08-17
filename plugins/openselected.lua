@@ -38,9 +38,19 @@ local function select_word_under_cursor(doc)
 
   if not text or text == "\n" then return nil end
 
-  local start_col = text:sub(1,col):find("[^"..pattern.."]")
-  local end_col = col + text:sub(col, #text):find("["..pattern.."]") - 1
-  doc:set_selection(line, end_col, line, start_col)
+  -- if character at cursor is a boundary return nil
+  local char_at_cursor = text:sub(col, col)
+  if char_at_cursor:match("[" .. pattern .. "]") then
+    return nil
+  end
+
+  -- get start/end of contiguous chunk at cursor
+  local left = text:sub(1, col):match("[^" .. pattern .. "]+$") or ""
+  local right = text:sub(col + 1):match("^[^" .. pattern .. "]+") or ""
+  local start_col = col - #left + 1
+  local end_col = col + #right + 1
+
+  doc:set_selection(line, start_col, line, end_col)
   return doc:get_text(doc:get_selection())
 end
 
