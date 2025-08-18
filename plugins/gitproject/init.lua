@@ -65,11 +65,6 @@ local function is_project_in_git()
   return core.git_project.status
 end
 
-local add_prj_dir__orig = core.add_project_directory
-function core.add_project_directory(path)
-  add_prj_dir__orig(path)
-end
-
 local function get_project_file_info(root, file)
   local path = root .. PATHSEP .. file
   local info = system.get_file_info(path)
@@ -128,7 +123,7 @@ function dirwatch.get_directory_files(dir, root, path, entries_count, recurse_pr
       return {}, true, entries_count
     end
   else
-    dw_get_directory_files(dir, root, path, entries_count, recurse_pred)
+    return dw_get_directory_files(dir, root, path, entries_count, recurse_pred)
   end
 end
 
