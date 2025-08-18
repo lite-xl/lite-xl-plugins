@@ -2004,6 +2004,15 @@
       "version": "0.4.0"
     },
     {
+      "description": "Helix inspired modal editing for Lite XL",
+      "id": "modal-hx",
+      "mod_version": "3",
+      "name": "modal-hx",
+      "remote": "https://codeberg.org/Mandarancio/lite-modal-hx:355f1d973da29920d5a640e063755b373dc25705",
+      "type": "plugin",
+      "version": "0.1.1"
+    },
+    {
       "description": "Adds a motion-trail to the caret *([gif](https://user-images.githubusercontent.com/3920290/83256814-085ccb00-a1ab-11ea-9e35-e6633cbed1a9.gif))*",
       "id": "motiontrail",
       "mod_version": "3",
