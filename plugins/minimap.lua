@@ -228,8 +228,6 @@ local function reset_cache_if_needed()
 end
 
 
-
-
 -- Move cache to make space for new lines
 local prev_insert_notify = Highlighter.insert_notify
 function Highlighter:insert_notify(line, n, ...)
@@ -238,13 +236,11 @@ function Highlighter:insert_notify(line, n, ...)
   if not highlighter_cache[self] then
     highlighter_cache[self] = {}
   else
-    local to = math.min(line + n, #self.doc.lines)
-    for i=#self.doc.lines+n,to,-1 do
-      highlighter_cache[self][i] = highlighter_cache[self][i - n]
+    local blanks = { }
+    for i = 1, n do
+      blanks[i] = false
     end
-    for i=line,to do
-      highlighter_cache[self][i] = nil
-    end
+    common.splice(highlighter_cache[self], line, 0, blanks)
   end
 end
 
@@ -256,10 +252,7 @@ function Highlighter:remove_notify(line, n, ...)
   if not highlighter_cache[self] then
     highlighter_cache[self] = {}
   else
-    local to = math.max(line + n, #self.doc.lines)
-    for i=line,to do
-      highlighter_cache[self][i] = highlighter_cache[self][i + n]
-    end
+    common.splice(highlighter_cache[self], line, n)
   end
 end
 
@@ -271,7 +264,7 @@ function Highlighter:tokenize_line(idx, state, ...)
   if not highlighter_cache[self] then
     highlighter_cache[self] = {}
   end
-  highlighter_cache[self][idx] = nil
+  highlighter_cache[self][idx] = false
   return res
 end
 
@@ -297,14 +290,50 @@ end
 local MiniMap = Scrollbar:extend()
 
 
-function MiniMap:new(dv)
-  MiniMap.super.new(self, { direction = "v", alignment = "e" })
+function MiniMap:new(dv, original_v_scrollbar)
+  MiniMap.super.new(self, { direction = "v", alignment = "e",
+                            force_status = "expanded",
+                            expanded_size = cached_settings.width,
+                            expanded_margin = 0 })
+  self.original_force_status = original_v_scrollbar.force_status
+  self.original_expanded_size = original_v_scrollbar.expanded_size
+  self.original_expanded_margin = original_v_scrollbar.expanded_margin
   self.dv = dv
   self.enabled = nil
+  self.was_enabled = true
 end
 
 
-function MiniMap:line_highlight_color(line_index)
+function MiniMap:swap_to_status()
+  local enabled = self:is_minimap_enabled()
+  if not enabled and self.was_enabled then
+    self.force_status = self.original_force_status
+    self.expanded_size = self.original_expanded_size
+    self.expanded_margin = self.original_expanded_margin
+    self.was_enabled = false
+  elseif enabled and not self.was_enabled then
+    self.force_status = "expanded"
+    self.expanded_size = cached_settings.width
+    self.expanded_margin = 0
+    self.was_enabled = true
+  end
+end
+
+
+function MiniMap:update()
+  self:swap_to_status()
+  if self:is_minimap_enabled() then
+    reset_cache_if_needed()
+    self.expanded_size = cached_settings.width
+    local lh = self.dv:get_line_height()
+    local nlines = self.dv.size.y / lh
+    self.minimum_thumb_size = nlines * line_spacing
+  end
+  MiniMap.super.update(self)
+end
+
+
+function MiniMap:line_highlight_color(line_index, docview)
   -- other plugins can override this, and return a color
 end
 
@@ -327,96 +356,56 @@ function MiniMap:is_minimap_enabled()
 end
 
 
-function MiniMap:get_minimap_dimensions()
-  local x, y, w, h = self:get_track_rect()
-  local _, cy, _, cy2 = self.dv:get_content_bounds()
-  local lh = self.dv:get_line_height()
-
-  local visible_lines_start = math.max(1, math.floor(cy / lh))
-  local visible_lines_count = math.max(1, (cy2 - cy) / lh)
-  local minimap_lines_start = 1
-  local minimap_lines_count = math.floor(h / line_spacing)
-  local line_count = #self.dv.doc.lines
-
-  local is_file_too_large = line_count > 1 and line_count > minimap_lines_count
-  if is_file_too_large then
-    local scroll_pos = (visible_lines_start - 1) /
-       (line_count - visible_lines_count - 1)
-    scroll_pos = math.min(1.0, scroll_pos) -- 0..1, procent of visual area scrolled
-
-    local thumb_height = visible_lines_count * line_spacing
-    local scroll_pos_pixels = scroll_pos * (h - thumb_height)
-
-    minimap_lines_start = visible_lines_start -
-        math.floor(scroll_pos_pixels / line_spacing)
-    minimap_lines_start = math.max(1, minimap_lines_start)
+function MiniMap:_on_mouse_pressed_normal(button, x, y, clicks)
+  local overlaps = self:_overlaps_normal(x, y)
+  local percent = MiniMap.super._on_mouse_pressed_normal(self, button, x, y, clicks)
+  if overlaps == "track" then
+    -- We need to adjust the percentage to scroll to the line in the minimap
+    -- that was "clicked"
+    local minimap_line, _ = self:get_minimap_lines()
+    local _, track_y, _, _ = self:_get_track_rect_normal()
+    local line = minimap_line + (y - track_y) // line_spacing
+    local _, y = self.dv:get_line_screen_position(line)
+    local _, oy = self.dv:get_content_offset()
+    local nr = self.normal_rect
+    percent = common.clamp((y - oy - (self.dv.size.y) / 2) / (nr.scrollable - self.dv.size.y), 0, 1)
   end
-  return visible_lines_start, visible_lines_count, minimap_lines_start, minimap_lines_count, is_file_too_large
+  return percent
 end
 
 
-function MiniMap:_get_track_rect_normal()
-  if not self:is_minimap_enabled() then return MiniMap.super._get_track_rect_normal(self) end
-  return self.dv.size.x + self.dv.position.x - config.plugins.minimap.width, self.dv.position.y, config.plugins.minimap.width, self.dv.size.y
+local function get_visible_minline(dv)
+  local _, y, _, _ = dv:get_content_bounds()
+  local lh = dv:get_line_height()
+  local minline = math.max(0, y / lh + 1)
+  return minline
 end
 
 
-function MiniMap:get_active_margin() if self:is_minimap_enabled() then return 0 else return MiniMap.super.get_active_margin(self) end end
+function MiniMap:get_minimap_lines()
+  local _, track_y, _, h = self:_get_track_rect_normal()
+  local _, thumb_y, _, _ = self:_get_thumb_rect_normal()
 
+  local nlines = h // line_spacing
 
-function MiniMap:_get_thumb_rect_normal()
-  if not self:is_minimap_enabled() then return MiniMap.super._get_thumb_rect_normal(self) end
-  local visible_lines_start, visible_lines_count, minimap_lines_start, minimap_lines_count, is_file_too_large = self:get_minimap_dimensions()
-  local visible_y = self.dv.position.y + (visible_lines_start - 1) * line_spacing
-  if is_file_too_large then
-    local line_count = #self.dv.doc.lines
-    local scroll_pos = (visible_lines_start - 1) /
-       (line_count - visible_lines_count - 1)
-    scroll_pos = math.min(1.0, scroll_pos) -- 0..1, procent of visual area scrolled
-
-    local thumb_height = visible_lines_count * line_spacing
-    local scroll_pos_pixels = scroll_pos * (self.dv.size.y - thumb_height)
-    visible_y = self.dv.position.y + scroll_pos_pixels
+  local minline = get_visible_minline(self.dv)
+  local top_lines = (thumb_y - track_y) / line_spacing
+  local lines_start, offset = math.modf(minline - top_lines)
+  if lines_start <= 1 and nlines >= #self.dv.doc.lines then
+    offset = 0
   end
-  return self.dv.size.x + self.dv.position.x - config.plugins.minimap.width, visible_y, config.plugins.minimap.width, visible_lines_count * line_spacing
+  return common.clamp(lines_start, 1, #self.dv.doc.lines), common.clamp(nlines, 1, #self.dv.doc.lines), offset * line_spacing
 end
 
 
-function MiniMap:on_mouse_pressed(button, x, y, clicks)
-  local percent = MiniMap.super.on_mouse_pressed(self, button, x, y, clicks)
-  if not self:is_minimap_enabled() or not percent then return percent end
-  local _, visible_lines_count, minimap_lines_start, minimap_lines_count, is_file_too_large = self:get_minimap_dimensions()
-  local _, _, w, h = self:get_track_rect()
-  local tx, ty, tw, th = self:get_thumb_rect()
-  if y >= ty and y < ty + th then self.drag_start_offset = (y - ty) - th / 2 return self.percent end
-  self.drag_start_offset = 0
-  self.hovering.thumb = x >= tx and x < tx + tw and y >= ty and y < ty + th
-  self.dragging = self.hovering.thumb
-  local lh = self.dv:get_line_height()
-  percent = math.max(0.0, math.min((y - self.dv.position.y) / h, 1.0))
-  return (((percent * minimap_lines_count) + minimap_lines_start) * lh / self.dv:get_scrollable_size()) - (visible_lines_count / #self.dv.doc.lines / 2)
+function MiniMap:set_size(x, y, w, h, scrollable)
+  if not self:is_minimap_enabled() then return MiniMap.super.set_size(self, x, y, w, h, scrollable) end
+  -- If possible, use the size needed to only manage the visible minimap lines.
+  -- This allows us to let Scrollbar manage the thumb.
+  h = math.min(h, line_spacing * (scrollable // self.dv:get_line_height()))
+  MiniMap.super.set_size(self, x, y, w, h, scrollable)
 end
 
-
-function MiniMap:on_mouse_moved(x, y, dx, dy)
-  local percent = MiniMap.super.on_mouse_moved(self, x, y, dx, dy)
-  if not self:is_minimap_enabled() or type(percent) ~= "number" then return percent end
-  local _, visible_lines_count, minimap_lines_start, minimap_lines_count, is_file_too_large = self:get_minimap_dimensions()
-  local lh = self.dv:get_line_height()
-  local _, _, w, h = self:get_track_rect()
-  local tx, ty, tw, th = self:get_thumb_rect()
-  if x >= tx and x < tx + tw and y >= ty and y < ty + th then self.hovering.thumb = true end
-  if not self.hovering.thumb then return self.percent end
-  y = y - self.drag_start_offset
-  percent = math.max(0.0, math.min((y - self.dv.position.y) / h, 1.0))
-  return (((percent * minimap_lines_count) + minimap_lines_start) * lh / self.dv:get_scrollable_size()) - (visible_lines_count / #self.dv.doc.lines / 2)
-end
-
-function MiniMap:draw_thumb()
-  local color = self.hovering.thumb and style.scrollbar2 or style.scrollbar
-  local x, y, w, h = self:get_thumb_rect()
-  renderer.draw_rect(x, y, w, h, color)
-end
 
 function MiniMap:draw()
   if not self:is_minimap_enabled() then return MiniMap.super.draw(self) end
@@ -426,25 +415,27 @@ function MiniMap:draw()
   local highlight = dv.hovered_scrollbar or dv.dragging_scrollbar
   local visual_color = highlight and style.scrollbar2 or style.scrollbar
 
-  local visible_lines_start, visible_lines_count,
-    minimap_lines_start, minimap_lines_count = self:get_minimap_dimensions()
 
   if config.plugins.minimap.draw_background then
-    renderer.draw_rect(x, y, w, h, style.minimap_background or style.background)
+    renderer.draw_rect(x, y, w, self.dv.size.y, style.minimap_background or style.background)
   end
   self:draw_thumb()
+
+  local minimap_lines_start, minimap_lines_count, y_offset = self:get_minimap_lines()
+  local line_selection_offset = line_spacing - char_height
+  y = y - y_offset + line_selection_offset
 
   -- highlight the selected lines, and the line with the caret on it
   local selection_color = config.plugins.minimap.selection_color or style.dim
   local caret_color = config.plugins.minimap.caret_color or style.caret
 
-  for i, line1, col1, line2, col2 in dv.doc:get_selections() do
-    local selection1_y = y + (line1 - minimap_lines_start) * line_spacing
-    local selection2_y = y + (line2 - minimap_lines_start) * line_spacing
+  for _, line1, _, line2, _ in dv.doc:get_selections() do
+    local selection1_y = y + (line1 - minimap_lines_start) * line_spacing - line_selection_offset
+    local selection2_y = y + (line2 - minimap_lines_start) * line_spacing - line_selection_offset
     local selection_min_y = math.min(selection1_y, selection2_y)
-    local selection_h = math.abs(selection2_y - selection1_y)+1
+    local selection_h = math.abs(selection2_y - selection1_y) + 1 + line_selection_offset
     renderer.draw_rect(x, selection_min_y, w, selection_h, selection_color)
-    renderer.draw_rect(x, selection1_y, w, line_spacing, caret_color)
+    renderer.draw_rect(x, selection1_y, w, line_spacing + line_selection_offset, caret_color)
   end
 
   local highlight_align = config.plugins.minimap.highlight_align
@@ -511,15 +502,14 @@ function MiniMap:draw()
     highlight_x = x + w - highlight_width
   end
   local function render_highlight(idx, line_y)
-    local highlight_color = self:line_highlight_color(idx)
+    local highlight_color = self:line_highlight_color(idx, self.dv)
     if highlight_color then
-      renderer.draw_rect(highlight_x, line_y, highlight_width, line_spacing, highlight_color)
+      renderer.draw_rect(highlight_x, line_y - line_selection_offset,
+                         highlight_width, line_spacing + line_selection_offset, highlight_color)
     end
   end
 
   local endidx = math.min(minimap_lines_start + minimap_lines_count, #self.dv.doc.lines)
-
-  reset_cache_if_needed()
 
   if not highlighter_cache[dv.doc.highlighter] then
     highlighter_cache[dv.doc.highlighter] = {}
@@ -545,7 +535,7 @@ function MiniMap:draw()
         local start = 1
         while true do
           -- find text followed spaces followed by newline
-          local s, e, w, eol = string.ufind(text, "[^%s]*()[ \t]*()\n?", start)
+          local s, e, w, eol = string.find(text, "[^%s]*()[ \t]*()\n?", start)
           if not s then break end
           local nchars = w - s
           start = e + 1
@@ -595,23 +585,9 @@ end
 local old_docview_new = DocView.new
 function DocView:new(doc)
   old_docview_new(self, doc)
-  if self:is(DocView) then self.v_scrollbar = MiniMap(self) end
-end
-
-local old_docview_scroll_to_make_visible = DocView.scroll_to_make_visible
-function DocView:scroll_to_make_visible(line, col, ...)
-  if
-    not self:is(DocView) or not self.v_scrollbar:is(MiniMap)
-    or
-    not self.v_scrollbar:is_minimap_enabled()
-  then
-    return old_docview_scroll_to_make_visible(self, line, col, ...)
+  if self:is(DocView) then
+    self.v_scrollbar = MiniMap(self, self.v_scrollbar)
   end
-  local old_size = self.size.x
-  self.size.x = math.max(0, self.size.x - config.plugins.minimap.width)
-  local result = old_docview_scroll_to_make_visible(self, line, col, ...)
-  self.size.x = old_size
-  return result
 end
 
 

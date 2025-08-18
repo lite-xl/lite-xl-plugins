@@ -4,12 +4,12 @@ local syntax = require "core.syntax"
 
 syntax.add {
   name = "fstab",
-  files = { "fstab" },
+  files = { PATHSEP .. "fstab$" },
   comment = '#',
   patterns = {
     -- Only lines that start with a # are comments; you can have #'s in fuse
     -- filesystem strings that aren't comments, so shouldn't be highlighted as such.
-    { regex   = "^#.*$",                    type = "comment" },
+    { regex   = "^#.*",                     type = "comment" },
     { pattern = "[=/:.,]+",                 type = "operator" },
     { pattern = "/.*/",                     type = "string"  },
     { pattern = "#",                        type = "operator" },

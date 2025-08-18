@@ -967,7 +967,7 @@ function RootView:on_mouse_moved(x, y, dx, dy)
       rootview_dragged_node = self.dragged_node
     end
   elseif rootview_dragged_node then
-    local w, h, wx, wy = system.get_window_size()
+    local w, h, wx, wy = system.get_window_size(core.window)
     if x < 0 or x > w or y < 0 or y > h then
       self.dragged_node = nil
       self:set_show_overlay(self.drag_overlay, false)

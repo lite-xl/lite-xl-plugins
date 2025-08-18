@@ -199,7 +199,7 @@ function TetrisView:new(options)
     }
   }
   self.live_piece = nil
-  self.hold_piece = nil
+  self.held_piece = nil
 end
 
 function TetrisView:calculate_tick(score)

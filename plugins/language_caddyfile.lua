@@ -2,10 +2,10 @@
 local syntax = require "core.syntax"
 
 syntax.add {
-  files = { "Caddyfile" },
+  files = { PATHSEP .. "Caddyfile$" },
   comment = "#",
   patterns = {
-    { pattern = { "#", "\n"},          type = "comment"  },
+    { pattern = "#.*",                 type = "comment"  },
     { pattern = { '"', '"', '\\' },    type = "string"   },
     -- Matcher definition
     { pattern = "@[%w_]+",             type = "operator" },

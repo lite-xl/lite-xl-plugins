@@ -4,9 +4,10 @@ local syntax = require "core.syntax"
 syntax.add {
   name = "Haskell",
   files = { "%.hs$" },
-  comment = "%-%-",
+  comment = "--",
+  block_comment = {"{-", "-}"},
   patterns = {
-    { pattern = {"%-%-", "\n"},         type = "comment"  },
+    { pattern = "%-%-.*",               type = "comment"  },
     { pattern = { "{%-", "%-}" },       type = "comment"  },
     { pattern = { '"', '"', '\\' },     type = "string"   },
     { pattern = { "'", "'", '\\' },     type = "string"   },
