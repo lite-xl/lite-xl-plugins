@@ -1635,10 +1635,12 @@
       "id": "language_starlark",
       "mod_version": "3",
       "path": "plugins/language_starlark.lua",
+      "replaces": [
+        "language_bazel"
+      ],
       "tags": [
         "language"
       ],
-      "replaces": ["language_bazel"],
       "version": "0.2"
     },
     {
