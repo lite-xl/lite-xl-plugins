@@ -19,12 +19,20 @@ syntax.add {
     { pattern = "-?0x%x+",                                    type = "number"   }, -- Number: hexadecimal
     { pattern = "-?%d+[%d%.eE]*[fFdD]?",                      type = "number"   }, -- Number: exponential, float/double
     { pattern = "[%+%-=/%*%^%%<>!~|&]",                       type = "operator" }, -- Operator
-    { pattern = "[%a_][%w_]*%f[(]",                           type = "function" }, -- Method
-    { pattern = "^import()%s+()[%w_.]+",                      type = { "keyword", "normal", "normal" } }, -- Import
-    { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",               type = "keyword2" }, -- Constants
+    -- Method
+    { pattern = "[A-Z_]+[a-z-A-Z_]+()%s+()%w+()%f[(]",        type = { "function", "normal", "function", "normal" } },
+    { pattern = "[A-Z_]+[a-z-A-Z_]+()%<.-%>()%s+()%w+()%f[(]",type = { "function", "keyword2", "normal", "function", "normal" } },
+    { pattern = "[%a_][%w_]*%f[(]",                           type = "function" },
+    -- Generic method
+    { pattern = "%s+()%<.-%>()%s+", type = { "normal", "keyword2", "normal" } },
+    { pattern = "%.()%<.-%>()%w+", type = { "normal", "keyword2", "function" } },
+    -- Import
+    { pattern = "^import()%s+()[%w_.]+",                      type = { "keyword", "normal", "normal" } },
+    -- Constants
+    { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",               type = "keyword2" },
     -- Class name reference: ; (single accessibility modifier)
-    { pattern = "return()%s+()[A-Z]%w+()%s+.-()%;",     type = { "symbol", "normal", "function", "normal", "normal" } },
-    { pattern = "return()%s+()[A-Z][A-Z_]+()%;",        type = { "symbol", "normal", "keyword2", "normal" } },
+    { pattern = "return()%s()[a-z][%w_]+()%;",                type = { "symbol", "normal", "normal", "normal" } }, -- This is a fix: es. return someVarName;
+    { pattern = "return()%s()[A-Z][A-Z_]+()%;",               type = { "symbol", "normal", "keyword2", "normal" } },
     { pattern = "^%s*[A-Z]%w+%s+()%w+%s*%;",                  type = { "function", "normal" } },
     { pattern = "^%s*%w+()%<.-%>()%s+%w+%s*%;",               type = { "function", "keyword2", "normal" } },
     -- Class name reference: ; (multiple accessibility modifiers)
@@ -62,20 +70,19 @@ syntax.add {
     { pattern = "%(%s*()%w+()%<.-%>()%s+()%w+%s*%)",          type = { "normal", "function", "keyword2", "normal", "normal" } },
     -- Array
     { pattern = "%w+()%[()%d*()%]",                           type = { "function", "normal", "number", "normal" } },
-    -- Class name reference: method
-    -- es. public String SomeClass(
-    { pattern = "%w+%s+()%w+%s*()%f[(]",                      type = { "function", "function", "normal" } },
-    { pattern = "%w+()%<.-%>()%s+%w+%s*()%f[(]",              type = { "function", "keyword2", "function", "normal" } },
-    -- Other patterns
-    { pattern = "this()%s*.*$",                               type = { "keyword", "normal" } }, -- Import
-    -- { pattern = "^%s*%@.+%)",                                 type = "keyword2" }, -- Annotation (at line start)
-    -- { regex   = [[\s*\@.+\)(?=\s+\w+)]],                      type = "keyword2" }, -- Annotation (at line middle)
-    { pattern = "%@%w+",                                      type = "keyword2" }, -- Annotation (like: final @Nullable String something;)
-    { pattern = "%:%:()%w+",                                  type = { "normal", "function" } }, -- Method reference with double colon operator
-    { pattern = "%.class",                                    type = "normal"   }, -- .class should be colored as normal
-    { pattern = "[%a_][%w_]*",                                type = "symbol"   }, -- Symbols
-    -- TODO: check if there are redundant/overlapping patterns
+    -- FIX: ?
+    { pattern = "this()%s*.*$",                               type = { "keyword", "normal" } },
+    -- Annotation (like: final @Nullable String something;)
+    { pattern = "%@%w+",                                      type = "keyword2" },
+    -- Method reference with double colon operator
+    { pattern = "%:%:()%w+",                                  type = { "normal", "function" } },
+    -- .class should be colored as normal
+    { pattern = "%.class",                                    type = "normal"   },
+    -- Symbols
+    { pattern = "[%a_][%w_]*",                                type = "symbol"   },
     -- WIP: check for missing syntaxes by opening an example Java project
+    -- TODO: check if there are redundant/overlapping patterns
+    -- TODO: , final BiomeDictionary.Type... types) {
   },
   symbols = {
     ["abstract"]      = "keyword",
