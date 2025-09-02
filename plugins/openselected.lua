@@ -50,8 +50,7 @@ local function select_word_under_cursor(doc)
   local start_col = col - #left + 1
   local end_col = col + #right + 1
 
-  doc:set_selection(line, start_col, line, end_col)
-  return doc:get_text(doc:get_selection())
+  return text:sub(start_col, end_col)
 end
 
 command.add("core.docview!", {
