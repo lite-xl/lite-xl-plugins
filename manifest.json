@@ -1410,6 +1410,16 @@
       "version": "0.1"
     },
     {
+      "description": "Syntax for the [Ocaml](https://ocaml.org/) programming language",
+      "id": "language_ocaml",
+      "mod_version": "3",
+      "path": "plugins/language_ocaml.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
       "description": "Syntax for the [Odin](https://github.com/odin-lang/Odin) programming language",
       "id": "language_odin",
       "mod_version": "3",
