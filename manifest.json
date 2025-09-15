@@ -90,6 +90,7 @@
         "language_elm": {},
         "language_env": {},
         "language_erb": {},
+        "language_erlang": {},
         "language_fe": {},
         "language_fennel": {},
         "language_fortran": {},
@@ -997,6 +998,16 @@
         "language"
       ],
       "version": "0.1.1"
+    },
+    {
+      "description": "Syntax for the [Erlang](https://www.erlang.org/) programming language.",
+      "id": "language_erlang",
+      "mod_version": "3",
+      "path": "plugins/language_erlang.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
     },
     {
       "description": "Syntax for the [fe](https://github.com/rxi/fe) programming language",
