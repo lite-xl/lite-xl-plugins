@@ -1754,6 +1754,16 @@
       "version": "0.1"
     },
     {
+      "description": "Syntax for the [Wesnoth Markup Language](https://wiki.wesnoth.org/ReferenceWML)",
+      "id": "language_wml",
+      "mod_version": "3",
+      "path": "plugins/language_wml.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
       "description": "Syntax for the [Wren](http://wren.io/) programming language",
       "id": "language_wren",
       "mod_version": "3",
