@@ -2395,6 +2395,19 @@
       "version": "1.3"
     },
     {
+      "description": "Commands for transforming cases",
+      "id": "transform",
+      "name": "Transform",
+      "path": "plugins/transform.lua",
+      "mod_version": "3",
+      "tags":["transform", "snake_case", "camelCase", "PascalCase"],
+      "type": "plugin",
+      "version" : "0.1.0",
+      "extra": {
+        "author": "floppyDisco"
+      }
+    },
+    {
       "description": "Tree-sitter bindings based on `lua-tree-sitter`",
       "id": "tree_sitter",
       "name": "Tree-sitter",
