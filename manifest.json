@@ -2273,11 +2273,20 @@
       "version": "0.1"
     },
     {
-      "description": "Underlines misspelt words *([screenshot](https://user-images.githubusercontent.com/3920290/79923973-9caa7400-842e-11ea-85d4-7a196a91ca50.png))* *-- note: on Windows a [`words.txt`](https://github.com/dwyl/english-words/blob/master/words.txt) dictionary file must be placed beside the exe*",
+      "description": "Underlines misspelt words *([screenshot](https://user-images.githubusercontent.com/3920290/79923973-9caa7400-842e-11ea-85d4-7a196a91ca50.png))*",
       "id": "spellcheck",
       "mod_version": "3",
-      "path": "plugins/spellcheck.lua",
-      "version": "0.2"
+      "path": "plugins/spellcheck",
+      "version": "0.3",
+      "dependencies": { "dictionaries": {} }
+    },
+    {
+      "description": "A set of dictionaries (made for the Spellcheck pluggin. Comes with a script to convert `.txt` files lua-readable dictionaries.",
+      "id": "dictionaries",
+      "mod_version": "3",
+      "path": "libraries/dictionaries",
+      "type": "library",
+      "version": "0.1"
     },
     {
       "description": "Displays the current date and time in the corner of the status view",
