@@ -40,7 +40,8 @@ command.add("core.docview", {
       submit = function(cmd)
         dv.doc:replace(function(str)
           return exec(
-            "printf %b " .. printfb_quote(str:gsub("%\n$", "") .. "\n") .. " | eval '' " .. shell_quote(cmd),
+            "printf %b " .. printfb_quote(str:gsub("%\n$", "") .. "\n") ..
+            " | eval '' " .. shell_quote(cmd:gmatch("%?%?", str)),
             str:find("%\n$")
           )
         end)

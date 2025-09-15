@@ -478,7 +478,7 @@
       "id": "exec",
       "mod_version": "3",
       "path": "plugins/exec.lua",
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "When a selection crosses multiple lines, it is drawn to the end of the screen *([screenshot](https://user-images.githubusercontent.com/2798487/140995616-89a20b55-5917-4df8-8a7c-d7c53732fa8b.png))*",
