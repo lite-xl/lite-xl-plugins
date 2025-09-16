@@ -4,6 +4,9 @@ local syntax = require "core.syntax"
 -- Language Syntax References
 -- https://docs.oracle.com/javase/specs/jls/se8/html/index.html
 
+-- WIP: required for complex recurring patterns
+
+
 syntax.add {
   name = "Java",
   files = { "%.java$" },
