@@ -1317,7 +1317,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for [MARTe2](https://vcis.f4e.europa.eu/marte2-docs/master/html/index.html) configuration language",
