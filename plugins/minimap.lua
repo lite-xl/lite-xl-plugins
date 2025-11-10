@@ -347,26 +347,6 @@ function MiniMap:set_size(x, y, w, h, scrollable)
 end
 
 
-function MiniMap:on_mouse_moved(x, y, dx, dy)
-  local percent = MiniMap.super.on_mouse_moved(self, x, y, dx, dy)
-  if not self:is_minimap_enabled() or type(percent) ~= "number" then return percent end
-  local _, visible_lines_count, minimap_lines_start, minimap_lines_count, is_file_too_large = self:get_minimap_dimensions()
-  local lh = self.dv:get_line_height()
-  local _, _, w, h = self:get_track_rect()
-  local tx, ty, tw, th = self:get_thumb_rect()
-  if x >= tx and x < tx + tw and y >= ty and y < ty + th then self.hovering.thumb = true end
-  if not self.hovering.thumb then return self.percent end
-  y = y - self.drag_start_offset
-  percent = math.max(0.0, math.min((y - self.dv.position.y) / h, 1.0))
-  return (((percent * minimap_lines_count) + minimap_lines_start) * lh / self.dv:get_scrollable_size()) - (visible_lines_count / #self.dv.doc.lines / 2)
-end
-
-function MiniMap:draw_thumb()
-  local color = self.hovering.thumb and style.scrollbar2 or style.scrollbar
-  local x, y, w, h = self:get_thumb_rect()
-  renderer.draw_rect(x, y, w, h, color)
-end
-
 local total_time = 0
 local old_tokenize = DocView.tokenize
 function DocView:tokenize(line, ...)
@@ -498,7 +478,6 @@ function MiniMap:draw()
 
     render_highlight(idx, line_y)
     local cache = highlighter_cache[dv][idx]
-    --print("IDX", idx)
     if not highlighter_cache[dv][idx] then -- need to cache
       highlighter_cache[dv][idx] = {}
       cache = highlighter_cache[dv][idx]
