@@ -34,7 +34,7 @@ function DocView:tokenize(line, ...)
   if not config.plugins.rainbowparen.enabled then return old_tokenize(self, line, ...) end
   if not self.parenstack then self.parenstack = {} end
   local parenstack = self.parenstack[line-1] or ""
-  local t = self:accumulate_tokens(old_tokenize(self, line, ...), function(output, text, token_style)
+  local t = common.accumulate_tokens(old_tokenize(self, line, ...), function(output, text, token_style)
     if token_style.type == "normal" or token_style.type == "symbol" then
       for normtext1, paren, normtext2 in text:gmatch("([^%(%[{}%]%)]*)([%(%[{}%]%)]?)([^%(%[{}%]%)]*)") do
         if #normtext1 > 0 then output(normtext1) end
