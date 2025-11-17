@@ -53,7 +53,7 @@ function indentguide.get_line_indent_guide_spaces(doc, line)
       indentguide.get_line_spaces(doc, line - 1, -1),
       indentguide.get_line_spaces(doc, line + 1,  1))
   end
-  return indentguide.get_line_spaces(doc, line)
+  return indentguide.get_line_spaces(doc, line, 1)
 end
 
 
@@ -78,7 +78,7 @@ function DocView:update()
 
   local minline, maxline = self:get_visible_line_range()
   for i = minline, maxline do
-    self.indentguide_indents[i] = indentguide.get_line_indent_guide_spaces(self.doc, i)
+    self.indentguide_indents[i] = indentguide.get_line_indent_guide_spaces(self.doc, i, 1)
   end
 
   local _, indent_size = self.doc:get_indent_info()
