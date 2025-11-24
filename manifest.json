@@ -1139,6 +1139,13 @@
       "version": "0.1"
     },
     {
+      "description": "Syntax for the [Handlebars](https://handlebarsjs.com/) templating language",
+      "version": "0.1",
+      "path": "plugins/language_hbs.lua",
+      "id": "language_hbs",
+      "mod_version": "3"
+    },
+    {
       "description": "Syntax for the [HLSL](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl) programming language",
       "id": "language_hlsl",
       "mod_version": "3",
