@@ -797,12 +797,12 @@ command.add(
     return false
   end,
   {
-    ["search-replace:show"] = function(av)
-      show_find(av, false)
-    end,
-
-    ["search-replace:toggle"] = function(av)
-      show_find(av, true)
+        ["search-replace:toggle"] = function(av)
+        if widget:is_visible() then
+            command.perform "search-replace:hide"
+        else
+            show_find(av, false)
+        end
     end
   }
 )
