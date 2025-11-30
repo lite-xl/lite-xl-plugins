@@ -627,6 +627,13 @@
       "version": "4.3.7"
     },
     {
+      "description": "Image loading/saving support for Lite XL.",
+      "id": "image",
+      "type": "library",
+      "remote": "https://github.com/adamharrison/lite-xl-image:cbdf03523040380575da0ae636b6e40da2a91dfb",
+      "version": "0.3"
+    },
+    {
       "description": "Dark (or even Mica!) title bar for Lite XL",
       "id": "immersive-title",
       "mod_version": "3",
