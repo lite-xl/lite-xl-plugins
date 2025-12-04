@@ -2564,7 +2564,7 @@
       "mod_version": "3",
       "remote": "https://github.com/yahallo1/lite-xl-info.git:280a74886cecb9715dedbd0cc7cae5052483a63e",
       "version": "0.1"
-    },
+    }
   ],
   "remotes": [
     "https://github.com/lite-xl/lite-xl-lsp-servers:latest",
