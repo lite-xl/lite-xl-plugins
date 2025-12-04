@@ -162,6 +162,7 @@
         "language_typst": {},
         "language_umka": {},
         "language_v": {},
+        "language_vala": {},
         "language_wren": {},
         "language_yaml": {},
         "language_zig": {}
@@ -1738,6 +1739,16 @@
       "id": "language_v",
       "mod_version": "3",
       "path": "plugins/language_v.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
+      "description": "Syntax for the [Vala](https://vala.dev/) programming language",
+      "id": "language_vala",
+      "mod_version": "3",
+      "path": "plugins/language_vala.lua",
       "tags": [
         "language"
       ],
