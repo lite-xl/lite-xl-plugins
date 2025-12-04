@@ -153,6 +153,7 @@
         "language_starlark": {},
         "language_swift": {},
         "language_tal": {},
+        "language_tau": {},
         "language_tcl": {},
         "language_teal": {},
         "language_tex": {},
@@ -1648,6 +1649,16 @@
       "id": "language_tal",
       "mod_version": "3",
       "path": "plugins/language_tal.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
+      "description": "Syntax for the [Tau](https://githu.com/NicoNex/tau) programming language",
+      "id": "language_tau",
+      "mod_version": "3",
+      "path": "plugins/language_tau.lua",
       "tags": [
         "language"
       ],
