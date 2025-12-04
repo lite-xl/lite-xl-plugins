@@ -2559,10 +2559,10 @@
       "version": "0.1"
     },
     {
-      "decription": "Info reader for Lite XL.",
+      "description": "Info reader for Lite XL.",
       "id": "lite-xl-info",
       "mod_version": "3",
-      "remote": "https://github.com/yahallo1/lite-xl-info.git:280a74886cecb9715dedbd0cc7cae5052483a63e",
+      "remote": "https://github.com/yahallo1/lite-xl-info.git:237404be7bdc3b8df1d13cf7b18bb350ca76cc02",
       "version": "0.1"
     }
   ],
