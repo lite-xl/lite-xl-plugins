@@ -77,6 +77,7 @@
         "language_carbon": {},
         "language_clojure": {},
         "language_cmake": {},
+        "language_conf": {},
         "language_containerfile": {},
         "language_crystal": {},
         "language_csharp": {},
@@ -857,6 +858,16 @@
         "language"
       ],
       "version": "0.2.1"
+    },
+    {
+      "description": "Syntax for .gitconfig, .rclone.conf and other generic configuration files based on the INI format",
+      "id": "language_conf",
+      "mod_version": "3",
+      "path": "plugins/language_conf.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.2"
     },
     {
       "description": "Syntax for [Containerfile](https://github.com/containers/common/blob/main/docs/Containerfile.5.md)/[Dockerfile](https://docs.docker.com/engine/reference/builder/)",
