@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 local config = require "core.config"
 local style = require "core.style"
 local DocView = require "core.docview"

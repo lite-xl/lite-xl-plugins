@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 -- copied from language_js, but added regex highlighting back
 local syntax = require "core.syntax"
 

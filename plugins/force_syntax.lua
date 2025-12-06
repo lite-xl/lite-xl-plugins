@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 local core = require "core"
 local Doc = require "core.doc"
 local syntax = require "core.syntax"

@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 
 -- Syntax highlighting for the Rivet programming language.
 -- This plugin is always updated to the latest Rivet syntax.

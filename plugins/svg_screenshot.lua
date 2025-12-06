@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 
 --[[
  base64 -- v1.5.3 public domain Lua base64 encoder/decoder
