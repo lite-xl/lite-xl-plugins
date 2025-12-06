@@ -663,15 +663,22 @@
     {
       "description": "Production and Early-Access OpenJDK Builds, from Oracle.",
       "id": "jdk",
-      "mod_version": "3",
+      "mod_version": "4",
       "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:443a076fe5741dbd3a8f774c9b577bbf4c58f4e9",
       "type": "library",
       "version": "24.0.2"
     },
     {
+      "id": "jupyter",
+      "description": "Jupyter Notebook support for .ipynb files.",
+      "mod_version": "4",
+      "remote": "https://github.com/adamharrison/jupyter.git:35f113e9c5f781753904e4a7e8ae058cfb20bf57",
+      "version": "0.1"
+    },
+    {
       "description": "Simple *key HUD* for Lite XL",
       "id": "keyhud",
-      "mod_version": "3",
+      "mod_version": "4",
       "remote": "https://codeberg.org/Mandarancio/keyhud:77c95fed9756b0b20a78ca0f61f20b593787bf20",
       "type": "plugin",
       "version": "0.2.3"
