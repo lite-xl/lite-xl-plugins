@@ -1,7 +1,7 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
--- Language Syntax References
+-- Language Syntax Reference
 -- https://groovy-lang.org/syntax.html
 
 syntax.add {
@@ -26,7 +26,8 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]",              type = "operator" }, -- Operators
     { pattern = "[%a_][%w_]*%f[(]",                  type = "function" }, -- Function/Method/Class/...
     { pattern = "[%a_][%w_]*%f[%[]",                 type = "function" }, -- Custom Type
-    { regex   = [[[A-Z](?:[A-Z_][\d]*)+(?!\w)]],     type = "keyword2" }, -- Constants
+    { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",      type = "keyword2" }, -- Constants
+    { pattern = "%@[%w%.]+",                         type = "keyword2" }, -- Annotation
     { pattern = "import()%s+()[%w_.]+",              type = { "keyword", "normal", "normal" } },
     { pattern = "%.class",                           type = "normal"   }, -- .class should be colored as normal
     { pattern = "[%a_][%w_]*",                       type = "symbol"   }, -- ?

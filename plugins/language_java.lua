@@ -1,7 +1,7 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
--- Language Syntax References
+-- Language Syntax Reference
 -- https://docs.oracle.com/javase/specs/jls/se8/html/index.html
 
 syntax.add {
@@ -23,8 +23,9 @@ syntax.add {
     { pattern = "[%a_][%w_]*%f[(]",                 type = "function" }, -- Method
     { pattern = "^import()%s+()[%w_.]+",            type = { "keyword", "normal", "normal" } }, -- Import
     { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",     type = "keyword2" }, -- Constants
-    { pattern = "this()%s*.*$",                     type = { "keyword", "normal" } }, -- FIX: ?
-    { pattern = "%@%w+",                            type = "keyword2" }, -- Annotation
+    -- FIX: ?
+    { pattern = "this()%s*.*$",                     type = { "keyword", "normal" } },
+    { pattern = "%@[%w%.]+",                        type = "keyword2" }, -- Annotation
     { pattern = "%:%:()%w+",                        type = { "normal", "function" } }, -- Method reference with double colon operator
     { pattern = "%.class",                          type = "normal"   }, -- .class should be colored as normal
     { pattern = "[%a_][%w_]*",                      type = "symbol"   } -- Symbols
