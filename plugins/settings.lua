@@ -1578,7 +1578,53 @@ end
 ---@type widget.keybinddialog
 local keymap_dialog = KeybindingDialog()
 
+-- Detects conflicts with other commands
+function keymap_dialog:conflicts(bindings)
+  local conflicts = {}
+  
+  for _, binding in ipairs(bindings) do
+    if binding ~= "" and binding ~= "none" and not binding:match("^%s+$") then
+      for cmd, _ in pairs(command.map) do
+        if cmd ~= self.command then 
+          local cmd_bindings = {keymap.get_binding(cmd)} 
+          for _, cmd_binding in ipairs(cmd_bindings) do
+            if binding == cmd_binding then
+              table.insert(conflicts, {binding = binding, command = cmd})
+            end
+          end
+        end
+      end
+    end
+  end
+  return conflicts
+end
+
 function keymap_dialog:on_save(bindings)
+  local conflicts = self:conflicts(bindings)
+
+  if #conflicts > 0 then
+    local msg = {"Found conflicts with other commands:\n"}
+    for _, conflict in ipairs(conflicts) do
+      table.insert(msg, string.format("'%s' already has a binding for '%s'\n", conflict.binding, conflict.command))
+    end
+    table.insert(msg, "\nDo you still want to apply these bindings?")
+    
+    MessageBox.warning(
+      "Keybinding Conflict",
+      msg,
+      function(_, button_id, _)
+        if button_id == 1 then
+          self:apply_bindings(bindings)
+        end
+      end,
+      MessageBox.BUTTONS_YES_NO
+    )
+  else
+    self:apply_bindings(bindings)
+  end
+end
+  
+function keymap_dialog:apply_bindings(bindings)
   local row_value = apply_keybinding(self.command, bindings)
   if row_value then
     self.listbox:set_row(self.row_id, row_value)
@@ -1630,6 +1676,31 @@ end
 function Settings:load_keymap_settings()
   self.keybinds.scrollable = false
 
+  -- Find all conflicts in settings
+  local function find_conflicts()
+    local conflicts_map = {}
+    
+    for cmd, _ in pairs(command.map) do
+      local bindings = {keymap.get_binding(cmd)}
+      for _, binding in ipairs(bindings) do
+        if not conflicts_map[binding] then
+          conflicts_map[binding] = {}
+        end
+        table.insert(conflicts_map[binding], cmd)
+      end
+    end
+    
+    for binding, cmds in pairs(conflicts_map) do
+      if #cmds <= 1 then
+        conflicts_map[binding] = nil
+      end
+    end
+    
+    return conflicts_map
+  end
+
+  local conflicts_map = find_conflicts()
+
   local ordered = {}
   for name, _ in pairs(command.map) do
     table.insert(ordered, name)
@@ -1646,24 +1717,114 @@ function Settings:load_keymap_settings()
 
   listbox:add_column("Command")
   listbox:add_column("Bindings")
+  listbox:add_column("Status")
 
-  for _, name in ipairs(ordered) do
-    local keys = { keymap.get_binding(name) }
-    local binding = ""
-    if #keys == 1 then
-      binding = keys[1]
-    elseif #keys > 1 then
-      binding = keys[1]
-      for idx, key in ipairs(keys) do
+  -- Function to render keybinding text
+  local function render_keybinding(self, row, x, y, font, color, only_calc)
+    local data = self:get_row_data(row)
+    local bindings = {keymap.get_binding(data)}
+    local text = ""
+    
+    if #bindings == 1 then
+      text = bindings[1]
+    elseif #bindings > 1 then
+      text = bindings[1]
+      for idx, key in ipairs(bindings) do
         if idx ~= 1 then
-          binding = binding .. "\n" .. key
+          text = text .. "\n" .. key
         end
       end
-    elseif #keys < 1 then
-      binding = "none"
+    else
+      text = "none"
     end
+    
+    local w, h = 0, 0
+    
+    if not only_calc then
+      renderer.draw_text(font, text, x, y, color)
+    end
+    
+    w, h = font:get_width(text), font:get_height()
+    
+    return w, h
+  end
+
+  -- Function to render conflict status
+  local function render_conflict_status(self, row, x, y, font, color, only_calc)
+    local data = self:get_row_data(row)
+    local bindings = {keymap.get_binding(data)}
+    local has_conflict = false
+    local conflict_info = {}
+    
+    for _, binding in ipairs(bindings) do
+      if conflicts_map[binding] and #conflicts_map[binding] > 1 then
+        has_conflict = true
+        for _, cmd in ipairs(conflicts_map[binding]) do
+          if cmd ~= data then
+            table.insert(conflict_info, {binding = binding, command = cmd})
+          end
+        end
+      end
+    end
+    
+    local w, h = 0, 0
+    
+    if has_conflict then
+      w = font:get_width("  !  ")
+      h = font:get_height()
+      
+      if not only_calc then
+        renderer.draw_text(font, "  !  ", x, y, style.warn)
+        
+        local mx, my = core.root_view.mouse.x, core.root_view.mouse.y
+        if mx >= x and mx <= x + w and my >= y and my <= y + h then
+          local tooltip = "Conflict with commands:"
+          local tooltip_lines = {tooltip}
+          for _, info in ipairs(conflict_info) do
+            table.insert(tooltip_lines, "'" .. info.binding .. "' -> " .. info.command)
+          end
+          
+          local max_width = 0
+          for _, line in ipairs(tooltip_lines) do
+            max_width = math.max(max_width, font:get_width(line))
+          end
+          
+          local tooltip_x = mx + 20
+          local tooltip_y = my - 10
+          local tooltip_w = max_width + 20
+          local tooltip_h = #tooltip_lines * (font:get_height() + 2) + 10
+          
+          local screen_w, screen_h = core.root_view.size.x, core.root_view.size.y
+          if tooltip_x + tooltip_w > screen_w then
+            tooltip_x = mx - tooltip_w - 10
+          end
+          if tooltip_y + tooltip_h > screen_h then
+            tooltip_y = screen_h - tooltip_h - 10
+          end
+          
+          renderer.draw_rect(tooltip_x, tooltip_y, tooltip_w, tooltip_h, style.background3)
+          renderer.draw_rect(tooltip_x, tooltip_y, tooltip_w, tooltip_h, style.dim, 1)
+
+          local line_y = tooltip_y + 5
+          for _, line in ipairs(tooltip_lines) do
+            renderer.draw_text(font, line, tooltip_x + 10, line_y, style.text)
+            line_y = line_y + font:get_height() + 2
+          end
+        end
+      end
+    else
+      w = 0
+      h = font:get_height()
+    end
+    
+    return w, h
+  end
+
+  for _, name in ipairs(ordered) do
     listbox:add_row({
-      style.text, name, ListBox.COLEND, style.dim, binding
+      style.text, name, ListBox.COLEND, 
+      render_keybinding, ListBox.COLEND, 
+      render_conflict_status
     }, name)
   end
 
