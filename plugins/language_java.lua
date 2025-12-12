@@ -23,7 +23,6 @@ syntax.add {
     { pattern = "[%a_][%w_]*%f[(]",                 type = "function" }, -- Method
     { pattern = "^import()%s+()[%w_.]+",            type = { "keyword", "normal", "normal" } }, -- Import
     { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",     type = "keyword2" }, -- Constants
-    -- FIX: ?
     { pattern = "this()%s*.*$",                     type = { "keyword", "normal" } },
     { pattern = "%@[%w%.]+",                        type = "keyword2" }, -- Annotation
     { pattern = "%:%:()%w+",                        type = { "normal", "function" } }, -- Method reference with double colon operator
