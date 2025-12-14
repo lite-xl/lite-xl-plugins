@@ -14,7 +14,7 @@ syntax.add {
     { pattern = { "/%*", "%*/" },                    type = "comment"  }, -- Multi-line comment
     { pattern = { '"', '"', '\\' },                  type = "string"   }, -- String, double quotes (also matches triple quotes for multi-line string)
     { pattern = { "'", "'", '\\' },                  type = "string"   }, -- String, apices
-    { pattern = { "%/", "%/", '\\' },                type = "string"   }, -- Slashy string
+    { pattern = { "^%/", "%/$", '\\' },              type = "string"   }, -- Slashy string
     { pattern = { "%$%/", "%/%$", '\\' },            type = "string"   }, -- Dollar slashy string
     { pattern = "'\\x%x?%x?%x?%x'",                  type = "string"   }, -- character hexadecimal escape sequence
     { pattern = "'\\u%x%x%x%x'",                     type = "string"   }, -- character unicode escape sequence
