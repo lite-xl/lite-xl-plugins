@@ -103,7 +103,7 @@ config.plugins.minimap = common.merge({
     },
     {
       label = "Small Docs definition",
-      description = "Size of a Doc to be considered small. Use 0 to automatically decide.",
+      description = "Number of lines for a Doc to be considered small. Use 0 to automatically decide.",
       path = "avoid_small_docs_len",
       type = "number",
       default = 0,
