@@ -406,7 +406,11 @@ end
 function MiniMap:set_percent(pct)
   local scrollable = self.dv:get_scrollable_size()
   local size = self.dv.size.y
-  MiniMap.super.set_percent(self, pct * scrollable / (scrollable - size))
+  local modpct = 0
+  if scrollable ~= size then
+    modpct = pct * scrollable / (scrollable - size)
+  end
+  MiniMap.super.set_percent(self, modpct)
 end
 
 
@@ -454,7 +458,6 @@ function MiniMap:_get_thumb_rect_normal()
 
   -- From https://github.com/lite-xl/lite-xl/pull/1589
   local along_size = math.max(self.minimum_thumb_size or style.minimum_thumb_size, nr.along_size * nr.along_size / sz)
-
   return
     x,
     -- Port fix from https://github.com/lite-xl/lite-xl/pull/1587
