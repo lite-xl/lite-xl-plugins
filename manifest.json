@@ -276,7 +276,8 @@ Enjoy coding with AI! 🚀4. **Share feedback** about what works/doesn't work3. 
         "language_v": {},
         "language_wren": {},
         "language_yaml": {},
-        "language_zig": {}
+        "language_zig": {},
+        "language_far_lng": {}
       },
       "description": "A metapackage containing all publically accessible language syntaxes.",
       "id": "meta_languages",
@@ -1914,6 +1915,16 @@ Enjoy coding with AI! 🚀4. **Share feedback** about what works/doesn't work3. 
       "version": "0.2"
     },
     {
+      "description": "Syntax for FAR Manager localization files (.lng)",
+      "id": "language_far_lng",
+      "mod_version": "3",
+      "path": "plugins/language_far_lng.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
       "description": "Automatically inserts indentation and closing bracket/text after newline",
       "id": "lfautoinsert",
       "mod_version": "3",
@@ -2661,6 +2672,13 @@ Enjoy coding with AI! 🚀4. **Share feedback** about what works/doesn't work3. 
       "id": "ide_tex",
       "mod_version": "3",
       "remote": "https://github.com/lite-xl/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
+      "version": "0.1"
+    },
+    {
+      "description": "FAR Manager style dual-panel file manager",
+      "id": "far_manager",
+      "mod_version": "3",
+      "path": "plugins/far_manager.lua",
       "version": "0.1"
     },
     {
