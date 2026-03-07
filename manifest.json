@@ -2675,7 +2675,7 @@ Enjoy coding with AI! 🚀4. **Share feedback** about what works/doesn't work3. 
       "version": "0.1"
     },
     {
-      "description": "FAR Manager style dual-panel file manager",
+      "description": "FAR Manager style dual-panel file manager with integration for FAR Manager (Windows) and far2l (Linux)",
       "id": "far_manager",
       "mod_version": "3",
       "path": "plugins/far_manager.lua",

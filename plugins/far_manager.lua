@@ -7,6 +7,9 @@ local common = require "core.common"
 local config = require "core.config"
 local View = require "core.view"
 local system = require "system"
+local process = require "process"
+
+local PATHSEP = common.PATHSEP
 
 local FileManagerView = View:extend()
 
@@ -143,8 +146,23 @@ function FileManagerView:go_up()
   end
 end
 
+local function launch_external_far()
+  local cmd
+  if PATHSEP == '\\' then
+    cmd = "far.exe"
+  else
+    cmd = "far2l"
+  end
+  local dir = core.project_dir or "."
+  local proc = process.start({cmd, dir})
+  if not proc then
+    core.error("Unable to launch " .. cmd)
+  end
+end
+
 command.add(nil, {
   ["far-manager:open"] = function()
     core.root_view:get_active_node():add_view(FileManagerView())
   end,
+  ["far-manager:launch-external"] = launch_external_far,
 })
