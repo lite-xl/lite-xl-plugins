@@ -8,6 +8,7 @@ local config = require "core.config"
 local View = require "core.view"
 local system = require "system"
 local process = require "process"
+local menu = require "core.menu"
 
 local PATHSEP = common.PATHSEP
 
@@ -60,6 +61,13 @@ function FileManagerView:draw_panel(x, y, w, h, path, files, active, cursor)
 end
 
 function FileManagerView:on_mouse_pressed(button, x, y, clicks)
+  if button == 'right' then
+    local m = menu.add(nil, "FAR Manager")
+    m:add("Open in External FAR", function() launch_external_far() end)
+    m:add("Refresh Panels", function() self:refresh() end)
+    m:show()
+    return
+  end
   local w = self.size.x / 2
   if x < w then
     self.active_panel = "left"
@@ -145,7 +153,10 @@ function FileManagerView:go_up()
     self.right_cursor = 1
   end
 end
-
+function FileManagerView:refresh()
+  self.left_files = self:list_dir(self.left_path)
+  self.right_files = self:list_dir(self.right_path)
+end
 local function launch_external_far()
   local cmd
   if PATHSEP == '\\' then
@@ -166,3 +177,6 @@ command.add(nil, {
   end,
   ["far-manager:launch-external"] = launch_external_far,
 })
+
+-- Add to file menu
+core.menu.add("file", {text = "Open in FAR Manager", command = "far-manager:launch-external"})
