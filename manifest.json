@@ -1,6 +1,118 @@
 {
   "addons": [
-    {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Enjoy coding with AI! 🚀4. **Share feedback** about what works/doesn't work3. **Customize** the prompts by editing the plugin code2. **Try all keybindings** to see which work best for you1. **Read [README.md](README.md)** for full documentation## Next Steps- Set `Max Tokens` lower to reduce cost- Average response = $0.01- $1 API credit = ~100 code completions## Cost Estimation (OpenAI)5. **Right-click menu** - You can also access AI from context menu4. **Higher temperature** for creative tasks, lower for precise code3. **Try different models** - Mistral might work better than Llama22. **Use clear descriptions** - "Extract repeated logic into function" > "fix it"1. **Select relevant code** - Don't include unrelated code## Tips for Best Results→ Adjust `Temperature` (0.3 = focused, 0.9 = creative)**Responses are too creative/rigid**→ Adjust `Max Tokens` in settings (default 2000)**Responses are too long/short**→ Double-check your key has no spaces. Visit https://platform.openai.com/account/billing/overview to verify account is active**OpenAI gives "Invalid API key"**→ Run `ollama serve` in another terminal first**Ollama says "connection refused"**→ Make sure `enabled` is true in AI Assistant settings**Nothing happens when I press the keybinding**→ First, set environment variable: `export OPENAI_API_KEY="sk-..."`**"API key not configured"**## Troubleshooting First Use- You need strong coding abilities- You're willing to pay- You prefer Claude's reasoning**Use Anthropic if:**- You have a decent GPU (or CPU)- You want 100% privacy (all local)- You're okay with slower responses- You want free unlimited usage**Use Ollama if:**- You need GPT-4 intelligence- You want fastest responses- You can pay per request (roughly $0.01-0.05 per request)- You want the best quality code completion**Use OpenAI if:**## Which Provider?| Custom prompt | `Ctrl+Shift+P` | Ask AI anything || Find bugs | `Ctrl+Shift+B` | AI analyzes issues || Refactor code | `Ctrl+Shift+R` | Code becomes better || Generate code | `Ctrl+Shift+G` | Type description, gets code || Explain code | `Ctrl+Shift+E` | AI comments explain `code || Complete code | `Ctrl+Shift+A` | AI finishes your code ||------|-------|--------------|| Need | Press | What Happens |## Basic Usage4. **Ready to use** with the same keybindings   - `Anthropic API Key` to your key   - `API Provider` to "Anthropic"3. **Find "AI Assistant"** and set:2. **Open Lite-XL Settings**1. **Get API Key**: Visit https://console.anthropic.com### Option 3: Anthropic (Claude, Requires Payment)5. **Use It**: Press `Ctrl+Shift+A` to complete code   - Set `Ollama Model` to "mistral"   - Set `API Provider` to "Ollama"   - Find "AI Assistant" section   - Open settings4. **Configure in Lite-XL**:   ```   ollama pull mistral   ```bash3. **Pull a Model**:   ```   ollama serve   ```bash2. **Start Server**: Run in a terminal1. **Install Ollama**: Download from https://ollama.ai### Option 2: Ollama (Free, Local, No API Key)4. **Try it**: Select code and press `Ctrl+Shift+A` to autocomplete3. **Open Lite-XL** and the plugin is ready to use   ```   export OPENAI_API_KEY="sk-your-key-here"   ```bash2. **Set Environment Variable**:1. **Get API Key**: Visit https://platform.openai.com/api-keys### Option 1: OpenAI (Easiest, Requires Payment)## 5-Minute Setup    {
       "dependencies": {
         "meta_colors": {},
         "meta_languages": {},
@@ -171,6 +283,13 @@
       "mod_version": "3",
       "type": "meta",
       "version": "0.1.21"
+    },
+    {
+      "description": "AI-powered code assistant supporting OpenAI, Ollama, Anthropic and custom endpoints. Provides code completion, explanation, generation, refactoring, and bug detection.",
+      "id": "ai",
+      "mod_version": "3",
+      "path": "plugins/ai/",
+      "version": "0.1"
     },
     {
       "description": "Align multiple carets and selections *([clip](https://user-images.githubusercontent.com/2798487/165631951-532f8d24-d596-4dd0-9d21-ff53c71ed32f.mp4))*",
