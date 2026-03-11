@@ -2030,6 +2030,14 @@
       "version": "1.1"
     },
     {
+      "description": "Start/stop a small HTTPS server in the current directory using Python and a self‑signed certificate.",
+      "id": "https_server",
+      "mod_version": "3",
+      "path": "plugins/https_server.lua",
+      "type": "plugin",
+      "version": "0.1"
+    },
+    {
       "dependencies": {
         "font_symbols_nerdfont_mono_regular": {}
       },

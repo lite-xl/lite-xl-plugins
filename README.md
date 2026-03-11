@@ -334,6 +334,7 @@ to follow with `extra.follow_branch`.*
 | [`haxe`](https://github.com/lite-xl/lite-xl-lsp-servers.git)*                                | Official Haxe builds.                                                                                        |
 | [`jdk`](https://github.com/lite-xl/lite-xl-lsp-servers.git)*                                 | Production and Early-Access OpenJDK Builds, from Oracle.                                                     |
 | [`net`](https://github.com/jgmdev/lite-xl-net)*                                              | Add support for TCP and UDP sockets using SDL_net.                                                           |
+| [`https_server`](plugins/https_server.lua?raw=1)                                             | Launch a simple HTTPS server in the current directory (self‑signed cert); commands and menu entries are provided, and behaviour can be customised (see config.comments in plugin file). |
 | [`nodejs`](https://github.com/lite-xl/lite-xl-lsp-servers.git)*                              | Official NodeJs builds.                                                                                      |
 | [`thread`](https://github.com/jgmdev/lite-xl-threads)*                                       | Supports spawning true os-threads.                                                                           |
 | [`tree_sitter`](https://github.com/Evergreen-lxl/lite-xl-tree-sitter.git)*                   | Tree-sitter bindings based on `lua-tree-sitter`                                                              |
