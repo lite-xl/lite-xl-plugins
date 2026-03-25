@@ -148,6 +148,7 @@
         "language_sass": {},
         "language_scala": {},
         "language_sh": {},
+        "language_slang": {},
         "language_ssh_config": {},
         "language_st": {},
         "language_starlark": {},
@@ -1610,6 +1611,16 @@
         "language"
       ],
       "version": "0.2.3"
+    },
+    {
+      "description": "Syntax for slang shader language",
+      "id": "language_slang",
+      "mod_version": "3",
+      "path": "plugins/language_slang.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
     },
     {
       "description": "Syntax for ssh & sshd config files",
