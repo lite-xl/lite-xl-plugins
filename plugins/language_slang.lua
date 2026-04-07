@@ -14,9 +14,6 @@ syntax.add {
     { pattern = "//.*",                                    type = "comment" },
     { pattern = { "/%*", "%*/" },                            type = "comment" },
 
-    { pattern = "%[%s*[%a_][%w_%.]*%s*[%(%]]",               type = "keyword2" },
-    { pattern = "%[%s*[%a_][%w_%.]*",                        type = "keyword2" },
-
     { pattern = "SV_[%u%d_]+",                               type = "keyword2" },
 
     { pattern = "#%s*[%a_][%w_]*",                           type = "keyword" },
