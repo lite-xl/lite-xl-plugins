@@ -11,10 +11,10 @@ syntax.add {
   block_comment = { "/*", "*/" },
 
   patterns = {
-    { pattern = "//.*",                                    type = "comment" },
+    { pattern = "//.*",                                      type = "comment" },
     { pattern = { "/%*", "%*/" },                            type = "comment" },
 
-    { pattern = "SV_[%u%d_]+",                               type = "keyword2" },
+    { pattern = "SV_[%w_]+",                                 type = "keyword2" },
 
     { pattern = "#%s*[%a_][%w_]*",                           type = "keyword" },
 
