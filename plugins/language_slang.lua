@@ -1,4 +1,5 @@
 -- Author: Blackoutburst: https://github.com/Blackoutburst
+-- Slang language features https://github.com/shader-slang/slang/blob/master/docs/user-guide/02-conventional-features.md
 
 -- mod-version:3
 local syntax = require "core.syntax"
@@ -10,7 +11,7 @@ syntax.add {
   block_comment = { "/*", "*/" },
 
   patterns = {
-    { pattern = "//.-\n",                                    type = "comment" },
+    { pattern = "//.*",                                    type = "comment" },
     { pattern = { "/%*", "%*/" },                            type = "comment" },
 
     { pattern = "%[%s*[%a_][%w_%.]*%s*[%(%]]",               type = "keyword2" },
