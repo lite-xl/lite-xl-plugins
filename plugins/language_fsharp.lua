@@ -25,9 +25,14 @@ syntax.add {
     { pattern = { '"', '"', '\\' }, type = "string" },
     { pattern = "'\\?.'", type = "string" },
 
-    -- interpolated strings (single-line, normal and verbatim)
-    { pattern = [[%$@?"(\\.|[^"\\])*"]], type = "string" },
-    { pattern = [[%$@?"""(.-)"""]], type = "string" },
+    -- interpolated normal string
+    { pattern = [[%$"[^"\n]*"]], type = "string" },
+
+    -- interpolated verbatim string
+    { pattern = [[%$@"[^"]*"]], type = "string" },
+
+    -- interpolated triple quote
+    { pattern = [[%$@?"""[^"]-"""]], type = "string" },
 
     -- numbers
     { pattern = "-?0x%x+", type = "number" },
