@@ -2225,6 +2225,14 @@
       "version": "0.1"
     },
     {
+      "description": "Selection expansion known from other editors for Lite XL.",
+      "id": "selectionexpand",
+      "mod_version": "3",
+      "name": "Selection Expand",
+      "remote": "https://github.com/sp0rk/lite-xl-selectionexpand.git:01b77072d5e8da5d989ec0f090b83b5a66da88ae",
+      "version": "0.1.0"
+    },
+    {
       "description": "Highlights regions of code that match the current selection *([screenshot](https://user-images.githubusercontent.com/3920290/80710883-5f597c80-8ae7-11ea-97f0-76dfacc08439.png))*",
       "id": "selectionhighlight",
       "mod_version": "3",
