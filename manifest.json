@@ -1978,8 +1978,8 @@
       "description": "Automatic configuration/binary download for LSP completion for Zig via zls.",
       "id": "lsp_zig",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:443a076fe5741dbd3a8f774c9b577bbf4c58f4e9",
-      "version": "0.14.0"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:602bdfa6b1286c50bba3ab6f3aa1c5b2e0fafe27",
+      "version": "0.16.0"
     },
     {
       "description": "Remaps mac modkeys `command/option` to `ctrl/alt`",
