@@ -927,7 +927,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [Djot](https://djot.net/) markup language",
@@ -1037,7 +1037,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [GABC](https://gregorio-project.github.io/gabc) music typesetting language",
@@ -1117,7 +1117,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.2.1"
+      "version": "0.3"
     },
     {
       "description": "Syntax for the [Hare](https://harelang.org) programming language",
@@ -1167,7 +1167,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for [.gitignore](https://git-scm.com/docs/gitignore), [.dockerignore](https://docs.docker.com/engine/reference/builder/#dockerignore-file) and some other `.*ignore` files",
@@ -1197,7 +1197,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1.3"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [jiyu](https://github.com/machinamentum/jiyu) programming language",
@@ -1237,7 +1237,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [KDL](https://kdl.dev) document language",
@@ -1257,7 +1257,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.2"
+      "version": "0.3"
     },
     {
       "checksum": "08a9f8635b09a98cec9dfca8bb65f24fd7b6585c7e8308773e7ddff9a3e5a60f",
@@ -1428,7 +1428,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for the [Perl](https://perl.org) programming language",
@@ -1448,7 +1448,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Syntax for [Pico-8](https://www.lexaloffle.com/pico-8.php) cartridge files",
@@ -1569,7 +1569,7 @@
       "tags": [
         "language"
       ],
-      "version": "0.3"
+      "version": "0.4"
     },
     {
       "description": "Syntax for the [Sass](https://sass-lang.com/) CSS preprocessor",

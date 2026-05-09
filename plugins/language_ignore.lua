@@ -12,9 +12,9 @@ syntax.add {
   files = { PATHSEP .. "%..*ignore$" },
   comment = "#",
   patterns = {
-    { regex = "^ *#.*$",            type = "comment" },
-    { regex = { "(?=^ *!.)", "$" }, type = "ignore"  },
-    { regex = { "(?=.)", "$" },     type = "exclude" },
+    { regex = [[^ *#.*$]],              type = "comment" },
+    { regex = { [[(?=^ *!.)]], [[$]] }, type = "ignore"  },
+    { regex = { [[(?=.)", "$]] },       type = "exclude" },
   },
   symbols = {}
 }
