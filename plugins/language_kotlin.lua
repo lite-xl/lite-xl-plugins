@@ -1,9 +1,13 @@
 -- mod-version:3
 local syntax = require "core.syntax"
 
+-- Language Syntax References
+-- https://kotlinlang.org/docs/basic-syntax.html
+-- https://kotlinlang.org/docs/keyword-reference.html
+
 syntax.add {
   name = "Kotlin",
-  files = { "%.kt$" },
+  files = { "%.kts?$", "%.klib$" },
   comment = "//",
   block_comment = { "/*", "*/" },
   patterns = {
@@ -14,23 +18,23 @@ syntax.add {
     { pattern = "'\\x%x?%x?%x?%x'",                  type = "string"   }, -- Character hexadecimal escape sequence
     { pattern = "'\\u%x%x%x%x'",                     type = "string"   }, -- Character unicode escape sequence
     { pattern = "'\\?.'",                            type = "string"   }, -- Character literal
+    { pattern = "%<.-%>%>*",                         type = "keyword2" }, -- Generic
     { pattern = "-?0x%x+",                           type = "number"   }, -- ?
     { pattern = "-?%d+[%deE]*f?",                    type = "number"   }, -- ?
     { pattern = "-?%.?%d+f?",                        type = "number"   }, -- ?
     { regex   = [[\-\>(?=\s)]],                      type = "operator" }, -- Lambda
     { regex   = [[\.{2}\<?\s?(?=[\\-]?[a-z0-9])]],   type = "operator" }, -- Range operators
     { pattern = "[%+%-=/%*%^%%<>!~|&]",              type = "operator" }, -- Operators
-    { regex   = [[\?(?=\.)]],                        type = "operator" }, -- ?. operator
     { pattern = "[%a_][%w_]*%f[(]",                  type = "function" }, -- Function/Method/Class
-    { regex   = "`[\\w_\\s]+`(?=\\s*\\()",           type = "function" }, -- Test Method
+    { regex   = [[`[\w_\s]+`(?=\s*\()]],             type = "function" }, -- Test Method
     { regex   = [[let(?=\s\{)]],                     type = "function" }, -- ? operator
     { regex   = [[\?\:(?=\s?)]],                     type = "operator" }, -- elvis operator
     { regex   = [[this(?=\.?\@?)]],                  type = "keyword"  }, -- this keyword
-    { regex   = "\\@\\w+",                           type = "keyword2" }, -- Annotations
-    { regex   = [[[a-zA-Z]+\@(?=\s?[a-zA-Z])]],      type = "keyword2" }, -- Annotations (this pattern is lower priority than the `this keyword` pattern)
-    { regex   = "[A-Z][A-Z_]+",                      type = "keyword2" }, -- Constants, FULL UPPERCASE
-    { pattern = "import()%s+()[%w_.]+",              type = { "keyword", "normal", "normal" } },
-    { pattern = "[%a_][%w_]*",                       type = "symbol"   }, -- ?
+    { pattern = "%@[%w%.]+",                         type = "keyword2" }, -- Annotation
+    { pattern = "^import()%s+()[%w_.]+",             type = { "keyword", "normal", "normal" } },
+    { pattern = "[A-Z][A-Z_%d]+%f[^a-zA-Z_%d]",      type = "keyword2" }, -- Constants
+    { pattern = "%:%s()%w+",                         type = { "normal", "function" } }, -- Type reference
+    { pattern = "[%a_][%w_]*",                       type = "symbol"   }, -- Symbols
   },
   symbols = {
     -- Hard keywords
@@ -81,6 +85,7 @@ syntax.add {
     ["setparam"]     = "keyword",
     ["value"]        = "keyword",
     ["where"]        = "keyword",
+    ["to"]           = "keyword",
 
     -- Modifier keywords
     ["abstract"]     = "keyword",
