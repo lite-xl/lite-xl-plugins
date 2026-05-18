@@ -2568,7 +2568,16 @@
       "mod_version": "3",
       "remote": "https://github.com/lite-xl/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
       "version": "0.1"
+    },
+    {
+        "id": "filesize",
+        "version": "1.0.0",
+        "mod_version": "3",
+        "description": "Shows real-time file size in status bar",
+        "remote": "https://github.com/<your-github-username>/filesize-lite-xl"
     }
+
+
   ],
   "remotes": [
     "https://github.com/lite-xl/lite-xl-lsp-servers:latest",
