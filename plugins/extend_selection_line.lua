@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 local DocView = require "core.docview"
 local style = require "core.style"
 
@@ -6,7 +6,7 @@ local draw_line_body = DocView.draw_line_body
 function DocView:draw_line_body(line, x, y)
   local line_height = draw_line_body(self, line, x, y)
   local lh = self:get_line_height()
-  for _, line1, _, line2, _ in self.doc:get_selections(true) do
+  for _, line1, _, line2, _ in self:get_vselections(true) do
     if line >= line1 and line < line2 and line1 ~= line2 then
       -- draw selection from the end of the line to the end of the available space
       local x1 = x + self:get_col_x_offset(line, #self.doc.lines[line])

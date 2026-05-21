@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 --[[
   dragdropselected.lua
   provides drag and drop of selected text (in same document)

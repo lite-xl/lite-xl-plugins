@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 local core = require "core"
 
 -- Load a specific theme when the filename of an active document does match

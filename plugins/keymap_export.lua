@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 
 -- Author:      Takase (takase1121)
 -- Description: Exports the keymap into a JSON file.

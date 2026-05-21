@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 local command = require "core.command"
 local DocView = require "core.docview"
 

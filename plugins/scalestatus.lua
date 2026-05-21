@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 --[[
     scalestatus.lua
     displays current scale (zoom) in status view

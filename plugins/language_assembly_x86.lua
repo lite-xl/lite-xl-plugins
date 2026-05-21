@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 -- Support for the intel syntax x86-64 assembly
 -- Simply add it to lite-xl's plugins folder (located somewhere at home/.config/lite-xl/plugins)
 -- https://github.com/DMClVG

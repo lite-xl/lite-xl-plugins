@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4 priority: 2000
 local config = require "core.config"
 local common = require "core.common"
 local DocView = require "core.docview"
@@ -21,68 +21,28 @@ config.plugins.colorpreview = common.merge({
 
 local white = { common.color "#ffffff" }
 local black = { common.color "#000000" }
-local tmp = {}
 
-
-local function draw_color_previews(self, line, x, y, ptn, base, nibbles)
-  local text = self.doc.lines[line]
-  local s, e = 0, 0
-
-  while true do
-    s, e = text:find(ptn, e + 1)
+local function style_pattern(dv, line, tokens, pattern, base, multiplier)
+  local offset = 1
+  while offset < line do
+    local s, e, r, g, b, a = dv.doc.lines[line]:ufind(pattern, offset)
     if not s then break end
-
-    local str = text:sub(s, e)
-    local r, g, b, a = str:match(ptn)
+    if not a or a == "" then a = 255 else a = tonumber(a, base) end
     r, g, b = tonumber(r, base), tonumber(g, base), tonumber(b, base)
-    a = tonumber(a or "", base)
-    if a ~= nil then
-      if base ~= 16 then
-        a = a * 0xff
-      end
-    else
-      a = 0xff
-    end
-
-    -- #123 becomes #112233
-    if nibbles then
-      r = r * 16
-      g = g * 16
-      b = b * 16
-    end
-
-    local x1 = x + self:get_col_x_offset(line, s)
-    local x2 = x + self:get_col_x_offset(line, e + 1)
-    local oy = self:get_line_text_y_offset()
-
+    r, g, b = r * multiplier, g * multiplier, b * multiplier
     local text_color = math.max(r, g, b) < 128 and white or black
-    tmp[1], tmp[2], tmp[3], tmp[4] = r, g, b, a
-
-    local l1, _, l2, _ = self.doc:get_selection(true)
-
-    if not (self.doc:has_selection() and line >= l1 and line <= l2) then
-      renderer.draw_rect(x1, y, x2 - x1, self:get_line_height(), tmp)
-      renderer.draw_text(self:get_font(), str, x1, y + oy, text_color)
-    end
+    tokens = common.paint_tokens(tokens, s, e, { background = { r, g, b, a }, color = text_color })
+    offset = e + 1
   end
+  return tokens
 end
 
-
-local draw_line_text = DocView.draw_line_text
-
-function DocView:draw_line_text(line, x, y)
-  local lh = draw_line_text(self, line, x, y)
-  if config.plugins.colorpreview.enabled then
-    draw_color_previews(self, line, x, y,
-      "#(%x%x)(%x%x)(%x%x)(%x?%x?)%f[%W]",
-      16
-    )
-    -- support #fff css format
-    draw_color_previews(self, line, x, y, "#(%x)(%x)(%x)%f[%W]", 16, true)
-    draw_color_previews(self, line, x, y,
-      "rgba?%((%d+)%D+(%d+)%D+(%d+)[%s,]-([%.%d]-)%s-%)",
-      nil
-    )
-  end
-  return lh
+local old_tokenize = DocView.tokenize
+function DocView:tokenize(line, ...)
+  local tokens = old_tokenize(self, line, ...)
+  tokens = style_pattern(self, line, tokens, "#(%x%x)(%x%x)(%x%x)(%x?%x?)%f[%W]", 16, 1)
+  tokens = style_pattern(self, line, tokens, "#(%x)(%x)(%x)%f[%W]", 16, 16)
+  tokens = style_pattern(self, line, tokens, "rgba?%((%d+)%D+(%d+)%D+(%d+)[%s,]-([%.%d]-)%s-%)", 10, 1)
+  return tokens
 end
+
