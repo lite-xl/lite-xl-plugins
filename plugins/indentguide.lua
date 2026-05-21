@@ -7,6 +7,9 @@ local DocView = require "core.docview"
 config.plugins.indentguide = common.merge({
   enabled = true,
   highlight = true,
+  background = true,
+  bg_alpha = 30,
+  bg_bright = 0.5,
   -- The config specification used by the settings gui
   config_spec = {
     name = "Indent Guide",
@@ -19,11 +22,38 @@ config.plugins.indentguide = common.merge({
     },
     {
       label = "Highlight Line",
-      description = "Toggle the highlight of the curent indentation indicator lines.",
+      description = "Toggle the highlight of the current indentation indicator lines.",
       path = "highlight",
       type = "toggle",
       default = true
-    }
+    },
+    {
+      label = "Line Background",
+      description = "Toggle the background drawing for all indentation indicator lines.",
+      path = "background",
+      type = "toggle",
+      default = true
+    },
+    {
+      label = "Line Background Alpha",
+      description = "Alpha value used to blend the background.",
+      path = "bg_alpha",
+      type = "number",
+      default = 30,
+      min = 0,
+      max = 255,
+      step = 1
+    },
+    {
+      label = "Line Background Brightness",
+      description = "Brightness value used to dim/lighten the background.",
+      path = "bg_bright",
+      type = "number",
+      default = 0.5,
+      min = 0,
+      max = 2,
+      step = 0.05
+    },
   }
 }, config.plugins.indentguide)
 
@@ -137,6 +167,7 @@ function DocView:draw_line_text(line, x, y)
     local h = self:get_line_height()
     local font = self:get_font()
     local space_sz = font:get_width(" ")
+    local _, _, view_w = self:get_content_bounds()
     for i = 0, spaces - 1, indent_size do
       local color = style.guide or style.selection
       local active_lvl = self.indentguide_indent_active[line] or -1
@@ -147,6 +178,16 @@ function DocView:draw_line_text(line, x, y)
       end
       local sw = space_sz * i
       renderer.draw_rect(math.ceil(x + sw), y, w, h, color)
+      if config.plugins.indentguide.background then
+        color = style.guide or style.selection
+        local bg = {
+          color[1] * config.plugins.indentguide.bg_bright,
+          color[2] * config.plugins.indentguide.bg_bright,
+          color[3] * config.plugins.indentguide.bg_bright,
+          config.plugins.indentguide.bg_alpha
+        }
+        renderer.draw_rect(math.ceil(x + sw), y, view_w, h, bg)
+      end
     end
   end
   return draw_line_text(self, line, x, y)
