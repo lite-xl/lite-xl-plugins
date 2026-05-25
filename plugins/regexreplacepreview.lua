@@ -45,14 +45,23 @@ local function substitute(pattern_string, str, replacement)
       local currentReplacement = replacement
       if #indices > 2 then
         for i = 1, (#indices/2 - 1) do
+          local captured = str:sub(indices[i*2+1], end_character(str,indices[i*2+2]-1))
+          local escaped = captured:gsub("%%", "%%%%"):gsub("\\", "\\\\")
           currentReplacement = string.gsub(
             currentReplacement,
             "\\" .. i,
-            str:sub(indices[i*2+1], end_character(str,indices[i*2+2]-1))
+            escaped 
           )
         end
       end
-      currentReplacement = string.gsub(currentReplacement, "\\%d", "")
+      currentReplacement = string.gsub(currentReplacement, "\\([0-9]+)", function(n)
+        local num = tonumber(n)
+        if num > 0 and num <= (#indices/2 - 1) then
+          return ""
+        else
+          return "\\" .. n
+        end
+      end)
       table.insert(replacements, { indices[1], #currentReplacement+indices[1] })
       if indices[1] > 1 then
         table.insert(result, str:sub(offset, previous_character(str, indices[1])) .. currentReplacement)
