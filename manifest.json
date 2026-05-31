@@ -570,6 +570,32 @@
       "version": "0.3"
     },
     {
+      "dependencies": {
+        "ghostty_lxl": {
+          "version": ">=0.2.0"
+        }
+      },
+      "description": "A Lite XL integrated terminal backed by Ghostty's libghostty-vt.",
+      "extra": {
+        "follow_branch": "main"
+      },
+      "id": "ghostty",
+      "mod_version": "3",
+      "remote": "https://github.com/mbhatia/lite-xl-ghostty.git:fdc84111353a643b350617cd92f1759983f968bd",
+      "version": "0.2.0"
+    },
+    {
+      "description": "Native Ghostty terminal module for lite-xl-ghostty.",
+      "extra": {
+        "follow_branch": "main"
+      },
+      "id": "ghostty_lxl",
+      "mod_version": "3",
+      "remote": "https://github.com/mbhatia/lite-xl-ghostty.git:fdc84111353a643b350617cd92f1759983f968bd",
+      "type": "library",
+      "version": "0.2.0"
+    },
+    {
       "description": "Shows \"git blame\" information of a line *([screenshot](https://raw.githubusercontent.com/juliardi/lite-xl-gitblame/main/screenshot_1.png))*",
       "id": "gitblame",
       "mod_version": "3",
