@@ -7,7 +7,7 @@ syntax.add {
   comment = "#",
   patterns = {
     -- common types --
-    { pattern = "#.*",                              type = "comment"  },
+    { pattern = "^#.*",                              type = "comment"  },
     { pattern = "[!<>|&%[%]=*()]",                  type = "operator" },
     -- int
     { pattern = "%s[%d]+%s",                        type = "number"   }, 
@@ -19,7 +19,7 @@ syntax.add {
     
     -- language specific types --
     -- normal and predefined  macros
-    { pattern = "%%{[%a%d%:_]+%}",        type = "function", "symbol" }, 
+    { pattern = "%%{[%a%d%:_]+%}",        type = "function", "symbol" },
 
     -- conditional macro with expansion
     { 
@@ -53,7 +53,8 @@ syntax.add {
     
   symbols = {
         -- commands "function" 
-        ["%prep"]                          = "function", 
+	["%prep"]                          = "function",
+	["%conf"]                          = "function",
         ["%build"]                         = "function",
         ["%pre"]                           = "function",
         ["%preun"]                         = "function",
@@ -285,6 +286,8 @@ syntax.add {
         ["AutoProv:"]                      = "keyword2",
         ["AutoReqProv:"]                   = "keyword2",
         ["Icon:"]                          = "keyword2",
+	["BuildSystem:"]                   = "keyword2",
+	["BuildOption:"]                   = "keyword2",
 
 -- build requirements "keyword2"
         ["Conflicts:"]                     = "keyword2",
@@ -307,6 +310,7 @@ syntax.add {
         ["%autosetup"]                     = "keyword2",
         ["%doc"]                           = "keyword2",
         ["%cmake"]                         = "keyword2",
+	["%configure"]                     = "keyword2",
         ["%license"]                       = "keyword2",
         ["%make"]                          = "keyword2",
         ["%make_build"]                    = "keyword2",
@@ -314,7 +318,9 @@ syntax.add {
         ["%meson"]                         = "keyword2",
         ["%ninja_build"]                   = "keyword2",
         ["%ninja_install"]                 = "keyword2",
+	["%patchlist"]			   = "keyword2",
         ["%setup"]                         = "keyword2",
+	["%sourcelist"]			   = "keyword2",
         ["%attr"]                          = "keyword2",
         ["%docdir"]                        = "keyword2",
         ["%dir"]                           = "keyword2",
@@ -328,6 +334,7 @@ syntax.add {
         ["%{_arch}"]                       = "keyword",
         ["%{buildroot}"]                   = "keyword",
         ["%{_builddir}"]                   = "keyword",
+	["%{prefix}"]                      = "keyword",
         ["%{_prefix}"]                     = "keyword",
         ["%{_bindir}"]                     = "keyword",
         ["%{_sbindir}"]                    = "keyword",
@@ -347,6 +354,8 @@ syntax.add {
         ["%{_udevrulesdir}"]               = "keyword",
         ["%{_unitdir}"]                    = "keyword",
         ["%{_presetdir}"]                  = "keyword",
+        ["%{_iconsdir}"]                   = "keyword",
+	["%{_licensedir}"]		   = "keyword",
 
 -- per sh language plugin "keyword"
         ["break"]                          = "keyword",
