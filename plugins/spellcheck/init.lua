@@ -1,4 +1,7 @@
 -- mod-version:3
+
+
+-- Imports
 local core = require "core"
 local style = require "core.style"
 local config = require "core.config"
@@ -8,22 +11,19 @@ local DocView = require "core.docview"
 local Highlighter = require "core.doc.highlighter"
 local Doc = require "core.doc"
 
-local platform_dictionary_file
-if PLATFORM == "Windows" then
-  platform_dictionary_file = EXEDIR .. "/words.txt"
-else
-  platform_dictionary_file = "/usr/share/dict/words"
-end
+
 
 config.plugins.spellcheck = common.merge({
   enabled = true,
   files = { "%.txt$", "%.md$", "%.markdown$" },
-  dictionary_file = platform_dictionary_file
+  language = "EN"
 }, config.plugins.spellcheck)
 
 local last_input_time = 0
 local word_pattern = "%a+"
 local words
+local added_words
+local languages
 
 local spell_cache = setmetatable({}, { __mode = "k" })
 local font_canary
@@ -77,24 +77,32 @@ local function reset_cache()
 end
 
 
-local function load_dictionary()
-  core.add_thread(function()
-    local t = {}
-    local i = 0
-    for line in io.lines(config.plugins.spellcheck.dictionary_file) do
-      for word in line:gmatch(word_pattern) do
-        t[word:lower()] = true
-      end
-      i = i + 1
-      if i % 1000 == 0 then coroutine.yield() end
-    end
-    words = t
-    core.redraw = true
-    core.log_quiet(
-      "Finished loading dictionary file: \"%s\"",
-      config.plugins.spellcheck.dictionary_file
-    )
-  end)
+-- Remake with lua-based dictionaries
+local function load_dictionary(language)
+  if not language then language = config.plugins.spellcheck.language end
+
+  local ok, dict = pcall(require, "libraries.dictionaries")
+  if ok then
+    core.log("[Spellcheck]: Successfully loaded the dictionaries!!")
+  else
+    core.error("[Spellcheck]: There was a problem loading the dictionaries")
+    return
+  end
+
+  local ok_again, added = pcall(require, "plugins.spellcheck.added_words")
+    if ok_again then
+    core.log("[Spellcheck]: Successfully loaded the added words!!")
+  else
+    core.error("[Spellcheck]: There was a problem loading the added words")
+    return
+  end
+
+  added_words = added
+  languages = dict.languages
+  words = common.merge(dict[language], added[language])
+
+  core.log("[Spellcheck]: Loaded the %s dictionary", language)
+
 end
 
 
@@ -137,10 +145,8 @@ function DocView:draw_line_text(idx, x, y)
 
   if
     not config.plugins.spellcheck.enabled
-    or
-    not words
-    or
-    not matches_any(self.doc.filename or "", config.plugins.spellcheck.files)
+    or not words
+    or not matches_any(self.doc.filename or "", config.plugins.spellcheck.files)
   then
     return lh
   end
@@ -165,7 +171,7 @@ function DocView:draw_line_text(idx, x, y)
       if not s then break end
       local word = text:sub(s, e):lower()
       if not words[word] and not active_word(self.doc, idx, e + 1) then
-        local x,y = self:get_line_screen_position(idx, s)
+        local x, y = self:get_line_screen_position(idx, s)
         table.insert(calculated, x + self.scroll.x)
         table.insert(calculated, y + self.scroll.y)
         x,y = self:get_line_screen_position(idx, e + 1)
@@ -232,16 +238,12 @@ config.plugins.spellcheck.config_spec = {
     default = { "%.txt$", "%.md$", "%.markdown$" }
   },
   {
-    label = "Dictionary File",
-    description = "Path to a text file that contains a list of dictionary words.",
-    path = "dictionary_file",
-    type = "file",
-    exists = true,
-    default = platform_dictionary_file,
-    on_apply = function()
-      load_dictionary()
-    end
-  }
+    label = "Language",
+    description = "Default dictionary to load",
+    path = "language",
+    type = "string",
+    default = "EN"
+  },
 }
 
 load_dictionary()
@@ -255,16 +257,21 @@ command.add("core.docview", {
   ["spell-check:add-to-dictionary"] = function()
     local word = get_word_at_caret()
     if words[word] then
-      core.error("\"%s\" already exists in the dictionary", word)
+      core.error("[Spellcheck]: \"%s\" already exists in the dictionary", word)
       return
     end
     if word then
-      local fp = assert(io.open(config.plugins.spellcheck.dictionary_file, "a"))
-      fp:write("\n" .. word .. "\n")
-      fp:close()
       words[word] = true
-      core.log("Added \"%s\" to dictionary", word)
+      added_words[config.plugins.spellcheck.language][word] = true
+      local added_path = USERDIR .. PATHSEP .. "plugins" .. PATHSEP .. "spellcheck" .. PATHSEP .. "added_words.lua"
+      local fp = assert(io.open(added_path, "w+"))
+      fp:write("return ", common.serialize(added_words, { pretty = true }))
+      fp:close()
+      core.log("[Spellcheck]: Added \"%s\" to dictionary", word)
+      reset_cache()
+      return
     end
+    core.error("[Spellcheck]: Nothing was selected")
   end,
 
 
@@ -283,7 +290,7 @@ command.add("core.docview", {
       end
     end
     if #suggestions == 0 then
-      core.error("Could not find any suggestions for \"%s\"", word)
+      core.error("[Spellcheck]: Could not find any suggestions for \"%s\"", word)
       return
     end
 
@@ -319,7 +326,19 @@ command.add("core.docview", {
     })
   end,
 
+
+  ["spell-check:load-dictionary"] = function()
+    core.command_view:enter("Language", {
+      text = "",
+      suggest = function () return languages end,
+      submit  = function (name) load_dictionary(name) end
+
+    })
+  end,
+
 })
+
+
 
 local contextmenu = require "plugins.contextmenu"
 contextmenu:register("core.docview", {
