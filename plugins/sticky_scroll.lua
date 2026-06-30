@@ -305,6 +305,28 @@ function DocView:draw_overlay(...)
 end
 
 local old_mouse_pressed = DocView.on_mouse_pressed
+-- function DocView:on_mouse_pressed(button, x, y, clicks, ...)
+--   if not SS.should_run(self) then return old_mouse_pressed(self, button, x, y, clicks, ...) end
+
+--   local data = SS.managed_docviews[self]
+--   data.sticky_lines_mouse_pressed = false
+--   if #data.sticky_lines == 0 then
+--     return old_mouse_pressed(self, button, x, y, clicks, ...)
+--   end
+
+--   local lh = self:get_line_height()
+--   local rl_x, rl_y = self:get_line_screen_position(data.reference_line)
+--   if y >= math.min(rl_y + lh, lh * #data.sticky_lines + self.position.y) or y < self.position.y then
+--     data.sticky_lines_mouse_pressed = true
+--     return old_mouse_pressed(self, button, x, y, clicks, ...)
+--   end
+
+--   local clicked_line = data.sticky_lines[#data.sticky_lines - (y - self.position.y) // lh]
+--   local col = self:get_x_offset_col(clicked_line, x - rl_x)
+--   self:scroll_to_make_visible(clicked_line, col)
+--   self.doc:set_selection(clicked_line, col)
+--   return true
+-- end
 function DocView:on_mouse_pressed(button, x, y, clicks, ...)
   if not SS.should_run(self) then return old_mouse_pressed(self, button, x, y, clicks, ...) end
 
@@ -316,7 +338,13 @@ function DocView:on_mouse_pressed(button, x, y, clicks, ...)
 
   local lh = self:get_line_height()
   local rl_x, rl_y = self:get_line_screen_position(data.reference_line)
-  if y >= math.min(rl_y + lh, lh * #data.sticky_lines + self.position.y) or y < self.position.y then
+
+  if y >= math.min(rl_y + lh, lh * #data.sticky_lines + self.position.y)
+    or y < self.position.y
+    or x < self.position.x
+    or x >= self.position.x + self.size.x
+    or (self.v_scrollbar and self.v_scrollbar:overlaps(x, y))
+    or (self.minimap and type(self.minimap.overlaps) == "function" and self.minimap:overlaps(x, y)) then
     data.sticky_lines_mouse_pressed = true
     return old_mouse_pressed(self, button, x, y, clicks, ...)
   end
@@ -329,6 +357,31 @@ function DocView:on_mouse_pressed(button, x, y, clicks, ...)
 end
 
 local old_mouse_moved = DocView.on_mouse_moved
+-- function DocView:on_mouse_moved(x, y, ...)
+--   if not SS.should_run(self) then return old_mouse_moved(self, x, y, ...) end
+
+--   local data = SS.managed_docviews[self]
+--   data.hovered_sticky_scroll_line = nil
+--   if #data.sticky_lines == 0 then
+--     return old_mouse_moved(self, x, y, ...)
+--   end
+
+--   local lh = self:get_line_height()
+--   local _, rl_y = self:get_line_screen_position(data.reference_line)
+--   if self.mouse_selecting
+--    or y >= math.min(rl_y + lh, lh * #data.sticky_lines + self.position.y)
+--    or y < self.position.y
+--    or x < self.position.x
+--    or x >= self.position.x + self.size.x
+--    or self.v_scrollbar:overlaps(x, y)
+--    then
+--     return old_mouse_moved(self, x, y, ...)
+--   end
+
+--   self.cursor = "hand"
+--   data.hovered_sticky_scroll_line = data.sticky_lines[#data.sticky_lines - (y - self.position.y) // lh]
+--   return true
+-- end
 function DocView:on_mouse_moved(x, y, ...)
   if not SS.should_run(self) then return old_mouse_moved(self, x, y, ...) end
 
@@ -340,12 +393,14 @@ function DocView:on_mouse_moved(x, y, ...)
 
   local lh = self:get_line_height()
   local _, rl_y = self:get_line_screen_position(data.reference_line)
+
   if self.mouse_selecting
    or y >= math.min(rl_y + lh, lh * #data.sticky_lines + self.position.y)
    or y < self.position.y
    or x < self.position.x
    or x >= self.position.x + self.size.x
-   or self.v_scrollbar:overlaps(x, y)
+   or (self.v_scrollbar and self.v_scrollbar:overlaps(x, y))
+   or (self.minimap and type(self.minimap.overlaps) == "function" and self.minimap:overlaps(x, y))
    then
     return old_mouse_moved(self, x, y, ...)
   end
