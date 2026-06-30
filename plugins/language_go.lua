@@ -120,6 +120,11 @@ syntax.add {
     { pattern = "[%a_][%w%_]*()%s*():%s*%f[%w%p]",
       type = { "function", "normal", "operator" }
     },
+    -- FIX: interferes with pattern "parameters or declarations"
+    -- multi-variable comma lists
+    { pattern = "[%a_][%w%_]*()%s*(),%s*",
+      type = { "literal", "normal" }
+    },
     -- parameters or declarations
     { pattern = "[%a_][%w%_]*()%s+()[%*~&]?()[%a_][%w%_]*",
       type = { "literal", "normal", "operator", "keyword2" }
