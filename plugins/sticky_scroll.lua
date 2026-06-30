@@ -348,12 +348,12 @@ function DocView:on_mouse_moved(x, y, ...)
   local _, rl_y = self:get_line_screen_position(data.reference_line)
 
   if self.mouse_selecting
-   or y >= math.min(rl_y + lh, lh * #data.sticky_lines + self.position.y)
-   or y < self.position.y
-   or x < self.position.x
-   or x >= self.position.x + self.size.x
-   or (self.v_scrollbar and self.v_scrollbar:overlaps(x, y))
-   or (self.minimap and type(self.minimap.overlaps) == "function" and self.minimap:overlaps(x, y))
+    or y >= math.min(rl_y + lh, lh * #data.sticky_lines + self.position.y)
+    or y < self.position.y
+    or x < self.position.x
+    or x >= self.position.x + self.size.x
+    or (self.v_scrollbar and self.v_scrollbar:overlaps(x, y))
+    or (self.minimap and type(self.minimap.overlaps) == "function" and self.minimap:overlaps(x, y))
    then
     return old_mouse_moved(self, x, y, ...)
   end
