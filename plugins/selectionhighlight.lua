@@ -71,11 +71,17 @@ function DocView:draw_line_body(line, x, y)
         if line ~= line1 or start_col ~= col1 then
           local x1 = x + self:get_col_x_offset(line, start_col)
           local x2 = x + self:get_col_x_offset(line, end_col + 1)
+
           local color = style.selectionhighlight or style.syntax.comment
-          color[4] = config.plugins.selectionhighlight.opacity
+          local color_modified = {}
+          for idx, val in pairs(color) do
+             color_modified[idx] = val
+          end
+          color_modified[4] = config.plugins.selectionhighlight.opacity
+
           local thickness = config.plugins.selectionhighlight.thickness
           local use_scale = config.plugins.selectionhighlight.use_scale
-          draw_box(x1, y, x2 - x1, lh, color, thickness, use_scale)
+          draw_box(x1, y, x2 - x1, lh, color_modified, thickness, use_scale)
         end
         last_col = end_col + 1
       end
