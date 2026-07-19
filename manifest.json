@@ -2568,6 +2568,13 @@
       "mod_version": "3",
       "remote": "https://github.com/lite-xl/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
       "version": "0.1"
+    },
+    {
+      "description": "Jump to any visible word in the current document by typing a short marker label.",
+      "id": "fastjump",
+      "mod_version": "3",
+      "remote": "https://github.com/0xScodyx/fastjump.git:1ba4622ac54af76577c404b5253457f7c785be86",
+      "version": "0.1"
     }
   ],
   "remotes": [
