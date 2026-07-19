@@ -5,6 +5,7 @@ local config = require "core.config"
 local DocView = require "core.docview"
 
 config.plugins.selectionhighlight = common.merge({
+  opacity = 255,
   thickness = 1,
   use_scale = true,
   config_spec = {
