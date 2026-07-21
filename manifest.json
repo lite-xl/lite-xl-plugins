@@ -2229,7 +2229,7 @@
       "id": "selectionhighlight",
       "mod_version": "3",
       "path": "plugins/selectionhighlight.lua",
-      "version": "0.2"
+      "version": "0.3"
     },
     {
       "dependencies": {
