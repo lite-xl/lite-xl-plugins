@@ -74,11 +74,7 @@ function DocView:draw_line_body(line, x, y)
           local x2 = x + self:get_col_x_offset(line, end_col + 1)
 
           local color = style.selectionhighlight or style.syntax.comment
-          local color_modified = {}
-          for idx, val in pairs(color) do
-             color_modified[idx] = val
-          end
-          color_modified[4] = config.plugins.selectionhighlight.opacity
+          local color_modified = { color[1], color[2], color[3], config.plugins.selectionhighlight.opacity }
 
           local thickness = config.plugins.selectionhighlight.thickness
           local use_scale = config.plugins.selectionhighlight.use_scale
