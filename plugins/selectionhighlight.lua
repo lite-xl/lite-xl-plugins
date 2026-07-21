@@ -5,44 +5,35 @@ local config = require "core.config"
 local DocView = require "core.docview"
 
 config.plugins.selectionhighlight = common.merge({
-  opacity = 255,
   thickness = 1,
-  use_scale = true,
   config_spec = {
     name = "Selection Highlight",
     {
-      label = "Highlight Box Opacity",
-      description = "Define the how opaque the highlight box is.",
-      path = "opacity",
-      type = "number",
-      default = 255,
-      min = 0,
-      max = 255
+      label = "Highlight Box Colour",
+      description = "Color of the highlight box.",
+      path = "custom_color",
+      type = "color",
+      default = string.format("#%02X%02X%02X%02X",
+                              style.syntax.comment[1], style.syntax.comment[2], style.syntax.comment[3], style.syntax.comment[4]
+      )
     },
     {
       label = "Highlight Box Thickness",
-      description = "Thickness of highlight box.",
+      description = "Thickness of the highlight box.",
       path = "thickness",
       type = "number",
       default = 1,
       min = 1,
       max = 10
-    },
-    {
-      label = "Use SCALE Value",
-      description = "Increase thickness of highlight box acording to the SCALE value.",
-      path = "use_scale",
-      type = "toggle",
-      default = true
     }
   }
 }, config.plugins.selectionhighlight)
 
 -- originally written by luveti
 
-local function draw_box(x, y, w, h, color, thickness, use_scale)
+local function draw_box(x, y, w, h, color, thickness)
   local r = renderer.draw_rect
-  local t = use_scale and math.ceil(SCALE) * thickness or thickness
+  local t = math.ceil(SCALE) * thickness
 
   r(x, y, w, t, color)
   r(x, y + h - t, w, t, color)
@@ -72,13 +63,9 @@ function DocView:draw_line_body(line, x, y)
         if line ~= line1 or start_col ~= col1 then
           local x1 = x + self:get_col_x_offset(line, start_col)
           local x2 = x + self:get_col_x_offset(line, end_col + 1)
-
-          local color = style.selectionhighlight or style.syntax.comment
-          local color_modified = { color[1], color[2], color[3], config.plugins.selectionhighlight.opacity }
-
+          local color = config.plugins.selectionhighlight.custom_color
           local thickness = config.plugins.selectionhighlight.thickness
-          local use_scale = config.plugins.selectionhighlight.use_scale
-          draw_box(x1, y, x2 - x1, lh, color_modified, thickness, use_scale)
+          draw_box(x1, y, x2 - x1, lh, color, thickness)
         end
         last_col = end_col + 1
       end
