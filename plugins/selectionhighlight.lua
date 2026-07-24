@@ -9,7 +9,7 @@ config.plugins.selectionhighlight = common.merge({
   config_spec = {
     name = "Selection Highlight",
     {
-      label = "Highlight Box Colour",
+      label = "Highlight Box Color",
       description = "Color of the highlight box.",
       path = "custom_color",
       type = "color",
