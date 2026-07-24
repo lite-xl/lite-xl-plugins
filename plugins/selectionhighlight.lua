@@ -6,6 +6,7 @@ local DocView = require "core.docview"
 
 config.plugins.selectionhighlight = common.merge({
   thickness = 1,
+  custom_color = style.syntax.comment,
   config_spec = {
     name = "Selection Highlight",
     {
