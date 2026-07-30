@@ -14,7 +14,7 @@ config.plugins.selectionhighlight = common.merge({
       description = "Color of the highlight box.",
       path = "custom_color",
       type = "color",
-      default = string.format("#%02X%02X%02X%02X", table.unpack(style.syntax.comment)))
+      default = string.format("#%02X%02X%02X%02X", table.unpack(style.syntax.comment))
     },
     {
       label = "Highlight Box Thickness",
