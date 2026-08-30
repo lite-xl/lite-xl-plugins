@@ -584,7 +584,7 @@
       "version": "0.2"
     },
     {
-      "description": "View files state in commits, files diff in commits, and commit timeline.",
+      "description": "View file states and diffs within commits, and the commit timeline.",
       "id": "githistory",
       "mod_version": "3",
       "path": "plugins/githistory.lua",

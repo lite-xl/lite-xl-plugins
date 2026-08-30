@@ -224,7 +224,7 @@ command.add(nil, {
   end
 })
 
--- View commit timeline on a branch, making a selection on a commit in the time logs the commit detail to logs
+-- View commit timeline on a branch, making a selection on a commit in the timeline will log the commit detail to logs
 command.add(nil, {
   ["githistory:view-commit-timeline"] = function()
     core.command_view:enter("Which branch? (default=" .. config.plugins.githistory.default_branch .. ")", {
