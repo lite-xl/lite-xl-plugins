@@ -2,7 +2,22 @@
 local core = require "core"
 local command = require "core.command"
 local common = require "core.common"
+local config = require "core.config"
 
+config.plugins.gitopen = common.merge({
+  normalize_paths = true,
+
+  config_spec = {
+    name = "Git Open",
+    {
+      label = "Normalize Paths",
+      description = "Normalize Git paths by converting '\\' to '/'.",
+      path = "normalize_paths",
+      type = "toggle",
+      default = true
+    }
+  }
+}, config.plugins.gitopen)
 
 local function exec(cmd)
   local proc = process.start(cmd)
@@ -15,6 +30,14 @@ local function exec(cmd)
   return proc:read_stdout() or ""
 end
 
+-- Git for Windows uses / as Unix based systems
+local function normalize_path(path)
+  if config.plugins.gitopen.normalize_paths then
+    return path:gsub('\\', '/')
+  end
+
+  return path
+end
 
 local function git_find_files_and_open(commit)
   local git_root = exec({"git", "rev-parse", "--show-toplevel"}):match( "^%s*(.-)%s*$" )
@@ -22,11 +45,11 @@ local function git_find_files_and_open(commit)
 
   local git_files = {}
   for str in string.gmatch(file_list_str, "([^\n]+)") do
-    git_files[git_root .. PATHSEP .. str] = true
+    git_files[normalize_path(git_root .. PATHSEP .. str)] = true
   end
 
   for dir, item in core.get_project_files() do
-    local key = dir .. PATHSEP .. item.filename
+    local key = normalize_path(dir .. PATHSEP .. item.filename)
     if git_files[key] then
       core.root_view:open_doc(core.open_doc(item.filename))
     end
@@ -51,3 +74,4 @@ command.add(nil, {
     })
   end,
 })
+
