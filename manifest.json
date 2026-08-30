@@ -584,6 +584,13 @@
       "version": "0.2"
     },
     {
+      "description": "View files state in commits, files diff in commits, and commit timeline.",
+      "id": "githistory",
+      "mod_version": "3",
+      "path": "plugins/githistory.lua",
+      "version": "0.1"
+    },
+    {
       "description": "Open project files that are in a git commit (default=HEAD)",
       "id": "gitopen",
       "mod_version": "3",
