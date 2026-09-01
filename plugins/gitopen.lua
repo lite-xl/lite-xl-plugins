@@ -2,7 +2,7 @@
 local core = require "core"
 local command = require "core.command"
 local common = require "core.common"
-
+local config = require "core.config"
 
 local function exec(cmd)
   local proc = process.start(cmd)
@@ -15,20 +15,17 @@ local function exec(cmd)
   return proc:read_stdout() or ""
 end
 
-
 local function git_find_files_and_open(commit)
-  local git_root = exec({"git", "rev-parse", "--show-toplevel"}):match( "^%s*(.-)%s*$" )
+  local git_root = exec({"git", "rev-parse", "--show-toplevel"}):match("^%s*(.-)%s*$")
   local file_list_str = exec({"git", "show", "--name-only", "--pretty=format:", commit})
 
-  local git_files = {}
   for str in string.gmatch(file_list_str, "([^\n]+)") do
-    git_files[git_root .. PATHSEP .. str] = true
-  end
+    -- Nomalize path as Git for Windows uses / as Unix based systems
+    local filename = common.normalize_path(git_root .. PATHSEP .. str)
 
-  for dir, item in core.get_project_files() do
-    local key = dir .. PATHSEP .. item.filename
-    if git_files[key] then
-      core.root_view:open_doc(core.open_doc(item.filename))
+    -- Only open files within the commit whose names do not match the configured ignore file patterns
+    if not common.match_pattern(common.basename(filename), config.ignore_files) then
+      core.root_view:open_doc(core.open_doc(filename))
     end
   end
 end
@@ -51,3 +48,4 @@ command.add(nil, {
     })
   end,
 })
+
