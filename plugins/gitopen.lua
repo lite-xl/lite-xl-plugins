@@ -23,6 +23,7 @@ local function git_find_files_and_open(commit)
     -- Nomalize path as Git for Windows uses / as Unix based systems
     local filename = common.normalize_path(git_root .. PATHSEP .. str)
 
+    -- Only open files within the commit whose names do not match the configured ignore file patterns
     if not common.match_pattern(common.basename(filename), config.ignore_files) then
       core.root_view:open_doc(core.open_doc(filename))
     end
