@@ -321,9 +321,23 @@ command.add("core.docview", {
 
 })
 
-local contextmenu = require "plugins.contextmenu"
-contextmenu:register("core.docview", {
-  contextmenu.DIVIDER,
-  { text = "View Suggestions",  command = "spell-check:replace" },
-  { text = "Add to Dictionary", command = "spell-check:add-to-dictionary" }
-})
+-- defer adding context menu item until all plugins have had
+-- a chance to turn it off/on
+local function add_context_menu()
+  if false == config.plugins.contextmenu then return end
+
+  -- abort if contextmenu plugin isn't available
+  local found, contextmenu = pcall(require, "plugins.contextmenu")
+  if not found then
+    core.log("[spellcheck] no plugin.contextmenu, not adding context menu item.")
+    return
+  end
+
+  contextmenu:register("core.docview", {
+    contextmenu.DIVIDER,
+    { text = "View Suggestions",  command = "spell-check:replace" },
+    { text = "Add to Dictionary", command = "spell-check:add-to-dictionary" }
+  })
+end
+-- Add context menu item after everything has been loaded
+core.add_thread(add_context_menu)
