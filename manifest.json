@@ -2568,6 +2568,13 @@
       "mod_version": "3",
       "remote": "https://github.com/lite-xl/lite-xl-ide.git:3bb229a5b7ed7028c40bba831b0dd77b06c3e262",
       "version": "0.1"
+    },
+    {
+      "description": "Info reader for Lite XL.",
+      "id": "lite-xl-info",
+      "mod_version": "3",
+      "remote": "https://github.com/yahallo1/lite-xl-info.git:237404be7bdc3b8df1d13cf7b18bb350ca76cc02",
+      "version": "0.1"
     }
   ],
   "remotes": [
