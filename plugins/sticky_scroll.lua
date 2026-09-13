@@ -322,7 +322,7 @@ function DocView:on_mouse_pressed(button, x, y, clicks, ...)
   end
 
   local clicked_line = data.sticky_lines[#data.sticky_lines - (y - self.position.y) // lh]
-  local col = self:get_x_offset_col(clicked_line, x - rl_x)
+  local _, col = self:resolve_screen_position(clicked_line, x - rl_x)
   self:scroll_to_make_visible(clicked_line, col)
   self.doc:set_selection(clicked_line, col)
   return true
