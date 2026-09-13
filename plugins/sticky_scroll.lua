@@ -277,7 +277,7 @@ function DocView:draw_overlay(...)
 
   -- We need to reset the clip, because when DocView:draw_overlay is called
   -- it's too small for us.
-  local old_clip_rect = core.clip_rect_stack[#core.clip_rect_stack]
+  local old_clip_rect = self.root_view.window.clip_rect_stack[#self.root_view.window.clip_rect_stack]
   renderer.set_clip_rect(self.position.x, self.position.y, self.size.x, self.size.y)
 
   local drawn = false
