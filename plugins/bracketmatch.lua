@@ -1,4 +1,4 @@
---- mod-version:3
+-- mod-version:3
 local core = require "core"
 local style = require "core.style"
 local command = require "core.command"

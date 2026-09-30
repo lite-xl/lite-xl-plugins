@@ -1,3 +1,4 @@
+-- mod-version:3
 local Parser = require "plugins.editorconfig.parser"
 
 local tests = {}

@@ -1,3 +1,4 @@
+-- mod-version:3
 local core = require "core"
 local tests = require "plugins.editorconfig.tests"
 

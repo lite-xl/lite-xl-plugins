@@ -1,3 +1,4 @@
+-- mod-version:3
 -- To obtain the mapping:
 --[[
 wget -qO .fantasticonrc.js https://github.com/yamatsum/nonicons/raw/master/.fantasticonrc.js \

@@ -1,3 +1,4 @@
+-- mod-version:3
 --[[
 @title lua-profiler
 @version 1.1

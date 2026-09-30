@@ -1,6 +1,6 @@
+-- mod-version:3
 -- Author: Rohan Vashisht: https://github.com/RohanVashisht1234/
 
--- mod-version:3
 local syntax = require "core.syntax"
 
 syntax.add {

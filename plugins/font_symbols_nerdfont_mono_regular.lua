@@ -1,3 +1,4 @@
+-- mod-version:3
 -- To obtain the mapping:
 --[[
 wget -qO - https://github.com/ryanoasis/nerd-fonts/raw/master/glyphnames.json \

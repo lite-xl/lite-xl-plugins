@@ -1,3 +1,4 @@
+-- mod-version:3
 -- Lua parser implementation of the .editorconfig spec as best understood.
 -- @copyright Jefferson Gonzalez <jgmdev@gmail.com>
 -- @license MIT

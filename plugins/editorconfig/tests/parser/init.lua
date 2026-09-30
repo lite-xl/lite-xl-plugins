@@ -1,3 +1,4 @@
+-- mod-version:3
 local tests = require "plugins.editorconfig.tests"
 
 -- Basic parser tests
