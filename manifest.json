@@ -361,11 +361,11 @@
       "version": "0.1"
     },
     {
-      "description": "Debug Lite-XL's Lua VM interactively, if you're running it from a terminal. Warning: Will significantly slow down Lite-XL if installed.",
+      "description": "Debug Lite-XL's Lua VM interactively, if you're running it from a terminal.",
       "id": "lite-debugger",
       "mod_version": "3",
       "path": "plugins/lite-debugger.lua",
-      "version": "0.1"
+      "version": "0.2"
     },
     {
       "description": "Provides a debugger integration, with pluggable backends. Currently supports only gdb. *([screenshot](https://raw.githubusercontent.com/adamharrison/lite-xl-ide/main/screenshots/debugger.png))*",
