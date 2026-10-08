@@ -2242,6 +2242,19 @@
       "version": "0.7"
     },
     {
+      "id": "scrollbar_selection_highlight",
+      "version": "1.0",
+      "mod_version": "3",
+      "type": "plugin",
+      "name": "Scrollbar selection highlight",
+      "description": "Highlights selected text matches as horizontal lines on the scrollbar.",
+      "path": "plugins/scrollbar_selection_highlight.lua",
+      "extra": {
+		"author": "Sylphrena",
+		"license": "0BSD"
+      }
+    },
+    {
       "description": "Displays the current time in the corner of the status view",
       "id": "smallclock",
       "mod_version": "3",
