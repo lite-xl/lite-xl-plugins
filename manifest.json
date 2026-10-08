@@ -1362,6 +1362,16 @@
       "version": "0.1"
     },
     {
+      "description": "Syntax for the [Miranda](https://www.cs.kent.ac.uk/people/staff/dat/miranda/) programming language",
+      "id": "language_miranda",
+      "mod_version": "3",
+      "path": "plugins/language_miranda.lua",
+      "tags": [
+        "language"
+      ],
+      "version": "0.1"
+    },
+    {
       "description": "Syntax for the [MoonScript](https://moonscript.org) scripting language",
       "id": "language_moon",
       "mod_version": "3",
