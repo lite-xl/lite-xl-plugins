@@ -1915,8 +1915,8 @@
       "description": "Automatic configuration/binary download for LSP completion for Lua with lua-language-server (sumneko).",
       "id": "lsp_lua",
       "mod_version": "3",
-      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:443a076fe5741dbd3a8f774c9b577bbf4c58f4e9",
-      "version": "3.15.0"
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:1c37fdb0986e2da7051fd474d313fd162f62925b",
+      "version": "3.19.1"
     },
     {
       "description": "Automatic configuration/binary download for LSP completion for Java with jdtls.",
