@@ -1947,6 +1947,13 @@
       "version": "20250804"
     },
     {
+      "description": "Automatic configuration/binary download for LSP completion for SQL with sqls.",
+      "id": "lsp_sql",
+      "mod_version": "3",
+      "remote": "https://github.com/lite-xl/lite-xl-lsp-servers.git:1c37fdb0986e2da7051fd474d313fd162f62925b",
+      "version": "0.2.48"
+    },
+    {
       "description": "Automatic configuration/binary download for LSP completion for TeX with texlab.",
       "id": "lsp_tex",
       "mod_version": "3",
