@@ -7,6 +7,7 @@ local syntax = require "core.syntax"
 
 syntax.add {
     name = "Miranda",
+    
     files = { "%.m$" },
     comment = "||",
 
