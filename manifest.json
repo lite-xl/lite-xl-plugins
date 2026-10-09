@@ -2235,7 +2235,10 @@
       "extra": {
           "author": "Sylphrena",
           "license": "0BSD"
-      }
+      },
+      "replaces": [
+          "selectionhighlight"
+      ]
     },
     {
       "dependencies": {
