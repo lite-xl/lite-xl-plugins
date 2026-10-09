@@ -1,4 +1,4 @@
---- mod-version:3
+--- mod-version:4
 local core = require "core"
 local style = require "core.style"
 local command = require "core.command"
@@ -79,30 +79,30 @@ local bracket_maps = {
 }
 
 
-local function get_token_at(doc, line, col)
+local function get_token_at(dv, line, col)
   local column = 0
-  for _,type,text in doc.highlighter:each_token(line) do
+  for _,type,text in dv.doc.highlighter:each_token(line) do
     column = column + #text
     if column >= col then return type, text end
   end
 end
 
 
-local function get_matching_bracket(doc, line, col, line_limit, open_byte, close_byte, direction)
+local function get_matching_bracket(dv, line, col, line_limit, open_byte, close_byte, direction)
   local end_line = line + line_limit * direction
   local depth = 0
 
   while line ~= end_line do
-    local byte = doc.lines[line]:byte(col)
-    if byte == open_byte and get_token_at(doc, line, col) ~= "comment" then
+    local byte = dv.doc.lines[line]:byte(col)
+    if byte == open_byte and get_token_at(dv, line, col) ~= "comment" then
       depth = depth + 1
-    elseif byte == close_byte and get_token_at(doc, line, col) ~= "comment" then
+    elseif byte == close_byte and get_token_at(dv, line, col) ~= "comment" then
       depth = depth - 1
       if depth == 0 then return line, col end
     end
 
     local prev_line, prev_col = line, col
-    line, col = doc:position_offset(line, col, direction)
+    line, col = dv:position_offset(line, col, direction)
     if line == prev_line and col == prev_col then
       break
     end
@@ -113,18 +113,19 @@ end
 local state = {}
 local select_adj = 0
 
-local function update_state(line_limit)
+local function update_state(dv, line_limit)
   line_limit = line_limit or math.huge
 
   -- reset if we don't have a document (eg. DocView isn't focused)
-  local doc = core.active_view.doc
-  if not doc then
+  local doc = dv.doc
+  if not doc or not doc.highlighter then
     state = {}
     return
   end
 
+
   -- early exit if nothing has changed since the last call
-  local line, col = doc:get_selection()
+  local line, col = dv:get_selection()
   local change_id = doc:get_change_id()
   if  state.doc == doc and state.line == line and state.col == col
   and state.change_id == change_id and state.limit == line_limit then
@@ -138,10 +139,10 @@ local function update_state(line_limit)
       local line, col = doc:position_offset(line, col, i)
       local open = doc.lines[line]:byte(col)
       local close = map[open]
-      if close and get_token_at(doc, line, col) ~= "comment" then
+      if close and get_token_at(dv, line, col) ~= "comment" then
         -- i == 0 if the cursor is on the left side of a bracket (or -1 when on right)
         select_adj = i + 1 -- if i == 0 then select_adj = 1 else select_adj = 0 end
-        line2, col2 = get_matching_bracket(doc, line, col, line_limit, open, close, map.direction)
+        line2, col2 = get_matching_bracket(dv, line, col, line_limit, open, close, map.direction)
         goto found
       end
     end
@@ -165,7 +166,7 @@ local update = DocView.update
 
 function DocView:update(...)
   update(self, ...)
-  update_state(100)
+  update_state(self, 100)
 end
 
 
@@ -173,7 +174,7 @@ local function redraw_char(dv, x, y, line, col, bg_color, char_color)
   local x1 = x + dv:get_col_x_offset(line, col)
   local x2 = x + dv:get_col_x_offset(line, col + 1)
   local lh = dv:get_line_height()
-  local token = get_token_at(dv.doc, line, col)
+  local token = get_token_at(dv, line, col)
   if not char_color then
     char_color = style.syntax[token]
   end
@@ -259,15 +260,15 @@ end
 
 command.add("core.docview", {
   ["bracket-match:move-to-matching"] = function(dv)
-    update_state()
+    update_state(dv)
     if state.line2 then
-      dv.doc:set_selection(state.line2, state.col2)
+      dv:set_selection(state.line2, state.col2)
     end
   end,
   ["bracket-match:select-to-matching"] = function(dv)
-    update_state()
+    update_state(dv)
     if state.line2 then
-        dv.doc:set_selection(state.line, state.col, state.line2, state.col2 + select_adj)
+        dv:set_selection(state.line, state.col, state.line2, state.col2 + select_adj)
     end
   end,
 })

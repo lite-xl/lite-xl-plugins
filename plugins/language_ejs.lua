@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 
 -- Embedded JavaScript templating
 -- provides .ejs syntax support (fork of language_html.lua).

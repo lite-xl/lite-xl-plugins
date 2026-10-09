@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 
 local style = require "core.style"
 local common = require "core.common"

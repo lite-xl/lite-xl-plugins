@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 --
 -- Crossplatform file based IPC system for lite-xl.
 -- @copyright Jefferson Gonzalez <jgmdev@gmail.com>

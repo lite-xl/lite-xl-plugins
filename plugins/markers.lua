@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 -- Markers plugin for lite text editor
 -- original implementation by Petri Häkkinen
 

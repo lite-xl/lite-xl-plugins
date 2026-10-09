@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 local core = require "core"
 local DocView = require "core.docview"
 local style = require "core.style"
@@ -277,7 +277,7 @@ function DocView:draw_overlay(...)
 
   -- We need to reset the clip, because when DocView:draw_overlay is called
   -- it's too small for us.
-  local old_clip_rect = core.clip_rect_stack[#core.clip_rect_stack]
+  local old_clip_rect = self.root_view.window.clip_rect_stack[#self.root_view.window.clip_rect_stack]
   renderer.set_clip_rect(self.position.x, self.position.y, self.size.x, self.size.y)
 
   local drawn = false
@@ -322,7 +322,7 @@ function DocView:on_mouse_pressed(button, x, y, clicks, ...)
   end
 
   local clicked_line = data.sticky_lines[#data.sticky_lines - (y - self.position.y) // lh]
-  local col = self:get_x_offset_col(clicked_line, x - rl_x)
+  local _, col = self:resolve_screen_position(clicked_line, x - rl_x)
   self:scroll_to_make_visible(clicked_line, col)
   self.doc:set_selection(clicked_line, col)
   return true

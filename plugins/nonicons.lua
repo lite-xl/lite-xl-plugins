@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 -- Author: Jipok
 -- Doesn't work well with scaling mode == "ui"
 

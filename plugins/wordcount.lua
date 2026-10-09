@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 local core = require "core"
 local style = require "core.style"
 local StatusView = require "core.statusview"
@@ -34,10 +34,10 @@ end
 
 
 local old_raw_insert = Doc.raw_insert
-function Doc:raw_insert(line, col, text, undo_stack, time)
+function Doc:raw_insert(line, col, text, undo_stack, time, ...)
   if words[self] then
     local old_count = compute_words(self, line, line)
-    old_raw_insert(self, line, col, text, undo_stack, time)
+    old_raw_insert(self, line, col, text, undo_stack, time, ...)
     local total_lines, s = 0, 0
     while true do
       s = text:find("\n", s + 1, true)
@@ -46,19 +46,19 @@ function Doc:raw_insert(line, col, text, undo_stack, time)
     end
     words[self] = words[self] + compute_words(self, line, line + total_lines) - old_count
   else
-    old_raw_insert(self, line, col, text, undo_stack, time)
+    old_raw_insert(self, line, col, text, undo_stack, time, ...)
   end
 end
 
 
 local old_raw_remove = Doc.raw_remove
-function Doc:raw_remove(line1, col1, line2, col2, undo_stack, time)
+function Doc:raw_remove(line1, col1, line2, col2, undo_stack, time, ...)
   if words[self] then
     local old_count = compute_words(self, line1, line2)
-    old_raw_remove(self, line1, col1, line2, col2, undo_stack, time)
+    old_raw_remove(self, line1, col1, line2, col2, undo_stack, time, ...)
     words[self] = words[self] + compute_words(self, line1, line1) - old_count
   else
-    old_raw_remove(self, line1, col1, line2, col2, undo_stack, time)
+    old_raw_remove(self, line1, col1, line2, col2, undo_stack, time, ...)
   end
 end
 

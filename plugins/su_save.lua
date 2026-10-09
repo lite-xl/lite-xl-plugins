@@ -1,4 +1,4 @@
--- mod-version:3 priority:99
+-- mod-version:4 priority:99
 local core = require "core"
 local common = require "core.common"
 local command = require "core.command"

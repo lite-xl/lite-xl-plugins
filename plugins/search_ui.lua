@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 --
 -- Replacement for the find/replace and project search CommandView
 ---interface using Widgets with some extra features.

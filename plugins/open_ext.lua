@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 
 -- The general idea is to check if the file opened is valid utf-8
 -- since lite-xl only supports UTF8 text, others can be safely assumed

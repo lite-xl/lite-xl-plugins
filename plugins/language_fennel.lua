@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 -- Support for the Fennel programming language: https://fennel-lang.org
 -- Covers all the keywords up to Fennel version 1.2.0
 

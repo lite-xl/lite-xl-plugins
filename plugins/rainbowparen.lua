@@ -1,15 +1,14 @@
--- mod-version:3
+-- mod-version:4
 local core = require "core"
 local style = require "core.style"
 local config = require "core.config"
 local common = require "core.common"
 local command = require "core.command"
 local tokenizer = require "core.tokenizer"
-local Highlighter = require "core.doc.highlighter"
+local DocView = require "core.docview"
 
 config.plugins.rainbowparen = common.merge({
   enabled = true,
-  parens = 5
 }, config.plugins.rainbowparen)
 
 style.syntax.paren_unbalanced = style.syntax.paren_unbalanced or { common.color "#DC0408" }
@@ -19,73 +18,48 @@ style.syntax.paren3  =  style.syntax.paren3 or { common.color "#fcd476"}
 style.syntax.paren4  =  style.syntax.paren4 or { common.color "#52dab2"}
 style.syntax.paren5  =  style.syntax.paren5 or { common.color "#5a98cf"}
 
-local tokenize = tokenizer.tokenize
-local extract_subsyntaxes = tokenizer.extract_subsyntaxes
+local total_parens = 5
+while style.syntax["paren" .. (total_parens + 1)] do 
+  total_parens = total_parens + 1
+end
+
 local closers = {
   ["("] = ")",
   ["["] = "]",
   ["{"] = "}"
 }
 
-local function parenstyle(parenstack)
-  return "paren" .. ((#parenstack % config.plugins.rainbowparen.parens) + 1)
-end
-
-function tokenizer.extract_subsyntaxes(base_syntax, state)
-  if not config.plugins.rainbowparen.enabled then
-    return extract_subsyntaxes(base_syntax, state)
-  end
-  return extract_subsyntaxes(base_syntax, state.istate)
-end
-
-function tokenizer.tokenize(syntax, text, state, resume)
-  if not config.plugins.rainbowparen.enabled then
-    return tokenize(syntax, text, state, resume)
-  end
-  state = state or {}
-  local res, istate, resume = tokenize(syntax, text, state.istate, resume)
-  local parenstack = state.parenstack or ""
-  local newres = {}
-  -- split parens out
-  -- the stock tokenizer can't do this because it merges identical adjacent tokens
-  for i, type, text in tokenizer.each_token(res) do
-    if type == "normal" or type == "symbol" then
+local old_tokenize = DocView.tokenize
+function DocView:tokenize(line, ...)
+  if not config.plugins.rainbowparen.enabled then return old_tokenize(self, line, ...) end
+  if not self.parenstack then self.parenstack = {} end
+  local parenstack = self.parenstack[line-1] or ""
+  local t = self:accumulate_tokens(old_tokenize(self, line, ...), function(output, text, token_style)
+    if token_style.type == "normal" or token_style.type == "symbol" then
       for normtext1, paren, normtext2 in text:gmatch("([^%(%[{}%]%)]*)([%(%[{}%]%)]?)([^%(%[{}%]%)]*)") do
-        if #normtext1 > 0 then
-          table.insert(newres, type)
-          table.insert(newres, normtext1)
-        end
+        if #normtext1 > 0 then output(normtext1) end
         if #paren > 0 then
+          local color
           if paren == parenstack:sub(-1) then -- expected closer
             parenstack = parenstack:sub(1, -2)
-            table.insert(newres, parenstyle(parenstack))
+            color = "paren" .. ((#parenstack % total_parens) + 1)
           elseif closers[paren] then -- opener
-            table.insert(newres, parenstyle(parenstack))
+            color = "paren" .. ((#parenstack % total_parens) + 1)
             parenstack = parenstack .. closers[paren]
-          else -- unexpected closer
-            table.insert(newres, "paren_unbalanced")
           end
-          table.insert(newres, paren)
+          output(paren, { color = style.syntax[color or "paren_unbalanced"] })
         end
-        if #normtext2 > 0 then
-          table.insert(newres, type)
-          table.insert(newres, normtext2)
-        end
+        if #normtext2 > 0 then output(normtext2) end
       end
     else
-      table.insert(newres, type)
-      table.insert(newres, text)
+      output(text)
     end
+  end)
+  if parenstack ~= self.parenstack[line] then
+    self.parenstack[line] = parenstack
+    if line < #self.doc.lines then self:invalidate_cache(line + 1) end
   end
-  return newres, { parenstack = parenstack, istate = istate }, resume
-end
-
-local function toggle_rainbowparen(enabled)
-  config.plugins.rainbowparen.enabled = enabled
-  for _, doc in ipairs(core.docs) do
-    doc.highlighter = Highlighter(doc)
-    doc:reset_syntax()
-  end
+  return t
 end
 
 -- The config specification used by the settings gui
@@ -98,13 +72,15 @@ config.plugins.rainbowparen.config_spec = {
     type = "toggle",
     default = true,
     on_apply = function(enabled)
-      toggle_rainbowparen(enabled)
+      command.perform("rainbow-parentheses:toggle", enabled)
     end
   }
 }
 
 command.add(nil, {
-  ["rainbow-parentheses:toggle"] = function()
-    toggle_rainbowparen(not config.plugins.rainbowparen.enabled)
+  ["rainbow-parentheses:toggle"] = function(enabled)
+    if enabled == nil then enabled = not config.plugins.rainbowparen.enabled end
+    config.plugins.rainbowparen.enabled = enabled
+    for _, doc in ipairs(core.docs) do doc:reset_syntax() end
   end
 })

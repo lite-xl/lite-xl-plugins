@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 -- Support for RISC-V assembly
 -- Note: kinda conflicts with x86 asm, must uninstall it or use force-syntax plugin
 -- https://github.com/cheyao

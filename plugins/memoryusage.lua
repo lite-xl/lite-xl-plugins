@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 -- original implementation by AqilCont
 local core = require "core"
 local config = require "core.config"

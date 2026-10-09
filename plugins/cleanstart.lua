@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 require 'plugins.treeview' -- load after treeview
 local command = require 'core.command'
 

@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 -- Not perfect, because we can't actually figure out when something closes, but should be good enough, so long as we check the list of open views.
 -- Maybe find a better way to get at "Node"?
 local core = require "core"

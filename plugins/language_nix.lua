@@ -1,4 +1,4 @@
--- mod-version:3
+-- mod-version:4
 -- https://nixos.wiki/wiki/Overview_of_the_Nix_Language
 local syntax = require "core.syntax"
 
