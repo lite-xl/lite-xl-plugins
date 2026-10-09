@@ -2225,11 +2225,17 @@
       "version": "0.1"
     },
     {
-      "description": "Highlights regions of code that match the current selection *([screenshot](https://user-images.githubusercontent.com/3920290/80710883-5f597c80-8ae7-11ea-97f0-76dfacc08439.png))*",
-      "id": "selectionhighlight",
+      "id": "selection_highlight",
+      "version": "1.0",
       "mod_version": "3",
-      "path": "plugins/selectionhighlight.lua",
-      "version": "0.2"
+      "type": "plugin",
+      "name": "Selection highlight",
+      "description": "Highlights selected text matches both in the view and as horizontal lines on the scrollbar.",
+      "path": "plugins/selection_highlight.lua",
+      "extra": {
+          "author": "Sylphrena",
+          "license": "0BSD"
+      }
     },
     {
       "dependencies": {
@@ -2240,19 +2246,6 @@
       "mod_version": "3",
       "path": "plugins/settings.lua",
       "version": "0.7"
-    },
-    {
-      "id": "scrollbar_selection_highlight",
-      "version": "1.0",
-      "mod_version": "3",
-      "type": "plugin",
-      "name": "Scrollbar selection highlight",
-      "description": "Highlights selected text matches as horizontal lines on the scrollbar.",
-      "path": "plugins/scrollbar_selection_highlight.lua",
-      "extra": {
-		"author": "Sylphrena",
-		"license": "0BSD"
-      }
     },
     {
       "description": "Displays the current time in the corner of the status view",
