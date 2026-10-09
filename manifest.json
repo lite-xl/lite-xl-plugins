@@ -591,6 +591,13 @@
       "version": "0.2"
     },
     {
+      "description": "A lightweight git client for Lite XL. Track changes, stage/unstage, commit, pull, push, and manage branches and remotes from inside the editor, with a git panel and per-line gutter diff markers.",
+      "id": "git",
+      "mod_version": "3",
+      "remote": "https://github.com/0xScodyx/git.git:3e5f489fb7aed3605199d8b2ab0cdb7b9ee7ca41",
+      "version": "0.1"
+    },
+    {
       "description": "Displays git branch and insert/delete count in status bar *([screenshot](https://user-images.githubusercontent.com/3920290/81107223-bcea3080-8f0e-11ea-8fc7-d03173f42e33.png))*",
       "id": "gitstatus",
       "mod_version": "3",
