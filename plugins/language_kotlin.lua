@@ -22,13 +22,13 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]",              type = "operator" }, -- Operators
     { regex   = [[\?(?=\.)]],                        type = "operator" }, -- ?. operator
     { pattern = "[%a_][%w_]*%f[(]",                  type = "function" }, -- Function/Method/Class
-    { regex   = "`[\\w_\\s]+`(?=\\s*\\()",           type = "function" }, -- Test Method
+    { regex   = [[`[\w_\s]+`(?=\s*\()]],             type = "function" }, -- Test Method
     { regex   = [[let(?=\s\{)]],                     type = "function" }, -- ? operator
     { regex   = [[\?\:(?=\s?)]],                     type = "operator" }, -- elvis operator
     { regex   = [[this(?=\.?\@?)]],                  type = "keyword"  }, -- this keyword
-    { regex   = "\\@\\w+",                           type = "keyword2" }, -- Annotations
+    { regex   = [[\@\w+]],                           type = "keyword2" }, -- Annotations
     { regex   = [[[a-zA-Z]+\@(?=\s?[a-zA-Z])]],      type = "keyword2" }, -- Annotations (this pattern is lower priority than the `this keyword` pattern)
-    { regex   = "[A-Z][A-Z_]+",                      type = "keyword2" }, -- Constants, FULL UPPERCASE
+    { regex   = [[[A-Z][A-Z_]+]],                    type = "keyword2" }, -- Constants, FULL UPPERCASE
     { pattern = "import()%s+()[%w_.]+",              type = { "keyword", "normal", "normal" } },
     { pattern = "[%a_][%w_]*",                       type = "symbol"   }, -- ?
   },
