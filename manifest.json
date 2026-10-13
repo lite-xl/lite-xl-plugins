@@ -2249,6 +2249,13 @@
       "version": "0.7"
     },
     {
+      "description": "Moves the treeview sidebar between the left and right edges of the window, like VS Code's *Toggle Primary Side Bar Position*",
+      "id": "sidebar_position",
+      "mod_version": "3",
+      "path": "plugins/sidebar_position.lua",
+      "version": "0.1"
+    },
+    {
       "description": "Displays the current time in the corner of the status view",
       "id": "smallclock",
       "mod_version": "3",
