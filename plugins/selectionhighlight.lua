@@ -1,16 +1,43 @@
 -- mod-version:3
 local style = require "core.style"
+local common = require "core.common"
+local config = require "core.config"
 local DocView = require "core.docview"
+
+config.plugins.selectionhighlight = common.merge({
+  thickness = 1,
+  custom_color = style.syntax.comment,
+  config_spec = {
+    name = "Selection Highlight",
+    {
+      label = "Highlight Box Color",
+      description = "Color of the highlight box.",
+      path = "custom_color",
+      type = "color",
+      default = string.format("#%02X%02X%02X%02X", table.unpack(style.syntax.comment))
+    },
+    {
+      label = "Highlight Box Thickness",
+      description = "Thickness of the highlight box.",
+      path = "thickness",
+      type = "number",
+      default = 1,
+      min = 1,
+      max = 10
+    }
+  }
+}, config.plugins.selectionhighlight)
 
 -- originally written by luveti
 
-local function draw_box(x, y, w, h, color)
+local function draw_box(x, y, w, h, color, thickness)
   local r = renderer.draw_rect
-  local s = math.ceil(SCALE)
-  r(x, y, w, s, color)
-  r(x, y + h - s, w, s, color)
-  r(x, y + s, s, h - s * 2, color)
-  r(x + w - s, y + s, s, h - s * 2, color)
+  local t = math.ceil(SCALE) * thickness
+
+  r(x, y, w, t, color)
+  r(x, y + h - t, w, t, color)
+  r(x, y + t, t, h - t * 2, color)
+  r(x + w - t, y + t, t, h - t * 2, color)
 end
 
 
@@ -35,8 +62,9 @@ function DocView:draw_line_body(line, x, y)
         if line ~= line1 or start_col ~= col1 then
           local x1 = x + self:get_col_x_offset(line, start_col)
           local x2 = x + self:get_col_x_offset(line, end_col + 1)
-          local color = style.selectionhighlight or style.syntax.comment
-          draw_box(x1, y, x2 - x1, lh, color)
+          local color = config.plugins.selectionhighlight.custom_color
+          local thickness = config.plugins.selectionhighlight.thickness
+          draw_box(x1, y, x2 - x1, lh, color, thickness)
         end
         last_col = end_col + 1
       end
