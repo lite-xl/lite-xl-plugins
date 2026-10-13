@@ -6,7 +6,6 @@ local config = require "core.config"
 local style = require "core.style"
 local DocView = require "core.docview"
 local Highlighter = require "core.doc.highlighter"
-local Object = require "core.object"
 local Scrollbar = require "core.scrollbar"
 
 -- Sample configurations:
@@ -104,7 +103,7 @@ config.plugins.minimap = common.merge({
     },
     {
       label = "Small Docs definition",
-      description = "Size of a Doc to be considered small. Use 0 to automatically decide.",
+      description = "Number of lines for a Doc to be considered small. Use 0 to automatically decide.",
       path = "avoid_small_docs_len",
       type = "number",
       default = 0,
@@ -286,10 +285,12 @@ function Highlighter:soft_reset(...)
   highlighter_cache[self] = {}
 end
 
-
+---@class MiniMap : core.scrollbar
+---@field super core.scrollbar
 local MiniMap = Scrollbar:extend()
 
-
+---@param dv core.docview
+---@param original_v_scrollbar core.scrollbar
 function MiniMap:new(dv, original_v_scrollbar)
   MiniMap.super.new(self, { direction = "v", alignment = "e",
                             force_status = "expanded",
@@ -370,7 +371,46 @@ function MiniMap:_on_mouse_pressed_normal(button, x, y, clicks)
     local nr = self.normal_rect
     percent = common.clamp((y - oy - (self.dv.size.y) / 2) / (nr.scrollable - self.dv.size.y), 0, 1)
   end
+
+  -- Convert percent to workaround issues fixed by https://github.com/lite-xl/lite-xl/pull/1587
+  -- but not in 2.1.8 yet
+  if type(percent) == "number" then
+    local scrollable = self.dv:get_scrollable_size()
+    local size = self.dv.size.y
+    percent = percent * (scrollable - size) / scrollable
+  end
+
   return percent
+end
+
+
+function MiniMap:_on_mouse_moved_normal(x, y, dx, dy)
+  if self.dragging then
+    local nr = self.normal_rect
+    -- Port fix from https://github.com/lite-xl/lite-xl/pull/1587
+    local _, _, _, along_size = self:_get_thumb_rect_normal()
+    local pct = common.clamp((y - nr.along + self.drag_start_offset) / (nr.along_size - along_size), 0, 1)
+
+    -- Convert result like in View:on_mouse_moved from https://github.com/lite-xl/lite-xl/pull/1587
+    local scrollable = self.dv:get_scrollable_size()
+    local size = self.dv.size.y
+    local modpct = pct * (scrollable - size) / scrollable
+
+    return modpct
+  end
+  return self:_update_hover_status_normal(x, y)
+end
+
+-- Convert pct to workaround issues fixed by https://github.com/lite-xl/lite-xl/pull/1587
+-- but not in 2.1.8 yet
+function MiniMap:set_percent(pct)
+  local scrollable = self.dv:get_scrollable_size()
+  local size = self.dv.size.y
+  local modpct = 0
+  if scrollable ~= size then
+    modpct = pct * scrollable / (scrollable - size)
+  end
+  MiniMap.super.set_percent(self, modpct)
 end
 
 
@@ -406,6 +446,25 @@ function MiniMap:set_size(x, y, w, h, scrollable)
   MiniMap.super.set_size(self, x, y, w, h, scrollable)
 end
 
+
+function MiniMap:_get_thumb_rect_normal()
+  local nr = self.normal_rect
+  local sz = nr.scrollable
+  if sz == math.huge or sz <= nr.along_size then
+    return 0, 0, 0, 0
+  end
+
+  local x, _, across_size, _ = MiniMap.super._get_thumb_rect_normal(self)
+
+  -- From https://github.com/lite-xl/lite-xl/pull/1589
+  local along_size = math.max(self.minimum_thumb_size or style.minimum_thumb_size, nr.along_size * nr.along_size / sz)
+  return
+    x,
+    -- Port fix from https://github.com/lite-xl/lite-xl/pull/1587
+    nr.along + self.percent * (nr.along_size - along_size),
+    across_size,
+    along_size
+end
 
 function MiniMap:draw()
   if not self:is_minimap_enabled() then return MiniMap.super.draw(self) end
