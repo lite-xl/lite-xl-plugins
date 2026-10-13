@@ -304,6 +304,7 @@ function DocView:draw_overlay(...)
   return res
 end
 
+-- FIX: conflict with minimap.lua
 local old_mouse_pressed = DocView.on_mouse_pressed
 function DocView:on_mouse_pressed(button, x, y, clicks, ...)
   if not SS.should_run(self) then return old_mouse_pressed(self, button, x, y, clicks, ...) end
@@ -316,7 +317,13 @@ function DocView:on_mouse_pressed(button, x, y, clicks, ...)
 
   local lh = self:get_line_height()
   local rl_x, rl_y = self:get_line_screen_position(data.reference_line)
-  if y >= math.min(rl_y + lh, lh * #data.sticky_lines + self.position.y) or y < self.position.y then
+
+  if y >= math.min(rl_y + lh, lh * #data.sticky_lines + self.position.y)
+    or y < self.position.y
+    or x < self.position.x
+    or x >= self.position.x + self.size.x
+    or (self.v_scrollbar and self.v_scrollbar:overlaps(x, y))
+    or (self.minimap and type(self.minimap.overlaps) == "function" and self.minimap:overlaps(x, y)) then
     data.sticky_lines_mouse_pressed = true
     return old_mouse_pressed(self, button, x, y, clicks, ...)
   end
@@ -340,12 +347,14 @@ function DocView:on_mouse_moved(x, y, ...)
 
   local lh = self:get_line_height()
   local _, rl_y = self:get_line_screen_position(data.reference_line)
+
   if self.mouse_selecting
    or y >= math.min(rl_y + lh, lh * #data.sticky_lines + self.position.y)
    or y < self.position.y
    or x < self.position.x
    or x >= self.position.x + self.size.x
-   or self.v_scrollbar:overlaps(x, y)
+   or (self.v_scrollbar and self.v_scrollbar:overlaps(x, y))
+   or (self.minimap and type(self.minimap.overlaps) == "function" and self.minimap:overlaps(x, y))
    then
     return old_mouse_moved(self, x, y, ...)
   end
