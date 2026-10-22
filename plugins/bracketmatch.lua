@@ -184,7 +184,7 @@ local function redraw_char(dv, x, y, line, col, bg_color, char_color)
     -- redraw background
     core.push_clip_rect(x1, y, x2 - x1, lh)
     local dlt = DocView.draw_line_text
-    DocView.draw_line_text = function() end
+    DocView.draw_line_text = function() return lh end
     dv:draw_line_body(line, x, y)
     DocView.draw_line_text = dlt
     core.pop_clip_rect()
