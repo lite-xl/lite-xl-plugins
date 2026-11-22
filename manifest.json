@@ -2003,10 +2003,10 @@
       "version": "0.1"
     },
     {
-      "description": "Rendered Markdown preview inside the editor: headings, lists, code, tables and clickable links, updated live. Toggle with ctrl+shift+m / alt+m.",
+      "description": "Rendered Markdown preview inside the editor: headings, lists, code, tables and clickable links, LaTeX math (approximated; exact via pandoc in the browser), updated live. Toggle with ctrl+shift+m / alt+m.",
       "id": "mdpreview",
       "mod_version": "3",
-      "remote": "https://github.com/sergiokapone/lite-xl-mdpreview:48b947fcd6b8d61d5788d358337315ec7a0715ff",
+      "remote": "https://github.com/sergiokapone/lite-xl-mdpreview:6cb6a84869a04ab1f6e491d3b1ce776a026e41ec",
       "version": "0.1"
     },
     {
