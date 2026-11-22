@@ -2098,6 +2098,13 @@
       "version": "0.1"
     },
     {
+      "description": "Click an .html/.htm file in the treeview to open it in the default browser (ctrl+click opens it in the editor).",
+      "id": "openhtml",
+      "mod_version": "3",
+      "remote": "https://github.com/sergiokapone/lite-xl-openhtml:5394aec2804a52f3a7e47b56ebc593b81169c67d",
+      "version": "0.1"
+    },
+    {
       "description": "Opens the selected filename or url",
       "id": "openselected",
       "mod_version": "3",
