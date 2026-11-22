@@ -2369,6 +2369,13 @@
       "version": "0.1"
     },
     {
+      "description": "Click a .pdf/.djvu file in the treeview to read its text layer in a new tab (uses pdftotext / djvutxt in the background).",
+      "id": "textlayer",
+      "mod_version": "3",
+      "remote": "https://github.com/sergiokapone/lite-xl-textlayer:4ff7f1a83bd0d2e645bdd68173a3b07d2515cccf",
+      "version": "0.1"
+    },
+    {
       "description": "Theme manager with base16 themes",
       "id": "theme16",
       "mod_version": "3",
