@@ -2003,6 +2003,13 @@
       "version": "0.1"
     },
     {
+      "description": "Rendered Markdown preview inside the editor: headings, lists, code, tables and clickable links, updated live. Toggle with ctrl+shift+m / alt+m.",
+      "id": "mdpreview",
+      "mod_version": "3",
+      "remote": "https://github.com/sergiokapone/lite-xl-mdpreview:73f09f302fa5e3a644c10e02cdd0a84d60ca2d0f",
+      "version": "0.1"
+    },
+    {
       "description": "Show memory usage in the status view",
       "id": "memoryusage",
       "mod_version": "3",
