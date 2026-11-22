@@ -2098,10 +2098,10 @@
       "version": "0.1"
     },
     {
-      "description": "Click an .html/.htm file in the treeview to open it in the default browser (ctrl+click opens it in the editor).",
+      "description": "Ctrl+click an .html/.htm file in the treeview to open it in the default browser (a plain click opens it in the editor).",
       "id": "openhtml",
       "mod_version": "3",
-      "remote": "https://github.com/sergiokapone/lite-xl-openhtml:6ee6be56133a342e313dfab9e9e972e2068c5fb0",
+      "remote": "https://github.com/sergiokapone/lite-xl-openhtml:1397aa6d532c796b9286d30e5eb73ab53ea2aec0",
       "version": "0.1"
     },
     {
