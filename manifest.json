@@ -646,7 +646,7 @@
       "id": "indentguide",
       "mod_version": "3",
       "path": "plugins/indentguide.lua",
-      "version": "0.3"
+      "version": "0.3.1"
     },
     {
       "description": "Adds inter-process communication support, single-instance mode and tab drag and drop between instances.",
