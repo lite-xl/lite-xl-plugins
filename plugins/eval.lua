@@ -26,7 +26,7 @@ command.add("core.docview", {
     core.command_view:enter("Evaluate And Replace With Result", {
       submit = function(cmd)
         dv.doc:replace(function(str)
-          return eval(cmd)
+          return eval(cmd:gmatch("%?%?", str))
         end)
       end
     })
