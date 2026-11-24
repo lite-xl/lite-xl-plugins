@@ -19,7 +19,9 @@ syntax.add {
 		{ pattern = "%.%.",                            type = "operator" },
 		{ pattern = "[%^%+%-%*/%%&|~<>!=]",            type = "operator" },
 		{ pattern = "[%a_][%w_]*()%*?()%s*%f[%(]",     type = {"function", "operator", "normal"} },
-		{ pattern = "%u[%w_]*",                        type = "literal"  },
+		{ pattern = "%u[%w_]*%.()%u[%w_]*",            type = {"normal", "literal"}  },
+		{ pattern = "%.?%u[%w_]*",                     type = "literal"  },
+		{ pattern = "[%a_][%w_]*::",                   type = "literal" },
 		{ pattern = "[%a_][%w_]*",                     type = "symbol"   },
 	},
 	symbols = {
@@ -29,6 +31,7 @@ syntax.add {
 		["continue"]  = "keyword",
 		["default"]   = "keyword",
 		["else"]      = "keyword",
+		["enum"]      = "keyword",
 		["for"]       = "keyword",
 		["fn"]        = "keyword",
 		["import"]    = "keyword",
@@ -63,5 +66,53 @@ syntax.add {
 		["fiber"]  = "keyword2",
 		["any"]    = "keyword2",
 		["null"]   = "literal",
+
+		--- built-ins ---
+
+		["printf"]  = "keyword2",
+		["fprintf"] = "keyword2",
+		["sprintf"] = "keyword2",
+		["scanf"]   = "keyword2",
+		["fscanf"]  = "keyword2",
+		["sscanf"]  = "keyword2",
+
+		["round"] = "keyword2",
+		["trunc"] = "keyword2",
+		["ceil"]  = "keyword2",
+		["floor"] = "keyword2",
+		["fabs"]  = "keyword2",
+		["sqrt"]  = "keyword2",
+		["sin"]   = "keyword2",
+		["cos"]   = "keyword2",
+		["atan"]  = "keyword2",
+		["atan2"] = "keyword2",
+		["exp"]   = "keyword2",
+		["log"]   = "keyword2",
+
+		["new"]        = "keyword2",
+		["make"]       = "keyword2",
+		["copy"]       = "keyword2",
+		["append"]     = "keyword2",
+		["insert"]     = "keyword2",
+		["delete"]     = "keyword2",
+		["slice"]      = "keyword2",
+		["len"]        = "keyword2",
+		["cap"]        = "keyword2",
+		["sizeof"]     = "keyword2",
+		["sizeofself"] = "keyword2",
+		["selfhasptr"] = "keyword2",
+		["selftypeeq"] = "keyword2",
+		["typeptr"]    = "keyword2",
+		["valid"]      = "keyword2",
+
+		["validkey"] = "keyword2",
+		["keys"]     = "keyword2",
+
+		["fiberspawn"] = "keyword2",
+		["fibercall"]  = "keyword2",
+		["fiberalive"] = "keyword2",
+
+		["memusage"] = "keyword2",
+		["exit"]     = "keyword2"
 	},
 }
