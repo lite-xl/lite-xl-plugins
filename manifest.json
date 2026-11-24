@@ -312,6 +312,13 @@
       "version": "0.1.2"
     },
     {
+      "description": "Count selected characters and lines in status bar",
+      "id": "countselect",
+      "mod_version": "3",
+      "path": "plugins/countselected.lua",
+      "version": "0.1"
+    },
+    {
       "description": "Customize the caret in the editor",
       "id": "custom_caret",
       "mod_version": "3",
