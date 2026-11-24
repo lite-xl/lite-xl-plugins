@@ -6,17 +6,25 @@ syntax.add {
   files = { "%.elm$" },
   comment = "%-%-",
   patterns = {
-    { pattern = {"%-%-", "\n"},          type = "comment"  },
-    { pattern = { "{%-", "%-}" },        type = "comment"  },
-    { pattern = { '"', '"', '\\' },      type = "string"   },
-    { pattern = { '"""', '"""', '\\' },  type = "string"   },
-    { pattern = { "'", "'", '\\' },      type = "string"   },
-    { pattern = "-?0x%x+",               type = "number"   },
-    { pattern = "-?%d+[%d%.eE]*f?",      type = "number"   },
-    { pattern = "-?%.?%d+f?",            type = "number"   },
-    { pattern = "%.%.",                  type = "operator" },
-    { pattern = "[=:|&<>%+%-%*\\/%^%%]", type = "operator" },
-    { pattern = "[%a_'][%w_']*",         type = "symbol"   },
+    { pattern = {"%-%-", "\n"},                       type = "comment"  }, -- Single-line comment
+    { pattern = { "{%-", "%-}" },                     type = "comment"  }, -- Multi-line comment
+    { pattern = { '"', '"', '\\' },                   type = "string"   }, -- Single-line string
+    { pattern = { '"""', '"""', '\\' },               type = "string"   }, -- Multi-line string
+    { pattern = { "'", "'", '\\' },                   type = "string"   }, -- Single-line string, apices
+    { pattern = "-?0x%x+",                            type = "number"   }, -- ?
+    { pattern = "-?%d+[%d%.eE]*f?",                   type = "number"   }, -- ?
+    { pattern = "-?%.?%d+f?",                         type = "number"   }, -- ?
+    { pattern = "%.%.",                               type = "operator" }, -- ?
+    { pattern = "[=:|&<>%+%-%*\\/%^%%]",              type = "operator" }, -- Operators
+    { pattern = "^[a-zA-Z0-0_]+",                     type = "function" }, -- Function definition
+    -- TODO: verify that the following 2 patterns are actually function calls and not data structure definitions
+    { pattern = '[a-zA-Z0-0_]+()%s()%f[%"]',          type = { "function", "normal", "symbol"} },
+    { pattern = '[a-zA-Z0-0_]+()%s()%f[%[]',          type = { "function", "normal", "symbol"} },
+    -- WIP: Function definition
+    { pattern = '[a-zA-Z0-0_]+()%s()%f[%=]',          type = { "function", "normal", "symbol"} },
+    -- WIP: Function call
+    { pattern = '[a-zA-Z0-0_]+()%s()%f[a-zA-z0-9]',   type = { "function", "normal", "symbol" } },
+    { pattern = "[%a_'][%w_']*",                      type = "symbol"   } -- Symbols
   },
   symbols = {
     ["as"] = "keyword",
