@@ -23,7 +23,7 @@ syntax.add {
     { pattern = "[%+%-=/%*%^%%<>!~|&]",          type = "operator" }, -- Operators
     { pattern = "[%a_][%w_]*%f[(]",              type = "function" }, -- Function/Class/Method/...
     { pattern = "[%a_][%w_]*%f[%[]",             type = "function" }, -- Custom Type
-    { regex   = "[A-Z]+_?[A-Z]+",                type = "keyword2" }, -- Constants
+    { regex   = "[A-Z]+|[A-Z]+_[A-Z]+",          type = "keyword2" }, -- Constants
     { pattern = "import()%s+()[%w_.]+",          type = { "keyword", "normal", "normal" } },
     { pattern = "[%a_][%w_]*",                   type = "symbol"   }, -- ?
     { pattern = "[a-zA-Z]+%.+",                  type = "function" }, -- Lib path
